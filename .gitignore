@@ -63,6 +63,9 @@ dmypy.json
 .ruff_cache/
 
 # Generated design files (keep structure, ignore large generated files)
+# Ignore large DXF files (>50MB) to avoid GitHub limits
+designs/**/devices_myelination_multi_device.dxf
+
 # Uncomment if you want to ignore all generated files:
 # designs/**/*.scad
 # designs/**/*.dxf
