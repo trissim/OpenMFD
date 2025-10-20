@@ -1,0 +1,2 @@
+"""Core device generation logic."""
+
