@@ -1,0 +1,79 @@
+# -*- coding: utf-8 -*-
+
+# Macro Begin: /home/ts/code/projects/mfd/plates/96_well_plate_reservoirs_print_hips_2/chamfer_plate.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
+import FreeCAD
+import Part
+
+# Gui.runCommand('Std_DlgMacroRecord',0)
+### Begin command Std_Open
+from freecad import module_io
+module_io.OpenInsertObject("Mesh", "/home/ts/code/projects/mfd/plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl", "open")
+
+# App.setActiveDocument("Unnamed")
+# App.ActiveDocument=App.getDocument("Unnamed")
+# Gui.ActiveDocument=Gui.getDocument("Unnamed")
+# Gui.SendMsgToActiveView("ViewFit")
+### End command Std_Open
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_2')
+### Begin command Part_ShapeFromMesh
+App.getDocument('Unnamed').addObject('Part::Feature', '_6_well_plate_reservoirs_print_hips_003')
+__shape__ = Part.Shape()
+__shape__.makeShapeFromMesh(FreeCAD.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_2').Mesh.Topology, 0.010000, True)
+FreeCAD.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').Shape = __shape__
+FreeCAD.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').purgeTouched()
+del __shape__
+### End command Part_ShapeFromMesh
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_003')
+### Begin command Part_RefineShape
+App.getDocument('Unnamed').addObject('Part::Refine','_6_well_plate_reservoirs_print_hips_003')
+App.getDocument('Unnamed').ActiveObject.Source = FreeCAD.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003')
+App.getDocument('Unnamed').ActiveObject.Label = FreeCAD.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').Label
+App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').Visibility = False
+# App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.ShapeAppearance=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').getLinkedObject(True).ViewObject,'ShapeAppearance',App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.ShapeAppearance)
+# App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.PointColor)
+App.ActiveDocument.recompute()
+### End command Part_RefineShape
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_2')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004')
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70',-59.355,-36.222,3.5)
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge68',-58.2695,37.3075,3.5)
+# Gui.runCommand('Part_Chamfer',0)
+FreeCAD.ActiveDocument.addObject("Part::Chamfer","Chamfer")
+FreeCAD.ActiveDocument.Chamfer.Base = FreeCAD.ActiveDocument._6_well_plate_reservoirs_print_hips_004
+__fillets__ = []
+__fillets__.append((68,7.50,5.00))
+__fillets__.append((70,7.50,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge4',-62.075,11.0518,8.5)
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge1',-63.75,19.4106,8.5)
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge1',-63.75,-25.7913,8.5)
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge28',-31.7641,-42.675,8.5)
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge38',63.75,-34.0468,8.5)
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge25',11.3646,42.675,8.5)
+# Gui.runCommand('Part_Chamfer',0)
+FreeCAD.ActiveDocument.addObject("Part::Chamfer","Chamfer001")
+FreeCAD.ActiveDocument.Chamfer001.Base = FreeCAD.ActiveDocument.Chamfer
+__fillets__ = []
+__fillets__.append((1,1.67,1.67))
+__fillets__.append((25,1.67,1.67))
+__fillets__.append((28,1.67,1.67))
+__fillets__.append((38,1.67,1.67))
+FreeCAD.ActiveDocument.Chamfer001.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument.Chamfer.Visibility = False
+
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Macro End: /home/ts/code/projects/mfd/plates/96_well_plate_reservoirs_print_hips_2/chamfer_plate.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++

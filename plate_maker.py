@@ -1,0 +1,143 @@
+import solid
+from make_device import make_unit_array
+import os.path as osp
+import os 
+import math
+
+version="v5"
+base_path="./designs/plasma_racks/4mm_well_0.5inch_diam_device_"+version+"/"
+base_name="12_well_plate_"+version
+#basic plate dims
+plate_size_outer=[127.5,85.35]
+plate_size_inner=[122.5,81.35]
+plate_height_outer=8.5
+plate_height_inner=8.5
+plate_height=plate_height_inner+plate_height_outer
+plate_under_depth=3
+skirt_hole_dims=[plate_size_outer[0]-25,plate_size_outer[1]-15]
+corner_x=7.5
+corner_y=7.5
+grid_size=[4,3]
+dims = [26,26,0]
+well_diam=24
+
+water_well_diam_out=18
+water_well_diam_in=15.5
+water_well_height=plate_height_inner+plate_height_outer-plate_under_depth
+water_well_floor_thickness=2
+n_vents = 6
+vent_width = math.pi*water_well_diam_in/float(n_vents)/2.0
+vent_depth = 3
+
+
+def save_model(model,base_path,base_name):
+    if not osp.exists(base_path):
+        os.makedirs(base_path)
+    scad_path=osp.join(base_path,base_name+".scad")
+    solid.scad_render_to_file(model,osp.join(scad_path))
+
+def center_unit_array(model,dims,grid_size):
+    model = solid.translate([dims[0]/2.0,dims[1]/2.0,0])(model)
+    model = solid.translate([-dims[0]*(grid_size[0]/2.0),
+                             -dims[1]*(grid_size[1]/2.0),0])(model)
+    return model
+
+
+#plate_chassis
+plate_height_diff=plate_height-plate_height_inner
+
+#outer_plate as base
+plate=solid.cube((*plate_size_outer,plate_height_diff),center=True)
+plate=solid.translate([0,0,plate_height_diff/2.0])(plate)
+#inner plate goes on top
+plate_inner=solid.cube((*plate_size_inner,plate_height_inner),center=True)
+plate_inner=solid.translate([0,0,plate_height_inner/2.0+plate_height_diff])(plate_inner)
+plate=solid.union()(plate,plate_inner)
+
+
+plate_under_remove_out=solid.cube((*plate_size_outer,plate_under_depth),center=True)
+plate_under_remove_out=solid.translate([0,0,plate_under_depth/2.0])(plate_under_remove_out)
+plate_under_remove_in=solid.cube((*plate_size_inner,plate_under_depth),center=True)
+plate_under_remove_in=solid.translate([0,0,plate_under_depth/2.0])(plate_under_remove_in)
+
+plate_under_remove=solid.difference()(plate_under_remove_out,plate_under_remove_in)
+#plate_under_remove=solid.cube((*plate_size_inner,plate_under_depth),center=True)
+#plate_under_remove=solid.translate([0,0,plate_under_depth/2.0])(plate_under_remove)
+
+corners_from_x_y = lambda x,y: [[-x/2.0,y/2.0],
+                                    [x/2.0, y/2.0],
+                                    [-x/2.0, -y/2.0],
+                                    [x/2.0, -y/2.0]]
+plate_under_remove_corner=solid.cube((*skirt_hole_dims,plate_under_depth),center=True)
+plate_under_remove_corner=solid.translate([0,0,plate_under_depth/2.0])(plate_under_remove_corner)
+plate_corners_pos=corners_from_x_y(*plate_size_outer)
+plate_under_remove_corners=[]
+for corner_pos in plate_corners_pos:
+    temp_corner=solid.translate([*corner_pos,0])(plate_under_remove_corner)
+    plate_under_remove_corners.append(temp_corner)
+
+corners_remove=solid.union()(*plate_under_remove_corners)
+skirt=solid.intersection()(plate_under_remove,corners_remove)
+
+plate=solid.difference()(plate,plate_under_remove_out)
+plate=solid.union()(plate,skirt)
+#plate=plate_under_remove
+#plate=plate
+#plate=skirt
+
+
+
+#corners
+#               0       1        2        3         4          5
+corner_points=[[0,0,0],[0,corner_y,10],[0,corner_y,0],[0,corner_y,10],[corner_x,corner_y,10],[corner_x,corner_y,0]]
+corner=solid.polygon(points=corner_points)()
+corner=solid.linear_extrude(height=plate_height_inner)(corner)
+
+corner_top_left=corner
+corner_top_left=solid.translate([0,-corner_y,0])(corner_top_left)
+corner_top_left=solid.translate([-plate_size_inner[0]/2.0,plate_size_inner[1]/2.0,plate_height_diff])(corner_top_left)
+
+corner_bottom_left=solid.rotate(90)(corner)
+corner_bottom_left=solid.translate([corner_x,0,0])(corner_bottom_left)
+corner_bottom_left=solid.translate([-plate_size_inner[0]/2.0,-plate_size_inner[1]/2.0,plate_height_diff])(corner_bottom_left)
+
+corners = solid.union()(corner_top_left,corner_bottom_left)
+plate=solid.difference()(plate,corners)
+
+#plate wells
+well = solid.cylinder(r=well_diam/2.0, h=plate_height, segments=64, center = True)
+well = solid.translate([0,0,plate_height/2.0])(well)
+wells=make_unit_array(well,dims,grid_size)
+wells=center_unit_array(wells,dims,grid_size)
+plate = solid.difference()(plate,wells)
+
+#water wells
+water_well_out = solid.cylinder(r=water_well_diam_out/2.0, h=water_well_height, segments=64, center = True)
+water_well_in = solid.cylinder(r=water_well_diam_in/2.0, h=water_well_height, segments=64, center = True)
+water_well=solid.difference()(water_well_out,water_well_in)
+water_well = solid.translate([0,0,water_well_height/2.0+plate_under_depth])(water_well)
+
+vent = solid.cube((water_well_diam_out,vent_width,vent_depth),center=True)
+vent = solid.translate([0,0,-vent_depth/2.0])(vent)
+vent = solid.translate([0,0,water_well_height+plate_under_depth])(vent)
+vents=[]
+for i in range(n_vents):
+    rot_vent = solid.rotate(i*360.0/n_vents)(vent)
+    vents.append(rot_vent)
+vents=solid.union()(*vents)
+water_well = solid.difference()(water_well,vents)
+
+water_well_floor_in=solid.cylinder(r=water_well_diam_in/2.0, h=water_well_floor_thickness, segments=64, center = True)
+water_well_floor_out=solid.cylinder(r=well_diam/2.0+1, h=water_well_floor_thickness, segments=64, center = True)
+water_well_floor=solid.difference()(water_well_floor_out,water_well_floor_in)
+water_well_floor=solid.translate([0,0,water_well_floor_thickness/2.0+plate_under_depth])(water_well_floor)
+water_well=solid.union()(water_well,water_well_floor)
+
+
+water_wells=make_unit_array(water_well,dims,grid_size)
+water_wells=center_unit_array(water_wells,dims,grid_size)
+plate = solid.union()(plate,water_wells)
+
+save_model(plate,base_path,base_name)
+
+

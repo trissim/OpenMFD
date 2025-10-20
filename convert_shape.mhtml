@@ -1,0 +1,81 @@
+From: <Saved by Blink>
+Snapshot-Content-Location: https://gist.githubusercontent.com/slazav/4853bd36669bb9313ddb83f51ee1cb82/raw/89f56923dcf5c868173b354bab5cb2d497795cf9/convert_shape.py
+Subject: 
+Date: Tue, 27 Feb 2024 15:08:35 -0000
+MIME-Version: 1.0
+Content-Type: multipart/related;
+	type="text/html";
+	boundary="----MultipartBoundary--s5M9R2bCL91R9Mq1BpgEvySWeZfh43rbyO5pEqZ1p9----"
+
+
+------MultipartBoundary--s5M9R2bCL91R9Mq1BpgEvySWeZfh43rbyO5pEqZ1p9----
+Content-Type: text/html
+Content-ID: <frame-A7B6E689CF20D3520AE3702842FC22C2@mhtml.blink>
+Content-Transfer-Encoding: quoted-printable
+Content-Location: https://gist.githubusercontent.com/slazav/4853bd36669bb9313ddb83f51ee1cb82/raw/89f56923dcf5c868173b354bab5cb2d497795cf9/convert_shape.py
+
+<html><head><meta http-equiv=3D"Content-Type" content=3D"text/html; charset=
+=3DUTF-8"><link rel=3D"stylesheet" type=3D"text/css" href=3D"cid:css-47c628=
+d7-daca-4a1c-b5e4-2c0ed62d9c59@mhtml.blink" /><meta name=3D"color-scheme" c=
+ontent=3D"light dark"></head><body><pre style=3D"word-wrap: break-word; whi=
+te-space: pre-wrap;">#!/usr/bin/python
+
+# path to FreeCAD.so
+FREECADPATH =3D '/usr/lib64/freecad/lib'
+import sys
+sys.path.append(FREECADPATH)
+
+if len(sys.argv)&lt;3:
+  print "Usage: sys.argv[0] &lt;in_file&gt; &lt;out_file&gt;"
+  sys.exit(1)
+
+iname=3Dsys.argv[1]
+oname=3Dsys.argv[2]
+
+# support two export formats: step and iges.
+# determin format from extension
+if oname[-5:]=3D=3D".iges":
+  type=3D"iges"
+elif oname[-5:]=3D=3D".step":
+  type=3D"step"
+else:
+  print "Output file should have .step or .iges extension"
+  sys.exit(1)
+
+import FreeCAD
+import Part
+
+# Openscad import settings according to
+# https://forum.lulzbot.com/viewtopic.php?t=3D243
+p=3DFreeCAD.ParamGet("User parameter:BaseApp/Preferences/Mod/OpenSCAD")
+p.SetBool('useViewProviderTree',True)
+p.SetBool('useMultmatrixFeature',True)
+# For some reason conversion does not work with cylinders created from
+# extruded 2d circles.
+# So I set MaxFN large enough and use smaller $fn in my step files to
+# export such cilinders as polygons.
+# If you use only normal cylinders, no need to use so large number here.
+p.SetInt('useMaxFN',50)
+
+# This should read any type of file
+FreeCAD.loadFile(iname)
+
+# iterate through all objects
+for o in App.ActiveDocument.Objects:
+  # find root object and export the shape
+  if len(o.InList)=3D=3D0:
+    if type=3D=3D"step":   o.Shape.exportStep(oname)
+    elif type=3D=3D"iges": o.Shape.exportIges(oname)
+    sys.exit(0)
+
+print "Error: can't find any object"
+sys.exit(1)
+</pre></body></html>
+------MultipartBoundary--s5M9R2bCL91R9Mq1BpgEvySWeZfh43rbyO5pEqZ1p9----
+Content-Type: text/css
+Content-Transfer-Encoding: quoted-printable
+Content-Location: cid:css-47c628d7-daca-4a1c-b5e4-2c0ed62d9c59@mhtml.blink
+
+@charset "utf-8";
+=0A
+------MultipartBoundary--s5M9R2bCL91R9Mq1BpgEvySWeZfh43rbyO5pEqZ1p9------

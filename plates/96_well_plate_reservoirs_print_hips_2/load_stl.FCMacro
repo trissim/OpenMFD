@@ -1,0 +1,380 @@
+# -*- coding: utf-8 -*-
+
+# Macro Begin: /home/ts/code/projects/mfd/plates/96_well_plate_reservoirs_print_hips_2/load_stl.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
+import FreeCAD
+import Part
+
+# Gui.runCommand('Std_DlgMacroRecord',0)
+### Begin command Std_Open
+from freecad import module_io
+module_io.OpenInsertObject("Mesh", "/home/ts/code/projects/mfd/plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl", "open")
+
+# App.setActiveDocument("Unnamed")
+# App.ActiveDocument=App.getDocument("Unnamed")
+# Gui.ActiveDocument=Gui.getDocument("Unnamed")
+# Gui.SendMsgToActiveView("ViewFit")
+### End command Std_Open
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_2')
+### Begin command Part_ShapeFromMesh
+App.getDocument('Unnamed').addObject('Part::Feature', '_6_well_plate_reservoirs_print_hips_003')
+__shape__ = Part.Shape()
+__shape__.makeShapeFromMesh(FreeCAD.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_2').Mesh.Topology, 0.010000, True)
+FreeCAD.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').Shape = __shape__
+FreeCAD.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').purgeTouched()
+del __shape__
+### End command Part_ShapeFromMesh
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_003')
+### Begin command Part_ReverseShape
+__o__=App.ActiveDocument.addObject("Part::Reverse","_6_well_plate_reservoirs_print_hips_003_rev")
+__o__.Source=App.ActiveDocument._6_well_plate_reservoirs_print_hips_003
+__o__.Label="_6_well_plate_reservoirs_print_hips_003 (Rev)"
+del __o__
+# App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003_rev').ViewObject.ShapeAppearance=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').getLinkedObject(True).ViewObject,'ShapeAppearance',App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003_rev').ViewObject.ShapeAppearance)
+# App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003_rev').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003_rev').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003_rev').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003_rev').ViewObject.PointColor)
+App.ActiveDocument.recompute()
+### End command Part_ReverseShape
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_003_rev')
+### Begin command Std_Delete
+App.getDocument('Unnamed').removeObject('_6_well_plate_reservoirs_print_hips_003_rev')
+App.getDocument('Unnamed').recompute()
+### End command Std_Delete
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_003')
+### Begin command Part_RefineShape
+App.getDocument('Unnamed').addObject('Part::Refine','_6_well_plate_reservoirs_print_hips_003')
+App.getDocument('Unnamed').ActiveObject.Source = FreeCAD.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003')
+App.getDocument('Unnamed').ActiveObject.Label = FreeCAD.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').Label
+App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').Visibility = False
+# App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.ShapeAppearance=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').getLinkedObject(True).ViewObject,'ShapeAppearance',App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.ShapeAppearance)
+# App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_003').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').ViewObject.PointColor)
+App.ActiveDocument.recompute()
+### End command Part_RefineShape
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_2')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_003')
+# Gui.runCommand('Std_Delete',0)
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70',-58.1729,-37.4041,3.5)
+# Gui.runCommand('Part_Chamfer',0)
+FreeCAD.ActiveDocument.addObject("Part::Chamfer","Chamfer")
+FreeCAD.ActiveDocument.Chamfer.Base = FreeCAD.ActiveDocument._6_well_plate_reservoirs_print_hips_004
+__fillets__ = []
+__fillets__.append((70,6.80,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((70,6.90,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((70,7.00,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((70,7.20,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_003')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((70,7.40,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_003')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((70,7.50,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_003')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((70,7.55,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((70,7.56,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((70,7.57,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((70,7.58,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_003')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((70,7.60,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge17',-57.5059,38.0711,3.5)
+# Gui.runCommand('Part_Chamfer',0)
+FreeCAD.ActiveDocument.addObject("Part::Chamfer","Chamfer001")
+FreeCAD.ActiveDocument.Chamfer001.Base = FreeCAD.ActiveDocument.Chamfer
+__fillets__ = []
+__fillets__.append((17,7.00,5.00))
+FreeCAD.ActiveDocument.Chamfer001.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument.Chamfer.Visibility = False
+
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.runCommand('Std_Undo',0)
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer','Face7',-60.91,39.566,3.5)
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge17',-57.7933,37.7837,3.5)
+# Gui.runCommand('Part_Chamfer',0)
+FreeCAD.ActiveDocument.addObject("Part::Chamfer","Chamfer001")
+FreeCAD.ActiveDocument.Chamfer001.Base = FreeCAD.ActiveDocument.Chamfer
+__fillets__ = []
+__fillets__.append((17,1.00,5.00))
+FreeCAD.ActiveDocument.Chamfer001.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument.Chamfer.Visibility = False
+
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.runCommand('Std_Undo',0)
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_2')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_003')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+# Gui.Selection.clearSelection('Unnamed')
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge68',-59.6252,35.9518,3.5)
+__fillets__ = []
+__fillets__.append((68,1.00,1.00))
+__fillets__.append((70,7.60,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+# Gui.Selection.clearSelection('Unnamed')
+# Gui.Selection.removeSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge68')
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge68')
+# Gui.Selection.removeSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge68')
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge68')
+__fillets__ = []
+__fillets__.append((68,7.60,5.00))
+__fillets__.append((70,7.60,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70')
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.runCommand('Std_Undo',0)
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer','Face5',-63.0775,-37.548,6.15141)
+# Gui.Selection.clearSelection()
+# Gui.runCommand('Std_Undo',0)
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_003')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer')
+### Begin command Std_Delete
+App.getDocument('Unnamed').removeObject('Chamfer')
+App.getDocument('Unnamed').recompute()
+### End command Std_Delete
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004')
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Face14',-63.75,35.1142,2.42914)
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge68',-59.8323,35.7447,3.5)
+# Gui.Selection.addSelection('Unnamed','_6_well_plate_reservoirs_print_hips_004','Edge70',-59.0203,-36.5567,3.5)
+# Gui.runCommand('Part_Chamfer',0)
+FreeCAD.ActiveDocument.addObject("Part::Chamfer","Chamfer")
+FreeCAD.ActiveDocument.Chamfer.Base = FreeCAD.ActiveDocument._6_well_plate_reservoirs_print_hips_004
+__fillets__ = []
+__fillets__.append((68,7.60,5.00))
+__fillets__.append((70,7.60,5.00))
+FreeCAD.ActiveDocument.Chamfer.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument._6_well_plate_reservoirs_print_hips_004.Visibility = False
+
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('_6_well_plate_reservoirs_print_hips_004').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge1',-63.75,13.0048,8.5)
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge24',-50.5049,42.675,8.5)
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge34',-49.2115,-42.675,8.5)
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge1',-63.75,-30.9609,8.5)
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge38',63.75,39.994,8.5)
+# Gui.runCommand('Part_Chamfer',0)
+FreeCAD.ActiveDocument.addObject("Part::Chamfer","Chamfer001")
+FreeCAD.ActiveDocument.Chamfer001.Base = FreeCAD.ActiveDocument.Chamfer
+__fillets__ = []
+__fillets__.append((1,1.00,1.00))
+__fillets__.append((24,1.00,1.00))
+__fillets__.append((34,1.00,1.00))
+__fillets__.append((38,1.00,1.00))
+FreeCAD.ActiveDocument.Chamfer001.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument.Chamfer.Visibility = False
+
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer001')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((1,0.50,0.50))
+__fillets__.append((24,0.50,0.50))
+__fillets__.append((34,0.50,0.50))
+__fillets__.append((38,0.50,0.50))
+FreeCAD.ActiveDocument.Chamfer001.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument.Chamfer.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge1')
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge24')
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge34')
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge38')
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer001')
+# Gui.Selection.clearSelection('Unnamed')
+__fillets__ = []
+__fillets__.append((1,0.10,0.10))
+__fillets__.append((24,0.10,0.10))
+__fillets__.append((34,0.10,0.10))
+__fillets__.append((38,0.10,0.10))
+FreeCAD.ActiveDocument.Chamfer001.Edges = __fillets__
+del __fillets__
+FreeCADGui.ActiveDocument.Chamfer.Visibility = False
+
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge1')
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge24')
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge34')
+# Gui.Selection.addSelection('Unnamed','Chamfer','Edge38')
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'LineColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.LineColor)
+# App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor=getattr(App.getDocument('Unnamed').getObject('Chamfer').getLinkedObject(True).ViewObject,'PointColor',App.getDocument('Unnamed').getObject('Chamfer001').ViewObject.PointColor)
+# Gui.activeDocument().resetEdit()
+# Gui.Selection.clearSelection()
+# Gui.Selection.addSelection('Unnamed','Chamfer001')
+# Gui.Selection.clearSelection('Unnamed')
+# Gui.Selection.clearSelection()
+# Macro End: /home/ts/code/projects/mfd/plates/96_well_plate_reservoirs_print_hips_2/load_stl.FCMacro +++++++++++++++++++++++++++++++++++++++++++++++++
