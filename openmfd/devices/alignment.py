@@ -4,14 +4,14 @@ This module provides functions for creating alignment marks used in
 multi-layer photolithography for precise layer-to-layer alignment.
 """
 
-from typing import List, Tuple, Optional
+from typing import List, Optional, Tuple
+
 import solid
-from solid.utils import union, difference
+from solid.utils import difference, union
 
 
 def create_single_L_mark(
-    corner_length: float,
-    thickness_divisor: float = 3.0
+    corner_length: float, thickness_divisor: float = 3.0
 ) -> solid.OpenSCADObject:
     """Create single L-shaped alignment mark.
 
@@ -47,8 +47,7 @@ def create_single_L_mark(
 
 
 def create_full_alignment_mark(
-    corner_length: float,
-    thickness_divisor: float = 8.0
+    corner_length: float, thickness_divisor: float = 8.0
 ) -> solid.OpenSCADObject:
     """Create full alignment mark (two L-shapes forming a crosshair).
 
@@ -79,17 +78,14 @@ def create_full_alignment_mark(
 
     # Top-right L (rotated 180°)
     tr = solid.rotate(180)(corner)
-    tr = solid.translate([thickness/2, thickness/2, 0])(tr)
+    tr = solid.translate([thickness / 2, thickness / 2, 0])(tr)
 
     # Bottom-left L (rotated 0°)
     bl = solid.rotate(0)(corner)
-    bl = solid.translate([-thickness/2, -thickness/2, 0])(bl)
+    bl = solid.translate([-thickness / 2, -thickness / 2, 0])(bl)
 
     # Combine to form crosshair
     return union()(tr, bl)
-
-
-
 
 
 def create_alignment_marks(
@@ -98,7 +94,7 @@ def create_alignment_marks(
     grid_size: List[int],
     alignment_mode: str = "full",
     units_from_center: Optional[Tuple[float, float]] = None,
-    corner_length: Optional[float] = None
+    corner_length: Optional[float] = None,
 ) -> solid.OpenSCADObject:
     """Add alignment marks to device array.
 
@@ -148,11 +144,11 @@ def create_alignment_marks(
     """
     if alignment_mode is None or alignment_mode == "none":
         return array
-    
+
     # Compute corner length if not provided
     if corner_length is None:
         corner_length = (dims[0] + dims[1]) / 2 / 8
-    
+
     # Compute array dimensions
     width = grid_size[0] * dims[0]
     length = grid_size[1] * dims[1]
@@ -168,18 +164,18 @@ def create_alignment_marks(
 
         # Four positions: right, top, left, bottom (NOT corners!)
         positions = [
-            (center_x + x_offset, center_y),          # Right
-            (center_x, center_y + y_offset),          # Top
-            (center_x - x_offset, center_y),          # Left
-            (center_x, center_y - y_offset),          # Bottom
+            (center_x + x_offset, center_y),  # Right
+            (center_x, center_y + y_offset),  # Top
+            (center_x - x_offset, center_y),  # Left
+            (center_x, center_y - y_offset),  # Bottom
         ]
     else:
         # Position marks at array corners
         positions = [
-            (0, 0),                    # Bottom-left
-            (width, 0),                # Bottom-right
-            (0, length),               # Top-left
-            (width, length),           # Top-right
+            (0, 0),  # Bottom-left
+            (width, 0),  # Bottom-right
+            (0, length),  # Top-left
+            (width, length),  # Top-right
         ]
 
     # Create marks at all four positions
@@ -187,7 +183,7 @@ def create_alignment_marks(
     # The "hollow" effect comes from the mark SHAPE (ring), not from subtraction.
     # When the wafer mask subtracts the array, hollow marks create registration holes.
     marks = []
-    for (x, y) in positions:
+    for x, y in positions:
         if alignment_mode == "full":
             # Solid crosshair (two L-shapes forming +)
             mark = create_full_alignment_mark(corner_length, thickness_divisor=8.0)
@@ -211,51 +207,45 @@ def create_alignment_marks(
     return union()(array, all_marks)
 
 
-def create_crosshair_mark(
-    size: float,
-    thickness: float
-) -> solid.OpenSCADObject:
+def create_crosshair_mark(size: float, thickness: float) -> solid.OpenSCADObject:
     """Create crosshair alignment mark.
-    
+
     Creates a crosshair (+) mark for fine alignment.
-    
+
     Parameters
     ----------
     size : float
         Size of crosshair (length of arms).
     thickness : float
         Thickness of crosshair lines.
-        
+
     Returns
     -------
     solid.OpenSCADObject
         Crosshair mark.
-        
+
     Examples
     --------
     >>> crosshair = create_crosshair_mark(size=5.0, thickness=0.1)
     """
     # Create horizontal line
     horizontal = solid.square([size, thickness], center=True)
-    
+
     # Create vertical line
     vertical = solid.square([thickness, size], center=True)
-    
+
     # Combine to form crosshair
     return union()(horizontal, vertical)
 
 
 def create_vernier_scale(
-    length: float,
-    num_marks: int,
-    mark_thickness: float,
-    mark_height: float
+    length: float, num_marks: int, mark_thickness: float, mark_height: float
 ) -> solid.OpenSCADObject:
     """Create vernier scale for precise alignment measurement.
-    
+
     Creates a vernier scale with multiple marks for measuring alignment
     precision.
-    
+
     Parameters
     ----------
     length : float
@@ -266,12 +256,12 @@ def create_vernier_scale(
         Thickness of each mark.
     mark_height : float
         Height of each mark.
-        
+
     Returns
     -------
     solid.OpenSCADObject
         Vernier scale.
-        
+
     Examples
     --------
     >>> scale = create_vernier_scale(
@@ -280,24 +270,22 @@ def create_vernier_scale(
     """
     marks = []
     spacing = length / (num_marks - 1)
-    
+
     for i in range(num_marks):
         mark = solid.square([mark_thickness, mark_height], center=False)
         mark = solid.translate([i * spacing, 0])(mark)
         marks.append(mark)
-    
+
     return union()(*marks)
 
 
 def create_alignment_target(
-    outer_diameter: float,
-    inner_diameter: float,
-    num_rings: int = 3
+    outer_diameter: float, inner_diameter: float, num_rings: int = 3
 ) -> solid.OpenSCADObject:
     """Create concentric ring alignment target.
-    
+
     Creates a target pattern with concentric rings for coarse alignment.
-    
+
     Parameters
     ----------
     outer_diameter : float
@@ -306,12 +294,12 @@ def create_alignment_target(
         Inner diameter of target.
     num_rings : int, default=3
         Number of concentric rings.
-        
+
     Returns
     -------
     solid.OpenSCADObject
         Alignment target.
-        
+
     Examples
     --------
     >>> target = create_alignment_target(
@@ -319,43 +307,40 @@ def create_alignment_target(
     ... )
     """
     rings = []
-    
+
     # Calculate ring spacing
     radius_step = (outer_diameter - inner_diameter) / (2 * num_rings)
-    
+
     for i in range(num_rings):
         outer_r = outer_diameter / 2 - i * 2 * radius_step
         inner_r = outer_r - radius_step
-        
+
         outer_circle = solid.circle(r=outer_r)
         inner_circle = solid.circle(r=inner_r)
-        
+
         ring = difference()(outer_circle, inner_circle)
         rings.append(ring)
-    
+
     return union()(*rings)
 
 
-def create_custom_alignment_pattern(
-    pattern_type: str,
-    size: float
-) -> solid.OpenSCADObject:
+def create_custom_alignment_pattern(pattern_type: str, size: float) -> solid.OpenSCADObject:
     """Create custom alignment pattern.
-    
+
     Creates various alignment patterns for different purposes.
-    
+
     Parameters
     ----------
     pattern_type : str
         Type of pattern: "crosshair", "target", "corner", "vernier".
     size : float
         Size of pattern.
-        
+
     Returns
     -------
     solid.OpenSCADObject
         Alignment pattern.
-        
+
     Examples
     --------
     >>> pattern = create_custom_alignment_pattern("crosshair", size=5.0)
@@ -367,8 +352,9 @@ def create_custom_alignment_pattern(
     elif pattern_type == "corner":
         return create_corner_mark(size, thickness_divisor=3.0)
     elif pattern_type == "vernier":
-        return create_vernier_scale(size, num_marks=10, mark_thickness=size / 100, mark_height=size / 5)
+        return create_vernier_scale(
+            size, num_marks=10, mark_thickness=size / 100, mark_height=size / 5
+        )
     else:
         # Default to crosshair
         return create_crosshair_mark(size, thickness=size / 20)
-
