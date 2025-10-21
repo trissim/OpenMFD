@@ -1,0 +1,55 @@
+name: Coverage
+
+on:
+  push:
+    branches: [master, main]
+  workflow_dispatch:
+
+jobs:
+  coverage:
+    name: Generate Coverage Report
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install -e ".[dev]"
+          pip install genbadge[coverage]
+
+      - name: Run tests with coverage
+        continue-on-error: true
+        run: |
+          mkdir -p site
+          python -m pytest --cov=openmfd \
+                --cov-report=xml \
+                --cov-report=html:site/coverage \
+                tests/ \
+                --skip-slow \
+                --skip-openscad \
+                -v || echo "Some tests failed, but continuing with coverage report generation"
+
+      - name: Generate coverage badge
+        run: |
+          mkdir -p .github/badges
+          genbadge coverage -i coverage.xml -o .github/badges/coverage.svg -n "coverage report"
+
+      - name: Upload coverage report
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-report
+          path: site/coverage/
+
+      - name: Upload coverage badge
+        uses: actions/upload-artifact@v4
+        with:
+          name: coverage-badge
+          path: .github/badges/coverage.svg
