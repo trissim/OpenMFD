@@ -35,11 +35,19 @@ from openmfd.devices import (
     ArrayConfiguration,
     assemble_device,
     create_device_array_from_config,
+    create_device_array,
 )
 from openmfd.export import export_scad
 
 # Legacy imports (for features not yet refactored)
-from make_device import make_walls, make_outline, make_unit_array, add_wafer_to_mask, r
+from make_device import (
+    make_walls,
+    make_outline,
+    add_wafer_to_mask,
+    make_chambers as legacy_make_chambers,
+    make_channels as legacy_make_channels,
+    r
+)
 import numpy as np
 
 # ============================================================================
@@ -87,9 +95,28 @@ GLASS_SIZE, GLASS_ERROR, OUTLINE_ALIGNMENT_THICKNESS = [110, 74], 4, 1
 # PDMS curing
 CURE_TEMP = 100
 
-# Insert parameters
+# Rendering options
+RENDER_INSERT_STL = False  # Set to True to render insert STL (SLOW! ~5-10 minutes)
+
+# Insert parameters (legacy values from v27)
 CHAMBER_HOLE_DIMS = (2, 2)
 INSERT_PIN_OFFSET = -0.5
+
+# 3D Insert parameters (matching legacy make_device.py)
+DEGREES_OUT = 16
+DEGREES_IN = 35
+INSERT_HEIGHT = 3.8
+INSERT_HEIGHT_IN = 0.40
+TAPER_LEN_OUT_EXTRA = 0.300
+TAPER_LEN_IN_EXTRA = 0.91
+PIN_HEIGHT = 0.06
+PIN_INNER_HEIGHT = 2
+PIN_DIMS = (1.85, 1.85)
+SKIRT_THICKNESS1 = 0.75
+SKIRT_HEIGHT1 = 0.660
+SKIRT_EMPTY1 = 0.3
+SKIRT_THICKNESS2 = 0.8
+SKIRT_HEIGHT2 = 0.04
 
 # ============================================================================
 # Helper Functions
@@ -144,7 +171,7 @@ def create_device_arrays(unit_geometries, dims, grid_size, alignment_configs):
         Dict of {layer_name: array_geometry}
     """
     return {
-        name: make_unit_array(
+        name: create_device_array(
             geom, dims, grid_size, dxf=True, alignment=alignment_configs[name],
             units_from_center=UNITS_FROM_CENTER, alignment_offset=ALIGNMENT_OFFSET,
             alignment_mark_size=ALIGNMENT_MARK_SIZE
@@ -220,6 +247,127 @@ def main():
                                     padx=WALL_PADX, pady=WALL_PADY)
     r.render(wafer_walls, outfile=str(BASE_PATH / f"wall_single_{DEVICE_NAME}.stl"))
 
+    # 3D Well Inserts (STL) - using new openmfd.inserts module
+    print("\n=== Creating 3D Well Inserts ===")
+
+    # Import insert generation functions
+    from openmfd.inserts.chamfer import deg_taper_len, linear_extrude_if_flat
+    from openmfd.inserts.pins import create_pin_array
+    from openmfd.inserts.skirts import create_dual_skirt
+
+    # Calculate outer taper dimensions
+    taper_len_out = deg_taper_len(INSERT_HEIGHT, DEGREES_OUT) + TAPER_LEN_OUT_EXTRA
+    well_rad_outer = WELL_RAD - taper_len_out
+    chan_l_outer = CHAN_L + taper_len_out * 2
+    chamber_width_outer = CHAMBER_WIDTH - taper_len_out * 2
+
+    # Create outer insert geometry (2D) - using legacy functions for compatibility
+    _, measurements_outer = legacy_make_channels(
+        chan_l_outer, CHAN_W, height=0.2, num_chans=NUM_CHANS, spacing=CHAN_GAP, dxf=True
+    )
+    outer_insert_2d = solid.union()(
+        wells_top_bottom(radius=well_rad_outer, height=None, positions=well_positions, dxf=True, shape="circle"),
+        legacy_make_chambers(msrs=measurements_outer, height=0.2, width=chamber_width_outer, len_until=CHAMBER_LEN_UNTIL, dxf=True)
+    )
+
+    # Create array of outer inserts
+    outer_insert_2d_array = create_device_array(
+        outer_insert_2d, DIMS, GRID_SIZE, dxf=True, alignment=None,
+        units_from_center=UNITS_FROM_CENTER, alignment_offset=ALIGNMENT_OFFSET,
+        alignment_mark_size=ALIGNMENT_MARK_SIZE
+    )
+
+    # Extrude outer insert with chamfer
+    outer_insert_3d = linear_extrude_if_flat(
+        outer_insert_2d_array,
+        height=INSERT_HEIGHT,
+        degrees=DEGREES_OUT,
+        segments=20
+    )
+
+    # Calculate inner taper dimensions
+    taper_len_in = deg_taper_len(INSERT_HEIGHT_IN, DEGREES_IN) + TAPER_LEN_IN_EXTRA
+    well_rad_inner = well_rad_outer - taper_len_in
+    chan_l_inner = chan_l_outer + taper_len_in * 2
+    chamber_width_inner = chamber_width_outer - taper_len_in * 2
+
+    # Create inner insert geometry (2D) - using legacy functions for compatibility
+    _, measurements_inner = legacy_make_channels(
+        chan_l_inner, CHAN_W, height=0.2, num_chans=NUM_CHANS, spacing=CHAN_GAP, dxf=True
+    )
+    inner_insert_2d = solid.union()(
+        wells_top_bottom(radius=well_rad_inner, height=None, positions=well_positions, dxf=True, shape="circle"),
+        legacy_make_chambers(msrs=measurements_inner, height=0.2, width=chamber_width_inner, len_until=CHAMBER_LEN_UNTIL, dxf=True)
+    )
+
+    # Create array of inner inserts
+    inner_insert_2d_array = create_device_array(
+        inner_insert_2d, DIMS, GRID_SIZE, dxf=True, alignment=None,
+        units_from_center=UNITS_FROM_CENTER, alignment_offset=ALIGNMENT_OFFSET,
+        alignment_mark_size=ALIGNMENT_MARK_SIZE
+    )
+
+    # Extrude inner insert with chamfer
+    inner_insert_3d = linear_extrude_if_flat(
+        inner_insert_2d_array,
+        height=INSERT_HEIGHT_IN,
+        degrees=DEGREES_IN,
+        segments=20
+    )
+
+    # Subtract inner from outer
+    all_well_inserts = solid.difference()(outer_insert_3d, inner_insert_3d)
+
+    # Position inserts above pins and skirts
+    z_offset = PIN_HEIGHT + SKIRT_HEIGHT1 + SKIRT_HEIGHT2
+    all_well_inserts = solid.translate([0, 0, z_offset])(all_well_inserts)
+
+    # Create skirts
+    skirts = create_dual_skirt(
+        insert_geometry=solid.projection()(all_well_inserts),
+        thickness1=-SKIRT_THICKNESS1,
+        height1=SKIRT_HEIGHT1,
+        empty1=SKIRT_EMPTY1,
+        thickness2=-SKIRT_THICKNESS2,
+        height2=SKIRT_HEIGHT2,
+        pin_height=PIN_HEIGHT
+    )
+
+    # Create pins
+    pins = create_pin_array(
+        well_positions=wells_pos_from_center_2(WELLS_POS + INSERT_PIN_OFFSET),
+        dims=PIN_DIMS,
+        height=PIN_HEIGHT + SKIRT_HEIGHT1 + SKIRT_HEIGHT2 + PIN_INNER_HEIGHT,
+        offset=0.0  # Offset already applied to well_positions
+    )
+
+    # Create array of pins
+    pins_array = create_device_array(
+        pins, DIMS, GRID_SIZE, dxf=True, alignment=None,
+        units_from_center=UNITS_FROM_CENTER, alignment_offset=ALIGNMENT_OFFSET,
+        alignment_mark_size=ALIGNMENT_MARK_SIZE
+    )
+
+    # Combine all components
+    all_well_inserts = solid.union()(all_well_inserts, skirts, pins_array)
+
+    # Apply PDMS shrinkage compensation (x, y only, not z)
+    all_well_inserts = solid.scale([scale_percent, scale_percent, 1])(all_well_inserts)
+
+    # Save SCAD file (always)
+    scad_path = BASE_PATH / f"{DEVICE_NAME}_wells_insert.scad"
+    solid.scad_render_to_file(all_well_inserts, str(scad_path))
+    print(f"Saved: {scad_path}")
+
+    # Render to STL (optional - SLOW!)
+    if RENDER_INSERT_STL:
+        print("Rendering insert STL (this may take 5-10 minutes)...")
+        r.render(all_well_inserts, outfile=str(BASE_PATH / f"{DEVICE_NAME}_wells_insert.stl"))
+        print(f"Saved: {BASE_PATH / f'{DEVICE_NAME}_wells_insert.stl'}")
+    else:
+        print(f"⏭️  Skipping STL render (set RENDER_INSERT_STL=True to enable)")
+        print(f"   You can render the STL manually by opening {scad_path} in OpenSCAD")
+
     # Glass slide outline with alignment groove
     glass_size = np.array(GLASS_SIZE)
     outline = solid.difference()(
@@ -291,8 +439,12 @@ def main():
     print(f"  ✅ {DEVICE_NAME}_single_top.scad (wells + chambers)")
     print(f"  ✅ {DEVICE_NAME}_single_aligned.scad (both layers)")
 
-    print("\n📐 3D Walls (for PDMS molding):")
-    print(f"  ✅ wall_single_{DEVICE_NAME}.stl")
+    print("\n📐 3D Components (for PDMS molding & pipetting):")
+    print(f"  ✅ wall_single_{DEVICE_NAME}.stl (PDMS mold walls)")
+    if RENDER_INSERT_STL:
+        print(f"  ✅ {DEVICE_NAME}_wells_insert.stl (3D printed well inserts)")
+    else:
+        print(f"  ✅ {DEVICE_NAME}_wells_insert.scad (3D printed well inserts - open in OpenSCAD to render STL)")
 
     print("\n🔲 Device Arrays (6x8 = 48 devices):")
     print(f"  ✅ {DEVICE_NAME}_bottom.scad (channels + alignment marks + text)")
@@ -321,6 +473,11 @@ def main():
     print("  ✅ Cure temperature text")
     print("  ✅ PDMS shrinkage scaling (0.8x for 100°C cure)")
     print("  ✅ 3D printed walls (STL)")
+    print("  ✅ 3D printed well inserts with:")
+    print("      - Chamfered openings (16° outer, 35° inner)")
+    print("      - Alignment pins (fit into square holes)")
+    print("      - Dual skirt system (for sealing)")
+    print("      - PDMS shrinkage compensation")
 
     print("\n" + "-" * 70)
     print("NEXT STEPS:")
