@@ -30,6 +30,13 @@ from openmfd.devices import (
 from openmfd.export import (
     export_scad,
 )
+from openmfd.inserts import (
+    TaperConfiguration,
+    InsertConfiguration,
+    PinConfiguration,
+    SkirtConfiguration,
+    assemble_well_inserts,
+)
 
 # ============================================================================
 # Configuration Parameters
@@ -390,7 +397,106 @@ def main():
     save_model(array_bottom_final, BASE_PATH, f"{DEVICE_NAME}_bottom")
     save_model(array_top_final, BASE_PATH, f"{DEVICE_NAME}_top")
     save_model(array_aligned_final, BASE_PATH, f"{DEVICE_NAME}_aligned")
-    
+
+    # ========================================================================
+    # Step 6: Generate 3D Printed Well Inserts (Single Device)
+    # ========================================================================
+
+    print("\n=== Generating 3D Printed Well Inserts (Single Device) ===")
+
+    # Helper function to create device geometry for inserts
+    def make_2_compartment_for_inserts(well_rad, chan_l, chamber_width, add_chambers):
+        """Create device geometry for insert generation."""
+        wells = wells_top_bottom(
+            radius=well_rad,
+            height=None,
+            positions=well_positions,
+            dxf=True,
+            shape="circle"
+        )
+
+        if add_chambers:
+            _, measurements = make_channels(
+                length=chan_l,
+                width=CHAN_W,
+                height=0.2,
+                num_chans=NUM_CHANS,
+                spacing=CHAN_GAP,
+                dxf=True
+            )
+
+            chambers = make_chambers(
+                msrs=measurements,
+                height=0.2,
+                width=chamber_width,
+                len_until=CHAMBER_LEN_UNTIL,
+                dxf=True
+            )
+
+            geometry = solid.union()(wells, chambers)
+        else:
+            geometry = wells
+
+        return (geometry, well_positions), None, None
+
+    # Configure insert tapers
+    outer_taper = TaperConfiguration(
+        height=INSERT_HEIGHT,
+        degrees=DEGREES_OUT,
+        extra_length=TAPER_LEN_OUT_EXTRA,
+        segments=20,
+    )
+
+    inner_taper = TaperConfiguration(
+        height=INSERT_HEIGHT_IN,
+        degrees=DEGREES_IN,
+        extra_length=TAPER_LEN_IN_EXTRA,
+        segments=20,
+    )
+
+    insert_config = InsertConfiguration(
+        outer_taper=outer_taper,
+        inner_taper=inner_taper,
+        well_radius=WELL_RAD,
+        channel_length=CHAN_L,
+    )
+
+    # Configure alignment pins
+    pin_config = PinConfiguration(
+        dims=PIN_DIMS,
+        height=PIN_HEIGHT,
+        inner_height=PIN_INNER_HEIGHT,
+        offset=INSERT_PIN_OFFSET,
+        hole_dims=CHAMBER_HOLE_DIMS,
+    )
+
+    # Configure sealing skirts
+    skirt_config = SkirtConfiguration(
+        thickness1=SKIRT_THICKNESS1,
+        height1=SKIRT_HEIGHT1,
+        empty1=SKIRT_EMPTY1,
+        thickness2=SKIRT_THICKNESS2,
+        height2=SKIRT_HEIGHT2,
+    )
+
+    # Generate inserts for single device (grid_size = [1, 1])
+    print("Generating well inserts for single device...")
+    single_insert = assemble_well_inserts(
+        device_function=make_2_compartment_for_inserts,
+        insert_config=insert_config,
+        pin_config=pin_config,
+        skirt_config=skirt_config,
+        dims=DIMS,
+        grid_size=[1, 1],  # Single device only
+        well_positions=insert_well_positions,
+        alignment_offset=None,
+        pdms_scale=scale_percent,
+    )
+
+    # Export single device insert
+    save_model(single_insert, BASE_PATH, f"{DEVICE_NAME}_single_insert")
+    print(f"✓ Single device insert exported (fast preview)")
+
     # ========================================================================
     # Summary
     # ========================================================================
@@ -419,6 +525,9 @@ def main():
     print("\n📐 3D Walls (for PDMS molding):")
     print(f"  ✅ wall_single_{DEVICE_NAME}.stl")
 
+    print("\n🔧 3D Printed Well Inserts:")
+    print(f"  ✅ {DEVICE_NAME}_single_insert.scad (single device, fast preview)")
+
     print("\n🔲 Device Arrays (6x8 = 48 devices):")
     print(f"  ✅ {DEVICE_NAME}_bottom.scad (channels + alignment marks + text)")
     print(f"  ✅ {DEVICE_NAME}_top.scad (wells + chambers + outline)")
@@ -435,6 +544,7 @@ def main():
     print("  ✅ Cure temperature text")
     print("  ✅ PDMS shrinkage scaling (0.8x for 100°C cure)")
     print("  ✅ 3D printed walls (STL)")
+    print("  ✅ 3D printed well inserts (chamfered, with pins and skirts)")
 
     print("\n" + "-" * 70)
     print("NEXT STEPS:")
@@ -444,7 +554,10 @@ def main():
     print("     - Use _bottom.scad for channel layer (SU-8 200μm)")
     print("     - Use _top.scad for well/chamber layer (SU-8 200μm)")
     print("  3. Use wall STL for 3D printing PDMS mold")
-    print("  4. Align layers using alignment marks during bonding")
+    print("  4. Export well inserts to STL for 3D printing:")
+    print(f"     openscad -o {BASE_PATH}/{DEVICE_NAME}_single_insert.stl \\")
+    print(f"              {BASE_PATH}/{DEVICE_NAME}_single_insert.scad")
+    print("  5. Align layers using alignment marks during bonding")
 
     print("\n" + "=" * 70)
 
