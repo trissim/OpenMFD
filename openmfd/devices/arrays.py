@@ -9,6 +9,7 @@ import solid
 from solid.utils import union
 
 from .config import ArrayConfiguration, CasingConfiguration
+from .wafer import compute_wafer_center
 
 
 def create_device_array(
@@ -17,10 +18,16 @@ def create_device_array(
     grid_size: List[int],
     dxf: bool = False,
     alignment: Optional[str] = None,
-    units_from_center: Optional[Tuple[float, float]] = None
+    units_from_center: Optional[Tuple[float, float]] = None,
+    alignment_offset: Optional[Tuple[float, float]] = None,
+    alignment_mark_size: float = 1.0
 ) -> solid.OpenSCADObject:
     """Create an array of device units in a grid pattern.
-    
+
+    Creates a grid of device units with optional alignment marks.
+    Devices are positioned starting at [0, 0] to match the wafer
+    centering coordinate system.
+
     Parameters
     ----------
     unit : solid.OpenSCADObject
@@ -32,46 +39,75 @@ def create_device_array(
     dxf : bool, default=False
         If True, create 2D array for DXF export.
     alignment : str, optional
-        Alignment mode. If specified, adds alignment features.
+        Alignment mode ("full", "hollow", or None).
+        If specified, adds alignment marks.
     units_from_center : tuple of (float, float), optional
-        Offset from center for alignment features.
-        
+        Distance from center for alignment marks (in units).
+    alignment_offset : tuple of (float, float), optional
+        Offset to apply before adding alignment marks.
+    alignment_mark_size : float, default=1.0
+        Size of alignment marks.
+
     Returns
     -------
     solid.OpenSCADObject
-        Array of units.
-        
+        Array of units with optional alignment marks.
+
     Examples
     --------
     >>> # Create 8x12 array of units
     >>> array = create_device_array(unit, [9.0, 9.0, 0], [8, 12], dxf=True)
-    
-    >>> # Create 4x6 array with alignment
+
+    >>> # Create 6x8 array with full alignment marks
     >>> array = create_device_array(
-    ...     unit, [9.0, 9.0, 0], [4, 6],
-    ...     dxf=True, alignment='full', units_from_center=(2, 2)
+    ...     unit, [9.0, 9.0, 0], [6, 8],
+    ...     dxf=True, alignment='full', units_from_center=(3, 4),
+    ...     alignment_mark_size=1.0
+    ... )
+
+    >>> # Create array with hollow marks (for top layer)
+    >>> array = create_device_array(
+    ...     unit, [9.0, 9.0, 0], [6, 8],
+    ...     dxf=True, alignment='hollow', units_from_center=(3, 4),
+    ...     alignment_mark_size=1.0
     ... )
     """
     units = []
     rows, cols = grid_size[0], grid_size[1]
-    
-    # Create grid of units
+
+    # Create grid of units starting at [0, 0]
+    # Each device is positioned so its BOTTOM-LEFT CORNER is at the grid position
+    # (not the center), so we offset by half the casing dimensions
+    offset_x = dims[0] / 2.0
+    offset_y = dims[1] / 2.0
+
     for col in range(cols):
         for row in range(rows):
             if dxf:
-                positioned_unit = solid.translate([row * dims[0], col * dims[1]])(unit)
+                positioned_unit = solid.translate([row * dims[0] + offset_x, col * dims[1] + offset_y])(unit)
             else:
-                positioned_unit = solid.translate([row * dims[0], col * dims[1], dims[2] / 2.0])(unit)
+                positioned_unit = solid.translate([row * dims[0] + offset_x, col * dims[1] + offset_y, dims[2] / 2.0])(unit)
             units.append(positioned_unit)
-    
+
     array = union()(*units)
-    
-    # Add alignment features if requested
+
+    # Add alignment marks if requested
     if alignment is not None and dxf:
-        # Import alignment_features from make_device.py for now
-        # TODO: Refactor alignment_features into separate module
-        pass
-    
+        # Apply alignment offset before adding marks
+        if alignment_offset is not None:
+            array = solid.translate([alignment_offset[0], alignment_offset[1]])(array)
+
+        # Add alignment marks
+        from .alignment import create_alignment_marks
+        array = create_alignment_marks(
+            array, dims, grid_size, alignment,
+            units_from_center, alignment_mark_size
+        )
+
+        # Reverse alignment offset after adding marks
+        if alignment_offset is not None:
+            array = solid.translate([-alignment_offset[0], -alignment_offset[1]])(array)
+
     return array
 
 
