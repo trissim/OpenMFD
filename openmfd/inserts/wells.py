@@ -10,11 +10,65 @@ from .pins import create_pin_array
 from .skirts import create_dual_skirt
 
 
+def create_well_insert_2d(
+    device_function: Callable,
+    insert_config: InsertConfiguration,
+) -> Tuple[solid.OpenSCADObject, float, float]:
+    """Create 2D geometry for well insert (before extrusion).
+
+    Generates 2D device geometry with dimensions adjusted for taper.
+    This matches the legacy workflow where 2D geometry is arrayed BEFORE
+    extrusion, which is critical for correct chamfer behavior.
+
+    Parameters
+    ----------
+    device_function : callable
+        Function that generates device geometry. Should accept well_rad,
+        chan_l, chamber_width, and add_chambers parameters.
+    insert_config : InsertConfiguration
+        Configuration for insert geometry and taper.
+
+    Returns
+    -------
+    tuple of (solid.OpenSCADObject, float, float)
+        - 2D insert geometry
+        - Adjusted well radius
+        - Adjusted channel length
+    """
+    # Calculate taper length for outer chamfer
+    taper_len = deg_taper_len(
+        insert_config.outer_taper.height, insert_config.outer_taper.degrees
+    )
+    taper_len += insert_config.outer_taper.extra_length
+
+    # Adjust dimensions for taper
+    well_rad = insert_config.well_radius - taper_len
+    chan_l = insert_config.channel_length + taper_len * 2
+
+    # Determine chamber width
+    if insert_config.chamber_width is None:
+        chamber_width = insert_config.well_radius * 2 - taper_len * 2
+    else:
+        chamber_width = insert_config.chamber_width - taper_len * 2
+
+    # Generate 2D device geometry
+    # Note: This assumes device_function returns ((geometry, _), _, _)
+    (insert_2d, _), _, _ = device_function(
+        well_rad=well_rad,
+        chan_l=chan_l,
+        chamber_width=chamber_width,
+        add_chambers=insert_config.add_chambers,
+    )
+
+    return insert_2d, well_rad, chan_l
+
+
 def create_well_insert(
     device_function: Callable,
     insert_config: InsertConfiguration,
     dims: List[float],
     grid_size: List[int],
+    alignment_offset: Optional[Tuple[float, float]] = None,
 ) -> Tuple[solid.OpenSCADObject, float, float]:
     """Create a chamfered well insert from device geometry.
 
@@ -22,7 +76,11 @@ def create_well_insert(
     access and better liquid containment. The insert is created by:
     1. Adjusting well radius and chamber width for taper
     2. Generating 2D device geometry
-    3. Applying chamfered extrusion
+    3. **Arraying the 2D geometry** (legacy workflow)
+    4. Applying chamfered extrusion to the entire array
+
+    This matches the legacy workflow where 2D geometry is arrayed BEFORE
+    extrusion, which is critical for correct chamfer behavior.
 
     Parameters
     ----------
@@ -35,6 +93,8 @@ def create_well_insert(
         Unit dimensions [x, y, z].
     grid_size : list of int
         Grid size [rows, columns].
+    alignment_offset : tuple of (float, float), optional
+        Offset to apply to entire array (x, y) in mm.
 
     Returns
     -------
@@ -62,34 +122,23 @@ def create_well_insert(
     ...     grid_size=[6, 8]
     ... )
     """
-    # Calculate taper length for outer chamfer
-    taper_len = deg_taper_len(
-        insert_config.outer_taper.height, insert_config.outer_taper.degrees
-    )
-    taper_len += insert_config.outer_taper.extra_length
-
-    # Adjust dimensions for taper
-    well_rad = insert_config.well_radius - taper_len
-    chan_l = insert_config.channel_length + taper_len * 2
-
-    # Determine chamber width
-    if insert_config.chamber_width is None:
-        chamber_width = insert_config.well_radius * 2 - taper_len * 2
-    else:
-        chamber_width = insert_config.chamber_width - taper_len * 2
-
-    # Generate 2D device geometry
-    # Note: This assumes device_function returns ((geometry, _), _, _)
-    (insert_2d, _), _, _ = device_function(
-        well_rad=well_rad,
-        chan_l=chan_l,
-        chamber_width=chamber_width,
-        add_chambers=insert_config.add_chambers,
+    # Get 2D geometry
+    insert_2d, well_rad, chan_l = create_well_insert_2d(
+        device_function=device_function,
+        insert_config=insert_config,
     )
 
-    # Apply chamfered extrusion
+    # Array the 2D geometry BEFORE extrusion (legacy workflow)
+    insert_2d_array = create_well_insert_array(
+        insert_unit=insert_2d,
+        dims=dims,
+        grid_size=grid_size,
+        alignment_offset=alignment_offset,
+    )
+
+    # Apply chamfered extrusion to the entire array
     insert_3d = linear_extrude_if_flat(
-        insert_2d,
+        insert_2d_array,
         height=insert_config.outer_taper.height,
         degrees=insert_config.outer_taper.degrees,
         segments=insert_config.outer_taper.segments,
@@ -243,12 +292,13 @@ def assemble_well_inserts(
     """
     components = []
 
-    # Create outer insert
+    # Create outer insert (already arrayed and extruded)
     outer_insert, well_rad_outer, chan_l_outer = create_well_insert(
         device_function=device_function,
         insert_config=insert_config,
         dims=dims,
         grid_size=grid_size,
+        alignment_offset=alignment_offset,
     )
 
     # Create inner cavity if specified
@@ -267,18 +317,14 @@ def assemble_well_inserts(
             insert_config=inner_config,
             dims=dims,
             grid_size=grid_size,
+            alignment_offset=alignment_offset,
         )
 
         # Subtract inner from outer
         outer_insert = difference()(outer_insert, inner_insert)
 
-    # Create array of inserts
-    insert_array = create_well_insert_array(
-        insert_unit=outer_insert,
-        dims=dims,
-        grid_size=grid_size,
-        alignment_offset=alignment_offset,
-    )
+    # outer_insert is already an array, no need to array again
+    insert_array = outer_insert
 
     # Calculate z-offset for inserts (above pins and skirts)
     # Legacy: inserts at z = pin_height + skirt_height1 + skirt_height2
