@@ -334,16 +334,14 @@ def main():
     )
 
     # Create pins for single device
+    # NOTE: create_device_array() will center the pins automatically (arrays.py line 81-87)
+    # so we don't need to manually center them here
     pins = create_pin_array(
         well_positions=wells_pos_from_center_2(WELLS_POS + INSERT_PIN_OFFSET),
         dims=PIN_DIMS,
         height=PIN_HEIGHT + SKIRT_HEIGHT1 + SKIRT_HEIGHT2 + PIN_INNER_HEIGHT,
         offset=0.0  # Offset already applied to well_positions
     )
-
-    # Center pins in device (legacy make_device.py does this at line 514)
-    # This is critical - without this, pins are offset incorrectly!
-    pins = solid.translate([DIMS[0]/2, DIMS[1]/2, 0])(pins)
 
     # Create array of pins
     pins_array = create_device_array(
@@ -371,6 +369,94 @@ def main():
     else:
         print(f"⏭️  Skipping STL render (set RENDER_INSERT_STL=True to enable)")
         print(f"   You can render the STL manually by opening {scad_path} in OpenSCAD")
+
+    # ========================================================================
+    # Create Single Device Insert (for testing/visualization)
+    # ========================================================================
+
+    print("\n=== Creating Single Device Insert ===")
+
+    # Create single device outer insert (centered at [dims[0]/2, dims[1]/2])
+    single_outer_2d = solid.union()(
+        wells_top_bottom(radius=well_rad_outer, height=None, positions=well_positions, dxf=True, shape="circle"),
+        legacy_make_chambers(msrs=measurements_outer, height=0.2, width=chamber_width_outer, len_until=CHAMBER_LEN_UNTIL, dxf=True)
+    )
+
+    # Create single device array (1x1) - this centers the geometry
+    single_outer_2d_array = create_device_array(
+        single_outer_2d, DIMS, [1, 1], dxf=True, alignment=None,
+        units_from_center=None, alignment_offset=None, alignment_mark_size=None
+    )
+
+    # Extrude with chamfer
+    single_outer_3d = linear_extrude_if_flat(
+        single_outer_2d_array,
+        height=INSERT_HEIGHT,
+        degrees=DEGREES_OUT,
+        segments=20
+    )
+
+    # Create single device inner insert
+    single_inner_2d = solid.union()(
+        wells_top_bottom(radius=well_rad_inner, height=None, positions=well_positions, dxf=True, shape="circle"),
+        legacy_make_chambers(msrs=measurements_inner, height=0.2, width=chamber_width_inner, len_until=CHAMBER_LEN_UNTIL, dxf=True)
+    )
+
+    # Create single device array (1x1) - this centers the geometry
+    single_inner_2d_array = create_device_array(
+        single_inner_2d, DIMS, [1, 1], dxf=True, alignment=None,
+        units_from_center=None, alignment_offset=None, alignment_mark_size=None
+    )
+
+    # Extrude with chamfer
+    single_inner_3d = linear_extrude_if_flat(
+        single_inner_2d_array,
+        height=INSERT_HEIGHT_IN,
+        degrees=DEGREES_IN,
+        segments=20
+    )
+
+    # Subtract inner from outer
+    single_insert = solid.difference()(single_outer_3d, single_inner_3d)
+
+    # Position above pins and skirts
+    single_insert = solid.translate([0, 0, z_offset])(single_insert)
+
+    # Create single device skirts
+    single_skirts = create_dual_skirt(
+        insert_geometry=solid.projection()(single_insert),
+        thickness1=-SKIRT_THICKNESS1,
+        height1=SKIRT_HEIGHT1,
+        empty1=SKIRT_EMPTY1,
+        thickness2=-SKIRT_THICKNESS2,
+        height2=SKIRT_HEIGHT2,
+        pin_height=PIN_HEIGHT
+    )
+
+    # Create single device pins (centered by create_device_array)
+    single_pins = create_pin_array(
+        well_positions=wells_pos_from_center_2(WELLS_POS + INSERT_PIN_OFFSET),
+        dims=PIN_DIMS,
+        height=PIN_HEIGHT + SKIRT_HEIGHT1 + SKIRT_HEIGHT2 + PIN_INNER_HEIGHT,
+        offset=0.0
+    )
+
+    # Create 1x1 array to center the pins
+    single_pins_array = create_device_array(
+        single_pins, DIMS, [1, 1], dxf=True, alignment=None,
+        units_from_center=None, alignment_offset=None, alignment_mark_size=None
+    )
+
+    # Combine all single device components
+    single_insert_complete = solid.union()(single_insert, single_skirts, single_pins_array)
+
+    # Apply PDMS shrinkage compensation
+    single_insert_complete = solid.scale([scale_percent, scale_percent, 1])(single_insert_complete)
+
+    # Save single device insert SCAD file
+    single_scad_path = BASE_PATH / f"{DEVICE_NAME}_single_insert.scad"
+    solid.scad_render_to_file(single_insert_complete, str(single_scad_path))
+    print(f"Saved: {single_scad_path}")
 
     # Glass slide outline with alignment groove
     glass_size = np.array(GLASS_SIZE)
