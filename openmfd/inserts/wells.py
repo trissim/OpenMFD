@@ -281,8 +281,11 @@ def assemble_well_inserts(
     )
 
     # Calculate z-offset for inserts (above pins and skirts)
+    # Legacy: inserts at z = pin_height + skirt_height1 + skirt_height2
     z_offset = 0.0
+    pin_height = 0.0
     if pin_config is not None:
+        pin_height = pin_config.height
         z_offset += pin_config.height
     if skirt_config is not None:
         z_offset += skirt_config.height1 + skirt_config.height2
@@ -291,11 +294,23 @@ def assemble_well_inserts(
     insert_array = solid.translate([0, 0, z_offset])(insert_array)
     components.append(insert_array)
 
+    # Add skirts if specified (must be before pins to get correct projection)
+    if skirt_config is not None:
+        skirts = create_dual_skirt(
+            insert_geometry=solid.projection()(insert_array),
+            thickness1=-skirt_config.thickness1,  # Negative to shrink inward
+            height1=skirt_config.height1,
+            empty1=skirt_config.empty1,
+            thickness2=-skirt_config.thickness2,  # Negative to shrink inward
+            height2=skirt_config.height2,
+            pin_height=pin_height,
+        )
+        components.append(skirts)
+
     # Add pins if specified
     if pin_config is not None:
-        total_pin_height = (
-            pin_config.height + pin_config.inner_height
-        )
+        # Legacy: pin height = pin_height + skirt_height1 + skirt_height2 + pin_inner_height
+        total_pin_height = pin_config.height + pin_config.inner_height
         if skirt_config is not None:
             total_pin_height += skirt_config.height1 + skirt_config.height2
 
@@ -306,18 +321,6 @@ def assemble_well_inserts(
             offset=pin_config.offset,
         )
         components.append(pins)
-
-    # Add skirts if specified
-    if skirt_config is not None:
-        skirts = create_dual_skirt(
-            insert_geometry=solid.projection()(insert_array),
-            thickness1=skirt_config.thickness1,
-            height1=skirt_config.height1,
-            empty1=skirt_config.empty1,
-            thickness2=skirt_config.thickness2,
-            height2=skirt_config.height2,
-        )
-        components.append(skirts)
 
     # Combine all components
     assembly = union()(*components)

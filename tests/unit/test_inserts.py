@@ -84,9 +84,8 @@ class TestSkirtGeneration:
 
         skirt = create_skirt_layer(
             insert_geometry=insert_2d,
-            thickness=0.75,
+            thickness=-0.75,
             height=0.66,
-            empty_space=0.3,
         )
         assert isinstance(skirt, solid.OpenSCADObject)
 
@@ -97,11 +96,12 @@ class TestSkirtGeneration:
 
         skirts = create_dual_skirt(
             insert_geometry=insert_2d,
-            thickness1=0.75,
+            thickness1=-0.75,
             height1=0.66,
             empty1=0.3,
-            thickness2=0.8,
+            thickness2=-0.8,
             height2=0.04,
+            pin_height=0.06,
         )
         assert isinstance(skirts, solid.OpenSCADObject)
 

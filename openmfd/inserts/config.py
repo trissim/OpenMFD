@@ -122,19 +122,21 @@ class SkirtConfiguration:
     Parameters
     ----------
     thickness1 : float
-        First (upper) skirt thickness (mm).
+        First (upper) skirt thickness (mm). Use positive values (will be
+        negated internally to shrink inward from insert geometry).
     height1 : float
         First skirt height (mm).
     empty1 : float
-        Empty space inside first skirt (mm).
+        Empty space fill height at top of skirt1 (mm).
     thickness2 : float
-        Second (lower) skirt thickness (mm).
+        Second (lower) skirt thickness (mm). Use positive values (will be
+        negated internally to shrink inward from insert geometry).
     height2 : float
         Second skirt height (mm).
 
     Examples
     --------
-    >>> # Standard two-layer skirt
+    >>> # Standard two-layer skirt (legacy values)
     >>> skirt_config = SkirtConfiguration(
     ...     thickness1=0.75,
     ...     height1=0.66,

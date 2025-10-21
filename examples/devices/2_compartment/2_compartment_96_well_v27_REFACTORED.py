@@ -1,0 +1,454 @@
+"""
+2-Compartment 96-Well Device - Refactored to use OpenMFD package
+
+This is a refactored version of 2_compartment_96_well_v27_300um_suex200.py
+using the new openmfd package structure.
+
+Original: 2_compartment_96_well_v27_300um_suex200.py
+Version: 27
+SU-8 Height: 200μm
+Grid: 6x8 (48 devices total)
+"""
+
+from pathlib import Path
+import solid
+
+# Import from new openmfd package
+from openmfd.geometry import (
+    WellConfiguration,
+    ChannelConfiguration,
+    ChamberConfiguration,
+    wells_pos_from_center_2,
+)
+from openmfd.devices import (
+    DeviceConfiguration,
+    CasingConfiguration,
+    ArrayConfiguration,
+    assemble_device,
+    create_device_array_from_config,
+)
+from openmfd.export import (
+    export_scad,
+)
+
+# ============================================================================
+# Configuration Parameters
+# ============================================================================
+
+VERSION = 27
+BASE_PATH = Path(f"./designs/open_chamber/2_compartment_96_well_300um_suex200_v{VERSION}/")
+DEVICE_NAME = f"2_compartment_96_well_300um_suex200_v{VERSION}"
+
+# Device geometry
+WELLS_POS = 4.5  # Distance between wells
+WELL_RAD = 5.0 / 2.0  # Well radius (2.5mm)
+CHAN_GAP = 0.03  # Gap between channels
+CHAN_W = 0.01    # Channel width
+CHAN_L = 0.3     # Channel length
+CHAN_L_EXTRA = 6.0  # Extra channel length
+NUM_CHANS = int(WELL_RAD / (CHAN_GAP + CHAN_W))
+
+# Chamber parameters
+CHAMBER_LEN_UNTIL = WELLS_POS
+CHAMBER_WIDTH = WELL_RAD * 2
+
+# Casing dimensions
+ROWS = 1
+COLUMNS = 1
+CASING_X = 9 * 2  # 18mm
+CASING_Y = 9      # 9mm
+
+# Array parameters (6x8 = 48 devices)
+GRID_SIZE = [6, 8]
+DIMS = [CASING_X, CASING_Y, 0]
+ALIGNMENT_OFFSET = [(DIMS[0] - CASING_X * ROWS) / 2.0, (DIMS[1] - CASING_Y * COLUMNS) / 2]
+UNITS_FROM_CENTER = (7, 4.75)
+ALIGNMENT_MARK_SIZE = 1
+
+# Wafer parameters
+WAFER_SIZE = 150
+WAFER_FLAT_LEN = 57.5
+WAFER_THICKNESS = 0.625
+OUTER_MASK_THICKNESS = 3
+WAFER_LINE_THICKNESS = 0.3
+
+# Wall parameters
+WALL_HEIGHT = 10
+WALL_THICKNESS = 7
+WALL_PADX = 9
+WALL_PADY = 9
+
+# Outline parameters
+GLASS_SIZE = [110, 74]
+GLASS_ERROR = 4
+OUTLINE_ALIGNMENT_THICKNESS = 1
+
+# PDMS curing parameters
+CURE_TEMP = 100  # Celsius
+
+# Insert parameters (for 3D printed well inserts)
+DEGREES_OUT = 16
+DEGREES_IN = 35
+INSERT_HEIGHT = 3.8
+INSERT_HEIGHT_IN = 0.40
+TAPER_LEN_OUT_EXTRA = 0.300
+TAPER_LEN_IN_EXTRA = 0.91
+PIN_HEIGHT = 0.06
+PIN_INNER_HEIGHT = 2
+TAPER_HEIGHT = 0
+DEGREES_TAPER = 0
+CHAMBER_HOLE_DIMS = (2, 2)
+PIN_DIMS = (1.85, 1.85)
+INSERT_PIN_OFFSET = -0.5
+SKIRT_THICKNESS1 = 0.75
+SKIRT_HEIGHT1 = 0.660
+SKIRT_EMPTY1 = 0.3
+SKIRT_THICKNESS2 = 0.8
+SKIRT_HEIGHT2 = 0.04
+
+# ============================================================================
+# Helper Functions (from legacy make_device.py)
+# ============================================================================
+
+def scale_percent_pdms_heat_shrinkage(cure_temp):
+    """Calculate PDMS shrinkage based on curing temperature."""
+    # PDMS shrinks ~0.2% per 10°C above room temp
+    shrinkage_percent = 1.0 - (cure_temp * 0.002)
+    cure_text = f"Cure at {cure_temp}°C (scale: {shrinkage_percent:.4f})"
+    return shrinkage_percent, cure_text
+
+
+def save_model(model, base_path, name, dxf=True):
+    """Save model to SCAD file."""
+    base_path = Path(base_path)
+    base_path.mkdir(parents=True, exist_ok=True)
+    
+    scad_path = base_path / f"{name}.scad"
+    solid.scad_render_to_file(model, str(scad_path))
+    print(f"Saved: {scad_path}")
+
+
+# ============================================================================
+# Main Device Generation
+# ============================================================================
+
+def main():
+    """Generate 2-compartment 96-well device using new OpenMFD package."""
+
+    # Create output directory
+    BASE_PATH.mkdir(parents=True, exist_ok=True)
+
+    # Calculate PDMS shrinkage
+    scale_percent, cure_text = scale_percent_pdms_heat_shrinkage(CURE_TEMP)
+    print(f"PDMS Shrinkage: {cure_text}")
+
+    # ========================================================================
+    # Step 1: Create Single Device Unit - SEPARATE LAYERS
+    # ========================================================================
+
+    print("\n=== Creating Single Device Unit (Separate Layers) ===")
+
+    # Calculate well positions (2 wells separated by WELLS_POS distance)
+    well_positions = wells_pos_from_center_2(WELLS_POS)
+    print(f"Well positions: {well_positions}")
+
+    # -----------------------------------------------------------------------
+    # 1a. Create CHAMBERS/WELLS layer (top layer)
+    # -----------------------------------------------------------------------
+
+    # Use lower-level functions to create wells and chambers separately
+    # (since assemble_device requires channels for chamber measurements)
+
+    from openmfd.geometry import wells_top_bottom, make_chambers, make_channels
+    from openmfd.geometry.types import Measurements
+
+    # Create wells directly
+    print("Creating wells...")
+    wells_geometry = wells_top_bottom(
+        radius=WELL_RAD,
+        height=None,  # 2D for DXF
+        positions=well_positions,
+        dxf=True,
+        shape="circle"
+    )
+
+    # Create channels to get measurements (needed for chambers)
+    print("Creating channels (for measurements)...")
+    channels_geometry, measurements = make_channels(
+        length=CHAN_L,
+        width=CHAN_W,
+        height=0.2,
+        num_chans=NUM_CHANS,
+        spacing=CHAN_GAP,
+        dxf=True
+    )
+
+    # Create chambers using measurements from channels
+    print("Creating chambers...")
+    chambers_geometry = make_chambers(
+        msrs=measurements,
+        height=0.2,
+        width=CHAMBER_WIDTH,
+        len_until=CHAMBER_LEN_UNTIL,
+        dxf=True
+    )
+
+    # Combine wells and chambers for top layer
+    chamber_wells_single = solid.union()(wells_geometry, chambers_geometry)
+
+    # Create insert holes (square holes for 3D printed inserts)
+    print("Creating insert holes...")
+    insert_well_positions = wells_pos_from_center_2(WELLS_POS + INSERT_PIN_OFFSET)
+
+    from openmfd.geometry import make_well
+
+    # Create square insert holes
+    insert_holes = []
+    for pos in insert_well_positions:
+        hole = make_well(
+            dims=CHAMBER_HOLE_DIMS,
+            height=None,
+            dxf=True,
+            shape="square"
+        )
+        # Translate to position
+        hole = solid.translate([pos[0], pos[1], 0])(hole)
+        insert_holes.append(hole)
+
+    chamber_insert_holes = solid.union()(*insert_holes)
+
+    # Subtract insert holes from top layer
+    chamber_wells_single = solid.difference()(chamber_wells_single, chamber_insert_holes)
+
+    # -----------------------------------------------------------------------
+    # 1b. Create CHANNELS layer (bottom layer)
+    # -----------------------------------------------------------------------
+
+    # Create longer channels for bottom layer
+    print("Creating bottom layer channels...")
+    channels_single, _ = make_channels(
+        length=CHAN_L + CHAN_L_EXTRA,  # Longer channels
+        width=CHAN_W,
+        height=0.2,
+        num_chans=NUM_CHANS,
+        spacing=CHAN_GAP,
+        dxf=True
+    )
+
+    # -----------------------------------------------------------------------
+    # 1c. Create ALIGNED layer (both layers together)
+    # -----------------------------------------------------------------------
+
+    aligned_single = solid.union()(chamber_wells_single, channels_single)
+
+    # Export single unit layers
+    print("Exporting single unit layers...")
+    save_model(channels_single, BASE_PATH, f"{DEVICE_NAME}_single_bottom")
+    save_model(chamber_wells_single, BASE_PATH, f"{DEVICE_NAME}_single_top")
+    save_model(aligned_single, BASE_PATH, f"{DEVICE_NAME}_single_aligned")
+    
+    # ========================================================================
+    # Step 2: Create 3D Walls (STL export)
+    # ========================================================================
+
+    print("\n=== Creating 3D Walls ===")
+
+    # Import legacy functions for walls (not yet refactored)
+    from make_device import make_walls, r
+    import os.path as osp
+
+    walls, wafer_wall, wafer_walls = make_walls(
+        WAFER_SIZE, WALL_THICKNESS, GRID_SIZE, DIMS,
+        height=WALL_HEIGHT, segments=256, make_inner=False,
+        padx=WALL_PADX, pady=WALL_PADY
+    )
+
+    # Render to STL
+    print("Rendering walls to STL...")
+    r.render(wafer_walls, outfile=str(BASE_PATH / f"wall_single_{DEVICE_NAME}.stl"))
+
+    # ========================================================================
+    # Step 3: Create Outline for Glass Slide Alignment
+    # ========================================================================
+
+    print("\n=== Creating Glass Slide Outline ===")
+
+    # Import legacy functions for outline (not yet refactored)
+    from make_device import make_outline
+    import numpy as np
+
+    glass_size = np.array(GLASS_SIZE)
+    outline = make_outline(
+        glass_size - GLASS_ERROR, WALL_THICKNESS,
+        GRID_SIZE, DIMS, ALIGNMENT_OFFSET
+    )
+
+    # Make groove for alignment
+    outline_alignment_inner = glass_size - GLASS_ERROR + WALL_THICKNESS / 2.0 - OUTLINE_ALIGNMENT_THICKNESS / 2.0
+    outline_alignment = make_outline(
+        outline_alignment_inner, OUTLINE_ALIGNMENT_THICKNESS,
+        GRID_SIZE, DIMS, ALIGNMENT_OFFSET
+    )
+    outline = solid.difference()(outline, outline_alignment)
+
+    # ========================================================================
+    # Step 4: Create Cure Temperature Text
+    # ========================================================================
+
+    print("\n=== Creating Cure Temperature Text ===")
+
+    text1 = solid.text(cure_text, halign="center", valign="center", size=2)
+    text2 = solid.text("Use 60mL of Sylgard 184 in 1:10 ratio", halign="center", valign="center", size=2)
+    text = solid.union()(text1, solid.translate([0, -DIMS[1] / 2])(text2))
+    text = solid.translate([ALIGNMENT_OFFSET[0], ALIGNMENT_OFFSET[1]])(text)
+    text = solid.translate([GRID_SIZE[0] * DIMS[0] / 2.0, GRID_SIZE[1] * DIMS[1] / 2.0])(text)
+    text = solid.translate([0, -(GRID_SIZE[1] + 3) * DIMS[1] / 2])(text)
+
+    # ========================================================================
+    # Step 5: Create Device Arrays (6x8 grid = 48 devices)
+    # ========================================================================
+
+    print("\n=== Creating 6x8 Device Arrays (48 devices) ===")
+
+    # Import legacy function for array with alignment marks
+    from make_device import make_unit_array
+
+    # Create BOTTOM layer array (channels) with FULL alignment
+    print("Creating bottom layer array (channels + alignment marks)...")
+    array_bottom = make_unit_array(
+        channels_single, DIMS, GRID_SIZE,
+        dxf=True, alignment="full",
+        units_from_center=UNITS_FROM_CENTER,
+        alignment_offset=ALIGNMENT_OFFSET,
+        alignment_mark_size=ALIGNMENT_MARK_SIZE
+    )
+
+    # Add cure text to bottom layer
+    array_bottom = solid.union()(array_bottom, text)
+
+    # Create TOP layer array (wells + chambers) with HOLLOW alignment
+    print("Creating top layer array (wells + chambers + hollow alignment)...")
+    array_top = make_unit_array(
+        chamber_wells_single, DIMS, GRID_SIZE,
+        dxf=True, alignment="hollow",
+        units_from_center=UNITS_FROM_CENTER,
+        alignment_offset=ALIGNMENT_OFFSET,
+        alignment_mark_size=ALIGNMENT_MARK_SIZE
+    )
+
+    # Add outline to top layer
+    array_top = solid.union()(array_top, outline)
+
+    # Create ALIGNED array (both layers together)
+    array_aligned = solid.union()(array_top, array_bottom)
+
+    # Apply PDMS shrinkage scaling
+    if scale_percent != 1.0:
+        print(f"Applying PDMS shrinkage scale: {scale_percent}")
+        array_bottom = solid.scale([scale_percent, scale_percent])(array_bottom)
+        array_top = solid.scale([scale_percent, scale_percent])(array_top)
+        array_aligned = solid.scale([scale_percent, scale_percent])(array_aligned)
+
+    # ========================================================================
+    # Step 6: Add Wafer Mask Outline
+    # ========================================================================
+
+    print("\n=== Adding Wafer Mask Outline ===")
+
+    # Import legacy function for wafer mask
+    from make_device import add_wafer_to_mask
+
+    # Add wafer outline to bottom layer
+    array_bottom_final = add_wafer_to_mask(
+        WAFER_SIZE, WAFER_FLAT_LEN, array_bottom, GRID_SIZE, DIMS,
+        wafer_line_thickness=WAFER_LINE_THICKNESS,
+        outer_mask_thickness=OUTER_MASK_THICKNESS,
+        alignment_offset=ALIGNMENT_OFFSET,
+        shrinkage_scale=scale_percent
+    )
+
+    # Add wafer outline to top layer
+    array_top_final = add_wafer_to_mask(
+        WAFER_SIZE, WAFER_FLAT_LEN, array_top, GRID_SIZE, DIMS,
+        wafer_line_thickness=WAFER_LINE_THICKNESS,
+        outer_mask_thickness=OUTER_MASK_THICKNESS,
+        alignment_offset=ALIGNMENT_OFFSET,
+        shrinkage_scale=scale_percent
+    )
+
+    # Add wafer outline to aligned layer
+    array_aligned_final = add_wafer_to_mask(
+        WAFER_SIZE, WAFER_FLAT_LEN, array_aligned, GRID_SIZE, DIMS,
+        wafer_line_thickness=WAFER_LINE_THICKNESS,
+        outer_mask_thickness=OUTER_MASK_THICKNESS,
+        alignment_offset=ALIGNMENT_OFFSET,
+        shrinkage_scale=scale_percent
+    )
+
+    # Export final arrays
+    print("Exporting final device arrays...")
+    save_model(array_bottom_final, BASE_PATH, f"{DEVICE_NAME}_bottom")
+    save_model(array_top_final, BASE_PATH, f"{DEVICE_NAME}_top")
+    save_model(array_aligned_final, BASE_PATH, f"{DEVICE_NAME}_aligned")
+    
+    # ========================================================================
+    # Summary
+    # ========================================================================
+
+    print("\n" + "=" * 70)
+    print("EXPORT SUMMARY")
+    print("=" * 70)
+    print(f"Output directory: {BASE_PATH}")
+    print(f"Device name: {DEVICE_NAME}")
+    print(f"Grid size: {GRID_SIZE[0]}x{GRID_SIZE[1]} ({GRID_SIZE[0] * GRID_SIZE[1]} devices)")
+    print(f"Wells: 2 @ {WELL_RAD * 2}mm diameter")
+    print(f"Channels: {NUM_CHANS} @ {CHAN_W}mm width")
+    print(f"SU-8 height: 0.2mm (200μm)")
+    print(f"PDMS scale: {scale_percent:.4f}")
+    print(f"Cure temperature: {CURE_TEMP}°C")
+
+    print("\n" + "-" * 70)
+    print("FILES GENERATED:")
+    print("-" * 70)
+
+    print("\n📄 Single Device Unit (for testing):")
+    print(f"  ✅ {DEVICE_NAME}_single_bottom.scad (channels only)")
+    print(f"  ✅ {DEVICE_NAME}_single_top.scad (wells + chambers)")
+    print(f"  ✅ {DEVICE_NAME}_single_aligned.scad (both layers)")
+
+    print("\n📐 3D Walls (for PDMS molding):")
+    print(f"  ✅ wall_single_{DEVICE_NAME}.stl")
+
+    print("\n🔲 Device Arrays (6x8 = 48 devices):")
+    print(f"  ✅ {DEVICE_NAME}_bottom.scad (channels + alignment marks + text)")
+    print(f"  ✅ {DEVICE_NAME}_top.scad (wells + chambers + outline)")
+    print(f"  ✅ {DEVICE_NAME}_aligned.scad (both layers + all features)")
+
+    print("\n" + "-" * 70)
+    print("FEATURES INCLUDED:")
+    print("-" * 70)
+    print("  ✅ Separate top/bottom layers")
+    print("  ✅ Insert holes in wells (for 3D printed inserts)")
+    print("  ✅ Alignment marks (full on bottom, hollow on top)")
+    print("  ✅ Wafer mask outline (150mm wafer)")
+    print("  ✅ Glass slide outline (for alignment)")
+    print("  ✅ Cure temperature text")
+    print("  ✅ PDMS shrinkage scaling (0.8x for 100°C cure)")
+    print("  ✅ 3D printed walls (STL)")
+
+    print("\n" + "-" * 70)
+    print("NEXT STEPS:")
+    print("-" * 70)
+    print("  1. Open SCAD files in OpenSCAD to visualize")
+    print("  2. Export to DXF for photolithography masks:")
+    print("     - Use _bottom.scad for channel layer (SU-8 200μm)")
+    print("     - Use _top.scad for well/chamber layer (SU-8 200μm)")
+    print("  3. Use wall STL for 3D printing PDMS mold")
+    print("  4. Align layers using alignment marks during bonding")
+
+    print("\n" + "=" * 70)
+
+
+if __name__ == "__main__":
+    main()
+
