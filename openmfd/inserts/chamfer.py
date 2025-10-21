@@ -4,6 +4,16 @@ import math
 from typing import Callable
 import solid
 
+# Import the chamfer_extrude module from SCAD file
+# This is the actual chamfer implementation used by legacy code
+try:
+    _chamfer_module = solid.import_scad("./chamfer_extrude.scad")
+    _chamfer_extrude_scad = _chamfer_module.chamfer_extrude
+except Exception as e:
+    print(f"Warning: Could not import chamfer_extrude.scad: {e}")
+    print("Falling back to linear_extrude approximation")
+    _chamfer_extrude_scad = None
+
 
 def deg_taper_len(height: float, degrees: float) -> float:
     """Calculate horizontal taper length from height and angle.
@@ -120,17 +130,13 @@ def chamfer_extrude_wrapper(
             3D chamfered extrusion.
         """
         # Import the chamfer_extrude module from SCAD file
-        # Note: This assumes chamfer_extrude.scad is in the OpenSCAD library path
-        scad_code = f"""
-use <chamfer_extrude.scad>;
+        # This uses the actual chamfer_extrude.scad module (minkowski-based)
+        chamfer_extrude_module = solid.import_scad("./chamfer_extrude.scad")
+        chamfer_extrude_func = chamfer_extrude_module.chamfer_extrude
 
-chamfer_extrude(height={height}, angle={angle}, $fn={segments})
-"""
-        # For now, we'll use a simplified approach with linear_extrude and scale
-        # A full implementation would require the actual chamfer_extrude.scad module
-        # This creates an approximation of the chamfer effect
-        taper_factor = 1.0 - (deg_taper_len(height, angle) / height)
-        return solid.linear_extrude(height=height, scale=taper_factor)(obj)
+        # Apply chamfer extrusion with specified parameters
+        # The segments parameter controls $fn in the chamfer_extrude module
+        return chamfer_extrude_func(height=height, angle=angle, segments=segments)(obj)
 
     return chamfer_func
 
