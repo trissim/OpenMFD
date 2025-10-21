@@ -466,6 +466,8 @@ def main():
         inner_taper=inner_taper,
         well_radius=WELL_RAD,
         channel_length=CHAN_L,
+        chamber_width=CHAMBER_WIDTH,
+        add_chambers=True,
     )
 
     # Configure alignment pins
