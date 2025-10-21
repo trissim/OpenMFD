@@ -406,7 +406,12 @@ def main():
 
     # Helper function to create device geometry for inserts
     def make_2_compartment_for_inserts(well_rad, chan_l, chamber_width, add_chambers):
-        """Create device geometry for insert generation."""
+        """Create device geometry for insert generation.
+
+        Note: Geometry is centered at [0, 0]. The array function will position
+        each unit at [row*dims[0], col*dims[1]], and then the legacy centering
+        offset is applied by the array function itself.
+        """
         wells = wells_top_bottom(
             radius=well_rad,
             height=None,
@@ -436,6 +441,8 @@ def main():
             geometry = solid.union()(wells, chambers)
         else:
             geometry = wells
+
+        # DO NOT center here - the array function handles positioning
 
         return (geometry, well_positions), None, None
 
