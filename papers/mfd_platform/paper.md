@@ -35,7 +35,7 @@ Table 1 summarizes representative strategies to combine micro-scale features wit
 
 In this work, we address this multiscale fabrication bottleneck by integrating resin-printed well inserts onto an SU-8 wafer mold via adhesive bonding and mechanical self-alignment. The resulting hybrid mold produces PDMS devices with wells cast in place—no punching—while preserving fine SU-8-defined microfeatures. The fabrication method is application-agnostic: any microfluidic geometry that can be patterned in SU-8 can be integrated with 3D-printed well arrays to create plate-format devices. Because the technique introduces plate-format constraints (insert alignment features, keep-out zones, tiling, and standardized footprints), we provide an accompanying open-source Python layout generator (OpenMFD) as part of the platform to encode these design rules and generate fabrication-ready layouts. While we demonstrate the platform using a neuroscience application (compartmentalized axon injury assays), the approach is compatible with any cellular assay requiring spatial compartmentalization, gradient generation, co-culture, or controlled microenvironments.
 
-![Figure 1: End-to-end workflow from layout generation to hybrid mold fabrication and PDMS casting.](figures/fig1_workflow.png)
+![Figure 1: End-to-end workflow from layout generation to hybrid mold fabrication and PDMS casting.](figures/drafts/molds/casting.png)
 
 ## Materials and Methods
 ### Design automation (open-source Python layout generator)
@@ -76,7 +76,7 @@ Well inserts are printed using an Elegoo Mars 3 Pro resin printer and a high-tem
 
 Well inserts are printed as an array such that each insert contains a protruding alignment pin (“key”). The SU-8 design contains corresponding holes (“locks”) at the intended insert locations. Insert height sets the molded well depth during PDMS casting.
 
-![Figure 2: Well insert design and lock-and-key alignment features (CAD render; dimensions and tolerance callouts).](figures/fig2_insert_alignment.png)
+![Figure 2: Well insert design and lock-and-key alignment features (CAD render; dimensions and tolerance callouts).](figures/drafts/molds/clamp_assembly.jpg)
 
 ### Insert transfer, alignment, and adhesive bonding
 To avoid time-consuming manual placement of individual inserts, inserts are printed in their correct relative positions on a detachable magnetic build plate (or equivalent transfer fixture). The insert array is then transferred onto a larger bonding plate suitable for clamping against a full wafer.
@@ -95,7 +95,7 @@ We use EPO-TEK 301-2 epoxy and follow the manufacturer’s minimum alternative c
 
 [TODO: masking strategies if any; failure modes + mitigations]
 
-![Figure 3: Bonding fixture and adhesive interface, including epoxy application and cleanup.](figures/fig3_bonding_fixture.png)
+![Figure 3: Bonding fixture and adhesive interface, including epoxy application and cleanup.](figures/drafts/molds/clamp_assembly_seperated.jpg)
 
 ### Parylene insulation coating
 After insert bonding, the assembled hybrid mold is coated with 1 µm parylene C to insulate the 3D-printed resin (and adhesive) from downstream PDMS casting and cell culture. Parylene deposition was performed using the Specialty Coating Systems (SCS) 200 parylene coater available at the McGill Nanotools Micro, Nanofabrication Facility.
@@ -109,7 +109,7 @@ To improve demolding reliability, macro-scale mold features should avoid vertica
 
 Because PDMS shrinks at elevated curing temperatures, device geometry can be uniformly scaled to compensate; OpenMFD includes built-in support for applying a shrinkage-compensation scale factor during export.
 
-![Figure 4: Completed hybrid mold and representative PDMS casts showing integrated wells and fine microchannels.](figures/fig4_mold_and_casts.png)
+![Figure 4: Completed hybrid mold and representative PDMS casts showing integrated wells and fine microchannels.](figures/drafts/molds/SUEX.jpg)
 
 ### Device trimming, framing, and final assembly (plate-format package)
 To facilitate rapid, repeatable device packaging, the mold includes a rectangular cutting guide surrounding the array. After demolding, devices are trimmed to a standardized rectangular footprint using an industrial paper guillotine aligned to this guide.
@@ -138,7 +138,7 @@ In a typical workflow, we maintain 50 µL in the soma (cell body) compartment an
 
 [TODO: confirm axotomy incubation time (5 min vs 10 min); trypsin product and working concentration; Triton X-100 stock and dilution basis; CTB supplier; imaging endpoints and quantification pipeline]
 
-![Figure 7: Demonstration assay workflow and representative results for chemical axotomy and regeneration readouts.](figures/fig7_demo_assay.png)
+![Figure 7: Demonstration assay workflow and representative results for chemical axotomy and regeneration readouts.](figures/drafts/testing/calcein_am_axon_mosaic.png)
 
 ## Results
 ### Hybrid mold fabrication and well formation without punching
@@ -155,9 +155,9 @@ By integrating wells during PDMS casting rather than post-processing, the workfl
 
 We verified full microplate compatibility in high-content screening workflows by imaging devices on Opera Phenix and ImageXpress HCS microscopes, where plate-reader autofocus operated reliably across all wells without modification or calibration.
 
-![Figure 5: Plate-format device layout, well mapping, and compartment routing.](figures/fig5_96well_layout.png)
+![Figure 5: Plate-format device layout, well mapping, and compartment routing.](figures/drafts/pics/4x_brightfield.png)
 
-![Figure 6: Device quality validation: well formation, fluidic isolation, and representative defect modes.](figures/fig6_benchmarks.png)
+![Figure 6: Device quality validation: well formation, fluidic isolation, and representative defect modes.](figures/drafts/pics/less_axons.png)
 
 ### Platform generalizability: adaptation of published microfluidic designs
 
@@ -167,7 +167,7 @@ For each design, OpenMFD generates the full fabrication specification: multi-lay
 
 While we focus fabrication and biological validation on the axon injury platform, the ability to render diverse published geometries as plate-compatible layouts demonstrates that the approach is not device-specific. The hybrid mold fabrication protocol (SU-8 microfeatures + bonded inserts + parylene coating) is geometry-agnostic, constrained only by the design rules outlined in the Discussion.
 
-![Figure X: Platform generalizability across published microfluidic architectures. (A-C) DXF photomask renders for three device types adapted to 96-well format: (A) compartmentalized axon injury chamber (Taylor et al., 2005; fabricated and validated), (B) oligodendrocyte myelination platform (Ristola et al., 2019), (C) axon guidance device with orthogonal gradients (Taylor et al., 2015). (D-F) Corresponding STL models of matching well insert arrays. (G) Photograph of fabricated axon injury device demonstrating integrated well formation.](figures/figX_design_generalizability.png)
+![Figure X: Platform generalizability across published microfluidic architectures. (A-C) DXF photomask renders for three device types adapted to 96-well format: (A) compartmentalized axon injury chamber (Taylor et al., 2005; fabricated and validated), (B) oligodendrocyte myelination platform (Ristola et al., 2019), (C) axon guidance device with orthogonal gradients (Taylor et al., 2015). (D-F) Corresponding STL models of matching well insert arrays. (G) Photograph of fabricated axon injury device demonstrating integrated well formation.](figures/drafts/testing/representative-ctb1.jpg)
 
 ### Demonstration of chemical axotomy in a 96-well-format device
 [TODO: insert representative results narrative showing functional neuron culture, successful axon isolation across compartments, effective chemical axotomy, and imaging-based readouts. Confirm devices support standard culture timelines (DIV11+) and are compatible with automated liquid handling for axotomy delivery.]
