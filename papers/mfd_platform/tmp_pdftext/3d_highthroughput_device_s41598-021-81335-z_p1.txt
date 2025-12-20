@@ -1,0 +1,62 @@
+www.nature.com/scientificreports
+
+OPEN
+
+A directional 3D neurite outgrowth
+model for studying motor axon
+biology and disease
+Xandor M. Spijkers1,2, Svetlana Pasteuning‑Vuhman2, Jennifa C. Dorleijn1, Paul Vulto1*,
+Nienke R. Wevers1,3 & R. Jeroen Pasterkamp2*
+We report a method to generate a 3D motor neuron model with segregated and directed axonal
+outgrowth. iPSC-derived motor neurons are cultured in extracellular matrix gel in a microfluidic
+platform. Neurons extend their axons into an adjacent layer of gel, whereas dendrites and soma
+remain predominantly in the somal compartment, as verified by immunofluorescent staining. Axonal
+outgrowth could be precisely quantified and was shown to respond to the chemotherapeutic drug
+vincristine in a highly reproducible dose-dependent manner. The model was shown susceptible to
+excitotoxicity upon exposure with excess glutamate and showed formation of stress granules upon
+excess glutamate or sodium arsenite exposure, mimicking processes common in motor neuron
+diseases. Importantly, outgrowing axons could be attracted and repelled through a gradient of
+axonal guidance cues, such as semaphorins. The platform comprises 40 chips arranged underneath a
+microtiter plate providing both throughput and compatibility to standard laboratory equipment. The
+model will thus prove ideal for studying axonal biology and disease, drug discovery and regenerative
+medicine.
+Motor neurons project their axons to innervate other neurons and smooth- and skeletal muscle, allowing muscles
+in the body to contract. Impaired motor neuron function due to nerve injury or disease, affects voluntary movement and can cause paralysis. Although peripheral nerves are able to regenerate after injury, complete recovery
+does not o
+­ ccur1–3. Disease is another cause of disrupted motor neuron and axon function. In amyotrophic lateral
+sclerosis (ALS), upper and lower motor neurons undergo progressive degeneration leading to muscle denervation, paralysis and death within 3–5 years after d
+­ iagnosis4,5. Although exact causes are still unknown, aberrances
+in axonal stability, axonal transport, and axon growth dynamics have been reported amongst other ­hallmarks5–10.
+Accordingly, there is an increased research interest in studying axonal repair after peripheral nerve injury, as
+well as in studying axonal pathology in ALS. In vitro models that are relevant in their physiological behavior
+and allow spatially segregated interrogation of motor neuron somata and axons, are critical in advancing our
+understanding of peripheral nerve injury and disease, and in developing novel curing or regenerating therapies.
+The introduction of induced pluripotent stem cell (iPSC) technology and subsequent differentiation into
+human motor neurons provides a unique opportunity to study motor neuron disease and nerve regeneration
+mechanisms. In particular, the generation of iPSC-derived motor neurons from patients carrying specific mutations is a powerful tool for in vitro disease modeling. Most studies have focused on iPSC-derived lower motor
+neurons to study ALS. Lower motor neurons from familial ALS patients carrying superoxide dismutase 1 (SOD1)
+mutations showed various disease phenotypes compared to healthy controls, including reduced survival, abnormal mitochondrial mobility and endoplasmic reticulum (ER) s­ tress11,12. Lower motor neurons derived from
+patients carrying a mutation in the fused in sarcoma (FUS) gene showed cytoplasmic mislocalization of FUS and
+accumulation into SGs, in addition to aberrant axonal transport of mitochondria and ER v­ esicles13,14. Relevant
+disease phenotypes were also observed using iPSC technology for other common mutations in familial ALS,
+such as chromosome 9 open reading frame 72 (C9ORF72) and TAR DNA binding protein 43 (TDP-43) mutations.
+An extensive overview of this topic is provided e­ lsewhere15.
+Despite recent developments in iPSC technology, progress in dissecting ALS disease mechanisms, or in
+developing efficient therapies, is often hampered by a lack of relevant and scalable in vitro platforms that can
+rapidly be used to study axonal pathology. Two-dimensional culture platforms have been used extensively to
+1
+MIMETAS BV, Organ-On-a-Chip Company, 2333 CH Leiden, The Netherlands. 2Department of Translational
+Neuroscience, University Medical Center Utrecht Brain Center, Utrecht University, 3584 CG Utrecht, The
+Netherlands. 3Department of Cell and Chemical Biology, Leiden University Medical Centre, Einthovenweg 20, 2333
+ZC Leiden, The Netherlands. *email: p.vulto@mimetas.com; r.j.pasterkamp@umcutrecht.nl
+
+Scientific Reports |
+
+(2021) 11:2080
+
+| https://doi.org/10.1038/s41598-021-81335-z
+
+1
+Vol.:(0123456789)
+
+

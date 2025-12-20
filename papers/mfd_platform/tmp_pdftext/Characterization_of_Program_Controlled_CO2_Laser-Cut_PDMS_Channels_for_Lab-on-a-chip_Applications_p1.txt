@@ -1,0 +1,126 @@
+Proceedings of the 3rd Annual
+IEEE Conference on Automation Science and Engineering
+Scottsdale, AZ, USA, Sept 22-25, 2007
+
+MoRP-B01.2
+
+Characterization of Program Controlled CO2 Laser-Cut PDMS
+Channels for Lab-on-a-chip Applications
+Andrew W. Holle, Shih-Hui Chao, Mark R. Holl, IEEE Member,
+Jeffrey M. Houkal, and Deirdre R. Meldrum, IEEE Fellow
+ac
+
+Abstract—PDMS (polydimethylsiloxane) is an important
+material for lab-on-a-chip, an emerging technology to automate
+biological and chemical operations in microfluidic devices.
+Laser manufacturing of materials suitable for use in laminatebased construction of lab-on-a-chip devices is an important step
+in the development of automated assembly line procedures.
+This study investigates the effect of laser cutting parameters on
+channel topography when a carbon dioxide laser is used to
+create trenches in PDMS. We present cross-sectional
+micrographs of the laser-ablated channels that reveal a
+modified Gaussian contour, with smooth, circular arcs at the
+bottom of the channel. We define geometric parameters that
+describe the contours, including cut depth and maximum cut
+width. Relationships between laser power, pulses per inch, and
+laser traverse speed and ablation profile patterns are
+established. A strong linear relationship (R2=0.9951) between
+cut depth and laser power is demonstrated. Analysis of the
+radii of circular arcs at the bottom of the channel and at the
+surface of the PDMS was performed. As laser power density is
+increased (increase in laser power or pulses per inch) the
+PDMS surface radii and channel floor radius decrease.
+
+L
+
+I. INTRODUCTION
+
+ab-on-a-chip is a rapidly emerging field in which small
+(micro and nanoliter scale) volumes of fluids are
+manipulated for the sake of an experiment. In order to
+manipulate fluids on this scale, channels with appropriate
+dimensions (typically 10 to 100 micrometers) are needed.
+The silicon-based organic polymer PDMS has been used
+extensively in lab-on-a-chip applications. Small features in
+PDMS are commonly achieved photolithographically, but
+this is time consuming and costly.
+Laser cutting has been used as an alternative to
+photolithography.
+Past works have focused on the
+engraving of PDMS with lasers, but the majority of them
+
+Manuscript received March 18, 2007. This work was supported in part
+by the National Institutes of Health NHGRI Centers of Excellence in
+Genomic Science (Grant 5 P50 HG002360, D. Meldrum (PI)).
+A.W. Holle is with the Harrington Department of Bioengineering,
+Arizona State University, Tempe, AZ 85287-9309 USA. (e-mail:
+Andrew.Holle@asu.edu; phone: 860-861-1303)
+D.R. Meldrum is Director of the Center for Ecogenomics and the Dean
+of the Ira A. Fulton School of Engineering, Arizona State University,
+Tempe, AZ 85287-9309 USA (e-mail: Deirdre.meldrum@asu.edu)
+S.H. Chao, J.M. Houkal, and M.R. Holl are with the Center for
+Ecogenomics, The Biodesign Institute, Arizona State University, Tempe,
+AZ 85287-6501 USA (e-mail: joe.chao@asu.edu; jeff.houkal@asu.edu;
+mark.holl@asu.edu).
+
+1-4244-1154-8/07/$25.00 ©2007 IEEE.
+
+utilize expensive Ti:sapphire femtosecond laser systems [1].
+Wolfe et al. used a femtosecond laser to etch channels in
+PDMS and to produce intricate 2D patterns for lab-on-achip applications [2], but this research did not characterize
+channel geometry. Kim, Campbell, Groisman, Kleinfeld and
+Schaffer also utilized a femtosecond laser to build
+unmoldable features into microfluidc devices [3]. This work
+addressed soft lithography’s inability to realize 3D
+structures. Femtosecond lasers were utilized in Nguyen et
+al.’s research on bioreactors [4]. Seven polymer layers, four
+of them PDMS, were machined with femtosecond lasers,
+then stacked and bonded to form a complex bioreactor. This
+work proposed a five-minute ultrasonic cleaning to remove
+debris from the PDMS. While both of these works address
+certain challenges with the laser machining of PDMS,
+neither attempts to increase understanding of the channel
+dimensions and topography that laser cutting provides.
+Other works have addressed channel characteristics of
+laser-machined polymers. Chan, Nguyen, Xia, and Wu used
+a CO2 laser similar to the one used in this investigation to
+micromachine
+channels
+in
+PMMA
+(Polymethylmethacrylate) for use in fuel cells [5]. These
+channels exhibited a distinctive Gaussian profile. Channel
+cross sections were shown but not quantitatively
+characterized or modeled.
+Still other works have set out to understand selected
+characteristics of the surfaces of laser machined polymers.
+Pugmire, Waddell, Haasch, Tarlov, and Locascio analyzed
+the surface chemistry and electroosmotic flow characteristics
+of channels cut into several polymers [6], including PMMA,
+PETG
+(polyethylene
+terephthalate
+glycol),
+PC
+(polycarbonate), and PVC (polyvinyl chloride). PDMS was
+not characterized. Pham et al. correlated laser ablation rate
+with the thermal properties of several polymers, including
+PDMS [7].
+Graubner et al. quantified the relationship between pulse
+number and feature depth for isolated laser-ablated holes in
+PDMS [8]. An Nd:YAG laser was used to machine single
+holes into PDMS. Using this design, plots of depth vs.
+number of pulses were generated. Hole profiles and lateral
+dimensions were not analyzed.
+The CO2 laser is a cost-effective option for fabricating
+PDMS channels with widths larger than 100 micrometers.
+We characterized the topography of laser-cut channels at
+various laser settings. Data of the type presented here may
+be helpful in laser parameter selection for creating channels
+in PDMS sheets.
+
+621
+
+Authorized licensed use limited to: McGill Libraries. Downloaded on August 15,2024 at 23:04:31 UTC from IEEE Xplore. Restrictions apply.
+
+

@@ -1,0 +1,87 @@
+Journal of Neuroscience Methods 308 (2018) 183–191
+
+Contents lists available at ScienceDirect
+
+Journal of Neuroscience Methods
+journal homepage: www.elsevier.com/locate/jneumeth
+
+A microﬂuidic platform to study the eﬀects of GDNF on neuronal axon
+entrapment
+Ze Zhong Wanga, Matthew D. Woodb, Susan E. Mackinnonb, Shelly E. Sakiyama-Elbertc,
+
+T
+
+⁎
+
+a
+
+Department of Biomedical Engineering, Washington University in St. Louis, St. Louis, MO, United States
+Division of Plastic and Reconstructive Surgery, Department of Surgery, Washington University School of Medicine, St. Louis, MO, United States
+c
+Department of Biomedical Engineering, University of Texas at Austin, Austin, TX, United States
+b
+
+A R T I C LE I N FO
+
+A B S T R A C T
+
+Keywords:
+Peripheral nerve injury
+Schwann cells
+Neurite extension
+Gene therapy
+
+Background: One potential treatment strategy to enhance axon regeneration is transplanting Schwann Cells (SCs)
+that overexpress glial cell line-derived neurotrophic factor (GDNF). Unfortunately, constitutive GDNF overexpression in vivo can result in failure of regenerating axons to extend beyond the GDNF source, a phenomenon
+termed the “candy-store” eﬀect. Little is known about the mechanism of this axon entrapment in vivo.
+New Method: We present a reproducible in vitro culture platform using a microﬂuidic device to model axon
+entrapment and investigate mechanisms by which GDNF causes axon entrapment. The device is comprised of
+three culture chambers connected by two sets of microchannels, which prevent cell soma from moving between
+chambers but allow neurites to grow between chambers. Neurons from dorsal root ganglia were seeded in one
+end chamber while the eﬀect of diﬀerent conditions in the other two chambers was used to study neurite
+entrapment.
+Results: The results showed that GDNF-overexpressing SCs (G-SCs) can induce axon entrapment in vitro. We also
+found that while physiological levels of GDNF (100 ng/mL) promoted neurite extension, supra-physiological
+levels of GDNF (700 ng/mL) induced axon entrapment.
+Comparison with Existing Method: All previous work related to the “candy-store” eﬀect were done in vivo. Here,
+we report the ﬁrst in vitro platform that can recapitulate the axonal entrapment and investigate the mechanism of
+the phenomenon.
+Conclusions: This platform facilitates investigation of the “candy-store” eﬀect and shows the eﬀects of high
+GDNF concentrations on neurite outgrowth.
+
+1. Introduction
+Severe peripheral nerve injury (PNI) can have a devastating impact
+on patients’ quality of life resulting in lifelong disabilities. Autologous
+nerve grafting has been the standard of care for PNI, despite its major
+disadvantage of donor site morbidity (Lundborg, 2000). Alternative
+methods, such as acellular nerve grafts, are ineﬀective for large gaps
+because of the lack of cells and regenerative factors within the graft
+(Fox et al., 2005). Even with proper surgical reconstruction, functional
+recovery can be incomplete (Moore et al., 2009). Although the peripheral nerve is capable of regeneration, the rate of axonal regeneration
+is slow at 1–2 mm/day (Grinsell and Keating, 2014). Patients suﬀering
+from proximal injuries, such as brachial plexus injuries, which can involve regeneration distances of up to a meter, may require 2–3 years for
+axons to reach target muscles (Lundborg, 2000). However, chronic
+
+denervation can result in quiescence of Schwann cells (SCs), which
+leads to their precipitous decline in growth factor expression and a
+progressive failure to promote axonal regeneration over time (Fox et al.,
+2005). In addition, essentially irreversible changes to muscle occur by
+12–18 months (Kobayashi et al., 1997), at which point functional recovery is unlikely. To treat these patients, it is critical to devise strategies to enhance axonal growth and prevent chronic denervation of
+SCs to promote robust axon regeneration over long distances. One appealing strategy to improve recovery is to use exogenous growth factors
+and/or SCs with exogenous growth factor expression to enhance axonal
+regeneration.
+Glial cell line-derived neurotrophic factor (GDNF) is one of these
+potent growth factors involved in the normal regenerative process after
+injury. GDNF has been shown to improve axonal regeneration in motor
+neurons (Scheib and Höke, 2013) and a subset of sensory neurons (Wu-
+
+Abbreviations: GDNF, glial cell line-derived neurotrophic factor; G-SC, GDNF-overexpressing Schwann Cells; PNI, peripheral nerve injury; SC, Schwann cells
+⁎
+Corresponding author.
+E-mail address: sakiyama@utexas.edu (S.E. Sakiyama-Elbert).
+https://doi.org/10.1016/j.jneumeth.2018.08.002
+Received 7 March 2018; Received in revised form 1 August 2018; Accepted 2 August 2018
+Available online 03 August 2018
+0165-0270/ © 2018 Elsevier B.V. All rights reserved.
+
+

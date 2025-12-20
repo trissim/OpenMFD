@@ -1,0 +1,584 @@
+MNE 15 (2022) 100124
+
+Contents lists available at ScienceDirect
+
+Micro and Nano Engineering
+journal homepage: www.sciencedirect.com/journal/micro-and-nano-engineering
+
+Hybrid microfabrication of 3D pyrolytic carbon electrodes by
+photolithography and additive manufacturing
+Jesper Y. Pan a, Babak Rezaei a, Thomas A. Anhøj a, Niels B. Larsen b, Stephan S. Keller a, *
+a
+b
+
+DTU Nanolab, National Centre for Nano Fabrication and Characterization, Technical University of Denmark, Kgs. Lyngby 2800, Denmark
+DTU Health Tech, Department of Health Technology, Technical University of Denmark, Kgs. Lyngby 2800, Denmark
+
+A R T I C L E I N F O
+
+A B S T R A C T
+
+Keywords:
+Additive manufacturing
+CMEMS
+Pyrolytic carbon
+SU-8
+
+We report a novel hybrid method for fabricating high aspect ratio 3D pyrolytic carbon electrodes combining UV
+photolithography and additive manufacturing with commercially available SLA 3D printers and materials. By
+using a 3D printed chip holder, aligned 3D printing on a patterned silicon chip was possible. This allowed for the
+fabrication of cylindrical polymer micropillars with a height of 2173 ± 26 μm and a width of 316 ± 11 μm on
+SU-8 precursor structures defining the leads, contact pads and underlying 2D electrode prepared using UV
+lithography. Microfabrication of 3D structures with these dimensions is impossible to achieve with SU-8
+photolithography alone. The hybrid polymer structures were converted into 3D carbon electrodes with high
+structural integrity using a 3-step pyrolysis process optimized for the specific 3D print resin. During this process,
+the micropillars shrunk to 30 ± 3% in height and 35 ± 1% in width of the polymer precursor structures, while
+maintaining the macroscopic shape and microscopic surface roughness. Electrochemical experiments confirmed
+that the pyrolytic carbon formed a monolithic conductive 3D electrode. The surface roughness contributed to a
+17 ± 5% increase in electroactive surface area compared to the geometrical surface area of the micropillars.
+
+1. Introduction
+The microfabrication of 3D electrodes with large surface area is of
+high relevance for most applications involving electrochemistry. For
+electrochemical storage, supercapacitors have been proposed as a
+simpler and more sustainable alternative to batteries. In order to achieve
+high energy density, well defined, conductive, high surface area struc­
+tures are needed [1]. In electrochemical sensing, increased electrode
+surface area has contributed to improved sensor performance [2].
+During electrochemical monitoring of cells or electrical stimulation of
+cells in organ-on-chip models, 3D electrode configurations allow for
+shorter diffusion distances for a larger fraction of the cell cultures [3]. In
+many of these applications, carbon has been established as a promising
+electrode material due to its high chemical stability and inertness, a
+large electrochemical potential window, reasonable electrical conduc­
+tivity and inherent biocompatibility [4–6].
+Various microfabrication methods have been proposed for the
+fabrication of 3D carbon electrodes such as carbonization of electrospun
+fibers [7] and synthesis of graphene foams using chemical vapor depo­
+sition [8]. While these methods are excellent in producing highly porous
+carbon structures, they are not suitable for integration of electrodes with
+
+a well-defined electrode geometry on a chip. In the so-called carbon
+MEMS (CMEMS) process, photoresist precursor structures are converted
+into carbon electrodes through pyrolysis at temperatures >900 ◦ C in an
+inert atmosphere [9,10]. The main advantage of this approach is that the
+electrode geometry is defined by well-established microfabrication
+methods such as UV photolithography. Furthermore, the electrical and
+electrochemical properties of the resulting 3D pyrolytic carbon elec­
+trodes are largely dependent on the precursor material and the pyrolysis
+conditions and can therefore be optimized for a specific application
+[11,12].
+The negative epoxy photoresist SU-8 has been extensively explored
+for the CMEMS process, as it is possible to construct stable high aspect
+ratio polymer structures using UV photolithography, which then are
+converted to carbon through a pyrolysis process [13]. 3D pyrolytic
+carbon electrodes based on SU-8 polymer precursor have among others
+been applied for dielectrophoresis [14], as scaffolds for electrochemical
+monitoring of 3D cell cultures [3,15], for on-chip microsupercapacitors
+[16] or for enzymatic biosensing [17]. However, using this method the
+resolution and aspect ratio are limited by the SU-8 photolithography
+process, which makes it impractical to fabricate carbon electrodes with a
+height > 300 μm.
+
+* Corresponding author.
+E-mail addresses: suke@dtu.dk (J.Y. Pan), suke@dtu.dk (S.S. Keller).
+https://doi.org/10.1016/j.mne.2022.100124
+Received 25 November 2021; Received in revised form 27 February 2022; Accepted 7 March 2022
+Available online 10 March 2022
+2590-0072/© 2022 Published by Elsevier B.V. This is an open access article under the CC BY license (http://creativecommons.org/licenses/by/4.0/).
+
+J.Y. Pan et al.
+
+Micro and Nano Engineering 15 (2022) 100124
+
+Fig. 1. a) Electrode layout defined by UV photolithography with 17 μm thick SU-8 on top of 600 nm insulating oxide layer; b) 3D printing of 19 pillars in a hexagonal
+pattern using Formlabs High Temperature V1 resin; c) conversion of the hybrid polymer precursor structures into carbon through pyrolysis.
+
+Additive manufacturing has been established as a standard tech­
+nology for rapid prototyping. Basically, polymer parts with almost
+arbitrary 3D geometry are designed in computer-aided design (CAD)
+software and subsequently printed with various methods such as fused
+filament fabrication (FFF), digital light processing (DLP) or stereo­
+lithographic printing with a laser (SLA). The resolution of commercial
+printers gradually improves, and 3D printing has been explored for
+fabrication of 3D electrodes [18], electrochemical sensors [19] and
+devices for electrochemical energy storage [20–22]. Recently, pyrolysis
+of SLA-printed structures has been demonstrated to obtain free-standing
+3D pyrolytic carbon architectures for electrochemical energy storage
+[23,24] or cell culturing [25]. This opens up for fabrication of carbon
+electrodes with a high degree of freedom of design providing excellent
+control of shape and dimensions in a 3D configuration. However, for
+applications such as biosensing, cell monitoring or on-chip energy
+storage fabrication of 3D carbon electrodes on a carrier substrate is
+advantageous or even required. So far, additive manufacturing has not
+been explored for fabrication of on-chip carbon microelectrodes.
+Here, we demonstrate the fabrication of 3D pyrolytic carbon elec­
+trodes using a novel hybrid process combining SU-8 photolithography
+with additive manufacturing. For this purpose, a method for aligned
+stereolithographic 3D printing of high aspect ratio polymer structures on
+a Si carrier substrate with pre-defined 2D SU-8 patterns was developed.
+Subsequently, the hybrid polymer precursor structures were pyrolyzed
+at 900 ◦ C converting them into monolithically integrated 3D carbon
+electrodes. The influence of the pyrolysis parameters on the structural
+properties of the micropillars was investigated. The pyrolysis process
+was optimized to yield on-chip 3D pyrolytic carbon electrodes preser­
+ving the geometry of the polymer precursor structures. Finally, cyclic
+voltammetry was used to evaluate the electrochemical properties and
+compare the electroactive surface area of 2D and hybrid 3D pyrolytic
+carbon electrodes.
+
+preparation of polymer precursor structures followed by pyrolysis as
+illustrated in Fig. 1. First, a 600 nm thin SiO2 insulating layer was
+thermally grown on a 525 μm thick 4-in. silicon wafer (Topsil Global­
+Wafers A/S, Denmark). Next, a 17 μm thick bottom layer of SU-8
+photoresist was patterned by UV lithography with identical parame­
+ters as described previously [26]. This step was used to define the
+polymer precursor structure for a 2D circular working electrode (WE)
+layout with a diameter of 4 mm and electrical connection to a contact
+pad required for external interfacing (Fig. 1a). After development of the
+unexposed photoresist, the wafers were diced into single electrode chips
+with a dimension of 10 mm × 16 mm. 19 cylindrical micropillars of
+various heights were subsequently 3D printed in a hexagonal pattern on
+top of the 2D SU-8 structures (Fig. 1b). The hybrid polymer precursor
+structures were then pyrolyzed in inert atmosphere at a final tempera­
+ture of 900 ◦ C converting them into pyrolytic carbon electrodes (Fig. 1c).
+2.2. 3D printing of micropillars
+The 3D micropillars were 3D printed directly on the diced electrode
+chips using a Form 2 stereolithography 3D printer (Formlabs, USA) and
+the commercially available Formlabs High Temperature (HT) V1 resin
+(RS-F2-HTAM-01, Formlabs). This material was successfully converted
+into conductive pyrolytic carbon in a previous study [23]. In order to
+ensure lateral alignment between the pillars and the SU-8 pattern pre­
+viously defined by photolithography, a chip tray was first printed using
+the 3D printer itself as shown in Fig. 2. The chip tray consisted of a 1 mm
+thick structure, with 0.7 mm recesses designed to hold nine separate
+electrode chips (Fig. 2a) and was printed with a 25 μm layer thickness
+using Formlabs High Temperature v1 resin. After completion of the
+print, the 3D printed chip tray was rinsed for 10 min in isopropanol
+(VWR Chemicals, USA) using a Form Wash (Formlabs, USA) while
+remaining attached to the build platform of the printer (Fig. 2b). The
+electrode chips were subjected to a 75 s oxygen plasma at 120 W and 0.6
+mbar in a 80 kHz Zepto plasma system (Diener GmbH, Germany). This
+cleaning and activation of the SU-8 surface was implemented to improve
+adhesion of the 3D printed micropillars. The chips were subsequently
+mounted inside the chip tray using double-sided tape (Fig. 2c). To
+compensate for the thickness of the chip tray and the Si chips, and to
+ensure that the print plane for printing of the micropillars was equal to
+
+2. Materials and methods
+2.1. Microfabrication of pyrolytic carbon electrode chips
+The fabrication of the 3D pyrolytic carbon electrodes was based on a
+combination of UV photolithography and additive manufacturing for
+
+Fig. 2. a) Schematic of 3D printed chip tray, 9 electrode chips and the 3D printed structures; b) 3D printed chip tray with nine recessions for the electrode chips (10
+mm × 16 mm) after isopropanol wash; c) Chip tray with Si chips mounted before 3D printing of micropillars.
+2
+
+J.Y. Pan et al.
+
+Micro and Nano Engineering 15 (2022) 100124
+
+Fig. 3. SEM analysis of 3D printed pillars: a) Array of 19 3D printed pillars aligned on 2D SU-8 polymer precursor structure; b) Measured height compared to
+designed height for 3D printed micropillars; (c-e) 3D printed pillars with designed heights of 600 μm, 1200 μm and 2400 μm.
+
+the SU-8 surface, a 1 mm Z-axis compensation was selected in the soft­
+ware of the Form 2 printer.
+The micropillars with a width of 400 μm and varying heights were
+designed in a hexagonal pattern with a pitch of 800 μm using Fusion 360
+(Autodesk, USA) 3D CAD software. The constructed 3D model was sliced
+using Preform (Formlabs, USA) with a 25 μm layer thickness and printed
+on top of the 2D SU-8 precursor structure of the WE. After printing, the
+structures were rinsed in isopropanol using the Form Wash for 10 min,
+removed from the chip tray and cured in a Form Cure (Formlabs, USA)
+for 60 min at 60 ◦ C.
+
+Aldrich, USA). CV was conducted in 3 ml solution of phosphate buffer
+saline (PBS) (10 mM, pH 7.4) containing 10 mM equimolar ferri/
+ferrocyanide redox probe (Sigma Aldrich, USA) at a scan rate of 50 mV/
+s, using a PalmSens4 potentiostat (PalmSens, Netherlands).
+3. Results and discussion
+3.1. 3D printing of micropillars
+First, the 3D printing of the micropillars on the Si chips with the 2D
+SU-8 structure was investigated. Fig. 3 shows SEM images and height
+measurements of 3D printed micropillars. By using the 3D printer to
+fabricate a customized chip-tray, it was possible to reduce the impact of
+rotational and translational variations of the print stage, and thus ach­
+ieve a high degree of self-alignment for 3D structures printed directly on
+pre-patterned substrates (Fig. 3a). Furthermore, simultaneous printing
+on nine separate electrode chips was achieved, demonstrating the po­
+tential of this approach for parallel processing.
+In addition to positional and rotational offsets, height misalignment
+was also self-corrected by printing the holder for the chips using the 3D
+printer itself. As a consequence, the height variation of the 3D printed
+micropillars was relatively low, even though the chips were distributed
+on the build platform (Fig. 3b). This allowed for the use of the entire area
+of the print platform and enabled parallel processing without impact on
+reproducibility. In addition, the measured height of the pillars was in
+good correlation with the designed height despite a slight offset of 247
+± 44 μm. This offset is likely caused by bottom-layer compression
+causing the bottom of the pillars to be printed at slightly lower layer
+thicknesses compared to the rest of the structures.
+The actual diameter of the 3D printed pillars was 316 ± 11um, which
+was less than the designed diameter of 400 μm. This indicates that the
+resin was underexposed, resulting in smaller polymerized structures
+than the 3D design, and that the printer was operating at the limits of its
+capabilities in terms of resolution in x and y directions.
+
+2.3. Pyrolysis of hybrid polymer structures
+The SU-8 and HT resin hybrid precursor structures on the Si chips
+were transferred into a horizontal tube furnace (PEO-604 multipurpose
+furnace, ATV Technologie, Germany) under a constant nitrogen gas flow
+of 20 SLM. The pyrolysis process included a series of temperature steps
+with different ramping rates and dwell times. To identify the optimum
+carbonization conditions, several different pyrolysis temperature pro­
+files were tested while maintaining the final pyrolysis temperature at
+900 ◦ C. The polymer micropillars and the carbon electrodes were
+characterized by electron microscopy using a SEM Supra 60vp (Zeiss,
+Germany).
+2.4. Electrochemical characterization
+The electrochemical properties of the 3D carbon electrodes were
+analyzed by cyclic voltammetry (CV). Before electrochemical charac­
+terization, the carbon surface was activated using the oxygen plasma for
+75 s at 120 W and a pressure of 0.6 mbar.
+The electrochemical measurements were performed with a threeelectrode setup in a 10 ml glass beaker with the pyrolytic carbon chip
+as WE, a Ag/AgCl in 3 M KCl reference electrode (RE) (PalmSens,
+Netherlands) and a platinum wire as counter electrode (CE) (Sigma
+3
+
+J.Y. Pan et al.
+
+Micro and Nano Engineering 15 (2022) 100124
+
+Fig. 4. a) Pyrolysis processes showing different ramping profiles in order to reach the final temperature of 900 ◦ C; (b-d) SEM images of the pyrolytic carbon structure
+resulting from pyrolysis process 1–3, respectively.
+
+In addition, SEM images show that the bottom of the pillars was
+printed with a slightly larger diameter (Fig. 3c-e). This was observed
+regardless of the pillar height, indicating that it was the result of the
+automated burn-in phase of the printer, where the resin was exposed
+with a higher dose for the first few printed layers to ensure adhesion to
+the substrate. As a consequence, the first layers were overexposed
+compared to the remaining layers resulting in dimensions closer to the
+designed width.
+3.2. Pyrolysis of hybrid polymer structures
+A pyrolysis process converted the 3D polymer structures into carbon
+electrodes. During this process, the structures are heated to a tempera­
+ture of 900 ◦ C in an inert N2 atmosphere. The gradual increase of tem­
+perature causes the polymers to decompose, resulting in the release of
+hydrogen, nitrogen and oxygen, and at temperatures of 900 ◦ C or above
+mainly conductive pyrolytic carbon remains [26].
+In a preliminary study, we evaluated the possibility to avoid the 2D
+SU-8 bottom layer and fabricate 3D carbon microelectrodes by directly
+3D printing resin precursor structures on the Si carrier substrates fol­
+lowed by pyrolysis. However, this approach resulted in several
+challenges:
+Fig. 5. (a) Cubic structure with a sidelength of 10 mm before testing the
+decomposition of Formlabs HT v1 resin; (b-e) Formlabs HT v1 resin after
+heating to 300 ◦ C, 350 ◦ C, 375 ◦ C, 400 ◦ C respectively; (f) Relative mass
+measured after the different thermal processes.
+
+i) The adhesion of 3D print resin on the carrier substrates was
+suboptimal and frequently resulted in partial delamination of the
+3D printed structures during the washing and curing steps
+ii) The thickness of the 2D bottom layer connecting the 3D micro­
+pillars should have a uniform thickness < 20 μm to prevent
+cracking and delamination during pyrolysis. This was difficult to
+achieve with the present method for on-chip printing in the
+Formlabs printer
+iii) The 3D print resin was dewetting of the Si substrate during the
+pyrolysis process, resulting in lateral shrinkage of the bottom
+layer structures and bulging at the edge of the carbon pattern
+iv) The pyrolytic carbon obtained from 3D print resin easily
+delaminated during electrochemical characterization due to re­
+sidual stress in the bottom layer combined with low adhesion to
+the substrate.
+
+structures instead of micropillars (Fig. 4b). This was caused by rapid
+outgassing during heating of the polymer and the fast formation of a gasimpermeable outer shell. Apparently, the gaseous byproducts generated
+upon polymer heating and decomposition were unable to diffuse fast
+enough out of the polymer structures, causing a buildup of gas inside the
+structures. In order to confirm that high outgassing rate caused the
+structures to inflate, a higher ramping rate of 30 ◦ C/min was tested
+(Fig. 4a, process 2). Indeed the even faster heating caused a more
+prominent inflation of the pillars (Fig. 4c), while the SU-8 derived car­
+bon still preserved its shape and uniformity. This indicates that the
+Formlabs HT v1 resin outgases more heavily than other carbon precur­
+sor materials such as SU-8, where the overall geometry of micropillar
+structures was unaffected during pyrolysis with similar ramping rates
+[27].
+An additional pre-study was conducted with free-standing structures
+of Formlabs HT v1 resin to address this issue and determine the optimal
+thermal process for the fabrication of 3D carbon electrodes. Cubic
+scaffold structures with a total sidelength of 10 mm constructed of 500
+μm wide beams with a 1300 μm pitch (Fig. 5a) were heated with a
+ramping rate of 10 ◦ C/min to various temperatures for 60 min, followed
+by a gradual cooling down to room temperature at 10 ◦ C/min. When
+heated to 300 ◦ C (Fig. 5b), the structures turned from white to yellow,
+
+For the hybrid polymer structures with a 2D bottom layer prepared
+with SU-8 photoresist these challenges were successfully mitigated. The
+UV photolithography process allowed for precise control of the initial
+layer thickness and no delamination was observed. Furthermore, the SU8 pattern maintained the initial footprint area and mainly showed
+shrinkage in the vertical direction during pyrolysis. This was attributed
+to the higher structural stability of SU-8 resin after crosslinking
+compared to 3D print resin preventing reflow during heating, and
+improved surface interactions between the SU-8 and the substrate.
+A pyrolysis temperature profile with a ramping rate of 10 ◦ C/min
+(Fig. 4a, process 1) resulted in formation of inflated and bulbous
+4
+
+J.Y. Pan et al.
+
+Micro and Nano Engineering 15 (2022) 100124
+
+Fig. 6. SEM images of (a) 3D printed pillars with a designed width of 400 μm and height of 1200 μm and (b) corresponding 3D carbon electrode structure after
+pyrolysis; (c) Measured pillar height before and after pyrolysis; Higher magnification SEM images of a single pillar with a designed height of 2400 μm before (d) and
+after (e) pyrolysis.
+
+indicating the start of the polymer decomposition process. At 350 ◦ C,
+significant discoloration and mass loss were observed (Fig. 5c). At
+375 ◦ C, the structures were completely black and the size was further
+reduced as byproducts kept evaporating from the structures (Fig. 5d).
+When heated to 400 ◦ C the structures almost reached their final size
+(Fig. 5e), whereas between 400 ◦ C and 900 ◦ C the change in mass was
+minimal (Fig. 5f).
+By measuring the mass loss at different temperatures, it was
+concluded that most of the mass loss occurs between 350 ◦ C and 400 ◦ C
+(Fig. 5f). Therefore, a pyrolysis process was designed for the 3D printed
+micropillar electrodes (Fig. 4a, process 3) where the temperature was
+
+ramped at 10 ◦ C/min to 375 ◦ C where it was held constant for 180 min to
+allow gaseous decomposition products to slowly escape the precursor
+structure. After this, the temperature was slowly ramped at 1 ◦ C/min to
+425 ◦ C where it was held for 30 min to ensure the complete outgassing of
+the materials. The temperature was then ramped to 900 ◦ C at 10 ◦ C/min
+and held constant for 60 min to obtain pyrolytic carbon.
+Fig. 4d shows that the electrodes fabricated using the optimized
+thermal process displayed no inflation, and confirms the successful
+conversion of the hybrid polymer precursor structures into pyrolytic
+carbon electrodes with retained geometrical layout.
+Detailed investigation of the carbon structures revealed that the HT
+
+Fig. 7. a) Cyclic voltammogram of electrodes with different designed height of pillars. b) Peak current compared to the measured height of the carbon micropillars.
+5
+
+J.Y. Pan et al.
+
+Micro and Nano Engineering 15 (2022) 100124
+
+resin pillars shrank in both width and height during the pyrolysis process
+(Fig. 6a-c) while for the 2D SU-8 structure only the thickness decreased
+to approximately 2 μm as reported earlier [26]. Additionally, the indi­
+vidual print layers and the unevenness of the pillar surfaces were still
+visible, indicating that microscopic features were maintained during
+pyrolysis (Fig. 6d-e).
+The relative dimensions of the 3D printed polymer structures were
+consistently reduced during the pyrolysis process regardless of the initial
+dimensions of the pillars. The diameter of the carbon pillars was 93.7 ±
+6.1 μm, which was 30 ± 3% of the one of the initial 3D printed pillars,
+while the height was decreased to 35 ± 1% (Fig. 6c) of the original
+value, corresponding to a shrinkage of approximately 70% and 65%,
+respectively. This consistency in isotropic shrinkage means that it should
+be possible to control the dimensions of the final carbon structures, by
+adjusting the size of the 3D printed polymer precursor structures. A
+similar shrinkage behavior was observed for 3D precursor structures
+fabricated with SU-8 photolithography [27–29]. However, high aspect
+ratio SU-8 structures shrank slightly less, to 40–50% of their prepyrolysis dimensions, which can probably be attributed to the very
+high crosslinking density of SU-8 epoxy resist. Here, the tallest micro­
+pillar electrodes had a height of 786 ± 57 μm, which is much higher
+than values of <300 μm reported for 3D pyrolytic carbon electrodes
+fabricated using SU-8 photoresist as a precursor [30].
+
+4. Conclusions
+We have demonstrated the use of additive manufacturing to fabricate
+3D polymer structures on a SU-8 layer patterned by photolithography.
+By using the 3D printer itself to fabricate a holder, precise alignment
+between 2D SU-8 structures and 3D printed geometries was possible. To
+the best of our knowledge, this is the first study combining well estab­
+lished UV lithography with 3D printing in a hybrid process. We applied
+the hybrid process for the microfabrication of carbon electrodes. With an
+optimized pyrolysis process the polymer structures were converted into
+a single monolithically integrated carbon electrode with excellent
+electrochemical properties, high surface area, and predictable di­
+mensions. The novel method for fabrication of on-chip 3D pyrolytic
+carbon electrodes is highly relevant for applications within biosensing,
+scaffolds for electrochemical monitoring of cells, or devices for energy
+storage.
+3D pyrolytic carbon electrodes with a height of up to 800 μm were
+fabricated, which is significantly larger than maximum heights of less
+than 300 μm reported for 3D electrodes obtained from polymer struc­
+tures solely fabricated with UV photolithography. To achieve carbon
+micropillar electrodes with similar heights, SU-8 precursor structures
+with a height of >1500 μm would have to be prepared. However, SU-8
+layers with thicknesses >700 μm are difficult to pattern in a single
+process of UV photolithography and a rather lengthy process with
+multiple steps of spin-coating, baking and exposure would be required
+instead [31].
+The wide design flexibility of additive manufacturing compared to
+traditional photolithography opens up for the fabrication of 3D polymer
+structures with almost arbitrary geometry. With the true freedom of
+design of the novel fabrication method, combined with the relatively fast
+turnaround time of 3D printing, it becomes possible to rapidly iterate the
+design of a device to obtain a structure optimized for a specific purpose.
+Currently the fabrication speed and structure size are limited by the 3D
+printer itself. The print resolution of the commercial 3D printer used in
+this study is around 150 μm in the x and y directions. However, additive
+manufacturing is rapidly evolving and future developments in the field
+of stereolithographic 3D printing will allow to further decrease the print
+resolution and in consequence the minimal feature size of the resulting
+3D structures.
+
+3.3. Electrochemical characterization
+The electrochemical properties of the carbon electrodes were
+assessed by cyclic voltammetry (CV). Fig. 7a shows that the anodic and
+cathodic peak currents in CV were larger for the samples with 3D pillars
+compared to the 2D carbon electrode fabricated without 3D printed
+pillars. Furthermore, the peak currents increased for increasing pillar
+heights. According to the Randles-Sevcik equation (Eq. 1), the peak
+current in CV is proportional to the electroactive surface area of the
+electrode:
+(
+)
+nFvD0 1
+2
+ip = 0.446nFAC0
+(1)
+RT
+where n is the number of electrons participating in the redox reaction (1
+in this case), F is the Faraday’s constant, A is the electroactive surface
+area (cm− 2), C0 is the bulk concentration of the redox probe (mol cm− 3),
+Do is the diffusion coefficient of the oxidized species in the solution (s− 1)
+and ν is the scan rate (V s− 1). Since all the CV experiments were con­
+ducted with the same redox probe and scan rate, the peak current should
+scale linearly with the electroactive surface area assuming a negligible
+contribution of radial diffusion for the investigated electrode geome­
+tries. The increase of the peak current for 3D electrodes compared to the
+2D configuration demonstrates that the carbon pillars were electrically
+connected to the 2D electrode and contributed to the electrochemical
+oxidation and reduction reactions. A comparison of the peak currents
+extracted from the cyclic voltammograms showed a linear increase of
+peak current as the pillar height was increased, indicating that the
+complete 3D carbon pillar electrodes contributed equally to the overall
+electrode area (Fig. 7b). The measured increase in peak current for the
+3D carbon electrodes was 17 ± 5% larger than the increase in geometric
+surface area of the electrodes assuming that the pillars were perfect
+cylinders. This can be explained by the rough surface of the pillars
+observed in the SEM images shown in Fig. 6d-e contributing to the
+electroactive surface. This means that 3D electrodes based on 3D printed
+polymer structures provide slightly larger surface area for electro­
+chemical reactions compared to similar structures prepared by SU-8
+photolithography, where the increase of the electrochemical surface
+area was identical to the change in geometric surface area [27,29,30].
+
+Declaration of Competing Interest
+None.
+Acknowledgements
+The authors would like to acknowledge financial support by the
+European Research Council under the Horizon 2020 Framework Pro­
+gramme grant no. 772370-PHOENEEX.
+Appendix A. Supplementary data
+Supplementary data to this article can be found online at https://doi.
+org/10.1016/j.mne.2022.100124.
+References
+[1] Y.G. Majid Beidaghi, Capacitive energy storage in micro-scale devices: recent
+advances in design and fabrication of micro- supercapacitors, Energy Environ. Sci.
+7 (2014) 867–884, https://doi.org/10.1039/c3ee43526a.
+[2] M. Peng, Y. Zhao, D. Chen, Y. Tan, Free-standing 3D electrodes for electrochemical
+detection of hydrogen peroxide, ChemCatChem 11 (17) (2019) 4222–4237,
+https://doi.org/10.1002/cctc.201900913.
+[3] C. Caviglia, et al., In situ electrochemical analysis of alkaline phosphatase activity
+in 3D cell cultures, Electrochim. Acta 359 (2020), 136951, https://doi.org/
+10.1016/j.electacta.2020.136951.
+
+6
+
+J.Y. Pan et al.
+
+Micro and Nano Engineering 15 (2022) 100124
+[18] A. Ambrosi, M. Pumera, 3D-printing technologies for electrochemical applications,
+Chem. Soc. Rev. 45 (10) (2016) 2740–2755, https://doi.org/10.1039/c5cs00714c.
+[19] R.M. Cardoso, et al., Additive-manufactured (3D-printed) electrochemical sensors:
+a critical review, Anal. Chim. Acta 1118 (2020) 73–91, https://doi.org/10.1016/j.
+aca.2020.03.028.
+[20] V. Egorov, U. Gulzar, Y. Zhang, S. Breen, C. O’Dwyer, Evolution of 3D printing
+methods and materials for electrochemical energy storage, Adv. Mater. 32 (29)
+(2020) 1–27, https://doi.org/10.1002/adma.202000556.
+[21] Z. Qi, et al., 3D-printed, superelastic polypyrrole–graphene electrodes with
+ultrahigh areal capacitance for electrochemical energy storage, Adv. Mater. Tech. 3
+(7) (2018) 1–8, https://doi.org/10.1002/admt.201800053.
+[22] C. Zhu, et al., 3D printed functional nanomaterials for electrochemical energy
+storage, Nano Today 15 (2017) 107–120, https://doi.org/10.1016/j.
+nantod.2017.06.007.
+[23] B. Rezaei, J.Y. Pan, C. Gundlach, S.S. Keller, Highly structured 3D pyrolytic carbon
+electrodes derived from additive manufacturing technology, Mater. Des. 193
+(2020), 108834, https://doi.org/10.1016/j.matdes.2020.108834.
+[24] B. Rezaei, T.W. Hansen, S.S. Keller, Stereolithography-derived three-dimensional
+pyrolytic carbon/Mn3O4Nanostructures for free-standing hybrid supercapacitor
+electrodes, ACS Applied Nano Materials (2021), https://doi.org/10.1021/
+acsanm.1c03251.
+[25] M. Islam, A.D. Lantada, M.R. Gómez, D. Mager, J.G. Korvink, Microarchitectured
+carbon structures as innovative tissue-engineering scaffolds, Advanced Engineering
+Materials 22 (6) (2020), https://doi.org/10.1002/adem.202000083.
+[26] Y.M. Hassan, et al., High temperature SU-8 pyrolysis for fabrication of carbon
+electrodes, J. Anal. Appl. Pyrolysis 125 (2017), https://doi.org/10.1016/j.
+jaap.2017.04.015.
+[27] I. Mantis, S. Hemanth, C. Caviglia, A. Heiskanen, S. Sylvest, Suspended highly 3D
+interdigitated carbon microelectrodes, Carbon 179 (2021) 579–589, https://doi.
+org/10.1016/j.carbon.2021.04.069.
+[28] R. Natu, M. Islam, J. Gilmore, R. Martinez-Duarte, Shrinkage of SU-8
+microstructures during carbonization, J. Anal. Appl. Pyrolysis 131 (January)
+(2018) 17–27, https://doi.org/10.1016/j.jaap.2018.02.015.
+[29] S. Hemanth, C. Caviglia, S.S. Keller, Suspended 3D pyrolytic carbon
+microelectrodes for electrochemistry, Carbon 121 (2017) 226–234, https://doi.
+org/10.1016/j.carbon.2017.05.090.
+[30] S. Esmail Tehrani, et al., Hydrogen peroxide detection using Prussian bluemodified 3D pyrolytic carbon microelectrodes, Electroanalysis (2021) 1–14,
+https://doi.org/10.1002/elan.202100387.
+[31] H. Lorenz, M. Despont, P. Vettiger, P. Renaud, Fabrication of photoplastic highaspect ratio microparts and micromolds usina SU-8 UV resist, Microsyst. Technol. 4
+(3) (1998) 143–146, https://doi.org/10.1007/s005420050118.
+
+[4] R.L. McCreery, Advanced carbon electrode materials for molecular
+electrochemistry, Chem. Rev. 108 (7) (2008) 2646–2687, https://doi.org/
+10.1021/cr068076m.
+[5] A. Asif, et al., Pyrolytic carbon Nanograss enhances neurogenesis and
+dopaminergic differentiation of human midbrain neural stem cells, Adv.
+Healthcare Mat. 2001108 (2020) 1–12, https://doi.org/10.1002/
+adhm.202001108.
+[6] W. Zhang, S. Zhu, R. Luque, S. Han, L. Hu, G. Xu, Recent development of carbon
+electrode materials and their bioanalytical and environmental applications, Chem.
+Soc. Rev. 45 (3) (2016) 715–752, https://doi.org/10.1039/c5cs00297d.
+[7] F. Lu, J. Wang, X. Sun, Z. Chang, 3D hierarchical carbon nanofibers/TiO2@MoS2
+core-shell heterostructures by electrospinning, hydrothermal and in-situ growth for
+flexible electrode materials, Mater. Des. 189 (2020), https://doi.org/10.1016/j.
+matdes.2020.108503.
+[8] X. Dong, et al., 3D graphene foam as a monolithic and macroporous carbon
+electrode for electrochemical sensing, ACS Appl. Mater. Interfaces 4 (6) (2012)
+3129–3133, https://doi.org/10.1021/am300459m.
+[9] C.W. Yin Song, Richa Agrawal, Yong Hao, Chunhui Chen, C-MEMS based
+microsupercapacitors and microsensors, ECS Trans. 61 (7) (2014) 55–64.
+[10] C. Wang, G. Jia, L.H. Taherabadi, M.J. Madou, A novel method for the fabrication
+of high-aspect ratio C-MEMS structures, J. Microelectromech. Syst. 14 (2) (2005)
+348–358, https://doi.org/10.1109/JMEMS.2004.839312.
+[11] A. Mardegan, R. Kamath, S. Sharma, P. Scopece, P. Ugo, M. Madou, Optimization
+of carbon electrodes derived from epoxy-based photoresist, J. Electrochem. Soc.
+160 (8) (2013) B132–B137, https://doi.org/10.1149/2.107308jes.
+[12] S. Sharma, R. Kamath, M. Madou, Porous glassy carbon formed by rapid pyrolysis
+of phenol-formaldehyde resins and its performance as electrode material for
+electrochemical double layer capacitors, J. Anal. Appl. Pyrolysis 108 (2014) 12–18,
+https://doi.org/10.1016/j.jaap.2014.05.025.
+[13] R. Martinez-Duarte, SU-8 photolithography as a toolbox for carbon MEMS,
+Micromachines 5 (3) (2014) 766–782, https://doi.org/10.3390/mi5030766.
+[14] R. Martinez-Duarte, P. Renaud, M.J. Madou, A novel approach to dielectrophoresis
+using carbon electrodes, Electrophoresis 32 (17) (2011) 2385–2392, https://doi.
+org/10.1002/elps.201100059.
+[15] L. Amato, et al., Pyrolysed 3D-carbon scaffolds induce spontaneous differentiation
+of human neural stem cells and facilitate real-time dopamine detection, Adv. Funct.
+Mater. 24 (44) (2014) 7042–7052, https://doi.org/10.1002/adfm.201400812.
+[16] R. Agrawal, M. Beidaghi, W. Chen, C. Wang, Carbon microelectromechanical
+systems (C-MEMS) based microsupercapacitors, Proc. SPIE 9493 (2015) 94930C.
+[17] S. Hemanth, A. Halder, C. Caviglia, Q. Chi, S.S. Keller, 3D carbon microelectrodes
+with bio-functionalized graphene for electrochemical biosensing, Biosensors 8 (3)
+(2018), https://doi.org/10.3390/bios8030070.
+
+7
+
+

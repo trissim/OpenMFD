@@ -1,0 +1,3 @@
+[submodule "openmfd_repo"]
+	path = openmfd_repo
+	url = https://github.com/trissim/OpenMFD

@@ -1,0 +1,61 @@
+NIH Public Access
+Author Manuscript
+Langmuir. Author manuscript; available in PMC 2010 August 18.
+
+NIH-PA Author Manuscript
+
+Published in final edited form as:
+Langmuir. 2003 March 4; 19(5): 1551–1556. doi:10.1021/la026417v.
+
+Microfluidic Multicompartment Device for Neuroscience
+Research†
+Anne M. Taylor‡, Seog Woo Rhee‡, Christina H. Tu§, David H. Cribbs§, Carl W. Cotman§,
+and Noo Li Jeon*,‡
+‡ Department of Biomedical Engineering, University of California at Irvine, Irvine, California 92697
+§ Institute of Brain Aging and Dementia, University of California at Irvine, Irvine, California 92697
+
+Abstract
+
+NIH-PA Author Manuscript
+
+This paper describes and characterizes a novel microfabricated neuronal culture device. This
+device combines microfabrication, microfluidic, and surface micropatterning techniques to create
+a multicompartment neuronal culturing device that can be used in a number of neuroscience
+research applications. The device is fabricated in poly(dimethylsiloxane), PDMS, using soft
+lithography techniques. The PDMS device is placed on a tissue culture dish (polystyrene) or glass
+substrate, forming two compartments with volumes of less than 2 μL each. These two
+compartments are separated by a physical barrier in which a number of micron-size grooves are
+embedded to allow growth of neurites across the compartments while maintaining fluidic
+isolation. Cells are plated into the somal (cell body) compartment, and after 3–4 days, neurites
+extend into the neuritic compartment via the grooves. Viability of the neurons in the devices is
+between 50 and 70% after 7 days in culture; this is slightly lower than but comparable to values
+for a control grown on tissue culture dishes. Healthy neuron morphology is evident in both the
+devices and controls. We demonstrate the ability to use hydrostatic pressure to isolate insults to
+one compartment and, thus, expose localized areas of neurons to insults applied in soluble form.
+Due to the high resistance of the microgrooves for fluid transport, insults are contained in the
+neuritic compartment without appreciable leakage into the somal compartment for over 15 h.
+Finally, we demonstrate the use of polylysine patterning in combination with the microfabricated
+device to facilitate identification and visualization of neurons. The ability to direct sites of
+neuronal attachment and orientation of neurite outgrowth by micropatterning techniques,
+combined with fluidically isolated compartments within the culture area, offers significant
+advantages over standard open culture methods and other conventional methods for manipulating
+distinct neuronal microenvironments.
+
+NIH-PA Author Manuscript
+
+I. Introduction
+A multicompartment culturing method for neuritic isolation was first described by
+Campenot for primary cultures of sympathetic neurons.1,2 In this method, a tissue culture
+dish is coated with collagen and parallel lines, spaced 200 μm apart, are scratched along the
+surface of the dish. A three-compartment Teflon piece is sealed to a tissue culture dish with
+silicone grease, and neurons are plated in the small central chamber of the Teflon piece.
+Neurites grow outward into the two other compartments on either side, aligning parallel to
+the scratches.1 Variations of the Campenot chamber have been used in studies of various
+types of long projection neurons. However, to use cortical and hippocampal neuronal
+
+†Part of the Langmuir special issue entitled The Biomolecular Interface.
+*
+
+To whom correspondence should be addressed. Phone: 949-824-9032. njeon@uci.edu.
+
+

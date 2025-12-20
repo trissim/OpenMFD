@@ -1,0 +1,90 @@
+MNE 15 (2022) 100124
+
+Contents lists available at ScienceDirect
+
+Micro and Nano Engineering
+journal homepage: www.sciencedirect.com/journal/micro-and-nano-engineering
+
+Hybrid microfabrication of 3D pyrolytic carbon electrodes by
+photolithography and additive manufacturing
+Jesper Y. Pan a, Babak Rezaei a, Thomas A. Anhøj a, Niels B. Larsen b, Stephan S. Keller a, *
+a
+b
+
+DTU Nanolab, National Centre for Nano Fabrication and Characterization, Technical University of Denmark, Kgs. Lyngby 2800, Denmark
+DTU Health Tech, Department of Health Technology, Technical University of Denmark, Kgs. Lyngby 2800, Denmark
+
+A R T I C L E I N F O
+
+A B S T R A C T
+
+Keywords:
+Additive manufacturing
+CMEMS
+Pyrolytic carbon
+SU-8
+
+We report a novel hybrid method for fabricating high aspect ratio 3D pyrolytic carbon electrodes combining UV
+photolithography and additive manufacturing with commercially available SLA 3D printers and materials. By
+using a 3D printed chip holder, aligned 3D printing on a patterned silicon chip was possible. This allowed for the
+fabrication of cylindrical polymer micropillars with a height of 2173 ± 26 μm and a width of 316 ± 11 μm on
+SU-8 precursor structures defining the leads, contact pads and underlying 2D electrode prepared using UV
+lithography. Microfabrication of 3D structures with these dimensions is impossible to achieve with SU-8
+photolithography alone. The hybrid polymer structures were converted into 3D carbon electrodes with high
+structural integrity using a 3-step pyrolysis process optimized for the specific 3D print resin. During this process,
+the micropillars shrunk to 30 ± 3% in height and 35 ± 1% in width of the polymer precursor structures, while
+maintaining the macroscopic shape and microscopic surface roughness. Electrochemical experiments confirmed
+that the pyrolytic carbon formed a monolithic conductive 3D electrode. The surface roughness contributed to a
+17 ± 5% increase in electroactive surface area compared to the geometrical surface area of the micropillars.
+
+1. Introduction
+The microfabrication of 3D electrodes with large surface area is of
+high relevance for most applications involving electrochemistry. For
+electrochemical storage, supercapacitors have been proposed as a
+simpler and more sustainable alternative to batteries. In order to achieve
+high energy density, well defined, conductive, high surface area struc­
+tures are needed [1]. In electrochemical sensing, increased electrode
+surface area has contributed to improved sensor performance [2].
+During electrochemical monitoring of cells or electrical stimulation of
+cells in organ-on-chip models, 3D electrode configurations allow for
+shorter diffusion distances for a larger fraction of the cell cultures [3]. In
+many of these applications, carbon has been established as a promising
+electrode material due to its high chemical stability and inertness, a
+large electrochemical potential window, reasonable electrical conduc­
+tivity and inherent biocompatibility [4–6].
+Various microfabrication methods have been proposed for the
+fabrication of 3D carbon electrodes such as carbonization of electrospun
+fibers [7] and synthesis of graphene foams using chemical vapor depo­
+sition [8]. While these methods are excellent in producing highly porous
+carbon structures, they are not suitable for integration of electrodes with
+
+a well-defined electrode geometry on a chip. In the so-called carbon
+MEMS (CMEMS) process, photoresist precursor structures are converted
+into carbon electrodes through pyrolysis at temperatures >900 ◦ C in an
+inert atmosphere [9,10]. The main advantage of this approach is that the
+electrode geometry is defined by well-established microfabrication
+methods such as UV photolithography. Furthermore, the electrical and
+electrochemical properties of the resulting 3D pyrolytic carbon elec­
+trodes are largely dependent on the precursor material and the pyrolysis
+conditions and can therefore be optimized for a specific application
+[11,12].
+The negative epoxy photoresist SU-8 has been extensively explored
+for the CMEMS process, as it is possible to construct stable high aspect
+ratio polymer structures using UV photolithography, which then are
+converted to carbon through a pyrolysis process [13]. 3D pyrolytic
+carbon electrodes based on SU-8 polymer precursor have among others
+been applied for dielectrophoresis [14], as scaffolds for electrochemical
+monitoring of 3D cell cultures [3,15], for on-chip microsupercapacitors
+[16] or for enzymatic biosensing [17]. However, using this method the
+resolution and aspect ratio are limited by the SU-8 photolithography
+process, which makes it impractical to fabricate carbon electrodes with a
+height > 300 μm.
+
+* Corresponding author.
+E-mail addresses: suke@dtu.dk (J.Y. Pan), suke@dtu.dk (S.S. Keller).
+https://doi.org/10.1016/j.mne.2022.100124
+Received 25 November 2021; Received in revised form 27 February 2022; Accepted 7 March 2022
+Available online 10 March 2022
+2590-0072/© 2022 Published by Elsevier B.V. This is an open access article under the CC BY license (http://creativecommons.org/licenses/by/4.0/).
+
+

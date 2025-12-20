@@ -1,0 +1,832 @@
+Proceedings of the 3rd Annual
+IEEE Conference on Automation Science and Engineering
+Scottsdale, AZ, USA, Sept 22-25, 2007
+
+MoRP-B01.2
+
+Characterization of Program Controlled CO2 Laser-Cut PDMS
+Channels for Lab-on-a-chip Applications
+Andrew W. Holle, Shih-Hui Chao, Mark R. Holl, IEEE Member,
+Jeffrey M. Houkal, and Deirdre R. Meldrum, IEEE Fellow
+ac
+
+Abstract—PDMS (polydimethylsiloxane) is an important
+material for lab-on-a-chip, an emerging technology to automate
+biological and chemical operations in microfluidic devices.
+Laser manufacturing of materials suitable for use in laminatebased construction of lab-on-a-chip devices is an important step
+in the development of automated assembly line procedures.
+This study investigates the effect of laser cutting parameters on
+channel topography when a carbon dioxide laser is used to
+create trenches in PDMS. We present cross-sectional
+micrographs of the laser-ablated channels that reveal a
+modified Gaussian contour, with smooth, circular arcs at the
+bottom of the channel. We define geometric parameters that
+describe the contours, including cut depth and maximum cut
+width. Relationships between laser power, pulses per inch, and
+laser traverse speed and ablation profile patterns are
+established. A strong linear relationship (R2=0.9951) between
+cut depth and laser power is demonstrated. Analysis of the
+radii of circular arcs at the bottom of the channel and at the
+surface of the PDMS was performed. As laser power density is
+increased (increase in laser power or pulses per inch) the
+PDMS surface radii and channel floor radius decrease.
+
+L
+
+I. INTRODUCTION
+
+ab-on-a-chip is a rapidly emerging field in which small
+(micro and nanoliter scale) volumes of fluids are
+manipulated for the sake of an experiment. In order to
+manipulate fluids on this scale, channels with appropriate
+dimensions (typically 10 to 100 micrometers) are needed.
+The silicon-based organic polymer PDMS has been used
+extensively in lab-on-a-chip applications. Small features in
+PDMS are commonly achieved photolithographically, but
+this is time consuming and costly.
+Laser cutting has been used as an alternative to
+photolithography.
+Past works have focused on the
+engraving of PDMS with lasers, but the majority of them
+
+Manuscript received March 18, 2007. This work was supported in part
+by the National Institutes of Health NHGRI Centers of Excellence in
+Genomic Science (Grant 5 P50 HG002360, D. Meldrum (PI)).
+A.W. Holle is with the Harrington Department of Bioengineering,
+Arizona State University, Tempe, AZ 85287-9309 USA. (e-mail:
+Andrew.Holle@asu.edu; phone: 860-861-1303)
+D.R. Meldrum is Director of the Center for Ecogenomics and the Dean
+of the Ira A. Fulton School of Engineering, Arizona State University,
+Tempe, AZ 85287-9309 USA (e-mail: Deirdre.meldrum@asu.edu)
+S.H. Chao, J.M. Houkal, and M.R. Holl are with the Center for
+Ecogenomics, The Biodesign Institute, Arizona State University, Tempe,
+AZ 85287-6501 USA (e-mail: joe.chao@asu.edu; jeff.houkal@asu.edu;
+mark.holl@asu.edu).
+
+1-4244-1154-8/07/$25.00 ©2007 IEEE.
+
+utilize expensive Ti:sapphire femtosecond laser systems [1].
+Wolfe et al. used a femtosecond laser to etch channels in
+PDMS and to produce intricate 2D patterns for lab-on-achip applications [2], but this research did not characterize
+channel geometry. Kim, Campbell, Groisman, Kleinfeld and
+Schaffer also utilized a femtosecond laser to build
+unmoldable features into microfluidc devices [3]. This work
+addressed soft lithography’s inability to realize 3D
+structures. Femtosecond lasers were utilized in Nguyen et
+al.’s research on bioreactors [4]. Seven polymer layers, four
+of them PDMS, were machined with femtosecond lasers,
+then stacked and bonded to form a complex bioreactor. This
+work proposed a five-minute ultrasonic cleaning to remove
+debris from the PDMS. While both of these works address
+certain challenges with the laser machining of PDMS,
+neither attempts to increase understanding of the channel
+dimensions and topography that laser cutting provides.
+Other works have addressed channel characteristics of
+laser-machined polymers. Chan, Nguyen, Xia, and Wu used
+a CO2 laser similar to the one used in this investigation to
+micromachine
+channels
+in
+PMMA
+(Polymethylmethacrylate) for use in fuel cells [5]. These
+channels exhibited a distinctive Gaussian profile. Channel
+cross sections were shown but not quantitatively
+characterized or modeled.
+Still other works have set out to understand selected
+characteristics of the surfaces of laser machined polymers.
+Pugmire, Waddell, Haasch, Tarlov, and Locascio analyzed
+the surface chemistry and electroosmotic flow characteristics
+of channels cut into several polymers [6], including PMMA,
+PETG
+(polyethylene
+terephthalate
+glycol),
+PC
+(polycarbonate), and PVC (polyvinyl chloride). PDMS was
+not characterized. Pham et al. correlated laser ablation rate
+with the thermal properties of several polymers, including
+PDMS [7].
+Graubner et al. quantified the relationship between pulse
+number and feature depth for isolated laser-ablated holes in
+PDMS [8]. An Nd:YAG laser was used to machine single
+holes into PDMS. Using this design, plots of depth vs.
+number of pulses were generated. Hole profiles and lateral
+dimensions were not analyzed.
+The CO2 laser is a cost-effective option for fabricating
+PDMS channels with widths larger than 100 micrometers.
+We characterized the topography of laser-cut channels at
+various laser settings. Data of the type presented here may
+be helpful in laser parameter selection for creating channels
+in PDMS sheets.
+
+621
+
+Authorized licensed use limited to: McGill Libraries. Downloaded on August 15,2024 at 23:04:31 UTC from IEEE Xplore. Restrictions apply.
+
+MoRP-B01.2
+
+II. METHODS AND MATERIALS
+A. PDMS
+The PDMS used for this investigation was purchased from
+Specialty Silicone Products, Inc. (Ballston Spa, NY). The
+material was packaged in 300 millimeter by 300 millimeter
+sheet form and had a nominal thickness of 381 micrometers
+(0.015 inches), the thickest sheet available. Pre-made sheets
+were chosen to avoid potential inconsistencies.
+B. Laser
+The CO2 laser used for this investigation was the XL9200, manufactured by Universal Laser Systems Inc.
+(Scottsdale, AZ). Having a characteristic wavelength of 10.6
+micrometers, the infrared laser operates with variable
+settings for power, speed, and pulses per inch (PPI). The
+assist gas utilized by this specific laser was air, supplied
+coaxially. Powers presented are relative to the maximum
+allowable input power of 60 watts (e.g. 50% power is
+equivalent to 30 watts). Speeds are fractions of the
+maximum speed of 254 cm/sec (e.g. 50% speed is equivalent
+to 127 cm/sec).
+C. Channel Creation
+To characterize the effect of laser parameters on channel
+morphology, a full spectrum of data was collected
+employing different laser settings. Two repetition rates (500
+and 750 PPI) were used. Lower settings tended to produce a
+noticeable scalloping effect due to the larger distance
+between laser pulses. Four speed settings (25%, 50%, 75%,
+and 100%) were used to investigate the effect of laser speed
+on channel depth and shape. Ten power settings (10-100%
+in increments of 10%) were used to elucidate the effect of
+laser power and channel depth and shape. Eighty cuts were
+required in order to test each combination of these
+configurations. To do this, an AutoCad template with eighty
+contiguous parallel lines with length of 4.66 millimeters and
+spacing of 1.27 millimeters was prepared. A strip of PDMS
+was cut from the packaged sheet and positioned within the
+cutting field of the laser system in such a way that the
+pattern of parallel channel lines overlapped the edge of the
+strip. This was done to ensure that a clean cross-sectional
+profile was obtained at the edge of the strip, as opposed to
+cutting the PDMS cross section with a razor or scissors after
+the laser lines had been cut. The design was plotted on the
+XL-9200 seven lines at a time, due to the ability of the
+plotter to accommodate seven different laser settings in one
+pass. The assist gas was supplied in each experiment; no
+cuts were made without it in order to maintain the
+cleanliness of the lens. Once all eighty cuts had been made,
+the PDMS strip was washed with soap and water to remove
+debris. The strip was left to dry overnight between two
+composite wipes in a semi-clean room. After drying, the
+strip was cut into eight segments with ten lines each to
+facilitate imaging. After cross section characterization one
+500 PPI and one 750 PPI channel were sectioned
+longitudinally to document the degree of scalloping within
+the trench.
+
+D. Image Acquisition
+Each of the eight strip segments was attached to a steel Vblock using the natural adherence of the PDMS. The Vblock served to position the samples in the field of view and
+to provide contrast between the PDMS and the background.
+Images were acquired at a magnification of 11.25x, with the
+exception of the scalloping test image. An example of the
+cross-sectional profile of cut PDMS is seen in Fig. 1. For
+reference, all figures shown have thicknesses of 381
+micrometers.
+E. Image Analysis
+Photomicrographs were imported into MATLAB, where
+an image analysis function was used to calculate the
+parameters shown in Fig. 2. Measurements were taken for
+three radii, two slope values, and the depth and maximum
+width of the cut. The width was measured from the tangent
+intersections of the upper radii and the surface. Depth was
+measured from the bottom of the channel to the surface. To
+calculate the radii for the three circles, a circle-fit function
+was given a series of points anticipated to be on both the cut
+profile and the circle. This function then returned the center
+point and radius of the circle prescribed by the input points.
+Measurements were converted from pixels to metric units by
+calibration with a Standard USAF 1951 Resolution Test
+Pattern at the same magnification.
+
+III. RESULTS
+A. Scalloping Test
+Fig. 3 is an orthogonal cross section of PDMS which
+shows the surface profile of the base of the channel. From
+this profile, it can be seen that scalloping has been kept to a
+minimum at the 500 PPI setting and thus at higher settings.
+Results on the low end of the power spectrum, especially
+at high speeds, often would result in no cut. Because of this,
+there are several unattainable data points on the following
+graphs. An example of this is seen on all graphs at a speed
+setting of 100%.
+B. Radius 1, 2, and 3
+No strict patterns were found among the three radius
+parameters. However, gradual trends were noticed.
+In several instances, especially when levels for power
+setting and speed setting were moderate (between 50% and
+70% for power setting and between 25% and 50% for speed
+setting) all three transition regions were sloped, yielding a
+Gaussian cut profile. In these cases, the transition regions
+could be modeled well with arc segments of finite radius.
+Furthermore, the cut profile was moderately symmetrical,
+with both radii 1 and 3 being approximately equal. An
+example of this cut profile can be seen in Fig. 4.
+In other cases, mainly in cases with both high speed
+setting and low power setting, all three transition regions
+
+622
+Authorized licensed use limited to: McGill Libraries. Downloaded on August 15,2024 at 23:04:31 UTC from IEEE Xplore. Restrictions apply.
+
+MoRP-B01.2
+
+were sloped, but the overall profile was asymmetric. In a
+majority of these instances, radius 3 was greater than radius
+1. An example of this is seen in Fig. 5. These cut profiles
+were mostly seen at high speed setting and low power
+setting configurations.
+Another cut profile observed had one upper transition
+region sloped and the other blunt. In most cases, similar to
+the previous example, the region corresponding to radius 1
+was the region undergoing the blunt transition, while the
+region corresponding to radius 3 kept its rounded, smooth
+transition profile. An example of this cut profile can be seen
+in Fig. 6.
+These cut profiles were mostly seen at high
+speed setting and high power setting levels.
+The final group of cut profiles noticed was those in which
+both cut intersections were sharp. This ‘cornering’ yielded
+comparatively small radius values (under 25 micrometers)
+when the circle fit function in MATLAB was used. An
+example of this is seen in Fig. 7. These cut profiles were
+seen mostly at high power setting and low speed setting
+laser configurations.
+Similarly, there was a great deal of variability in the data
+for radius 2. Overall, as power setting increased, the value
+for radius 2 decreased.
+C. Width and Depth
+Data for the channel depth and channel width were
+collected at both 500 and 750 PPI. The data collected for
+channel width is displayed in Fig. 8 and Fig. 9. There is a
+strong positive relationship between width and power
+setting, with linear regression R2 values as high as 0.91.
+Furthermore, there is a clear trend that as speed setting is
+increased, channel width decreases, as expected. The data
+for channel depth is displayed in Fig. 10 and Fig. 11. There
+is a very strong positive relationship between depth and
+power setting. The linear regression at 50 percent speed at
+500 PPI yielded an R2 value of 0.995. All other R2 values
+were relatively high.
+D. Slope 1 and Slope 2
+Slope 1 is the slope of the line on the left hand side of the
+cut, and therefore by definition must always be negative.
+Charts of slope 1 vs. power setting for four different speed
+settings are seen in Figs. 12 and 13. A somewhat strong
+inverse relationship is observed; as power setting increases,
+slope 1 gets more negative. Slope 2 is the slope of the right
+hand side of the cut, and must be positive by definition.
+Charts of slope 2 vs. power setting for four different speed
+settings are seen in Figures 14 and 15. A positive
+relationship is observed, with slope 2 increasing as power
+setting increases. There is a very strong positive relationship
+between slope and power setting. The linear regression at 50
+percent speed at 500 PPI yielded an R2 value of 0.995, equal
+to the R2 value for the cut width.
+IV. DISCUSSION
+The first test run was the scalloping test. From Fig. 3, it is
+
+clear that there is not any evidence of pronounced
+scalloping, which is often seen in cuts made at low PPI
+settings. This may have an important impact on the use of
+CO2 laser-cut PDMS in lab-on-a-chip applications, due to its
+effect on flow characteristics.
+The two outside radius profiles and the two slope profiles
+were obtained to gain a better understanding of the
+differences between the left and right sides of the cut profile.
+When using the MATLAB program to fit circles, sharp
+corners had radii that were less than 22 micrometers. The
+majority of values for radius 1 were less than 22; this means
+that the left side of the cut profile was often very steep, with
+a somewhat sharp corner at the intersection of the cut and
+the surface of the PDMS sheet, as seen in Fig. 6. Radius 3
+was often much larger, with values going as high as 175
+micrometers. This shows how smooth the transition from the
+top side to the cut was on the right hand side. This pattern of
+a sharp corner on the left side and a smooth arc on the right
+side was present on many of the cuts. This skew may have
+been due to a small, constant asymmetric Gaussian laser
+profile at the point of cutting. This assertion is supported by
+the data obtained for slope 1 and slope 2. Slope 1, on the left
+side of the cut profile, had a greater average magnitude than
+slope 2. This shows that the left side was usually steeper
+than the right side. This asymmetry was most likely not a
+function of the assist gas because air was supplied coaxially.
+One possible explanation for asymmetry in the cut profile is
+an inherent non-perpendicularity of the laser to the cutting
+surface.
+Data for radius 2 was obtained in order to understand the
+properties of the bottom of the channel. This model was
+appropriate due to the fact that nearly all of the cuts had an
+arc-shaped profile at their bottom. The general trend for this
+bottom circle was as the power increased, the radius
+decreased. This is probably due to the fact that as the laser
+became more powerful, it cut deeper, which essentially
+‘buried’ the bottom of the profile. An important exception is
+on profiles where the laser cut through the entire PDMS
+sheet. In these cases, the laser expanded the channel width
+once it had cut through the entire height, making the
+projected radius of the bottom of the channel much larger.
+Data obtained for cut depth and width exposed some
+interesting trends in data. Figs. 10 and 11 show extremely
+strong linear relationships between cut depth and laser
+power. One important thing to note about cut depth was that
+for several of the high power/low speed cuts, the laser
+penetrated the entire thickness of the PDMS sheet. Once this
+happened, no attempt was made to extrapolate actual cut
+depth for fear of inaccuracy. Instead, cut depth is measured
+to be the height of the PDMS sheet. This trend is clear in
+Figs. 10 and 11 at the high end of the cut depth spectrum.
+Cut width charts showed a clear increase in cut width as
+laser power increased. These relationships also exhibited
+strong linear characteristics.
+Both procedural and measurement error are suspected to
+
+623
+Authorized licensed use limited to: McGill Libraries. Downloaded on August 15,2024 at 23:04:31 UTC from IEEE Xplore. Restrictions apply.
+
+MoRP-B01.2
+
+have been a factor in the results shown in the charts.
+Procedural error mainly involves the direction of the laser
+cut, while measurement error is a factor of the inherent
+human error involved in taking measurements. In order to
+reduce procedural error, an experiment has been proposed in
+which ablation profile is determined as a function of radial
+direction. In order to reduce measurement error, further
+MATLAB programming will include functions which
+automatically detect edges and make depth and width
+measurements.
+One important observation made was the amount of
+bulging found around the edges of the cuts. In past
+experiments, bulging in CO2-cut polymers has been a cause
+for concern, as irregularities around the edges of the cuts
+have induced flow problems in channels, as well as
+introduced difficulties in the bonding process. Chung, Lin,
+and Huang expounded on the bulge effect in PMMA, and
+proposed a PDMS coating to reduce it [9]. In this research,
+no bulge formation was noted, which makes this type of
+PDMS channel ideal for lab-on-a-chip applications.
+Furthermore, because of the elastic nature of PDMS, any
+small bulge formations could be reduced during bonding
+with simple mechanical pressure.
+
+chemistry of PDMS. Because water-based microfluidics
+often calls for hydrophilic channels, the ability to fabricate
+them is extremely important.
+ACKNOWLEDGMENT
+We would like to acknowledge the editing assistance
+provided by Dr. Roger Johnson and the support of The
+Biodesign Institute staff, with special recognition to Steve
+Fay.
+REFERENCES
+[1]
+[2]
+
+[3]
+[4]
+
+[5]
+
+V. CONCLUSION
+The conclusions drawn in this research have important
+implications in microfluidics. We have demonstrated that
+carbon dioxide laser-cut PDMS has the characteristics that
+make it a viable substrate for lab-on-a-chip applications due
+to its rounded channel profile and smooth edges. We assert
+that this will enable patterning of microfluidic networks at
+low cost and high automation throughput.
+While
+femtosecond lasers define the limit of fabrication resolution
+in laser microfabrication, it is imperative when transitioning
+to automated systems that cost be optimized. We have
+demonstrated that for a class of manufacturing
+configurations relevant to lab-on-a-chip integrated systems
+that carbon dioxide lasers are cost effective and excellent for
+this process.
+Further research will focus on flow
+characteristics within these PDMS channels, something that
+has not yet been analyzed. As well, further study of trends
+within the cut profile pertaining to the three radii is planned.
+Another possible direction for future research is the potential
+for the establishment of linear regressions for the modeling
+of channel width and depth based on the changeable
+parameters of the laser. This will allow future researchers to
+be able to look up the optimum laser settings for cutting
+once they have chosen a channel depth. Further future
+research will also include techniques for determining the
+characteristics of the entire channel, using a combination of
+SEM and optical surface profilometry. This research will
+further aid lab-on-a-chip applications by giving insights into
+overall channel characteristics, surface porosity, and residue
+in and around the channel. Further research will also look to
+understand the effect of laser machining on the surface
+
+[6]
+[7]
+[8]
+
+[9]
+
+C. G. Khan Malek, “Laser processing for bio-microfluidics
+applications (part II),” Anal Bioanal Chem, vol. 385 , pp. 1362-1369,
+June 2006.
+D.B. Wolfe, J.B. Ashcom, J.C. Hwang, C.B. Schaffer, E. Mazur, G.M.
+Whitesides, “Customization of poly(dimethylsiloxane) stamps by
+micromachining using a femtosecond-pulsed laser,” Advanced
+Materials, vol. 5, pp. 62-65, January 2003.
+T.N. Kim, K. Campbell, A. Groisman, D. Kleinfeld, C.B.Schaffer,
+“Femtosecond laser-drilled capillary integrated into a microfluidic
+device,” Applied Physics Letters, vol. 86, pp. 1-3, May 2005.
+M.N. Nguyen, H.D. Fahlenkamp, R.G. Higbee, A.M. Kachurin, K.H.
+Church, W.L. Warren, “Laser machined microfluidic bioreactors with
+printed scaffolds and integrated optical waveguides,” Proceedings of
+SPIE, vol. 5591, pp. 104-112, 2004.
+S.H. Chan, N.T. Nguyen, Z. Xia, Z. Wu, “Development of a polymeric
+micro fuel cell containing laser-micromachined flow channels,”
+Journal of Micromechanics and Microengineering, vol. 15, pp. 231236, October 2004.
+D.L. Pugmire, E.A. Waddell, R.Haasch, M.J. Tarlov, L.E. Locascio,
+“Surface characteraization of laser-ablated polymers used for
+microfluidics,” Anal. Chem, vol. 74, pp. 871-878, January 2002.
+D. Pham, L. Tonge, J. Cao, J. Wright, M. Papiernik, E. Harvey, D.
+Nicolau, “Effects of polymer properties on laser ablation behaviour,”
+Smart Mater. Struct., vol. 11, pp. 668-674, July 2002.
+V.M. Graubner, R. Jordan, O. Nuyken, T. Lippert, M. Hauer, B.
+Schnyder, A. Wokaun, “Incubation and ablation behavior of
+poly(dimethylsiloxane) for 266 nm irradiation,” Applied Surface
+Science, vol. 197-198, pp. 786-790, 2002.
+C.K. Chung, Y.C. Lin, G.R. Huang, “Bulge formation and
+improvement of the polymer in CO2 laser micromachining,” J.
+Micromech. Microeng., vol. 15, pp. 1878-1884, August 2005.
+
+624
+Authorized licensed use limited to: McGill Libraries. Downloaded on August 15,2024 at 23:04:31 UTC from IEEE Xplore. Restrictions apply.
+
+MoRP-B01.2
+
+Fig. 1. Channel cross-section (60% power setting, 50% speed setting,
+750 PPI).
+
+Fig. 2. Cross section topography descriptors. Radius 1 and radius 3
+illustrate the nature of the transition from PDMS surface to cut, while
+radius 2 illustrates the nature of the bottom of the channel.
+
+Smooth Transitions, Radius 1≈Radius 3
+
+Base of Channel (smooth)
+
+Fig. 3. Longitudinal channel cross-section (100% power setting,
+100% speed setting, 500 PPI), showing an absence of scalloping.
+
+Fig. 4. Channel cross-section (90% power setting, 50% speed setting,
+750 PPI), showing approximate Gaussian profile.
+
+Blunt Transition
+
+Smooth Transitions, Radius 1<Radius 3
+
+Fig. 5. Channel cross-section (20% power setting, 50% speed setting,
+500 PPI), showing configuration with radius 3 greater than radius 1.
+
+Smooth Transition
+
+Fig. 6. Channel cross-sectional (70% power setting, 100% speed
+setting, 500 PPI), showing slope 1 greater than slope 2.
+
+625
+Authorized licensed use limited to: McGill Libraries. Downloaded on August 15,2024 at 23:04:31 UTC from IEEE Xplore. Restrictions apply.
+
+MoRP-B01.2
+800
+25%Speed
+
+Blunt Transitions
+
+50%Speed
+
+Width (micrometers)
+
+700
+
+75%Speed
+600
+
+100%Speed
+
+500
+400
+300
+200
+100
+0
+0
+
+20
+
+40
+
+Fig. 7. Channel cross-section (100% power setting, 25% speed
+setting, 750 PPI). Full-thickness cut due to high power deposition.
+
+60
+
+80
+
+100
+
+120
+
+Pow er (%)
+Fig. 8. Width vs. laser power setting for various speed settings at 500
+PPI.
+450
+
+800
+25%Speed
+
+50%Speed
+
+50%Speed
+75%Speed
+
+600
+
+25%Speed
+
+400
+
+Depth (micrometers)
+
+Width (micrometers)
+
+700
+
+100%Speed
+500
+400
+300
+200
+100
+
+75%Speed
+
+350
+
+100%Speed
+300
+250
+200
+150
+100
+50
+
+0
+0
+
+20
+
+40
+
+60
+
+80
+
+100
+
+0
+
+120
+
+0
+
+20
+
+Pow er (%)
+
+60
+
+80
+
+100
+
+120
+
+Pow e r (%)
+
+Fig. 9. Width vs. laser power setting for various speed settings at 750
+PPI.
+
+Fig. 10. Depth vs. laser power setting for various speed settings at
+500 PPI.
+
+0
+
+450
+
+0
+
+25%Speed
+400
+
+50%Speed
+
+350
+
+75%Speed
+100%Speed
+
+300
+
+20
+
+40
+
+60
+
+80
+
+100
+
+120
+
+-0.5
+
+-1
+
+250
+
+Slope
+
+Depth (micrometers)
+
+40
+
+200
+150
+
+-1.5
+
+-2
+25% Speed
+
+100
+
+-2.5
+
+50% Speed
+75% Speed
+
+50
+-3
+
+0
+0
+
+20
+
+40
+
+60
+
+80
+
+100
+
+100% Speed
+
+120
+-3.5
+
+Power (%)
+
+Po w e r (%)
+
+Fig. 11. Depth vs. laser power setting for various speed settings at
+750 PPI.
+
+Fig. 12. Slope 1 vs. laser power setting for various speed settings at
+500 PPI.
+
+626
+Authorized licensed use limited to: McGill Libraries. Downloaded on August 15,2024 at 23:04:31 UTC from IEEE Xplore. Restrictions apply.
+
+MoRP-B01.2
+
+1.2
+
+0
+0
+
+20
+
+40
+
+60
+
+80
+
+100
+
+120
+1
+
+-0.5
+
+25%Speed
+50%Speed
+75%Speed
+
+0.8
+
+Slope
+
+Slope
+
+-1
+
+-1.5
+
+100%Speed
+
+0.6
+
+-2
+0.4
+
+-2.5
+0.2
+
+-3
+
+25%Speed
+50%Speed
+0
+
+75%Speed
+
+-3.5
+
+0
+
+100%Speed
+
+Pow er (%)
+
+20
+
+40
+
+60
+
+80
+
+100
+
+120
+
+Pow e r (%)
+
+Fig. 13. Slope 1 vs. laser power setting for various speed settings at
+750 PPI.
+
+Fig. 14. Slope 2 vs. laser power setting for various speed settings at
+500 PPI.
+
+1.2
+25%S peed
+
+1
+
+50%S peed
+75%S peed
+10 0 % S p e e d
+
+Slope
+
+0.8
+0.6
+0.4
+0.2
+0
+0
+
+20
+
+40
+
+60
+
+80 100 120
+
+Po w e r (%)
+Fig. 15. Slope 2 vs. laser power setting for various speed settings at 750
+PPI.
+
+627
+Authorized licensed use limited to: McGill Libraries. Downloaded on August 15,2024 at 23:04:31 UTC from IEEE Xplore. Restrictions apply.
+
+

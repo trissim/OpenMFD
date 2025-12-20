@@ -1,0 +1,97 @@
+This article is licensed under CC-BY 4.0
+
+pubs.acs.org/chemneuro
+
+Research Article
+
+A Microfluidic High-Capacity Screening Platform for Neurological
+Disorders
+Lydia Moll, Johan Pihl, Mattias Karlsson, Paul Karila, and Camilla I. Svensson*
+Cite This: ACS Chem. Neurosci. 2024, 15, 236−244
+
+ACCESS
+
+Metrics & More
+
+Read Online
+
+Article Recommendations
+
+sı Supporting Information
+*
+
+ABSTRACT: Compartmentalized cell cultures (CCCs) provide the
+possibility to study mechanisms of neurodegenerative diseases, such as
+spreading of misfolded proteins in Alzheimer’s or Parkinson’s disease
+or functional changes in, e.g., chronic pain, in vitro. However, many
+CCC devices do not provide the necessary capacity for identifying
+novel mechanisms, targets, or drugs in a drug discovery context. Here,
+we present a high-capacity cell culture microtiter microfluidic plate
+compliant with American National Standard Institute of the Society
+for Laboratory Automation and Screening (ANSI/SLAS) standards
+that allows to parallelize up to 96 CCCs/experimental units, where
+each experimental unit comprises three microchannel-connected
+compartments. The plate design allows the specific treatment of
+cells in individual compartments through the application of a fluidic
+barrier. Moreover, the compatibility of the plate with neuronal cultures was confirmed with rodent primary as well as human-induced
+pluripotent stem cell-derived neurons of the central or peripheral nervous system for up to 14 days in culture. Using
+immunocytochemistry, we demonstrated that the plate design restricts neuronal soma to individual compartments, while axons, but
+not dendrites, can grow through the connecting microchannels to neighboring compartments. In addition, we show that neurons are
+spontaneously active and, as deemed by the appearance of synchronous depolarizations in neighboring compartments, are
+synaptically coupled. In summary, the design of the microfluidic plate allows for both morphological and functional studies of
+neurological in vitro cultures with increased capacity to support identification of novel mechanisms, targets, or drugs.
+KEYWORDS: microfluidics, neurological disorders, drug discovery, plate-based screening, electrophysiology, in vitro systems
+
+M
+
+odeling aspects of neurological diseases (NDs), such as
+Alzheimer’s disease (AD), Parkinson’s disease (PD),
+amyotrophic lateral sclerosis (ALS), and chronic pain in vitro, is
+challenging. Compartmentalized cell cultures (CCCs) present a
+promising approach for advancing in vitro research on new
+mechanisms and targets in the quest to develop new drugs and
+alleviate NDs. However, the current limitations on available
+devices, including their low capacity, hinder their applicability in
+high-throughput drug discovery.1,2
+In CCCs, discrete cell culture regions are connected via
+microchannels with diameters large enough to establish a fluidic
+connection between the regions but sufficiently small to restrict
+cell migration. This enables spatial and temporal separation of
+cellular regions (such as soma and axons) or different cell
+populations while allowing cellular communication between
+these.3
+The use of CCCs allows for the study of various key
+mechanisms of NDs including the uptake, aggregation, axonal
+transport, and cell-to-cell spreading of misfolded proteins.4−6
+Additionally, CCCs are employed to investigate axonal
+degeneration and regeneration,7,8 as well as the transport of
+proteins, ion channels, and organelles along axons.9,10
+Furthermore, CCCs can be utilized to evaluate functional
+© 2023 The Authors. Published by
+American Chemical Society
+
+aspects such as neuronal excitability and cellular communication
+between distinct neuronal populations or between neurons and
+non-neuronal cells11,12 (for extensive reviews on CCC
+applications in NDs, see refs 3,13−15).
+Currently used CCC devices frequently have complex designs
+that come with the trade-off of limited capacity. While they are
+primarily utilized for basic research applications, the limited
+capacity is a barrier to employing these CCC models in target
+and drug screening contexts.2 Therefore, increased capacity is
+necessary, not only through the scale-up and parallelization of
+CCC devices but also by considering compatibility with robotic
+liquid handling and laboratory automation.1 Moreover, it
+requires robust manufacturing and materials to ensure reliable
+and reproducible results.1
+Received: June 14, 2023
+Revised: November 20, 2023
+Accepted: December 5, 2023
+Published: December 27, 2023
+
+236
+
+https://doi.org/10.1021/acschemneuro.3c00409
+ACS Chem. Neurosci. 2024, 15, 236−244
+
+

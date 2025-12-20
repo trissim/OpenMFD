@@ -1,0 +1,95 @@
+Molecular and Cellular Neuroscience 60 (2014) 43–52
+
+Contents lists available at ScienceDirect
+
+Molecular and Cellular Neuroscience
+journal homepage: www.elsevier.com/locate/ymcne
+
+A microﬂuidic based in vitro model of synaptic competition
+Ainsley Coquinco a, Luba Kojic a, Wendy Wen a, Yu Tian Wang a, Noo Li Jeon b,
+Austen J. Milnerwood a,c,d, Max Cynader a,⁎
+a
+
+Brain Research Centre, University of British Columbia, Vancouver, BC V6T-2B5, Canada
+Division of World Class University Multiscale Mechanical Design, School of Mechanical & Aerospace Engineering, Seoul National University, Seoul 151-744, Republic of Korea
+Division of Neurology, Department of Medicine, University of British Columbia, Vancouver, BC V6T-2B5, Canada
+d
+Centre for Applied Neurogenetics, University of British Columbia, Vancouver, BC V6T-2B5, Canada
+b
+c
+
+a r t i c l e
+
+i n f o
+
+Article history:
+Received 12 September 2013
+Revised 11 March 2014
+Accepted 15 March 2014
+Available online 21 March 2014
+Keywords:
+Synaptic plasticity
+Microﬂuidics
+Competition
+
+a b s t r a c t
+Synaptic competition is widely believed to be central to the formation and function of neuronal networks, yet the
+underlying mechanisms are poorly described. To investigate synaptic competition in vitro, we have developed a
+novel two input pathway competition model using a 3-compartment microﬂuidic device. Axons from cultured
+rat cortical neurons from two different lateral compartments (inputs) innervate a common neuronal population
+in a separate central compartment. Inhibiting one input's activity, using the GABAAR agonist muscimol, resulted
+in increased synapse numbers and axon elongation of the opposing untreated (uninhibited) inputs in the central
+compartment. Time lapse imaging revealed that uninhibited inputs outgrew and outconnected their inhibited
+counterparts. This form of competition occurs during a sensitive period ending prior to 21 DIV and is NMDAR
+and CamKII dependent. Surprisingly, this form of plasticity was dependent on the age of the center compartment
+neurons but not of the competing inputs.
+© 2014 Elsevier Inc. All rights reserved.
+
+Introduction
+In the developing brain, neurons undergo a substantial number of
+morphological and synaptic changes (Hua and Smith, 2004; Katz and
+Shatz, 1996). A constant balance of synapse formation, stabilization
+and elimination is required for the proper development and formation
+of neural circuits (Hua and Smith, 2004). A major contribution to
+these mechanisms is driven by the experience/activity/input that the
+brain receives during development (Hensch, 2005). One extensively
+studied example of this phenomenon occurs in the development of
+the visual cortex. When one eye is closed during development, electrophysiological observations show increases in activity and territory in
+favor of the open eye (Hensch, 2004; Hubel and Wiesel, 1970). These
+changes are also readily observable with anatomical techniques which
+show wider ocular dominance columns associated with the nondeprived eye than those related to the deprived eye (Gordon and
+Stryker, 1996; Wiesel and Hubel, 1963). The mechanism by which
+neural activity shapes neural circuitry during development remains a
+key question to be resolved in neuroscience research.
+While visual cortex plasticity is one of the more well studied models
+of neural development, it is not without its own difﬁculties. Because of
+
+the complexity of the mammalian brain, it is difﬁcult to observe changes
+on cellular and molecular scales. The use of primary neuronal cultures
+allows for easier observation and genetic manipulation of neurons
+(Gartner et al., 2006; Okabe et al., 2001; Zeitelhofer et al., 2009). However, changing the activity of neurons in culture is limited to nonselective chemical treatment of the entire culture or genetic modiﬁcation
+of a small population of neurons within the culture (Adesnik et al.,
+2008; Burrone et al., 2002; Harms et al., 2005; Lee et al., 1998; Lu
+et al., 2001; Otmakhov et al., 2004).
+Microﬂuidic technology now provides us with the ability to grow
+neurons in distinct chemical environments. Microﬂuidics is a ﬁeld of
+study utilizing minute volumes to control and manipulate ﬂuid movement to create chemically isolated environments (Park et al., 2006;
+Whitesides, 2006). By manipulating the volumes of the individual compartments, distinct chemical environments can be created due to the
+hydrostatic forces present between compartments. Park et al. (2006)
+fabricated a two compartment microﬂuidic device in which two neuronal groups could remain chemically isolated but were still allowed to
+interact with each other through their axonal projections. Here, we
+use a three compartment microﬂuidic device to create a new dual
+input model to study in vitro synaptic competition.
+Results
+
+⁎ Corresponding author at: 2211 Wesbrook Mall, Brain Research Centre, University of
+British Columbia, Vancouver, BC V6T-2B5, Canada.
+E-mail address: cynader@brain.ubc.ca (M. Cynader).
+
+http://dx.doi.org/10.1016/j.mcn.2014.03.001
+1044-7431/© 2014 Elsevier Inc. All rights reserved.
+
+Using a 3-compartment microﬂuidic device, which is a specialized
+version of the multicompartment chamber ﬁrst developed by Park
+
+

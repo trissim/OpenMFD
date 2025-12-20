@@ -1,0 +1,699 @@
+Journal of Neuroscience Methods 308 (2018) 183–191
+
+Contents lists available at ScienceDirect
+
+Journal of Neuroscience Methods
+journal homepage: www.elsevier.com/locate/jneumeth
+
+A microﬂuidic platform to study the eﬀects of GDNF on neuronal axon
+entrapment
+Ze Zhong Wanga, Matthew D. Woodb, Susan E. Mackinnonb, Shelly E. Sakiyama-Elbertc,
+
+T
+
+⁎
+
+a
+
+Department of Biomedical Engineering, Washington University in St. Louis, St. Louis, MO, United States
+Division of Plastic and Reconstructive Surgery, Department of Surgery, Washington University School of Medicine, St. Louis, MO, United States
+c
+Department of Biomedical Engineering, University of Texas at Austin, Austin, TX, United States
+b
+
+A R T I C LE I N FO
+
+A B S T R A C T
+
+Keywords:
+Peripheral nerve injury
+Schwann cells
+Neurite extension
+Gene therapy
+
+Background: One potential treatment strategy to enhance axon regeneration is transplanting Schwann Cells (SCs)
+that overexpress glial cell line-derived neurotrophic factor (GDNF). Unfortunately, constitutive GDNF overexpression in vivo can result in failure of regenerating axons to extend beyond the GDNF source, a phenomenon
+termed the “candy-store” eﬀect. Little is known about the mechanism of this axon entrapment in vivo.
+New Method: We present a reproducible in vitro culture platform using a microﬂuidic device to model axon
+entrapment and investigate mechanisms by which GDNF causes axon entrapment. The device is comprised of
+three culture chambers connected by two sets of microchannels, which prevent cell soma from moving between
+chambers but allow neurites to grow between chambers. Neurons from dorsal root ganglia were seeded in one
+end chamber while the eﬀect of diﬀerent conditions in the other two chambers was used to study neurite
+entrapment.
+Results: The results showed that GDNF-overexpressing SCs (G-SCs) can induce axon entrapment in vitro. We also
+found that while physiological levels of GDNF (100 ng/mL) promoted neurite extension, supra-physiological
+levels of GDNF (700 ng/mL) induced axon entrapment.
+Comparison with Existing Method: All previous work related to the “candy-store” eﬀect were done in vivo. Here,
+we report the ﬁrst in vitro platform that can recapitulate the axonal entrapment and investigate the mechanism of
+the phenomenon.
+Conclusions: This platform facilitates investigation of the “candy-store” eﬀect and shows the eﬀects of high
+GDNF concentrations on neurite outgrowth.
+
+1. Introduction
+Severe peripheral nerve injury (PNI) can have a devastating impact
+on patients’ quality of life resulting in lifelong disabilities. Autologous
+nerve grafting has been the standard of care for PNI, despite its major
+disadvantage of donor site morbidity (Lundborg, 2000). Alternative
+methods, such as acellular nerve grafts, are ineﬀective for large gaps
+because of the lack of cells and regenerative factors within the graft
+(Fox et al., 2005). Even with proper surgical reconstruction, functional
+recovery can be incomplete (Moore et al., 2009). Although the peripheral nerve is capable of regeneration, the rate of axonal regeneration
+is slow at 1–2 mm/day (Grinsell and Keating, 2014). Patients suﬀering
+from proximal injuries, such as brachial plexus injuries, which can involve regeneration distances of up to a meter, may require 2–3 years for
+axons to reach target muscles (Lundborg, 2000). However, chronic
+
+denervation can result in quiescence of Schwann cells (SCs), which
+leads to their precipitous decline in growth factor expression and a
+progressive failure to promote axonal regeneration over time (Fox et al.,
+2005). In addition, essentially irreversible changes to muscle occur by
+12–18 months (Kobayashi et al., 1997), at which point functional recovery is unlikely. To treat these patients, it is critical to devise strategies to enhance axonal growth and prevent chronic denervation of
+SCs to promote robust axon regeneration over long distances. One appealing strategy to improve recovery is to use exogenous growth factors
+and/or SCs with exogenous growth factor expression to enhance axonal
+regeneration.
+Glial cell line-derived neurotrophic factor (GDNF) is one of these
+potent growth factors involved in the normal regenerative process after
+injury. GDNF has been shown to improve axonal regeneration in motor
+neurons (Scheib and Höke, 2013) and a subset of sensory neurons (Wu-
+
+Abbreviations: GDNF, glial cell line-derived neurotrophic factor; G-SC, GDNF-overexpressing Schwann Cells; PNI, peripheral nerve injury; SC, Schwann cells
+⁎
+Corresponding author.
+E-mail address: sakiyama@utexas.edu (S.E. Sakiyama-Elbert).
+https://doi.org/10.1016/j.jneumeth.2018.08.002
+Received 7 March 2018; Received in revised form 1 August 2018; Accepted 2 August 2018
+Available online 03 August 2018
+0165-0270/ © 2018 Elsevier B.V. All rights reserved.
+
+Journal of Neuroscience Methods 308 (2018) 183–191
+
+Z.Z. Wang et al.
+
+“candy-store” eﬀect.
+In this study, we developed a microﬂuidic device to recapitulate the
+“candy-store” eﬀect in vitro and examined the eﬀects of G-SCs on neuronal axon entrapment. Neurite extension was quantiﬁed in neuron-SCs
+(normal SCs) and neuron-G-SCs (GDNF overexpressing) co-cultures. We
+also investigated the eﬀects of diﬀerent GDNF concentrations on axon
+entrapment. G-SCs resulted in signiﬁcantly greater trapping compared
+to normal SCs indicating that G-SCs can entrap neurites in vitro. In
+addition, high GDNF concentrations led to a similar decrease in neurite
+extension suggesting that high GDNF levels alone are suﬃcient to entrap axons.
+
+Fienberg et al., 2014). In vitro studies have shown that GDNF forms a
+complex with GDNF family receptor alpha 1 (GFRα1) and acts as an
+axonal guidance signal during regeneration (Blits et al., 2004;
+Lundborg, 2003; Marquardt et al., 2015; Taylor et al., 2008). Although
+SCs intrinsically secrete GDNF following injury, they are unable to
+maintain this trophic support for neurons over long periods of time after
+injury (Höke et al., 2002). In rodents, injury-induced GDNF expression
+is insuﬃcient to stimulate axonal regeneration after 2 months and decreases to baseline level by 6 months (Höke et al., 2002). Therefore, one
+viable strategy to increase the regeneration window is to develop effective delivery systems for GDNF over a long period of time.
+Various methods of delivery have been developed including protein
+delivery systems, gene therapy, and cell therapy. In particular, the use
+of adeno-associated and lenti-viral vectors that encode GDNF have been
+used in many studies. Our lab and others have previously studied lentiviral mediated overexpression of GDNF from SCs (GDNF-overexpression SCs, or G-SCs) (Blits et al., 2004; Eggers et al., 2013;
+Marquardt et al., 2015; Wu-Fienberg et al., 2014). However, excess
+GDNF production causes the “candy-store” eﬀect, where axons do not
+extend beyond sources of GDNF expression and are entrapped at a site
+rich in growth factor (Blits et al., 2004; Eggers et al., 2013; Tannemaat
+et al., 2008) (Fig. 1). Axonal swirling and coils form at these GDNF
+sources and are composed of a large number of motor axons and densely packed SCs (Eggers et al., 2013; Tannemaat et al., 2008). Inside the
+axon coils, myelination is severely impaired as shown by a decrease in
+myelin basic protein expression (Eggers et al., 2013). These negative
+side eﬀects create a major barrier against using GDNF to promote axonal regeneration.
+Understanding the “candy-store” eﬀect is important for eﬀectively
+using GDNF to promote axonal regeneration and reduce its negative
+impact. Studying the “candy-store” eﬀect in vivo is challenging given
+the involvement of multiple cell types and the complex peripheral nerve
+environment. In contrast, in vitro investigation will enable us to conduct
+controlled studies of individual factors. However, standard in vitro
+culture platforms cannot spatially separate neurons from extending
+neurites for clear visualization. Alternatively, microﬂuidic devices have
+been extensively used to model nerve injury (Cohen et al., 2011;
+Marquardt and Sakiyama-Elbert, 2015; Park et al., 2006; Siddique and
+Thakor, 2014; Taylor et al., 2005), with the major advantage of easy
+fabrication of the topographical structures of the culture platform.
+Namely, microﬂuidic devices can have features on the micrometer
+scale, which is ideal for isolating neurite extensions from neuronal
+soma. Therefore, developing a microﬂuidic device for recapitulating
+axon entrapment will allow for investigating the mechanism of the
+
+2. Materials and methods
+2.1. Fabrication of microﬂuidic device master mold
+3-inch silicon wafers (Silicon Inc. ID, USA) were coated with SU-8 5
+photoresists (MicroChem Corp, MA, USA) using a spin-coater. The
+wafers were then exposed under UV light under (or through) the ﬁrst
+layer of photo mask that had the pattern for the microchannels (Fig. 2).
+After development, the wafers were coated with a layer of SU-8 2050
+and exposed under the second photo mask, which contained the pattern
+for the cell culture chambers. After development, the wafers were exposed to trichloro(1,1,2,2-perﬂuorooctyl) silane (Millipore Sigma, MO,
+USA) under vacuum for 1 h to form an antiadhesive layer.
+2.2. Soft Lithography and Microﬂuidic Device
+Polydimethylsiloxane (PDMS, Sylgard 184, Dow Corning, MI, USA)
+was poured onto the silicon master mold in a petri dish with 1:10 wt
+ratio of curing agent to base and put under vacuum to remove air
+bubbles (Fig. 2). The PDMS was cured at 60 °C overnight. The device
+was then cut out and bonded to a glass slide using a plasma cleaner
+(Plasma Clean PDC-001, Harrick Plasma Inc., NY, USA). After 20 min of
+UV sterilization, the completed device was coated with 0.01% poly-Lornithine (PLO) for 1 h at 37 °C and laminin (1 mg/mL, Life Technologies, CA USA) for 1 h at 37 °C.
+2.3. FITCConjugation and Protein Transport Quantiﬁcations
+Fluorescein isothiocyanate (FITC) conjugation was performed as
+directed by the manufacturer (Sigma). Porcine pepsin (35 kD, Sigma)
+was used as an alternative to GDNF (30.4 kD) for protein labeling because of their similar sizes. After completion of the conjugation, the
+FITC-labeled protein was in PBS solution with 1% bovine serum albumin (Sigma). Various volumes of FITC-labeled protein (1 μg/mL) in
+solution were then applied to the distal chamber with the expectation
+that higher volumes would increase protein transport to the somal
+chamber. After 24 h, the liquid from the somal chamber was collected
+and the ﬂuorescence was measured at 488 nm using a ﬂuorescence
+spectrophotometer (SpectraMax M2e, Molecular Devices, CA, USA).
+The percent ﬂuorescence was calculated as a percentage of somal
+chamber ﬂuorescence intensity over distal chamber ﬂuorescence intensity.
+2.4. Isolation of Sensory Neurons and Culture Conditions
+Sensory neurons were harvested from White Leghorn chicken (Texas
+A&M University, Texas, USA) embryos at Day 7-9. Dorsal root ganglia
+were isolated from embryos and dissociated using 0.25% trypsin-EDTA
+(Invitrogen, CA, USA) for 20 min at 37 °C. Dissociated neurons were
+seeded in the somal chamber at 85,000 cells/cm2 and cultured in
+neurobasal medium with 2% B27 supplement, 1% penicillin-streptomycin (Pen/Strep), and 1% GlutaMAX (Invitrogen) (Fig. 3). Glial cellline derived neurotrophic factor (GDNF, PeproTech, NJ, USA) was applied to the middle and/or distal chamber. Medium in the somal
+
+Fig. 1. Schematics of the Candy-Store Eﬀect. Axons normal grow past Schwann
+cells (SC) and reach towards target muscles (Top). When we constitutively
+overexpress GDNF in SCs (GDNF-SC), axons fail to extend beyond the GDNF
+source (Bottom), causing the Candy-store eﬀect.
+184
+
+Journal of Neuroscience Methods 308 (2018) 183–191
+
+Z.Z. Wang et al.
+
+Fig. 2. Schematics of Microﬂudic Device Fabrication Process. The master mold for the device consist of two layers of photoresist structures. The ﬁrst layer deﬁnes the
+microchannels at 5 μm height. The second layer deﬁnes the culture chambers at 100 μm height. Soft lithography is used to make PDMS device, which is then
+assembled with glass coverslip as bottom and coated with PLO-laminin. The three chambers are connected by two sets of microchannels. The middle chamber is
+accessed through the two circular reservoirs.
+
+and 1% Pen/Strep. The cells were then plated into a 100 mm petri dish
+coated with 0.1% poly-L-lysine (Sigma) and laminin. Cytarabine (AraC, 10 μM, Sigma) was added to the plate along with fresh SC medium on
+Day 3 after plating. Then the plate was supplemented with 2 μM forskolin (BioGems, CA, USA) with fresh SC medium and cultured for 1–2
+weeks before use. G-SCs were generated based on a protocol previously
+developed (Wu-Fienberg et al., 2014). Brieﬂy, SC cultures were transduced with lentiviral particles containing GDNF transfer plasmid before
+passage 7. Cells were incubated with 2 μg/mL of polybrene (Santa Cruz
+Biotechnology, TX, USA) in SC medium for 1 h at 37 °C, after which the
+lentiviral vectors containing GDNF are introduced (MOI = 35). Cells
+are then incubated with 2 μg/mL polybrene and vector for 20 h at 37 °C.
+G-SCs were tested using enzyme-linked immune-sorbent assay (ELISA,
+R&D Systems, MN, USA) for GDNF production according to previously
+published results (Wu-Fienberg et al., 2014). G-SCs were seeded in the
+
+chamber was replaced with fresh medium every two days. Medium in
+the middle and distal chamber was also replaced every two days to
+maintain the GDNF level. By replacing media every two days in all
+chambers, the volumes of each chamber was maintained.
+
+2.5. Schwann cell harvest and culture
+SCs were harvested from sciatic nerves collected from adult male
+Lewis rats using previously described methods (Tao, 2013). To isolate
+the SCs, ﬁrst nerve branches were placed in DMEM (Dulbecco's Modiﬁed Eagle Medium) with sodium pyruvate (110 mg/L, Invitrogen),
+Collagenase (10 mg/mL, Thermo Fisher), and 0.25% trypsin for 30 min
+at 37 °C. After triturating the branches, they were centrifuged for
+10 min at 500×g, and the cell pellet was washed with SC medium
+containing DMEM plus 10% fetal bovine serum (FBS, Life Technologies)
+
+Fig. 3. Schematics of the microﬂuidic device. A) Top and B) side views of the microﬂuidic device. Both Somal and Distal chambers have a surface of 10 mm × 3 mm
+(schematics are not drawn to scale). Middle chamber reservoirs are 5 mm in diameter and the chamber dimensions are 100 mm × 200 μm × 100 μm (L × W×H).
+The two sets of microchannels dimensions are 5 × 5 × 500 (L × W×H) μm. Side view shows diﬀerent volumes applied to each chamber. The volume applied to the
+middle chamber is the volume applied to the two circular reservoirs.
+185
+
+Journal of Neuroscience Methods 308 (2018) 183–191
+
+Z.Z. Wang et al.
+
+middle chamber at 100,000 cells/cm2. G-SCs produced
+106.2 ± 6.8 ng/mL/day of GDNF in the middle chamber. Based on this
+GDNF production, approximately 744 ng/mL of GDNF was produced
+over 7 days. Therefore, we used 700 ng/mL of GDNF as the supraphysiological level to be applied in the middle chamber.
+2.6. Immunocytochemistry and data quantiﬁcation
+Immunocytochemistry (ICC) was performed on Day 6 after the start
+of neuronal culture. Brieﬂy, the cells in the device were ﬁxed using 4%
+paraformaldehyde (Sigma) for 20 min. After washing 3 times with PBS,
+the cells were permeabilized with 0.01% Triton X-100 (Sigma) for
+20 min. The cells in the device were then blocked using 5% normal goat
+serum (NGS, Sigma) in PBS for 1 h. Primary antibodies used included
+anti-neuroﬁlament (1:200 with 2% NGS in PBS, clone 3A10,
+Developmental Studies Hybridoma Bank, IA, USA) for neurites and antiS100β (1:400 with 2% NGS in PBS, Polyclonal Rabbit Ant-S100, Dako,
+CA, USA) for SCs. After incubating with primary antibodies overnight,
+the device was washed 3 times with PBS and then secondary antibodies
+were applied for 2 h. Hoechst 33342 was applied (1:1000 dilution) for
+20 min after washing the device with PBS. The device was then imaged
+using a wide-ﬁeld ﬂuorescence microscope (Leica DMi8, Leica, IL,
+USA). After acquiring images of the middle chamber and microchannels, neurites were quantiﬁed as a percentage of axons crossing,
+namely, the number of neurites exiting the middle chamber was divided
+by the number of neurites entering the middle chamber (Fig. 5).
+Overlapping neurites in one microchannel are accounted for by tracing
+them for a short distance after exiting the microchannel, at which point
+the neurites disperse (typically 3–4 neurites, data not shown).
+2.7. Statistical analysis
+Fig. 4. Microﬂuidic device shows controlled protein transport and robust axon
+crossing. A) Varying the loading volume in each chamber changes the amount
+of protein transported. 50/50/110 correspond to the volumes in somal/middle/
+distal chamber in μL. With a volume increase in the distal and middle chamber,
+the amount of ﬂuorescence increased more than 2-fold (6.6%–13.8%). *:
+p < 0.05 N = 4. B) Quantiﬁcation of axons crossing the middle chamber with
+diﬀerent conditions. Both conditions showed robust axons crossing (-/G100 at
+64.6% ± 10.7%, -/G700 at 55.3% ± 15.2%). N = 8.
+
+One-way ANOVA is performed on the sample groups using Minitab
+software. Scheﬀe’s post-hoc test with p < 0.05 for signiﬁcance was
+used. Data represented were shown as mean ± standard deviation.
+Data included N = 8 or more devices per condition; n = 30–518
+neurites measured per device.
+3. Results
+
+chamber was 6.6 ± 2.0% of the initial ﬂuorescence intensity in the
+distal chamber. The second set of conditions had 110 μL of liquid in the
+middle chamber, and 170 μL in the distal chamber. The ﬂuorescence
+intensity increased to 13.8 ± 3.0% (Fig. 4A, 50/110/170). This demonstrated that protein concentration in the somal chamber can be
+controlled by varying the volume applied to the other two chambers.
+To test whether high GDNF concentrations can cause axon entrapment in vitro, we wanted to ﬁrst establish a positive control that allows
+neurites to robustly cross the middle chamber. Table 1 shows the
+conditions applied to the middle and distal chambers. Either no GDNF,
+100 ng/mL, or 700 ng/mL of GDNF was added to the respective
+chambers. No growth factor addition resulted in low neurite outgrowth
+into the middle chamber (< 30 neurites/device). Even though the
+percentage of axon crossing was low under this condition, it did not
+represent the axonal entrapment eﬀect but likely a result of poor
+neurite extension in the ﬁrst place. We found that with 100 ng/mL and
+700 ng/mL of GDNF in the distal chamber and 0 ng/mL in the middle
+and somal chamber, neurites were able to robustly grow across the
+middle chamber to reach the second set of microchannels (Fig. 4B).
+Both conditions showed at least 50% of axons crossing with an average
+of 261 neurites measured in each device. These two conditions were
+used positive controls to compare with potential axon trapping conditions.
+
+3.1. Microﬂuidic device development
+One of the key features in the design of this microﬂuidic device was
+that it should enable cell signaling through exogenous growth factors
+and/or cell-cell interactions. Therefore, it was important to test protein
+transport from distal chamber to somal chamber in the microﬂuidic
+device to ensure that factors in the distal chamber could elicit a response in neurons separated by microchannels. We also sought to determine whether a growth factor in the distal chamber could provide
+axon guidance and/or promote survival of neurons seeded in the other
+chamber. We used pepsin (35 kDa), a similarly sized protein to GDNF
+(30.4 kDa), conjugated with ﬂuorescein isothiocyanate (FITC) to examine the transport of proteins between the distal and somal chamber.
+FITC-pepsin was applied to the distal chamber and the ﬂuorescence
+intensity in the somal chamber was measured over time. This allowed
+an estimation for the amount of GDNF that will reach the somal
+chamber for neurons to detect, and thus was used to determine the
+initial GDNF concentration that should be applied to the distal chamber
+to obtain a physiologically relevant level in the somal chamber.
+We tested whether protein transport can be controlled by modulating the volume in each chamber (and thus the pressure diﬀerential)
+such that ﬂuid was only ﬂowing unidirectionally from the distal to the
+somal chamber. Two diﬀerent volume sets were applied to the device.
+The ﬁrst set of conditions tested had 50 μL of liquid in the somal and the
+middle chamber, and 100 μL of liquid in the distal chamber (Fig. 4A,
+50/50/100). After 24 h, the ﬂuorescence intensity in the somal
+186
+
+Journal of Neuroscience Methods 308 (2018) 183–191
+
+Z.Z. Wang et al.
+
+Fig. 5. Schematics of culturing conditions. Neurons are seeded on Day 0 and stained on Day 7 using immunocytochemistry (ICC), at which point the percentage of
+axons crossing is quantiﬁed. Diﬀerent Schwann cells or GDNF concentrations are applied to the middle chamber and distal chamber (Table 1).
+
+on the GDNF production from G-SCs, approximately 744 ng/mL of
+GDNF was produced over 7 days. Therefore, we used 700 ng/mL of
+GDNF as the supra-physiological level. GDNF uptake by neurons was
+qualitatively assessed by ICC staining of GDNF. Cell treated with
+700 ng/mL of GDNF showed greater levels of antibody staining compared to untreated cells and cell treated with 100 ng/mL of GDNF (Sup
+Fig. 1). We found that supra-physiological levels of GDNF in the middle
+chamber signiﬁcantly reduced the percentage of axons crossing the
+middle chamber (Fig. 7G). Applying 100 ng/mL of GDNF to the middle
+chamber with 700 ng/mL in the distal chamber did not reduce the
+percentage of axons crossing comparing to 100 ng/mL in the distal
+chamber and 0 ng/mL in the middle chamber (Fig. 7G, -/G100, G100/). However, 700 ng/mL of GDNF in the middle chamber and 0 ng/mL in
+the distal chamber signiﬁcantly reduced the percentage of axons
+crossing to 14.0% (Fig. 7D & G, G700/-). This suggests supra-physiological levels of GDNF can induce axon trapping in vitro. Immunostaining for neuroﬁlament showed that neurites tend to stay in the
+middle chamber; however, we did not observe the formation of dense
+ﬁbers networks observed with G-SCs. We also examined the eﬀects of
+GDNF at 250 ng/mL and 500 ng/mL applied in the middle chamber and
+0 ng/mL in the distal chamber (G250/-, G500/-). G250/- showed axons
+crossing at 40.6% ± 12.4%; while G500/- showed axons crossing at
+45.8% ± 15.3%. This indicates the threshold concentration for GDNF to
+induce axon entrapment appears to be between 500 ng/mL and 700 ng/
+mL.
+Next, we wanted to see whether adding GDNF to the distal chamber
+can overcome the axon trapping induced by applying high levels GDNF
+to the middle chamber (Fig. 7H). When 100 ng/mL of GDNF was in both
+middle and distal chambers, 54.8% of axons were able to cross the
+middle chamber, similar the result observed with the same concentration of GDNF added to either just the distal or just the middle chamber
+(Fig. 7B, G100/G100). This suggests that axons were not trapped by a
+uniform distribution of GDNF at a physiological concentration. In
+contrast, applying supra-physiological levels of GDNF in the middle
+chamber and physiological GDNF levels to the distal chamber reduced
+the percentage of axons crossing to 24.3% (Fig. 7E & H, G700/G100).
+Therefore, physiological GDNF levels at a more distal site to the neurons cannot overcome axon trapping induced by high GDNF levels at a
+more proximal site. More importantly, when supra-physiological GDNF
+is applied to both the middle and distal chambers, only 14.1% of axons
+were able to cross the middle chamber (Fig. 7F & I, G700/G700),
+suggesting that high GDNF levels also cannot abolish axon trapping.
+Together, these data suggest that supra-physiological levels of GDNF
+
+Table 1
+List of conditions applied to the middle and distal chambers.
+Middle Chamber
+
+Distal Chamber
+
+Schwann Cells
+GDNF-Overexpressing Schwann
+Cells
+Control (No GDNF)
+
+None
+None
+
+GDNF (100 ng/mL)
+
+None
+
+GDNF (700 ng/mL)
+
+None
+
+None
+
+GDNF (100 ng/
+mL)
+GDNF (100 ng/
+mL)
+GDNF (100 ng/
+mL)
+
+GDNF (700 ng/
+mL)
+GDNF (700 ng/
+mL)
+GDNF (700 ng/
+mL)
+
+3.2. GDNF-overexpressing Schwann cells show axon entrapment in the
+microﬂuidic device
+To mimic the in vivo axon entrapment in the microﬂuidic device, we
+evaluated the eﬀects of placing G-SCs in the middle chamber, on neurite
+outgrowth compared to normal Schwan cells (Table 1). Brieﬂy, we
+seeded DRG neurons in the somal chamber and normal SCs or G-SCs in
+the middle chamber (Fig. 5). We found that seeding normal SCs in the
+middle chamber resulted in robust axon growth resulting 59.2% axons
+crossing (Fig. 6C, SC/-), comparable to 100 ng/mL of GDNF in the distal
+chamber (Fig. 4B). In contrast, seeding G-SCs in the middle chamber
+signiﬁcantly reduced the percentage of axons crossing to the distal
+chamber to 25.3% (Fig. 6C, G-SC/-). These results demonstrated that GSCs can induce axon entrapment in vitro. It was also noted that neurites
+with G-SCs seeded in the middle chamber formed a dense network of
+ﬁbers along the G-SCs (Fig. 6B), while neurites with normal SCs do not
+demonstrate this behavior (Fig. 6A). This resembled morphologies observed in previous in vivo studies where axons tend to form nerve coils
+at the sites of GDNF overexpression (Blits et al., 2004; Eggers et al.,
+2013).
+
+3.3. Eﬀects of diﬀerential GDNF concentrations on neurite extensions
+We wanted to examine the eﬀects of diﬀerent concentrations of
+GDNF in the middle and distal chambers (Table 1). Previous in vitro
+studies had shown that physiological levels of GDNF (100 ng/mL) improve neurite outgrowth (Marquardt and Sakiyama-Elbert, 2015). In
+addition, applying 100 ng/mL of GDNF to the distal chamber also
+promoted robust neurite outgrowth towards the distal chamber. Based
+187
+
+Journal of Neuroscience Methods 308 (2018) 183–191
+
+Z.Z. Wang et al.
+
+Fig. 6. GDNF-Overexpressing Schwann Cells causes axonal trapping in vitro. A–B) Normal Schwann Cells (A) and G-SCs (B) seeded in the middle chamber. C)
+Quantiﬁcation of axons crossing. SC results in 59.2 ± 12.3%. G-SC results in 25.3 ± 9.9%. N = 8. *: p < 0.00005.
+
+ﬁrst shown by Blits et al., where adenoviral-mediated overexpression of
+GDNF near the motoneuron pool promoted axon sprouting but prevented directional growth of axons at denervated motoneuron pool. We
+and others have also observed a similar phenomenon when overexpressing GDNF after sciatic nerve injury with either viral expression
+or transgenic expression in SCs (Eggers et al., 2013; Marquardt et al.,
+2015). In order to resolve this issue, Eggers et al. generated a GDNF
+gradient in vivo using lentiviral vectors and found that even the lowest
+concentration of GDNF still entrapped axons. We and others have used
+tetracycline-inducible systems to temporally control GDNF overexpression and identiﬁed a critical window of time at which GDNF
+overexpression should be shut oﬀ (Marquardt et al., 2015; Shakhbazau
+et al., 2013). However, little is known about the mechanism of the
+“candy-store” eﬀect and whether it acts directly on axons or indirectly
+via SCs. Evidence suggests SCs undergo phenotypic changes in the
+presence of high levels of GDNF that could aﬀect axon growth (Eggers
+et al., 2013). A recent study also shows G-SCs aﬀect ﬁbroblasts, and this
+interaction results in signiﬁcant ECM remodeling (Ee et al., 2017).
+However, all these studies have been done using in vivo models. The
+complexity of the in vivo environment presents a major challenge to
+eliciting the exact mechanism that underlies the “candy-store” eﬀect.
+Here we developed a microﬂuidic device that enables us to conduct
+controlled studies of individual factors and provide spatial separation of
+neurons from extending neurites for clear visualization. This in vitro
+culture platform can help us understand why GDNF overexpression
+leads to the “candy-store” eﬀect.
+
+have a direct eﬀect on reducing neurite outgrowth.
+4. Discussion
+A number of studies have focused on the use of exogenous growth
+factors for treating peripheral nerve injuries. Growth factors, such as
+GDNF, are released by SCs in response to nerve injury and aid neuronal
+survival and axon regeneration (Springer et al., 1995). Many studies
+have shown that GDNF also acts as a directional cue for guidance of
+regenerating axons (Batchelor, 2002; Lin et al., 2011). In addition to its
+direct beneﬁts, GDNF also contributes to the ability of SCs to promote
+repair after injury. The presence of GDNF enhances the ability of SCs to
+myelinate axons by inducing diﬀerentiation of a myelinating phenotype
+(Höke et al., 2003; Iwase et al., 2005; Jesuraj et al., 2014). As a result of
+their growth promoting beneﬁts, various methods for the delivery of
+growth factors have been examined including using lentiviral
+(Tannemaat et al., 2008, 2007) or adenoviral injections (Kells et al.,
+2004), microspheres (Garbayo et al., 2009; Wood et al., 2012), and
+scaﬀolds and conduits (Madduri et al., 2010). Yet, there still remains
+much to be understood about the eﬀects of growth factors on axon
+regeneration.
+Unlike other growth factors (Albers et al., 1996, 1994; Tolwani
+et al., 2004), GDNF when overexpressed can cause axon entrapment
+within the zone of GDNF expression, and is thus dubbed the “candystore” eﬀect (Blits et al., 2004; Ee et al., 2017; Eggers et al., 2013;
+Shakhbazau et al., 2013; Tannemaat et al., 2008). This behavior was
+188
+
+Journal of Neuroscience Methods 308 (2018) 183–191
+
+Z.Z. Wang et al.
+
+Fig. 7. Eﬀects of diﬀerential GDNF concentrations on neurite extensions. A–C) Low (100 ng/mL) GDNF applied to the middle chamber with varying concentrations in
+the distal chamber. A) G100/- at 50.9 ± 14.0%; B) G100/G100 at 54.8 ± 17.0%; C) G100/G700 at 51.8 ± 22.2%. D–F) High (700 ng/mL) GDNF applied to the
+middle chamber with varying concentrations in the distal chamber. D) G700/- at 14.0 ± 10.0%; E) G700/G100 at 24.3 ± 10.7%; F) G700/G700 at 14.1 ± 8.1%.
+G–I) Quantiﬁcation of axons crossing with varying concentrations of GDNF applied to the middle chamber and distal chamber. N = 8. *: p < 0.00005, **: p < 0.05,
+***: p < 0.005.
+
+an increase in p75 receptor expression (Eggers et al., 2013). In this
+study, we observed that neurites form dense ﬁber networks along GSCs, whereas these dense ﬁbers were not observed in the presence of
+normal SCs (Fig. 6A & B). This dense accumulation of axons is strikingly
+similar to previous in vivo results where elevated GDNF expression from
+virally-induced cells resulted in thick ﬁber coils formed at GDNF
+overexpressing locations (Blits et al., 2004; Ee et al., 2017; Eggers et al.,
+
+Previous studies have shown that G-SCs cause axon entrapment
+when transplanted in acellular nerve graft in sciatic nerve injury models
+(Marquardt et al., 2015). Similarly, our results show that G-SCs cause
+axon entrapment in the microﬂuidic device. This demonstrates that our
+in vitro platform is able to mimic the in vivo phenomenon. Previous
+studies have shown that GDNF overexpression causes SCs to undergo
+phenotypic changes marked by a decrease in myelin basic protein and
+189
+
+Journal of Neuroscience Methods 308 (2018) 183–191
+
+Z.Z. Wang et al.
+
+References
+
+2013). Our recent study showed that GDNF overexpression during
+nerve regeneration in vivo caused extensive axonal sprouting (Ee et al.,
+2017). The evidence from these studies and our current studies suggests
+G-SCs play a major role in causing axon entrapment. Speciﬁcally, these
+cells can prevent neurites from extending beyond the region of elevated
+GDNF and induce the formation of ﬁber networks. GDNF gradients can
+guide axon regeneration from lower concentrations to higher concentrations and eventually lead to muscle cells as the ﬁnal target in the
+peripheral nervous system. It has been shown that viral vector-induced
+GDNF expression in myoblasts improved motor neuron survival
+(Mohajeri et al., 1999). Making myoblast as a source of neurotrophic
+factor would be particularly useful when nerves were close enough to
+the muscles to create a gradient that the axons could sense. Therefore, it
+might also be valuable to explore using myoblast as the source of
+neurotrophic factor for future studies of regeneration near the muscle.
+In addition to investigating G-SC’s eﬀects on axon entrapment, we
+examined how exogenous GDNF aﬀects neurite outgrowth in a microﬂuidic device. Previous studies have shown that GDNF applied at
+physiological levels (50–100 ng/mL) promoted axon growth (Jesuraj
+et al., 2014; Marquardt and Sakiyama-Elbert, 2015). In this study, our
+results indicated that GDNF applied at a supra-physiological level
+(700 ng/ml) decreased neurite outgrowth. This suggests that a high
+GDNF level may be suﬃcient to trap axons. It is interesting to note that
+high GDNF levels in the distal chamber did not make up for axon entrapment caused by high GDNF in the middle chamber, suggesting axon
+entrapment is activated when GDNF reaches a certain threshold concentration and cannot be overcome by similarly high levels downstream. We also observed that neurites treated with high GDNF protein
+levels did not show dense ﬁber network formation. Compared to trapping caused by G-SCs, this might suggest the important roles of G-SC
+and ECM remodeling in axon entrapment and that the “candy-store”
+eﬀect constitutes two parts, where axon trapping is caused by GDNF
+directly while ﬁber networks form after ECM remodeling and may involve SCs.
+Understanding both the beneﬁts and negative impacts of using
+growth factors is critical developing safe therapeutics. Here, we have
+developed a microﬂuidic platform that allowed us to investigate a
+major negative side eﬀect of overexpressing GDNF from SCs. We have
+shown that G-SCs can induce axon entrapment similar to what is seen in
+vivo. In addition, this system allowed us to examine the eﬀect of exogenous GDNF on neurite outgrowth. We have shown that high levels of
+GDNF alone can signiﬁcantly reduce neurite outgrowth due to entrapment. Overall, this platform may provide a valuable tool to further
+investigate the underlying molecular mechanisms of the “candy-store”
+eﬀect. Together, these ﬁndings may prove valuable as they provide
+directions toward devising drug delivery methods that harness only the
+beneﬁcial eﬀects of GDNF to establish a robust treatment system for PNI
+in animal models. Clinically, this project has the potential to lead to
+therapies that prolong the regeneration window for long gap PNI.
+
+Albers, K.M., Wright, D.E., Davis, B.M., 1994. Overexpression of nerve growth factor in
+epidermis of transgenic mice causes hypertrophy of the peripheral nervous system. J.
+Neurosci. 14, 1422–1432.
+Albers, K.M., Perrone, T.N., Goodness, T.P., Jones, M.E., Green, M.A., Davis, B.M., 1996.
+Cutaneous overexpression of NT-3 increases sensory and sympathetic neuron number
+and enhances touch dome and hair follicle innervation. J. Cell Biol. 134, 487–497.
+https://doi.org/10.1083/jcb.134.2.487.
+Batchelor, P., 2002. Macrophages and microglia produce local trophic gradients that
+stimulate axonal sprouting toward but not beyond the wound edge. Mol. Cell.
+Neurosci. 21, 436–453. https://doi.org/10.1006/mcne.2002.1185.
+Blits, B., Carlstedt, T.P., Ruitenberg, M.J., De Winter, F., Hermens, W.T.J.M.C.,
+Dijkhuizen, P.A., Claasens, J.W.C., Eggers, R., Van Der Sluis, R., Tenenbaum, L., Boer,
+G.J., Verhaagen, J., 2004. Rescue and sprouting of motoneurons following ventral
+root avulsion and reimplantation combined with intraspinal adeno-associated viral
+vector-mediated expression of glial cell line-derived neurotrophic factor or brainderived neurotrophic factor. Exp. Neurol. 189, 303–316. https://doi.org/10.1016/j.
+expneurol.2004.05.014.
+Cohen, M.S., Orth, C.B., Kim, H.J., Jeon, N.L., Jaﬀrey, S.R., 2011. Neurotrophin-mediated
+dendrite-to-nucleus signaling revealed by microﬂuidic compartmentalization of
+dendrites. Proc. Natl. Acad. Sci. U. S. A. 108, 11246–11251. https://doi.org/10.
+1073/pnas.1012401108.
+Ee, X., Yan, Y., Hunter, D.A., Schellhardt, L., Sakiyama-Elbert, S.E., Mackinnon, S.E.,
+Wood, M.D., 2017. Transgenic SCs expressing GDNF-IRES-DsRed impair nerve regeneration within acellular nerve allografts. Biotechnol. Bioeng. 114, 2121–2130.
+https://doi.org/10.1002/bit.26335.
+Eggers, R., de Winter, F., Hoyng, S.A., Roet, K.C.D., Ehlert, E.M., Malessy, M.J.A.,
+Verhaagen, J., Tannemaat, M.R., 2013. Lentiviral vector-mediated gradients of GDNF
+in the injured peripheral nerve: eﬀects on nerve coil formation, Schwann cell maturation and myelination. PLoS One 8. https://doi.org/10.1371/journal.pone.
+0071076.
+Fox, I.K., Schwetye, K.E., Keune, J.D., Brenner, M.J., Yu, J.W., Hunter, D.A., Wood, P.M.,
+Mackinnon, S.E., 2005. Schwann-cell injection of cold-preserved nerve allografts.
+Microsurgery 25, 502–507. https://doi.org/10.1002/micr.20152.
+Garbayo, E., Montero-Menei, C.N., Ansorena, E., Lanciego, J.L., Aymerich, M.S., BlancoPrieto, M.J., 2009. Eﬀective GDNF brain delivery using microspheres-a promising
+strategy for Parkinson’s disease. J. Control. Release 135, 119–126. https://doi.org/
+10.1016/j.jconrel.2008.12.010.
+Grinsell, D., Keating, C.P., 2014. Peripheral nerve reconstruction after injury: a review of
+clinical and experimental therapies. Biomed Res. Int. 2014. https://doi.org/10.1155/
+2014/698256.
+Höke, A., Gordon, T., Zochodne, D.W.D., Sulaiman, O.A.R., 2002. A decline in glial cellline-derived neurotrophic factor expression is associated with impaired regeneration
+after long-term Schwann cell denervation. Exp. Neurol. 173, 77–85. https://doi.org/
+10.1006/exnr.2001.7826.
+Höke, A., Ho, T., Crawford, T.O., LeBel, C., Hilt, D., Griﬃn, J.W., 2003. Glial cell linederived neurotrophic factor alters axon schwann cell units and promotes myelination
+in unmyelinated nerve ﬁbers. J. Neurosci. 23, 561–567. https://doi.org/10.1002/
+jbm.a.30587.
+Iwase, T., Jung, C.G., Bae, H., Zhang, M., Soliven, B., 2005. Glial cell line-derived neurotrophic factor-induced signaling in Schwann cells. J. Neurochem. 94, 1488–1499.
+https://doi.org/10.1111/j.1471-4159.2005.03290.x.
+Jesuraj, N.J., Marquardt, L.M., Kwasa, J.A., Sakiyama-Elbert, S.E., 2014. Glial cell linederived neurotrophic factor promotes increased phenotypic marker expression in
+femoral sensory and motor-derived Schwann cell cultures. Exp. Neurol. 257, 10–18.
+https://doi.org/10.1016/j.expneurol.2014.04.005.
+Kells, A.P., Fong, D.M., Dragunow, M., During, M.J., Young, D., Connor, B., 2004. AAVmediated gene delivery of BDNF or GDNF is neuroprotective in a model of
+Huntington disease. Mol. Ther. 9, 682–688. https://doi.org/10.1016/j.ymthe.2004.
+02.016.
+Kobayashi, J., Mackinnon, S.E., Watanabe, O., Ball, D.J., Gu, X.M., Hunter, D.A., Kuzon,
+W.M., 1997. The eﬀect of duration of muscle denervation on functional recovery in
+the rat model. Muscle Nerve 20, 858–866. https://doi.org/10.1002/(SICI)10974598(199707)20:7<858::AID-MUS10>3.0.CO;2-O.
+Lin, Y.-C., Ramadan, M., Hronik-Tupaj, M., Kaplan, D.L., Philips, B.J., Sivak, W., Rubin,
+J.P., Marra, K.G., 2011. Spatially controlled delivery of neurotrophic factors in silk
+ﬁbroin-based nerve conduits for peripheral nerve repair. Ann. Plast. Surg. 67,
+147–155. https://doi.org/10.1097/SAP.0b013e3182240346.
+Lundborg, G., 2000. A 25-year perspective of peripheral nerve surgery: evolving neuroscientiﬁc concepts and clinical signiﬁcance. J. Hand Surg. Am. 25, 391–414.
+https://doi.org/10.1053/jhsu.2000.4165.
+Lundborg, G., 2003. Nerve injury and repair - a challenge to the plastic brain. J. Peripher.
+Nerv. Syst. 209–226. https://doi.org/10.1111/j.1085-9489.2003.03027.x.
+Madduri, S., Feldman, K., Tervoort, T., Papaloïzos, M., Gander, B., 2010. Collagen nerve
+conduits releasing the neurotrophic factors GDNF and NGF. J. Control. Release 143,
+168–174. https://doi.org/10.1016/j.jconrel.2009.12.017.
+Marquardt, L.M., Sakiyama-Elbert, S.E., 2015. GDNF preconditioning can overcome
+Schwann cell phenotypic memory. Exp. Neurol. 265, 1–7. https://doi.org/10.1016/j.
+expneurol.2014.12.003.
+Marquardt, L.M., Ee, X., Iyer, N., Hunter, D., Mackinnon, S.E., Wood, M.D., SakiyamaElbert, S.E., 2015. Finely tuned temporal and spatial delivery of GDNF promotes
+enhanced nerve regeneration in a long nerve defect model. Tissue Eng. Part A 21,
+2852–2864. https://doi.org/10.1089/ten.TEA.2015.0311.
+Mohajeri, M.H., Figlewicz, D.A., Bohn, M.C., 1999. Intramuscular grafts of myoblasts
+
+Acknowledgments
+This work was supported by the National Institutes of Health
+[RO1NS051706]. This work was performed in part at the Nano
+Research Facility at Washington University in St. Louis and Nano and
+Molecular Science Lab at University of Texas at Austin. The authors
+thank Daniel Hunter for the histological micrographs.
+
+Appendix A. Supplementary data
+Supplementary material related to this article can be found, in the
+online version, at doi:https://doi.org/10.1016/j.jneumeth.2018.08.
+002.
+
+190
+
+Journal of Neuroscience Methods 308 (2018) 183–191
+
+Z.Z. Wang et al.
+
+derived neurotrophic factor on regenerating sensory and motor axons in the transected peripheral nerve. Eur. J. Neurosci. 28, 1467–1479. https://doi.org/10.1111/j.
+1460-9568.2008.06452.x.
+Tao, Y., 2013. Isolation and culture of Schwann cells. Methods Mol. Biol. https://doi.org/
+10.1007/978-1-62703-444-9_9.
+Taylor, A.M., Blurton-Jones, M., Rhee, S.W., Cribbs, D.H., Cotman, C.W., Jeon, N.L.,
+2005. A microﬂuidic culture platform for CNS axonal injury, regeneration and
+transport. Nat. Methods 2, 599–605. https://doi.org/10.1038/nmeth777.
+Taylor, C.A., Braza, D., Rice, J.B., Dillingham, T., 2008. The incidence of peripheral nerve
+injury in extremity trauma. Am. J. Phys. Med. Rehabil. 87, 381–385. https://doi.org/
+10.1097/PHM.0b013e31815e6370.
+Tolwani, R.J., Cosgaya, J.M., Varma, S., Jacob, R., Kuo, L.E., Shooter, E.M., 2004. BDNF
+overexpression produces a long-term increase in myelin formation in the peripheral
+nervous system. J. Neurosci. Res. 77, 662–669. https://doi.org/10.1002/jnr.20181.
+Wood, M.D., Kim, H., Bilbily, A., Kemp, S.W.P., Lafontaine, C., Gordon, T., Shoichet, M.S.,
+Borschel, G.H., 2012. GDNF released from microspheres enhances nerve regeneration
+after delayed repair. Muscle Nerve 46, 122–124. https://doi.org/10.1002/mus.
+23295.
+Wu-Fienberg, Y., Moore, A.M., Marquardt, L.M., Newton, P., Johnson, P.J., Mackinnon,
+S.E., Sakiyama-Elbert, S.E., Wood, M.D., 2014. Viral transduction of primary
+Schwann cells using a Cre-lox system to regulate GDNF expression. Biotechnol.
+Bioeng. 111, 1886–1894. https://doi.org/10.1002/bit.25247.
+
+genetically modiﬁed to secrete glial cell line-derived neurotrophic factor prevent
+motoneuron loss and disease progression in a mouse model of familial amyotrophic
+lateral sclerosis. Hum. Gene Ther. 10, 1853–1866. https://doi.org/10.1089/
+10430349950017536.
+Moore, A.M., Ray, W.Z., Chenard, K.E., Tung, T., Mackinnon, S.E., 2009. Nerve allotransplantation as it pertains to composite tissue transplantation. Hand 4, 239–244.
+https://doi.org/10.1007/s11552-009-9183-x.
+Park, J.W., Vahidi, B., Taylor, A.M., Rhee, S.W., Jeon, N.L., 2006. Microﬂuidic culture
+platform for neuroscience research. Nat. Protoc. 1, 2128–2136. https://doi.org/10.
+1038/nprot.2006.316.
+Scheib, J., Höke, A., 2013. Advances in peripheral nerve regeneration. Nat. Rev. Neurol.
+9, 668–676. https://doi.org/10.1038/nrneurol.2013.227.
+Shakhbazau, A., Mohanty, C., Shcharbin, D., Bryszewska, M., Caminade, A.M., Majoral,
+J.P., Alant, J., Midha, R., 2013. Doxycycline-regulated GDNF expression promotes
+axonal regeneration and functional recovery in transected peripheral nerve. J.
+Control. Release 172, 841–851. https://doi.org/10.1016/j.jconrel.2013.10.004.
+Siddique, R., Thakor, N., 2014. Investigation of nerve injury through microﬂuidic devices.
+J. R. Soc. Interface 11, 20130676. https://doi.org/10.1098/rsif.2013.0676.
+Springer, J.E., Seeburger, J.L., He, J., Gabrea, A., Blankenhorn, E.P., Bergman, L.W.,
+1995. cDNA sequence and diﬀerential mRNA regulation of two forms of glial cell linederived neurotrophic factor in Schwann cells and rat skeletal muscle. Exp. Neurol.
+131, 47–52 ST–cDNA sequence and diﬀerential mRNA r.
+Tannemaat, M.R., Boer, G.J., Verhaagen, J., Malessy, M.J.A., 2007. Genetic modiﬁcation
+of human sural nerve segments by a lentiviral vector encoding nerve growth factor.
+Neurosurgery 61, 1286–1294. https://doi.org/10.1227/01.neu.0000306108.
+78044.a2.
+Tannemaat, M.R., Eggers, R., Hendriks, W.T., De Ruiter, G.C.W., Van Heerikhuize, J.J.,
+Pool, C.W., Malessy, M.J.A., Boer, G.J., Verhaagen, J., 2008. Diﬀerential eﬀects of
+lentiviral vector-mediated overexpression of nerve growth factor and glial cell line-
+
+Further reading
+Esper, R.M., 2004. Rapid axoglial signaling mediated by neuregulin and neurotrophic
+factors. J. Neurosci. https://doi.org/10.1523/JNEUROSCI.1692-04.2004.
+
+191
+
+

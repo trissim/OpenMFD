@@ -1,0 +1,1188 @@
+Journal of Micromechanics and
+Microengineering
+
+You may also like
+
+PAPER • OPEN ACCESS
+
+A compartmentalized neuron-oligodendrocyte coculture device for myelin research: design,
+fabrication and functionality testing
+To cite this article: Mervi Ristola et al 2019 J. Micromech. Microeng. 29 065009
+
+- Biomimetic hydrogels direct spinal
+progenitor cell differentiation and promote
+functional recovery after spinal cord injury
+Sydney A Geissler, Alexandra L Sabin,
+Rachel R Besser et al.
+- Advances in electroactive bioscaffolds for
+repairing spinal cord injury
+Zeqi Liu, Jiahui Lai, Dexin Kong et al.
+- Advances in 3D printing scaffolds for
+peripheral nerve and spinal cord injury
+repair
+Juqing Song, Baiheng Lv, Wencong Chen
+et al.
+
+View the article online for updates and enhancements.
+
+This content was downloaded from IP address 24.231.98.89 on 15/08/2024 at 22:04
+
+Journal of Micromechanics and Microengineering
+J. Micromech. Microeng. 29 (2019) 065009 (13pp)
+
+https://doi.org/10.1088/1361-6439/ab16a7
+
+A compartmentalized neuronoligodendrocyte co-culture device
+for myelin research: design, fabrication
+and functionality testing
+Mervi Ristola1,6,7,8 , Lassi Sukki2,8 , Maria Manuela Azevedo3,4 ,
+Ana Isabel Seixas3,4 , João Bettencourt Relvas3,4,5 ,
+Susanna Narkilahti1,8 and Pasi Kallio2,8
+1
+
+Neuro Group, Faculty of Medicine and Health Technology, Tampere University, Arvo Ylpön katu 34,
+33520 Tampere, Finland
+2
+Micro- and Nanosystems Research Group, Faculty of Medicine and Health Technology, Tampere
+University, Korkeakoulunkatu 10, 33720 Tampere, Finland
+3
+i3S—Instituto de Investigação e Inovação em Saúde, Universidade do Porto, Rua Alfredo Allen, 208,
+4200-135 Porto, Portugal
+4
+IBMC—Instituto de Biologia Molecular e Celular, Rua Alfredo Allen, 208, 4200-135 Porto, Portugal
+5
+The Discoveries Centre for Regeneration and Precision Medicine, Porto Campus, Rua Alfredo Allen,
+208, 4200-135 Porto, Portugal
+E-mail: mervi.ristola@tuni.fi
+Received 9 January 2019, revised 20 March 2019
+Accepted for publication 5 April 2019
+Published 3 May 2019
+Abstract
+
+Microfluidics devices for co-culturing neurons and oligodendrocytes represent an important
+in vitro research tool to decipher myelination mechanisms in health and disease and in the
+identification of novel treatments for myelin diseases. In reported devices using primary
+rodent cells, the spontaneous formation of myelin sheaths has been challenging and random
+orientation of neurites impede the analysis of myelination. Furthermore, fabrication methods
+for devices show limitations, highlighting the need for novel in vitro cell-based myelination
+models. In the present study, we describe a compartmentalized cell culture device targeted
+for neuron-oligodendrocyte co-culturing and myelination studies. In the device, neurites
+from primary rat dorsal root ganglion (DRG) neurons were capable of forming aligned
+dense networks in a specific compartment that was physically isolated from neuronal
+somas. Co-culture of rat DRG neurons and oligodendrocytes, a well-known model to study
+myelination in vitro, led to interactions between oligodendrocytes and neurites in the device,
+and the deposition of myelin segments in an aligned distribution was spontaneously formed.
+For the fabrication of the device, we present a new method that produces polydimethylsiloxane
+(PDMS)—based devices possessing an open compartment design. The proposed fabrication
+method takes advantage of an SU-8 photolithography process and 3D printing for mould
+fabrication. Both the microscale and macroscale features are replicated from the same mould,
+6
+
+Faculty of Medicine and Health Technology, Tampere University, Arvo
+Ylpön katu 34, 33520 Tampere, Finland
+7
+Author to whom any correspondence should be addressed.
+8
+Equal contribution.
+Original content from this work may be used under the terms
+of the Creative Commons Attribution 3.0 licence. Any further
+distribution of this work must maintain attribution to the author(s) and the title
+of the work, journal citation and DOI.
+1361-6439/19/065009+13$33.00
+
+1
+
+© 2019 IOP Publishing Ltd Printed in the UK
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+allowing devices to be produced with high precision and repeatability. The proposed device
+is applicable for long-term cell culturing, live-cell imaging, and by enhancing aligned myelin
+distribution, it is a promising tool for experimental setups that address diverse biological
+questions in the field of myelin research.
+Keywords: microfluidics, microfabrication, 3D printing, co-culture, myelination
+S Supplementary material for this article is available online
+(Some figures may appear in colour only in the online journal)
+
+1. Introduction
+
+polycaprolactone (PCL) fibers compared to random PCL
+fibers [17]. In vivo studies with nanofibrous nerve conduits
+have further shown thicker myelin sheaths on aligned conduits
+than on random conduits [18]. Furthermore, quantitation of
+myelination is difficult if neurites are randomly oriented in
+the culture. Thus, improvements in microfluidic devices for
+myelin research aiming to aligned neurite growth are needed.
+Microfluidics devices used in in vitro research can be
+divided into so-called enclosed and open compartment
+designs, both of which have been utilized in myelin studies
+[4, 12–16]. Neural cells are often very sensitive to chemical
+and mechanical changes in their environment and cell-specific
+growth requirements need to be considered in device design
+and fabrication. In devices with an enclosed compartment
+design, low-height cell compartments are enclosed within
+polydimethylsiloxane (PDMS) and access to open medium
+reservoirs is only at the ends of the cell compartments. This
+can cause uncontrollable or even impossible cell seeding,
+undesirable shear forces and inefficient nutrient supply and
+waste removal that in case of neuronal cells may negatively
+affect cell growth [19–21]. By adopting an open compartment design, the negative effects of enclosed compartment
+design can be avoided, and better culture conditions as well
+as improved cell viability and neurite growth is possible
+[4, 20, 22, 23].
+Two different methods to fabricate microfluidics devices
+possessing an open compartment design for myelination
+studies have been used in the past. In the most commonly used
+method, only the microscale features are included in an SU-8
+mould [4, 13, 15, 16]. Because the open macroscale features
+of the device are created by manual cutting, the drawbacks of
+this fabrication method include poor control over open features
+and poor repeatability between devices [24]. Another fabrication method developed by Park et al exploits a method called
+micro-macro hybrid soft-lithography master (MMHSM) [24].
+In the MMHSM method, both the microscale and macroscale
+features of the devices are replicated using a mould called a
+PMMA (poly(methyl methacrylate)) master. However, this
+method has a fairly complex fabrication process involving the
+fabrication of a replica device by milling macroscale features
+onto a PMMA piece, electroplating microscale features from
+copper onto a glass wafer and hot embossing these features
+onto the milled PMMA piece. This replica device is then used
+to mould the actual mould from PDMS. The PDMS mould
+is plasma bonded to a glass wafer and treated with (tridecafluoro-1,1,2,2-tetrahydrooctyl) trichloro-silane before it
+
+Microfluidics devices are important and practical research
+tools for a variety of biological applications, including in the
+field of neuroscience and myelin research. Myelination is
+an essential biological process whereby oligodendrocytes in
+the central nervous system (CNS) and Schwann cells in the
+peripheral nervous system (PNS) form myelin sheaths around
+the axons of neurons, ensuring the proper functioning of the
+vertebrate nervous system [1]. The mechanisms underlying
+myelination, as well as the mechanisms that underlie myelin
+diseases such as multiple sclerosis and peripheral neuropathies, are still not completely understood. This is not only
+because myelination is a highly regulated process but also
+because studying myelination in vivo is complex and timeconsuming; therefore, there is a crucial need for suitable in
+vitro cell-based models [2–5].
+Traditional in vitro neuron and myelinating cell co-culture
+systems are typically implemented on cell culture plates, dishes
+or glass coverslips where the quantitation of myelin formation
+and changes is difficult due to randomly distributed neurites
+and the presence of neuronal cell somas [6]. Furthermore,
+these culture conditions differ vastly from the in vivo environ­
+ment, where cellular functions, including myelination, are
+tightly controlled in a spatiotemporal manner [7–10]. To overcome these issues, compartmentalized neuron culture started
+with Campenot chambers [11]. The development in the field
+of microfabrication and microfluidics enabled the creation of
+next-generation compartmentalized devices. Microfluidics
+technology allows the fabrication of multi-compartment cell
+culture devices where microenvironmental conditions can be
+controlled spatially and temporally to better mimic in vivo
+conditions. Furthermore, defined compartments in devices can
+be used to monitor cellular and subcellular events and to ease
+experimental analysis [7–9]. To study the interactions and signalling between neurites and myelinating cells, microfluidics
+devices have been established to compartmentalize neurites
+and myelinating cells in a defined compartment separated
+from neuronal somas by microtunnels [12, 13]. However, the
+earlier works using devices from these pioneering studies in
+the culture of primary rodent cells have not concentrated on
+the establishment of aligned neurite culture and the spontaneous formation of myelin segments has been challenging
+[12–16]. Alignment of neurites may play a remarkable role
+in the success of myelination in vitro, as it has been reported
+that oligodendrocyte differentiation is enhanced on aligned
+2
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+can be used to mould PDMS replicas. To our knowledge, this
+method has not been adopted by other groups indicating its
+complexity. Thus, microfluidics devices with open compartments require alternative mould fabrication methods which
+share the simplicity of the traditional sole SU-8 based moulds
+and the repeatability of the MMHSM method.
+In this study, we propose a compartmentalized co-culture
+device targeted for neuron-oligodendrocyte in vitro studies and
+a new SU-8 and 3D printing-based fabrication method that produces repeatably PDMS-based microfluidics devices with an
+open compartment design. We report the successful co-culture
+of primary rat dorsal root ganglion (DRG) neurons and oligodendrocytes in this microfluidics device, which can also be
+used for time-lapse imaging. We demonstrate successful interactions and contacts between oligodendrocytes and neurites,
+with the deposition of aligned myelin segments in the device.
+2. Materials and methods
+
+Figure 1. Schematic illustration of the compartmentalized cell
+culture device for neuron-oligodendrocyte co-culturing. The device
+consists of two neuronal soma compartments and a myelination
+compartment. The outer diameters for compartments are shown in
+the figure. The neuronal soma compartments are interconnected
+to the myelination compartment by 40 microtunnels with the
+dimensions shown in the figure. Enlargement of the device cartoon
+illustrates the purpose of the microtunnels to isolate neurites from
+their somas and guide them to the myelination compartment. In
+the myelination compartment, the neurite network is formed and
+oligodendrocytes can interact with and ensheath neurites in the
+absence of neuronal somas.
+
+2.1. Design and fabrication of the microfluidics device
+
+The co-culture microfluidics device (figure 1) contains three
+sequential compartments: two neuronal soma compartments
+(length  =  3 mm, width  =  
+4 mm) at the ends, which are
+interconnected by microtunnels to a compartment for neuriteoligodendrocyte interactions and myelination analysis in the
+middle (length  =  3 mm or 5 mm, width  =  4 mm). Primary
+rat neurons have previously cultured in the microfluidics
+devices with 200–500 µm microtunnel length for the separation of neurites from their cell somas [13, 15, 16, 25–27]. As
+shorter and a higher number of microtunnels in the microfluidics devices have shown to improve functional formation of
+neurite networks [13, 28], the microtunnel length was set to
+250 µm and the number to 40 in our device. Two different
+microtunnel cross-sectional areas, tunnels 1.5 µm high and
+5 µm wide and tunnels 3.5 µm high and 10 µm wide, were
+designed. All the dimensions of four different device designs
+evaluated in this study are summarized in table 1.
+The mould for the fabrication of the device is comprised of
+(i) an SU-8 part that defines the microscale features, i.e. the
+microtunnels and the cell compartment areas, and (ii) three
+3D-printed steel inserts that provide the open macroscale features for the device (figure 2). To accurately align and attach
+the SU-8 part and the inserts together, a pair of holes and a pair
+of pins were designed for the SU-8 part and the bottom of each
+3D insert, respectively (figure 2). The SU-8 part was fabricated
+using multilayer SU-8 rapid prototyping methods, which have
+been described in detailed earlier [29]. Three chrome-on-glass
+masks, one containing the 5 µm wide microtunnels, one the
+10 µm wide microtunnels and one with the three cell compartment areas, were designed using SolidWorks (SolidWorks
+Corp., Waltham, MA, USA). The masks were fabricated from
+mask blanks (Clean Surface Technology Co., Tokyo, Japan)
+using a direct writing device (µpg501, Heidelberg Instruments
+Mikrotechnik GmbH, Heidelberg, Germany). SU-8 5 and
+SU-8 3050 photoresists (micro resist technology GmbH,
+Berlin, Germany) were subsequently spin-coated on a silicon
+wafer (University Wafer, Boston, MA, USA) to produce two
+
+combined layers of different heights. Once the layer for the
+1.5 µm-high or 3.5 µm-high microtunnels was developed,
+the second layer for the 200 µm-high cell compartment areas
+and alignment holes was fabricated on top of it. Before spin
+coating, the silicon wafers were treated with oxygen plasma
+at 30 W for two minutes in a reactive ion etcher (Vision 320
+Mk II RIE, Advanced Vacuum, Malmö, Sweden). The 3D
+inserts with 3 mm height were designed with SolidWorks and
+printed from stainless steel 316L using selective laser melting
+(SLM) [30] with 25 µm layer height using 40 µm diameter
+laser beam (Materflow Oy, Lahti, Finland). The alignment
+pins of the inserts were designed for a height of 150 µm,
+and the outer dimensions of the inserts were designed to be
+100 µm smaller than the corresponding cell compartment
+areas to take the manufacturing tolerance of 3D printing into
+account. To improve the PDMS demoulding, the insert sidewalls were designed at a 70° angle as previously reported
+[24], and the surfaces of the inserts that come into contact
+with PDMS were polished using fine grit sandpaper, up to
+P2000. A viscous steel epoxy was used to attach the inserts
+and the SU-8 parts by depositing the epoxy to a cavity (figure
+2). The high viscosity of the epoxy prevented it from leaking
+out of the cavity as the insert was pressed for gluing onto the
+SU-8 mould.
+The final PDMS device was fabricated from two PDMS
+parts: (1) a cell chamber part containing the microtunnels
+and cell compartments and (2) a medium reservoir chamber
+containing additional cell culture medium which allows for a
+longer interval between medium changes (figure 2). The cell
+3
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+Table 1. Dimensions of devices and number of devices used in the experiments.
+
+Microtunnels
+
+Myelination compartment
+
+Number of devices
+
+Device name
+
+Height (µm)
+
+Width (µm)
+
+Length (µm)
+
+Length (mm)
+
+Width (mm)
+
+Cell culture
+
+Immunostaining
+
+3.5/10 µm_3 mm
+3.5/10 µm_5 mm
+1.5/5 µm_3 mm
+1.5/5 µm_5 mm
+
+3.5
+3.5
+1.5
+1.5
+
+10
+10
+5
+5
+
+250
+250
+250
+250
+
+3
+5
+3
+5
+
+4
+4
+4
+4
+
+7
+8
+7
+8
+
+6
+6
+6
+4
+
+Figure 2. Fabrication steps for the microfluidics cell culture device for neuron-oligodendrocyte co-culturing. The mould is fabricated from
+an SU-8 part, which defines the microscale microtunnels and cell compartment areas, and three 3D-printed inserts, which provide the open
+macroscale features. For the accurate alignment, the inserts contain two pins on the bottom that match into pin holes in the SU-8 part. The
+SU-8 part and 3D inserts are attached together by placing steel epoxy into the cavity on the bottom of the inserts and aligning them to
+the SU-8 part. The final PDMS device is fabricated from two PDMS parts: a cell chamber part and a medium reservoir. The cell chamber
+part is replicated from the fabricated mould. To connect the neuronal soma and myelination compartments to the medium reservoir, inlets
+are punched for each compartment. A medium reservoir chamber is produced from the PDMS sheet by punching and bonded to the cell
+chamber part using oxygen plasma.
+
+chamber was replicated from the fabricated mould by carefully pouring degassed PDMS into the mould. After curing in
+the oven, the PDMS was slowly and carefully removed from
+the mould. Each cell chamber was separated from a PDMS
+replica containing six cell chambers using a  ∅24 mm biopsy
+punch. To connect the cell compartments in the cell chamber to
+the medium reservoir, inlets (figure 2) were punched for each
+compartment using either a  ∅2 mm or a  ∅3 mm biopsy punch,
+depending on the compartment size. The medium reservoir part
+of the device was fabricated from a 8 mm thick PDMS sheet
+using biopsy punches to provide a wall width of approximately
+4.5 mm. The maximum holding capacity of the medium reservoir for liquid is approximately 1.4 ml. The medium reservoir
+chamber was bonded onto the cell chamber part using oxygen
+plasma (Pico, Diener electronic GmbH  +  Co. KG, Ebhausen,
+Germany) for 20 s at 30 W and 0.3 mbar pressure.
+The microtunnels and cell compartments in the final
+PDMS device were coated with polyvinylpyrrolidone (PVP)
+to make them permanently hydrophilic and facilitate the
+supply of Matrigel as well as the cell culture medium in
+
+the microscale features when preparing the devices for cell
+culture. A modified PVP coating protocol was used for the
+treatment [31]. Briefly, the device was reversibly bonded to a
+glass wafer with the features against the glass and was then
+treated with oxygen plasma for five minutes at 30 W and
+0.3 mbar pressure. After the plasma treatment, the microtunnels and cell compartments were filled with a PVP solution
+(22.2% (w/v) solution containing polyvidone 25 powder
+(Merck, Kenilworth, NJ, USA) mixed with deionized (DI)
+water (Direct-Q3, Merck)) for ten minutes, washed with
+DI-water and dried using pressurised air.
+2.2. Characterization of the mould and microfluidics device
+
+Before attaching the 3D-printed inserts to the SU-8 parts, the
+dimensions of the SU-8 parts were characterized using a contact profilometer (Dektak XT, Bruker, Billerica, MA, USA) by
+measuring the heights of the microtunnels and the cell compartment areas. A scanning electron microscope (SEM, Zeiss
+ULTRA-55, Carl Zeiss AG, Oberkochen, Germany) was used
+4
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+approval from and in accordance with the IBMC/i3S Animal
+Ethics Committee, the Portuguese Veterinary Office and the
+European Union animal welfare laws and guidelines.
+
+to characterize the PDMS devices. The PDMS devices used in
+SEM imaging were taken from the last fabrication batch that
+was the fifth batch. Thus, the moulds had been used multiple
+times prior making devices to imaging allowing observation
+of possible wearing of the mould. The devices were bonded
+to microscope slides using oxygen plasma bonding and then
+coated with 10 nm of gold using metal vapour deposition. The
+microtunnels and the walls between the cell compartments
+were selected as structures to be imaged. The analysis included
+33 images of the 10 µm wide tunnels from one device to study
+how accurately our method replicates microscale features.
+The analysis was done using GNU image manipulation program (GIMP), where the widths of the features were measured
+using the measure tool. This tool provides widths in pixels,
+which was multiplied by pixel size information provided by
+the SEM. Both width mean and standard deviation were calculated in MATLAB (The MathWorks, Inc, MA, USA).
+
+2.5. Rat DRG neuron and oligodendrocyte myelinating
+co-cultures
+
+Purified DRG neurons can be myelinated by oligodendrocytes
+and their co-culture represents the most used myelination
+model in vitro [36–39]. Myelinating co-cultures were established as previously published with minor modifications
+[32, 33]. Before plating the DRG neurons into the PDMS
+device, Matrigel was pipetted out of the compartments, and
+the compartments were equilibrated with DMEM (including
+high glucose, GlutaMAX and sodium pyruvate; #31966047,
+Invitrogen, Thermo Fisher Scientific) supplemented with 10%
+fetal bovine serum (FBS) (Gibco, Thermo Fisher Scientific)
+and 1% penicillin/streptomycin (Thermo Fisher Scientific),
+named complete DMEM (C-DMEM). Dissociated DRG neurons were suspended in C-DMEM with nerve growth factor
+(NGF, 100 ng/ml; #13290010, Thermo Fisher Scientific) and
+seeded into the both neuronal soma compartments at a density
+of 1250–2100 cells mm−2 in a volume of 15 µl that fits into
+the compartment. For the control co-cultures, 90 000 neurons
+were plated on  ∅14 mm coverslips. Neurons were allowed to
+attach overnight in a humidified incubator at 37 °C and 5%
+CO2. The next day, 500 µl of C-DMEM supplemented with
+NGF was added to the cultures. Cultures were treated at 1, 2
+and 3 days in vitro (DIV) for 8 h with 5-fluoro-2′-deoxyuridine
+(FUrd, 20 µM; #F0503, Sigma-Aldrich) that is an antimitotic agent and removes the proliferating n­on-neuronal
+cells but maintains neurons in the culture. After 3 DIV, FBS
+in C-DMEM was replaced with 1% B27 (#0080085SA,
+Invitrogen, Thermo Fisher Scientific) and the cultures were
+grown for 21 DIV with total media (500 µl) changes every
+2–3 d. After 21 DIV, OPCs were seeded on top of the isolated neurite network in the myelination compartment of the
+device at a density of 80-125 cells mm−2 and on top of the
+neurons in the control culture (10 000 OPCs/coverslip). The
+co-cultures were maintained in myelinating medium (SATO
+medium (DMEM/F12 (Sigma-Aldrich) supplemented with
+insulin (5 mg ml–1; Sigma-Aldrich), human apo-transferrin
+(100 µg ml−1; Sigma-Aldrich), BSA (100 µg ml−1; NZYTech,
+Lisbon, Portugal), progesterone (60 ng ml−1; Sigma-Aldrich),
+putrescine (16 µg ml−1; Sigma-Aldrich), sodium selenite
+(40 ng ml−1; Sigma-Aldrich), thyroxine (40 ng ml−1; SigmaAldrich), triiodo-L-thyronine (30 ng ml−1; Sigma-Aldrich))
+completed with 1% B27, NGF (100 ng ml−1), N-acetyl-Lcysteine (5 ng ml−1; Sigma-Aldrich), and D-biotin (10 ng
+ml−1; Sigma-Aldrich)) for additional 18 DIV with total media
+(500 µl) changes every 2–3 d.
+
+2.3. Preparation of microfluidics devices for cell culture
+
+Glass coverslips (∅24 mm) were coated with 25 µg/ml poly-Dlysine (PDL) (#P7405, Sigma-Aldrich, St. Louis, MO, USA)
+diluted in boric acid buffer for two hours at RT. Uncoated
+PDL was removed by washing with sterile H2O and the coverslips were allowed to air-dry. The PVP-coated PDMS devices
+were sterilized by immersing them into 70% ethanol and airdrying thereafter to remove the residual ethanol. The devices
+were then attached to PDL-coated coverslips by reversible
+bonding. Reversible bonding was preferred over permanent
+bonding because of its simplicity and because oxygen plasma
+treatment needed in permanent bonding may have negative
+effect on the PDL coating of the coverslip. Neuronal soma
+compartments, myelination compartments and microtunnels
+of bonded devices were immediately filled with Matrigel
+(#354234, Enzifarma, Lisbon, Portugal) diluted at 1:20
+that was the dilution specifically optimized for the devices.
+Dilution was made in Dulbecco’s Modified Eagle’s medium
+(DMEM) including high glucose, GlutaMAX and sodium
+pyruvate (#31966047, Invitrogen, Thermo Fisher Scientific,
+Rockfore, IL, USA) and coatings were performed for 3 h at 37
+°C. The number of four different device designs included in
+the study is shown in table 1. The devices were kept in 6-well
+cell culture plates. Control cultures were performed on glass
+coverslips (∅14 mm) treated with the same coatings as for the
+devices with the exception that the Matrigel dilution was 1:10
+according to the standard protocol for rat DRG neurons and
+oligodendrocyte co-culture [32].
+2.4. Animals and primary cell preparation
+
+Wistar rats were used for the preparation of primary cultures
+of dorsal root ganglia (DRG) neurons and mixed glial cells
+(MGCs). DRGs were isolated from spinal cords of E15 rat
+embryos as previously described [32, 33]. Oligodendrocyte
+precursor cells (OPCs) were isolated from MGCs from
+postnatal day 0-2 (P0-P2) rat brains as previously described
+[32, 34, 35]. All animal experiments were performed with
+
+2.6. Time-lapse microscopy
+
+Live-cell imaging of the co-cultures in the PDMS devices was
+performed with phase-contrast microscopy. The devices were
+imaged on a 6-well plastic bottom plate with 150 s intervals
+5
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+distribution were built based on the normalized frequencies of
+pixel orientations at 15° intervals. Spectral analysis software
+CytoSpectre [45] was used for the quantitative analysis of neurite distribution in the devices compared to the control culture
+freely growing on a glass coverslip as previously described
+[46, 47]. The software calculates the orientation distribution
+as a circular variance value, where 0 indicates completely
+unidirectional orientation and 1 random distribution of orientation. Maximum wavelength was set to 20 µm to analyse
+neurites but to exclude somas from the analysis. All data for
+statistical analyses was found to be non-normal and therefore
+the nonparametric Mann–Whitney U-test was used. Statistical
+analyses were performed using SPSS Statistics (v.25; IBM
+Corp., Armonk, NY, USA) and a p -value less than 0.05 was
+considered statistically significant.
+
+for 1.5 d after the addition of OPCs. All images were recorded
+under a controlled environment (37 °C and 5% CO2) with a
+Zeiss Axiovert 200M microscope (Carl Zeiss AG) equipped
+with an A-Plan 20×/0.30 Ph1 objective and a Roper Coosnap
+HQ camera. For each device, a region of interest (ROI) was
+defined using the ‘create ROI grid’ option in Micromanager
+1.4 [40] image acquisition software. For some of the still
+images, false colouring was used for the visualization of oligodendrocytes in Adobe Photoshop (version 20161012.r.53).
+2.7. Immunofluorescence
+
+For assessing the identity of the cells and myelin formation
+in the co-cultures, immunocytochemical staining was performed following a previously published protocol with minor
+modifications [32, 41]. Briefly, cells were fixed in microtubule-protecting fixative buffer (MP-PFA; 4% PFA, 65 nM
+PIPES, 25 mM HEPES, 10 mM EGTA and 3 mM MgCl2
+in PBS) for 40 min at room temperature (RT), followed by
+permeabilization and blocking (in 1% HEPES buffer, 2.5%
+Triton X-100, 1% normal goat serum (NGS) and 1% normal
+horse serum in PBS) for 30 min at RT. Primary antibodies (rat
+anti-myelin basic protein (MBP), dil. 1:100 (#MCA409S,
+Bio-Rad Laboratories, Hercules, CA, USA) and mouse
+anti-βIII-tubulin, dil. 1:1000 (#302302, Synaptic Systems,
+Goettingen, Germany)) and secondary antibodies (goat antirat Alexa568, dil. 1:1000 and goat anti-rabbit Alexa488, dil.
+1:1000 (#A21247 and #A11034, respectively; both from
+Molecular Probes, Thermo Fischer Scientific)) were diluted
+in blocking solution and sequentially incubated for 1 h at
+RT. After washing, the cells were incubated with DAPI dye
+(4′,6′-diamidino-2-phenylindole, dilactate; dil. 1:40 000,
+#D3571, Molecular Probes, Thermo Fisher Scientific) for
+nuclear staining for 15 min at RT. After washing, the coverslips
+were mounted with Fluoroshield mounting medium (SigmaAldrich). Imaging was performed on a Leica DMI6000
+epifluorescence microscope (Leica, Wetzlar, Germany) using
+a 20×/0.40 CORR Ph1 or a 40×/0.60 objective equipped with
+an Orca Flash 4.0 v2.0 camera (Hamamatsu, Hamamatsu City,
+Japan). The number of devices in immunocytochemical analysis is shown in table 1. Image processing using a Gaussian
+blur filter and a nonlinear gamma change in Fiji software [42]
+was performed to enhance the image contrast for visualization
+purposes only.
+
+3. Results and discussion
+3.1. Fabrication and characterization of the mould and the
+microfluidics device
+
+Microfluidics devices were fabricated using the method proposed here (figure 2). For the cell experiments, 32 devices
+were fabricated with a success rate of approximately 90% of
+the devices remaining intact after demoulding. Most failures
+were caused due to the damage of the wall between the compartments in the demoulding process. The contact profilometer
+characterization of the SU-8 parts of the mould proved that
+they were successfully fabricated and the features in the SU-8
+parts had the intended dimensions. The 3D-printed inserts
+were successfully attached to the SU-8 part with the help
+of the alignment pins and holes using ­two-component steel
+epoxy. The combination of the SU-8 part and the 3D-printed
+insert formed a mould for PDMS device replication
+(figure 3(a)). To analyse the quality of the PDMS devices
+and possible wearing of the mould, the PDMS devices were
+selected for SEM analysis from the fifth batch of the devices
+fabricated with the mould. As observed from the SEM images,
+the devices remained unbroken during the demoulding process, and the devices precisely replicated features from the
+mould, with accurate replication of the microtunnels (figure
+3(b)). The measurements derived from SEM images of device
+with 10 µm microtunnel width indicated a mean tunnel
+width of 9.85 µm with a standard deviation of 0.09 µm. As
+the width was designed to be 10 µm, the measured width
+was only 1.5% smaller and thus within the range of PDMS
+shrinkage commonly considered to be 1%–3% due to heat
+[48]. The coefficient of variation was below 1% indicating
+excellent precision of the manufacturing process. Variations
+can be explained by some inaccuracy in image analysis due
+to the slightly blurry edges of the tunnels in the SEM images.
+The SEM images of the devices showed no indication of
+any wearing of the mould, implying that the mould can be
+reused several times. After this study, the moulds remained
+in active use, until degradation in device quality was noticed.
+This was caused by small PDMS fragments that were stuck
+between the inserts and the SU-8 parts in the mould. We estimate that the moulds fabricated with our method can be used
+
+2.8. Neurite orientation analysis
+
+Fluorescence images immunostained with βIII-tubulin antibody were analysed for neurite orientation. The plugins
+OrientationJ Distribution [43] and OrientationJ Measure [44]
+in the ImageJ software (version 1.52e) were used to study the
+distribution and direction of neurite orientation, respectively,
+in the myelination compartment of the devices. Neurites
+aligned parallel to the direction of microtunnels were defined
+to be at 0° orientation and the other directions obtained angles
+in the range between  −90° and  +90°. Results are shown at the
+range from 0° to 90°, as absolute values of orientation angles
+were considered. Weighted histograms of neurite orientation
+6
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+Figure 3. Characterization of the mould and the microfluidics PDMS device. (a) Fabricated mould imaged by Canon’s system camera
+showing the 3D-printed inserts attached to the SU-8 part of the mould on the silicon wafer. Scale bar is 2 mm. (b) An SEM image showing
+the accurate replication of the microtunnels that are 3.5 µm in height and 10 µm in width. Scale bar is 20 µm.
+
+approximately 15 times before degradation becomes significant. In the future work, the durability of the moulds can be
+improved by applying coating, such as (tridecafluoro-1,1,2,2tetrahydrooctyl) trichloro-silane, which is occasionally used
+with moulds to improve demoulding [49].
+In previous studies, two fabrication methods for microfluidics PDMS devices with open compartments have been
+presented. The method that uses an SU-8 mould for the microscale features and the manual cutting of the PDMS for the
+open features using either a biopsy punch or a scalpel is the
+most commonly used [4, 13, 15, 16]. However, developing
+more repeatable methods that use a single mould to produce
+all the features in the device is a matter of great importance.
+This kind of method has been presented only by Park et al [14,
+24]. In their MMHSM method, a mould for the final PDMS
+device is first made from a PMMA master that is fabricated
+using a combination of milling for macroscale features and
+hot embossing for microscale features [24]. The MMHSM
+method allows the fabrication of both the microscale and
+macroscale features at the same time, thus being a controlled
+and repeatable method. However, the production of the final
+PDMS device requires two replication steps from the original
+mould that complicates the process and increases the dimension alterations caused by PDMS shrinkage. Other limitations
+of their MMHSM method include a requirement for special
+equipment and the complexity of the PMMA master fabrication. Thus, to the best of our knowledge, it has not been adopted
+by others. We proposed here an alternative fabrication method
+for microfluidics PDMS devices with open compartments. In
+our method, both the microscale and macroscale features are
+replicated using the same mould, thus sharing some similarities with the MMHSM method [24]. Our fabrication process,
+however, allows for combining multiple microscopic features
+of different heights with macroscopic features that is not possible with the MMHSM method. Furthermore, our method
+provides a simpler way to produce the mould by taking the
+advantages of a traditional SU-8 lithography process and 3D
+printing, and the final PDMS device requires only one replication step. Thus, by using the fabrication method proposed in
+this study, more complex microscopic features can be created
+and microfluidics devices can be produced faster and with a
+smaller number of process steps.
+
+This is, to the best of our knowledge, the first study
+combining SU-8 lithography and 3D printing in the mould
+fabrication of a PDMS device. In earlier studies, the entire
+mould has been 3D printed. However, due to printing method
+limitations, the smallest dimensions have been in a range of
+hundreds of micrometres [50]. It has been suggested that the
+resolution limits of 3D printing could be mitigated by taking
+advantage of shrinkage in certain elastic resins. However, it
+has not been shown whether this kind of method is capable
+of producing both micrometre and millimetre scale features
+simultaneously in all three dimensions [51]. Thus, 3D printing
+as the only mould fabrication method is unable to produce sufficiently small microscale features in the devices containing
+also millimetre scale features. In our study, SLM was used
+as the 3D printing method due to the high quality and nonporous nature of SLM prints [30]. An SLM print was shown
+for the first time to be compatible with an SU-8 mould in
+the mould fabrication of PDMS devices. However, any fabrication method producing solid parts with sufficiently high
+accuracy, repeatability and surface quality is compatible with
+our method. Photolithography provides a large range for the
+width and the length of features, and it is possible to fabricate
+even sub-micrometre and millimetre sized features simultaneously [29, 52]. The downsides of photolithography are its
+limitations in the feature height (hundreds of micrometres)
+and the fabrication of devices with multiple different heights
+increases the duration and complexity of the fabrication process [52, 53]. Combining 3D printing with photolithography
+allows a significantly larger range of feature heights. Thus,
+the mould fabrication method presented in this study is highly
+applicable to meet the specific requirements of cell cultures in
+different research questions.
+3.2. Neurite extension and orientation in the microfluidics
+device
+
+This study aimed to build a cell culture device that promotes
+the formation of aligned-oriented neurite networks isolated
+from neuronal somas enabling easier analysis of myelination in vitro. A three-compartment design where the neurites
+extend into the middle compartment between two neuronal
+populations was created (figure 1). Rat DRG neurons were
+7
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+chosen for cell culture as they have been broadly used and
+are considered as an invaluable research model for studying
+axonal biology as well as myelination [54–56]. DRG neurons
+from both embryonic and postnatal rats have been successfully cultured in microfluidics PDMS devices where the
+separation of neurites from their cell somas has been achieved
+using 450–500 µm-long microtunnels [15, 16, 25–27].
+Reports on other rodent neuron types have shown that even
+a 200 µm microtunnel length is sufficient to isolate neurites
+from their somas [13]. Furthermore, shorter microtunnels and
+a higher number of microtunnels have the advantage of faster
+functional formation of extensive neurite networks compared
+to longer microtunnels and a lower number of microtunnels
+[13, 28]. In our device, the microtunnel length was set to
+250 µm and the number to 40 so that these features would
+not be the limiting factors and would maximize the formation
+of a dense neurite network. With respect to the segregation
+of neurites from their cell somas, other microtunnel dimensions, the width and height, were taken into consideration in
+this study. Thus, two different microtunnel sizes, height  =  
+3.5 µm  ×  width  =  10 µm and height  =  1.5 µm  ×  width  =  
+5 µm, were tested for the culture of rat DRG neurons.
+Furthermore, devices with two different myelination compartment lengths, 3 mm and 5 mm, were included in the experiment
+to assess its effect on the neurite network formation.
+In this study, dissociated DRG neurons seeded into the
+neuronal soma compartments started to extend their neurites into the microtunnels as early as 48 h after cell plating
+in all devices regardless of the microtunnel size or myelination compartment length. As the culture continued, neurites
+traversed the microtunnels and came out into the myelination
+compartment. The evaluation with phase-contrast microscopy
+and DAPI staining revealed hardly any DRG somas in the
+myelination compartment and the isolation of neurites from
+cell somas was observed with both tunnel sizes and both myelination compartment lengths (figures 4(a)–(d)). However, the
+behaviour of neurites in the myelination compartment differed
+depending on the size of the microtunnels. In the devices with
+larger microtunnels (height  
+=  3.5 µm  ×  width  =  10 µm),
+neurites looked healthy and continued their extension into the
+myelination compartment towards the opposite neuronal soma
+compartment (figures 4(a) and (b)). Neurites formed in the
+myelination compartment of 3 mm length aligned and dense
+network (figure 4(a)), whereas in the 5 mm long myelination
+compartment the aligned network appeared sparser (figure
+4(b)). Orientation analysis using OrientationJ Distribution
+showed that the majority of neurites in the myelination compartment of 3 mm length displayed a preferred direction in
+terms of orientation angle close to the 0° that was the defined
+direction of microtunnels (64% in the range from 0° to 30°;
+figure 4(e)). Neurites in the 5 mm long myelination compartment also exhibited a preferred direction parallel to the
+microtunnels but with a smaller percentage than in the 3 mm
+long myelination compartment (52% in the range from 0° to
+30°; figure 4(f)). In the devices with smaller microtunnels
+(height  =  1.5 µm  ×  width  =  5 µm), neurites were unable
+to extend along the myelination compartment of both 3 mm
+and 5 mm length. Neurite extension was nonlinear related to
+
+the direction of the microtunnels and the appearance of neurites was curvy in front of the microtunnels, with only some
+neurites capable of reaching the opposite microtunnels in the
+myelination compartment (figures 4(c) and (d)). OrientationJ
+Distribution analysis showed that neither in the myelination
+compartment of 3 mm nor 5 mm length neurites had a preferred direction parallel to the microtunnels (figures 4(g) and
+(h)).
+To further study the differences in neurite orientation
+in the myelination compartment of devices with different
+dimensions, orientation angles using OrientationJ Measure
+analysis were compared. The medians of neurite orientation angles in the devices with larger microtunnels (height  =  
+3.5 µm  ×  width  =  10 µm) were 17° and 14° for 3 mm and
+5 mm long myelination compartment, respectively (figure
+4(i)). These values were significantly smaller (p   <  0.001)
+than the corresponding medians in the devices with smaller
+microtunnels (height  =  1.5 µm  ×  width  =  5 µm) that were
+58° and 40° (figure 4(i)). As 0° is the defined direction of
+microtunnels, neurite orientation in the devices with larger
+microtunnels was confirmed to be aligned along the tunnel
+direction. Furthermore, a high variation in orientation angles
+in the devices with smaller microtunnels indicated random
+neurite orientation (figure 4(i)).
+To further quantify the neurite alignment in the devices
+and in the control culture (figure 4(k)), circular variance was
+analysed using CytoSpectre software. The analysis showed
+median circular variances of 0.43 and 0.44 for the devices
+with larger microtunnels in 3 mm and 5 mm long myelination
+compartment, respectively (figure 4(j)). The values were significantly smaller (p   <  0.001) than in the devices with smaller
+microtunnels (0.81 and 0.88 for 3 mm and 5 mm long myelination compartment, respectively) or in the control culture
+(0.67; figure 4(j)). As perfect alignment has a circular variance
+value of 0 and random alignment a value of 1, the analysis
+verified the presence of aligned neurite network in the myelination compartment with larger microtunnels.
+In this study, an extensive comparison of device param­
+eters and their quantitative analysis showed that in the devices
+with larger microtunnels (height  
+=  3.5 µm  ×  width  =  
+10 µm), neurite extension of rat DRG neurons was aligned
+and parallel with the direction of microtunnels in the myelination compartment (figure 4). This tunnel size enabled robust
+neurite outgrowth at the same time with the isolation of neurites from their somas. The formed aligned neurite network
+appeared denser in the myelination compartment of 3 mm
+length than in the compartment of 5 mm length. We showed
+that neurite extension was limited and neurites had no preferred direction along the microtunnels in the device with
+smaller microtunnel size (height  =  1.5 µm  ×  width  =  5 µm).
+Peyrin et al had similar findings with mouse cortical cells
+for narrow and long microtunnels (height  =  3 µm, width  
+< 3 µm, length  =  500 µm) as neurite extension and integrity
+were reduced [57]. They further showed that the number of
+neurites passing through the microtunnels highly correlates to
+at least the width of the microtunnel; decreasing the tunnel
+width reduces the number of neurites exiting the tunnels
+[57]. Thus, the limited neurite extension ability in our study
+8
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+Figure 4. Neurite extension and orientation in the microfluidics device. (a) and (b) Neurites of rat DRG neurons formed aligned network
+in the myelination compartment of the device with larger microtunnels (height  =  3.5 µm  ×  width  =  10 µm) whereas (c) and (d) neurite
+extension was impeded in the myelination compartment with smaller microtunnels (height  =  1.5 µm  ×  width  =  5 µm) as shown by
+immunocytochemical staining with βIII-tubulin antibody. With both tunnel sizes, microtunnels isolated cell somas from neurites in
+all four device designs (representative images shown only for one soma compartment in (a) and (c)). Scale bars are 100 µm. (e)–(h)
+Weighted histograms of neurite orientation angle distributions in the devices with larger (height  =  3.5 µm  ×  width  =  10 µm) and smaller
+(height  =  1.5 µm  ×  width  =  5 µm) microtunnels and 3 mm or 5 mm long myelination compartment obtained with OrientationJ Distribution
+analysis. Normalized frequencies of pixel orientations are shown at 15° intervals and the direction of microtunnels is defined as 0°
+(horizontal axis of the images in (a)–(d)). (i) The quantitative analysis of neurite orientation angles relative to the direction of microtunnels
+(0°; horizontal axis of the images in (a)–(d)) with OrientationJ Measure function confirmed significantly aligned neurite network parallel
+to the direction of microtunnels in the devices with larger microtunnels compared to the devices with smaller microtunnels. (j) The
+quantitative analysis of neurite alignment confirmed significantly smaller circular variances of the neurite network in the devices with
+larger microtunnels than in the control culture of freely growing cells on a coverslip or in the devices with smaller microtunnels. (k)
+Immunostained image of control culture with βIII-tubulin antibody. Scale bar is 100 µm. In (e)–(j), 20 ROIs (20 single images with
+20  ×  objective, each 512 µm  ×  512 µm) from 1–2 independent devices were examined. In (i) and (j), statistical analyses were calculated
+using the Mann–Whitney U-test and *symbols indicate significant differences compared to both the 1.5/5 µm_3 mm and 1.5/5 µm_5 mm
+devices (***p   ⩽  0.001) and #symbols compared to the control coverslip (###p   ⩽  0.001).
+
+9
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+could be affected by the fewer number of neurites traversing
+together or the smaller microtunnel size may pose as a spatial
+obstacle that limits neurite extension.
+We showed that neurites had no preferred direction in
+the devices with smaller microtunnel size (height  
+=  1.5
+µm  ×  width  =  5 µm). Interestingly, the analysis of circular
+variance between these devices and the control culture indicated that neurites in the control culture were more aligned
+(figure 4(j)). This can be due to the limited neurite extension
+in the devices. In the control culture, neurite density appeared
+to be very high (figure 4(k)). Even though neurites can extend
+into any direction, it can be that they tend to keep certain directions in this dense network. In contrary, the number of neurites
+seemed to be very low due to the poor neurite extension in
+the middle compartments of the devices with smaller microtunnels (figures 4(c) and (d)). Neurites with limited extension
+ability and low density most probably start to interact with
+other neurites that come from the parallel microtunnels.
+This leads to the curvy appearance of neurites in front of the
+microtunnels and more variable alignment than in the control
+culture.
+Altogether, the data obtained in this study showed that the
+three-compartment device design with a specific microtunnel
+size and number, and the compartment size leads to a significant directional growth of neurites. Compared to the random
+growth of neurites in previous microfluidics PDMS devices
+designed for the co-culture of neurons and oligodendrocytes [4, 12–16], an aligned neurite network is a remarkable
+improvement.
+
+of myelinated axons has not been in the focus of these studies
+and the spontaneous formation of myelin has been challenging
+in the devices. In the device with rat cortical neurons and oligodendrocytes, only the localization of oligodendrocytes along
+neurites was detected but no MBP-positive segments around
+neurites [12]. Similar results were also shown in the studies
+using a co-culture of rat CNS neurons and oligodendrocytes
+[13, 14]. To the best of our knowledge, the study using mouse
+embryonic stem cells as the cell source is the only one where
+spontaneous compact myelin formation has been shown in a
+microfluidics device [4]. In the studies with rat DRG neurons
+and oligodendrocytes, compact myelin sheaths have been
+shown only with the use of electrical stimulation [15, 16]. The
+previous studies have reported neither neurites nor myelin
+segments distributed in an aligned manner in the device. Our
+established device was thus proven to be advantageous over
+the reported devices, as we detected the spontaneously formed
+MBP segments along aligned neurites.
+The design of the microfluidics device and prevailing
+microenvironment can make a difference for cells regarding
+their behaviour and myelination capability. Similar to our
+established device, the previously presented devices [13–16]
+represent open compartment designs, however, which are produced with different fabrication methods. All these devices
+have a so-called two-compartment design with respect to coculture having thus geometric differences compared to our
+device. Microfluidics devices with multi-compartment designs
+have been published earlier [58–60] but they have not been
+used in myelination studies and their layout differ from our
+device. In our device, the number of microtunnels was chosen
+to be high enough because the higher number of microtunnels, hence the higher number of neurites, have been shown
+to have the advantage of faster functional formation of extensive neurite networks [28]. Importantly, functional activity of
+neurons has been reported to influence myelination process in
+vitro and in vivo [15, 16, 61]. The position of the three compartments in our device was sequential, that may have effect
+on promoting the establishment of an aligned neurite network
+in the myelination compartment. The use of aligned polycaprolactone (PCL) fibers and nanofibrous nerve conduits have
+shown enhanced oligodendrocyte differentiation [17] and
+thicker myelin sheaths [18], respectively, compared to their
+randomly oriented counterparts. Thus, neurite alignment and
+dense neurite network is suggested to maximize the potential for myelination seen in our device. As shown, our device
+supported interactions and contacts between oligodendrocytes
+and neurites as well as the spontaneously formed deposition
+of myelin segments in an aligned distribution.
+One of the advantages in the microfluidics devices representing an open compartment design, like our design and the
+previously presented devices for myelination studies [13–16],
+include controlled cell seeding. In the enclosed compartment
+designs, cell seeding is commonly performed via inlet and
+outlet of the channel that easily leads to cell clogging in the
+channel or losing cells through outlet resulting in too low or
+high cell density [62]. As the open compartment design allows
+direct access to the compartments, it enables better control
+over the reproducibility of cell seeding in terms of cell number
+
+3.3. Myelin formation in the microfluidics device
+
+To assess the suitability of the established microfluidics PDMS
+device for the co-culture of neurons and oligodendrocytes
+and myelination studies, primary rat OPCs were co-cultured
+with DRG neurite network. The co-culture system of purified
+DRGs and oligodendrocytes is well-known and the most used
+model for studying myelination in vitro [36–38]. On DIV 21,
+OPCs were added on top of the isolated DRG neurite network
+formed in the myelination compartment during the initial culture period. OPC seeding did not disturb the existing neurite
+network and OPCs distributed uniformly on top of the aligned
+neurites. Following their addition, OPC processes started to
+contact and survey the neurites (figure 5(a) and supplementary movie 1 (stacks.iop.org/JMM/29/065009/mmedia)).
+Oligodendrocyte myelination capacity was assessed by the
+presence of MBP segments deposited on the neurites. After
+18 days in co-culture, the oligodendrocytes were able to form
+MBP segments along the neurites as demonstrated by the
+overlap of MBP- and βIII-tubulin-positive staining (figure
+5(b)). The myelin segment distribution followed the neurite
+network distribution in an aligned configuration (figure 5(b)).
+The differences in the appearance of myelination are evident when compared to the control co-culture where myelin
+sheaths were randomly distributed (figure 5(c)).
+Microfluidics PDMS devices have been previously demonstrated for the co-culture of primary rodent neurons and
+oligodendrocytes [12–16]. However, the aligned distribution
+10
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+Figure 5. Myelination in the microfluidics device. (a) Selected still image frames from time-lapse imaging (see supplementary movie
+1 from another position in the same device) of rat OPC processes contacting and surveying the neurites of rat DRG neurons (arrows).
+Arrowheads indicate the extension of OPC processes and OPCs are visualized using false colouring. (b) Oligodendrocytes formed MBP
+segments along the neurites with an oriented distribution in the microfluidics device as demonstrated by immunocytochemical labelling for
+βIII-tubulin and MBP. (c) The random MBP distribution along neurites in the control co-culture. Scale bars are 20 µm.
+
+seeded in each compartment. The studies with enclosed compartment devices have also shown that the seeding and culture
+of e.g. embryonic bodies (EBs) of stem cells is impossible to
+the devices due to the shallow compartment height [20]. The
+open compartment devices bypass this problem and enable the
+possibility of culturing at least EBs, complete DRGs, DRG
+explants and 3D cell aggregates [20, 23, 63]. Replacement of
+enclosed compartments by open compartments has also led
+
+to improved cell viability and neurite growth [4, 21, 22]. The
+problems in cell survival and axon extension in enclosed compartment devices employing inlet and outlet system [4, 21, 22]
+may arise from uncontrolled cell density or shear stress of cells
+during cell seeding and medium exchange even though careful
+techniques are used [8, 62]. Another possible cause may be
+inefficient or insufficient nutrient supply and waste removal
+that damage sensitive cells. If nutrient/waste exchange is
+11
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+based on diffusion, it can take a long time in enclosed compartment devices. Furthermore, as culture area-to-volume ratio is
+much higher in enclosed compartments than in open compartments, the regular time interval between media changes may
+not be sufficient [8, 62]. Medium perfusion can be used in
+microfluidics devices to improve efficiency of nutrient/waste
+exchange [8, 62]. Controlled perfusion systems are almost
+always pump-driven because pumps give excellent flow control [64]. The major downside of the pump-driven flow is the
+need of additional equipment that complicates handling for
+end users and increases the change for problems, such as leakages at connection points [62]. The added value of our open
+compartment device is controlled cell seeding and efficient
+nutrient and waste product exchange without requirement of
+additional equipment. Thus, the device is easy to use and can
+be easily adopted to standard cell culture laboratories.
+
+development of better treatments for diseases associated with
+myelin defects.
+Acknowledgments
+Timo Aho, MSc, is acknowledged for his help with SEM imaging and Chiara Fedele, PhD, for her assistance in image analysis with OrientationJ. We acknowledge financial support from
+the Academy of Finland (grant number 296415 for MR and
+312411 for PK), the Finnish MS Foundation (MR), Business
+Finland (SN, PK), grant NORTE-01-0145-FEDER-000008
+(supported by the Norte Portugal Regional Operational Programme-NORTE 2020 under the PORTUGAL 2020 Partnership Agreement through the European Regional Development
+Fund (FEDER)) and grant POCI-01-0145-FEDER-007274
+(supported by FEDER funds and by Portuguese funds
+through FCT (Fundação para a Ciência e a Tecnologia)/
+MCTES). MMA (SFRH/BD/90301/2012) and AIS (SFRH/
+BPD/79417/2011) are recipients of individual fellowships
+from FCT. The authors also acknowledge the support of i3S
+Scientific Platforms: Advanced Light Microscopy, a member
+of the national infrastructure PPBI-Portuguese Platform of
+BioImaging (supported by POCI-01–0145-FEDER-022122),
+the Translational Cytometry Unit and the Animal Facility. The
+authors acknowledge the Tampere Imaging Facility (TIF) for
+their service.
+
+4. Conclusions
+We created a compartmentalized microfluidics cell culture
+device targeted for the co-culturing of neurons and oligodendrocytes in myelin studies in vitro. The design of the device
+promoted the formation of aligned-oriented neurites in an
+isolated compartment. The device is advantageous over previously reported devices using rodent primary cells, as the
+spontaneous formation of MBP segments along neurites with
+an aligned distribution in a rat primary DRG neuron and oligodendrocyte co-culture was achieved.
+To create a device with these benefits, we propose a novel
+fabrication method to produce PDMS-based microfluidics
+cell culture devices with open compartments. The method
+combines, for the first time, a photolithography process with
+3D printing in the fabrication of a mould that replicates both
+the microscopic and macroscopic features for the PDMS
+device at the same time. The designed microscale features
+were replicated with high accuracy and devices were produced with good repeatability. Compared to existing methods
+reported for the fabrication of microfluidics devices with
+open compartments, our method provides a simple and effective way to produce complex moulds containing features in
+all sizes. We believe that the method can be widely used and
+adopted to easily fabricate a wide variety of PDMS devices
+for in vitro research purposes. Our fabrication method is
+unique and especially suitable for purposes where a large
+range of variation is needed in all three dimensions of the
+microfluidics device.
+Among the advantages of the presented device is that it
+can be used for long-term live imaging with commercially
+available time-lapse imaging systems. Achieving a directional
+growth of neurites in the device gives benefits in the research
+questions where axonal biology is of interest. Aligned myelin
+distribution in a specific region of the device in the absence
+of neuronal cell somas facilitates the analysis of myelination.
+These features potentially allow for automated and quantitative analysis of myelination. Thus, the use of the proposed
+co-culture device may lead to a better understanding of myelination mechanisms both in health and disease and to the
+
+Supplementary data
+Supplementary Movie 1. OPC processes contacting and surveying neurites in the rat DRG neuron and oligodendrocyte
+co-culture in the microfluidics device. Scale bar is 20 µm.
+ORCID iDs
+Mervi Ristola https://orcid.org/0000-0002-3748-3304
+Lassi Sukki https://orcid.org/0000-0001-9181-7355
+Maria Manuela Azevedo
+https://orcid.org/0000-00017316-8283
+Ana Isabel Seixas https://orcid.org/0000-0003-3237-777X
+João Bettencourt Relvas https://orcid.org/0000-0001-76360924
+Susanna Narkilahti https://orcid.org/0000-0002-7602-4418
+Pasi Kallio https://orcid.org/0000-0002-2890-6782
+References
+[1] Nave K and Werner H B 2014 Annu. Rev. Cell Dev. Biol.
+30 503–33
+[2] Hosmane S, Yang I H, Ruffin A, Thakor N and Venkatesan A
+2010 Lab Chip 10 741–7
+[3] Barbati A C, Fang C, Banker G A and Kirby B J 2013 Biomed.
+Microdevices 15 97–108
+[4] Kerman B E et al 2015 Development 142 2213–25
+[5] Osorio-Querejeta I, Sáenz-Cuesta M, Muñoz-Culla M and
+Otaegui D 2017 Neuromolecular Med. 19 181–92
+[6] Duncan I D and Radcliff A B 2016 Exp. Neurol. 283 452–75
+12
+
+M Ristola et al
+
+J. Micromech. Microeng. 29 (2019) 065009
+
+[7] Millet L J and Gillette M U 2012 Yale J. Biol. Med. 85 501–21
+[8] Halldorsson S, Lucumi E, Gómez-Sjöberg R and
+Fleming R M T 2015 Biosens. Bioelectron. 63 218–31
+[9] Siddique R and Thakor N 2014 J. R. Soc. Interface
+11 20130676
+[10] Williamson J M and Lyons D A 2018 Front. Cell. Neurosci.
+12 424
+[11] Campenot R B 1977 Proc. Natl Acad. Sci. USA 74 4516–9
+[12] Taylor A M, Blurton-Jones M, Rhee S W, Cribbs D H,
+Cotman C W and Jeon N L 2005 Nat. Methods 2 599–605
+[13] Park J, Koito H, Li J and Han A 2009 Biomed. Microdevices
+11 1145–53
+[14] Park J, Koito H, Li J and Han A 2012 Lab Chip 12 3296–304
+[15] Yang I H, Gary D, Malone M, Dria S, Houdayer T, Belegu V,
+McDonald J W and Thakor N 2012 Neuromolecular Med.
+14 112–8
+[16] Malone M, Gary D, Yang I H, Miglioretti A, Houdayer T,
+Thakor N and McDonald J 2013 Glia 61 843–54
+[17] Xie J, Willerth S M, Li X, Macewan M R, Rader A, SakiyamaElbert S E and Xia Y 2009 Biomaterials 30 354–62
+[18] Zhu Y, Wang A, Patel S, Kurpinski K, Diao E, Bao X,
+Kwong G, Young W L and Li S 2011 Tissue Eng. C
+17 705–15
+[19] Walker G M, Zeringue H C and Beebe D J 2004 Lab Chip
+4 91–7
+[20] Shin H S, Kim H J, Min S K, Kim S H, Lee B M and Jeon N L
+2010 Biotechnol. Lett. 32 1063–70
+[21] Kim-Han J S, Antenor-Dorsey J A and O’Malley K L 2011
+J. Neurosci. 31 7212–21
+[22] Lu X, Kim-Han J S, O’Malley K L and Sakiyama-Elbert S E
+2012 J. Neurosci. Methods 209 35–9
+[23] van de Wijdeven R, Ramstad O H, Bauer U S, Halaas Ø,
+Sandvig A and Sandvig I 2018 Biomed. Microdevices 20 9
+[24] Park J, Li J and Han A 2010 Biomed. Microdevices 12 345–51
+[25] Yang I H, Siddique R, Hosmane S, Thakor N and Höke A
+2009 Exp. Neurol. 218 124–8
+[26] Tsantoulas C, Farmer C, Machado P, Baba K, McMahon S B
+and Raouf R 2013 PLoS One 8 e80722
+[27] Jia L, Wang L, Chopp M, Zhang Y, Szalad A and Zhang Z G
+2016 Neuroscience 329 43–53
+[28] Pan L, Alagapan S, Franca E, Leondopulos S S, DeMarse T B,
+Brewer G J and Wheeler B C 2015 Front. Neural. Circuits
+9 32
+[29] Xia Y and Whitesides G M 1998 Angew. Chem., Int. Ed. Engl.
+37 550–75
+[30] Bremen S, Meiners W and Diatlov A 2012 Laser Tech. J.
+9 33–8
+[31] Hemmilä S, Cauich-Rodríguez J V, Kreutzer J and Kallio P
+2012 Appl. Surf. Sci. 258 9864–75
+[32] Azevedo M M, Domingues H S, Cordelières F P, Sampaio P,
+Seixas A I and Relvas J B 2018 Glia 66 1826–44
+[33] Laursen L S, Chan C W and Ffrench-Constant C 2011 J. Cell
+Biol. 192 797–811
+[34] McCarthy K D and de Vellis J 1980 J. Cell Biol. 85 890–902
+[35] Chen Y, Balasubramaniyan V, Peng J, Hurlock E C,
+Tallquist M, Li J and Lu Q R 2007 Nat. Protocols
+2 1044–51
+[36] Wood P, Okada E and Bunge R 1980 Brain Res. 196 247–52
+[37] Wang Z, Colognato H and Ffrench-Constant C 2007 Glia
+55 537–45
+
+[38] Schnädelbach O, Ozen I, Blaschuk O W, Meyer R L and
+Fawcett J W 2001 Mol. Cell. Neurosci. 17 1084–93
+[39] Johnson M I, Bunge R P and Wood P M 2001 Primary Cell
+Cultures for the Study of Myelination (New York, Humana
+Press) pp 95–115
+[40] Edelstein A D, Tsuchida M A, Amodaj N, Pinkard H,
+Vale R D and Stuurman N 2014 J. Biol. Methods 1 e10
+[41] Barateiro A, Miron V E, Santos S D, Relvas J B, Fernandes A,
+Ffrench-Constant C and Brites D 2013 Mol. Neurobiol.
+47 632–44
+[42] Schindelin J et al 2012 Nat. Methods 9 676–82
+[43] Rezakhaniha R, Agianniotis A, Schrauwen J T C, Griffa A,
+Sage D, Bouten C V C, van de Vosse F N, Unser M and
+Stergiopulos N 2012 Biomech. Model. Mechanobiol.
+11 461–73
+[44] Fonck E, Feigl G G, Fasel J, Sage D, Unser M, Rüfenacht D A
+and Stergiopulos N 2009 Stroke 40 2552–6
+[45] Kartasalo K, Pölönen R, Ojala M, Rasku J, Lekkala J, AaltoSetälä K and Kallio P 2015 BMC Bioinform. 16 344
+[46] Toivanen M, Pelkonen A, Mäkinen M, Ylä-Outinen L,
+Sukki L, Kallio P, Ristola M and Narkilahti S 2017 Front.
+Neurosci. 11 606
+[47] Hyysalo A, Ristola M, Joki T, Honkanen M, Vippola M and
+Narkilahti S 2017 Macromol. Biosci. 17 1600517
+[48] Madsen M H, Feidenhans’l N A, Hansen P, Garnæs J and
+Dirscherl K 2014 J. Micromech. Microeng. 24 127002
+[49] Lake M, Narciso C, Cowdrick K, Storey T, Zhang S,
+Zartman J and Hoelzle D 2015 Protocol Exch. (https://doi.
+org/10.1038/protex.2015.069)
+[50] Ruppen J, Wildhaber F D, Strub C, Hall S R R,
+Schmid R A, Geiser T and Guenat O T 2015 Lab Chip
+15 3076–85
+[51] Sun M, Xie Y, Zhu J, Li J and Eijkel J C T 2017 Anal. Chem.
+89 2227–31
+[52] Duffy D C, McDonald J C, Schueller O J and Whitesides G M
+1998 Anal. Chem. 70 4974–84
+[53] Anderson J R, Chiu D T, Jackman R J, Cherniavskaya O,
+McDonald J C, Wu H, Whitesides S H and Whitesides G M
+2000 Anal. Chem. 72 3158–64
+[54] Jarjour A A, Zhang H, Bauer N, Ffrench-Constant C and
+Williams A 2012 Glia 60 1–12
+[55] Liu R, Lin G and Xu H 2013 PLoS One 8 e60558
+[56] Unsain N, Heard K N, Higgins J M and Barker P A 2014
+J. Vis. Exp. e51795
+[57] Peyrin J et al 2011 Lab Chip 11 3663–73
+[58] Dworak B J and Wheeler B C 2009 Lab Chip 9 404–10
+[59] Coquinco A, Kojic L, Wen W, Wang Y T, Jeon N L,
+Milnerwood A J and Cynader M 2014 Mol. Cell. Neurosci.
+60 43–52
+[60] Taylor A M, Dieterich D C, Ito H T, Kim S A and
+Schuman E M 2010 Neuron 66 57–68
+[61] Gibson E M et al 2014 Science 344 1252304
+[62] Young E W K and Beebe D J 2010 Chem. Soc. Rev.
+39 1036–48
+[63] Gluska S, Zahavi E E, Chein M, Gradus T, Bauer A, Finke S
+and Perlson E 2014 PLoS Pathog. 10 e1004348
+[64] Byun C K, Abi-Samra K, Cho Y and Takayama S 2014
+Electrophoresis 35 245–57
+
+13
+
+

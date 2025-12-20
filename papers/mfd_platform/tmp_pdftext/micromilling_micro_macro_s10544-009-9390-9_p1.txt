@@ -1,0 +1,76 @@
+Biomed Microdevices (2010) 12:345–351
+DOI 10.1007/s10544-009-9390-9
+
+Micro-macro hybrid soft-lithography master (MMHSM)
+fabrication for lab-on-a-chip applications
+Jaewon Park & Jianrong Li & Arum Han
+
+Published online: 5 January 2010
+# Springer Science+Business Media, LLC 2009
+
+Abstract We present a novel micro-macro hybrid softlithography master (MMHSM) fabrication technique where
+microdevices having both microscale and macroscale
+features can be replicated with a single soft-lithography
+step. A poly(methyl methacrylate) (PMMA) master having
+macroscale structures was first created by a bench-top
+milling machine. An imprinting master mold having microscale structures was then imprinted on the PMMA surface
+through a hot-embossing process to obtain a PMMA master
+mold. A poly(dimethylsiloxane) (PDMS) master was then
+replicated from this PMMA master through a standard softlithography process. This process allowed both microscale
+(height: 3–20 μm, width: 20–500 μm) and macroscale
+(height: 3.5 mm, width: 1.2–7 mm) structures to co-exist
+on the PDMS master mold, from which final PDMS devices
+could be easily stamped out in large quantities. Microfluidic
+structures requiring macroscale dimensions in height, such
+as reservoirs or fluidic tubing interconnects, could be directly
+built into PDMS microfluidic devices without the typically
+used manual punching process. This significantly reduced
+alignment errors and time required for such manual
+J. Park : A. Han (*)
+Department of Electrical and Computer Engineering,
+College of Engineering, Texas A&M University,
+College Station, TX 77843-3128, USA
+e-mail: arum.han@ece.tamu.edu
+J. Li
+Department of Veterinary Integrative Biosciences,
+College of Veterinary Medicine and Biomedical Sciences,
+Texas A&M University,
+College Station, TX 77843, USA
+A. Han
+Department of Biomedical Engineering, College of Engineering,
+Texas A&M University,
+College Station, TX 77843, USA
+
+fabrication steps. In this paper, we successfully demonstrated
+the utility of this novel hybrid fabrication method by
+fabricating a PDMS microfluidic device with 40 built-in
+fluidic interfaces and a PDMS multi-compartment neuron
+co-culture platform, where millimeter-scale compartments
+are connected via arrays of 20 μm wide and 200 μm long
+microfluidic channels. The resulting structures were characterized for the integrity of the transferred pattern sizes and
+the surface roughness using scanning electron microscopy
+and optical profilometry.
+Keywords Soft-lithography . Fluidic interface . PDMS .
+Cast molding
+
+1 Introduction
+Microfluidic devices have emerged as key components in
+next generation bio/medical applications due to their various
+advantages over conventionally used devices, such as small
+sample/reagent volume, faster response/analysis time, and
+portability (Han et al. 2007; Han and Frazier 2006; Nevill et al.
+2007). Many microfluidic systems, including miniaturized
+biosensors, microfluidic screening systems, and microfluidic
+cell culture platforms, have been developed for lab-on-a-chip
+applicaions in silicon, glass and various polymer materials
+(Cho et al. 2009; Han et al. 2006; Koltay et al. 2004;
+Vickerman et al. 2008). Although most fluidic components
+can be seamlessly integrated into a single system using variety
+of microfabrication techniques, some critical components
+cannot be easily fabricated using these technologies and
+require additional fabrication steps or complicated designs.
+Two such examples are world-to-chip fluidic interfaces and
+fluidic reservoirs, where the fabrication challenges are
+primarily due to their millimeter-scale dimensions in heights.
+
+

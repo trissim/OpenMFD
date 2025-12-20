@@ -1,0 +1,579 @@
+Japanese Journal of Applied
+Physics
+
+You may also like
+
+REGULAR PAPER
+
+Seamless fabrication technique for micro to
+millimeter structures by combining 3D printing and
+photolithography
+To cite this article: Takahiro Tamura and Takaaki Suzuki 2019 Jpn. J. Appl. Phys. 58 SDDL10
+
+- Microfluidic viscometers for biochemical
+and biomedical applications: A review
+S B Puneeth, Madhusudan B Kulkarni and
+Sanket Goel
+- Hard magnetics and soft materials—a
+synergy
+P Narayanan, R Pramanik and A
+Arockiarajan
+- Organic photodiodes: printing, coating,
+benchmarks, and applications
+Noah Strobel, Mervin Seiberlich, Ralph
+Eckstein et al.
+
+View the article online for updates and enhancements.
+
+This content was downloaded from IP address 24.231.98.89 on 15/08/2024 at 22:43
+
+REGULAR PAPER
+
+Japanese Journal of Applied Physics 58, SDDL10 (2019)
+https://doi.org/10.7567/1347-4065/ab09d0
+
+Seamless fabrication technique for micro to millimeter structures by combining 3D
+printing and photolithography
+Takahiro Tamura1 and Takaaki Suzuki1,2*
+1
+
+Division of Mechanical Science and Technology, Gunma University, Kiryu, Gunma, Japan
+Japan Science and Technology Agency, PRESTO, Kawaguchi, Saitama, Japan
+
+2
+*
+
+E-mail: suzuki.taka@gunma-u.ac.jp
+
+Received November 30, 2018; revised January 29, 2019; accepted February 6, 2019; published online June 10, 2019
+This paper proposes a seamless fabrication technique for micro-electro-mechanical systems (MEMS) devices having structures from micrometer
+to millimeter with a single material by combining 3D printing and photolithography. The proposed fabrication technique combines the fabrication
+characteristics of 3D printing and photolithography. We fabricated a mold of a microfluidic device having micro- and millimeter structures and
+evaluated three characteristics of the proposed technique. From the evaluations, the micro- to millimeter structures were seamlessly fabricated with
+an error within ±5%. The rough surface of the resist transferred from a 3D-printed master mold causes irregular reflection of UV light and reduction
+in patterning accuracy. The relation of object shape and fabrication of millimeter structures was evaluated. In addition, various advantages of the
+proposed fabrication technique were confirmed by demonstrating a fluid transportation test for the fabricated microfludic device.
+© 2019 The Japan Society of Applied Physics
+
+1. Introduction
+
+In the past decades, many micro-electro-mechanical systems
+(MEMS) devices have been developed1–7) because of their
+many advantages such as miniaturization, power saving,
+higher functionality, and lower cost. These MEMS devices
+having structures from sub-micrometer to sub-millimeter are
+often fabricated by photolithography,3–7) electron-beam
+lithography,2,6,8) and embossing.9,10) Recently, in addition
+to these fabrication techniques, 3D printing is beginning to be
+widely used11–16) in the MEMS ﬁeld to conveniently
+fabricate prototype devices and complex devices having
+structures from sub-millimeter to millimeter. However, in
+most cases, these fabrication techniques exist independently and
+each of them has the limitation of the fabrication size and shape.
+These limitations in fabrication often cause problems when
+fabricating devices. For example, in the ﬁeld of bio-MEMS,
+connections between macroscale external devices and microscale ﬂuidic devices (known as the macro-to-micro interface,
+interconnect, connector, or world-to-chip interface) have been
+reported as a problem.17–19) Also, the fabrication of a microﬂuidic device having micrometer structures by 3D printing has
+been reported as a problem.20,21)
+These fabrication techniques are mapped in three
+aspects22) as shown in Fig. 1. The horizontal axis is relative
+accuracy, which is object size divided by tolerance. The right
+side of the ﬁgure indicates that accurate fabrication is
+performed on a design value. The vertical axis is object
+size and indicates the range of fabricable sizes using each
+fabrication technique. The red color indicates that arbitrary
+complex structures are fabricated. As shown in the ﬁgure,
+photolithography fabricates simple structures from sub-micrometer to sub-millimeter. However, it is difﬁcult to
+fabricate 3D millimeter structures by photolithography23)
+due to several factors, e.g. ﬁlm thickness distribution of
+deposited thick ﬁlm, optical attenuation of photoresist in the
+vertical direction, diffraction of light, and depth of focus for
+thick ﬁlm. On the other hand, consumer-grade desktop 3D
+printers fabricate structures from sub-millimeter to centimeter
+with high complexity.12,14) However, it is difﬁcult to
+fabricate micrometer structures precisely.20,21) These two
+
+Fig. 1. (Color online) Purpose of this study. The horizontal axis is relative
+accuracy, the vertical axis is object size, and the color shows the ability to
+fabricate complex structures. Photolithography fabricates simple structures
+from sub-micrometer to sub-millimeter. On the other hand, consumer-grade
+desktop 3D printers fabricate sub-millimeter to centimeter structures with
+high complexity. The proposed fabrication technique realizes seamless
+fabrication from micrometer to millimeter with a single material by
+combining 3D printing and photolithography, indicated by hatching.
+
+fabrication techniques overlap in the area of sub-millimeter
+but exist independently. Therefore, it is difﬁcult for each
+technique to fabricate structures seamlessly from micrometer
+to millimeter.
+In this study, we propose a seamless fabrication technique
+from micrometer to millimeter with a single material by
+combining 3D printing and photolithography, as indicated by
+the hatching in Fig. 1. 3D printing and photolithography,
+which are the base of the proposed technique, have different
+characteristics. The proposed fabrication technique combines
+these two techniques and has mixed characteristics of each
+technique. So, we fabricated a mold for a microﬂuidic device
+having micrometer and millimeter structures by the proposed
+technique and evaluated three characteristics: the fabrication
+accuracy, surface roughness, and object shape. In the
+
+SDDL10-1
+
+© 2019 The Japan Society of Applied Physics
+
+Jpn. J. Appl. Phys. 58, SDDL10 (2019)
+
+T. Tamura and T. Suzuki
+
+Fig. 2. (Color online) Principle of the proposed technique. SU-8 millimeter
+structures are fabricated by SU-8 molding with a PDMS mold that is replicamolded with a 3D-printed master mold. Micrometer structures are fabricated
+in the molded SU-8 by photolithography.
+
+evaluation of the fabrication accuracy, the designed and
+measured values of the fabricated micrometer and millimeter
+structures are compared. Moreover, a microﬂuidic device was
+fabricated as one of several applications of the proposed
+technique to conﬁrm the various advantages. Concretely, the
+proposed fabrication technique realizes seamless fabrication
+of micrometer and millimeter structures without assembly for
+a complex microﬂuidic device. In addition, the proposed
+technique realizes complex and ﬁne structures by combining
+3D printing and photolithography.
+2. Experimental methods
+2.1. Principle of fabrication technique
+
+The proposed fabrication technique is based on a combination of 3D printing and photolithography using thick negative
+photoresist SU-8 (MicroChem Corp.). As shown in the
+schematic in Fig. 2, SU-8 millimeter structures are fabricated
+by SU-8 molding with a polydimethylsiloxane (PDMS) mold
+that is replica-molded with a 3D-printed master mold. SU-8 is
+widely used for fabricating MEMS devices as a thick
+negative photoresist.24) In addition, SU-8 micrometer structures are fabricated by photolithography. In other words,
+millimeter structures are fabricated by SU-8 molding with the
+3D-printed master mold and micrometer structures are
+incorporated in the molded SU-8 by photolithography. So,
+a seamless fabrication technique of structures from micro- to
+millimeter made of a single material is realized by combining
+3D printing and photolithography.
+2.2. Fabrication process
+Figure 3 shows a process ﬂow of the proposed fabrication
+technique. Firstly, a master mold is designed with STL ﬁle
+format by 3D-CAD software (Inventor professional, Autodesk)
+and printed using a 3D printer (Form 2, Formlabs) with 25 μm
+height of one layer [Fig. 3(a)]. In the 3D printing, standard clear
+resin (FLGPCL04, Formlabs) is used. This master mold has
+structures from sub-millimeter to millimeter size precisely
+fabricated by a consumer-grade desktop 3D printer,20,21) then
+a PDMS (SILPOT 184, Dow Corning) mold is fabricated by
+replica molding25,26) [Fig. 3(b)]. Next, liquid SU-8 (SU-8 3005,
+
+MicroChem) is poured into the millimeter structures and baked
+at 95 °C for 2 h [Fig. 3(c)]. After baking the SU-8, the level of
+SU-8 liquid surfaces decreases by losing the solvent.27)
+Therefore, pouring and baking SU-8 is repeated until the
+distance between the PDMS mold surface and the baked SU-8
+surface becomes 1 mm or less. After SU-8 cooling, ultraviolet
+(UV) light is exposed to the baked SU-8 with ⩾2000 mJ cm−2
+(wavelength 365 nm) which is a sufﬁcient exposure dose for
+the millimeter-thick SU-8 [Fig. 3(d)]. After that, SU-8 is baked
+at 65 °C for 1 min and 95 °C for 6 min. As a result, SU-8
+millimeter structures are fabricated. Next, SU-8 (SU-8 3050,
+MicroChem) is coated with a thickness of 200 μm or more on a
+Cr-patterned glass substrate and baked at 95 °C for 2 h
+[Figs. 3(e) and 3(f)]. After SU-8 cooling, the SU-8-coated
+substrate and the PDMS mold are bonded. After that, pressure
+is applied to the substrate under a vacuum to degas28) the air
+inside the substrate and the PDMS mold for 10 min [Fig. 3(g)].
+After degassing, pressure is applied with 0.1 kPa to the
+substrate and the SU-8 is baked at 95 °C for an hour using
+an oven [Fig. 3(h)]. As a result, the uncrosslinked SU-8
+exceeds the glass transition temperature27) and ﬂows into the
+patterns on the PDMS mold.29) After SU-8 cooling, the PDMS
+mold and the substrate are separated. After that, UV light is
+exposed with a normal exposure dose for an SU-8 submillimeter thickness from the back side of the Cr-patterned
+glass substrate30) [Fig. 3(i)]. The SU-8 pattern molded with the
+PDMS mold is designed to cover the Cr pattern on the
+substrate. Therefore, the shape of the micrometer structures is
+determined by photolithography. Then, the SU-8 is baked at
+65 °C for 1 min and 95 °C for 6 min [Fig. 3(j)]. After cooling
+the SU-8 for 30 min, it is developed with SU-8 developer
+(MicroChem) for 10 min and then rinsed with isopropyl alcohol
+(Kanto Chemical) for 1 min, two times [Fig. 3(k)]. Through the
+process, micrometer structures and millimeter structures are
+seamlessly fabricated with the single material.
+2.3. Evaluation
+In general, 3D printing and photolithography, which are the
+base of the proposed technique, have different characteristics
+in terms of their object size, surface roughness, and object
+shape, as shown in Table I. The proposed fabrication
+technique combining 3D printing and photolithography has
+mixed characteristics from each technique.
+By using the proposed fabrication technique, a mold of a
+microﬂuidic device having micro- and millimeter structures
+was fabricated as shown in Fig. 4(a). Also, the characteristics
+of the proposed fabrication technique (1)–(3) were evaluated
+as shown in Fig. 4(b). First, to evaluate the fabrication
+accuracy, the structures on the fabricated device were
+observed using a scanning electron microscope (SEM)
+(JCM-5700LV, JEOL) and designed and measured values
+of the structures were compared. Second, to evaluate the
+effect of the resist surface roughness on the micrometer
+structures, two devices fabricated using a surface-treated
+master mold and a master mold without surface treatment
+were compared. Third, the relationship between object shape
+and fabrication was evaluated by three types of structures
+with three aspect ratios. Finally, a PDMS microﬂuidic device
+was fabricated by soft lithography25) using the microﬂuidic
+mold fabricated by the proposed technique. The PDMS
+microﬂuidic device and a glass substrate were bonded by
+oxygen-plasma treatment31) using a dry etching system
+
+SDDL10-2
+
+© 2019 The Japan Society of Applied Physics
+
+Jpn. J. Appl. Phys. 58, SDDL10 (2019)
+
+T. Tamura and T. Suzuki
+
+Fig. 3. (Color online) Process ﬂow of the proposed technique. (a) Master mold fabricated with a 3D printer. (b) PDMS mold fabricated by replica molding.
+(c) Liquid SU-8 is poured and baked. (d) Soft-baked SU-8 exposed to UV light. (e), (f) Coated and soft-baked SU-8 prepared on a Cr-patterned glass substrate.
+(g) Pressure and vacuum are applied. (h) Bonded SU-8 is baked under pressure. (i) PDMS mold and substrate are separated, then soft-baked SU-8 is exposed to
+UV light from the back side. (j) Post-exposure baking of SU-8. (k) Development of SU-8.
+Table I.
+
+Characteristics of fabrication technique. AR: aspect ratio.
+
+(1) Object size (fabricate with
+accuracy)
+(2) Surface roughness
+(3) Object shape
+
+3D printing
+
+Photolithography
+
+Sub-mm to cm
+
+Sub-μm to sub-mm
+
+Micrometer-order
+Complex, high
+AR
+
+Nanometer-order
+Simple, low AR
+
+(ES401, Nippon Scientiﬁc). A suspension having microspheres with a diameter of 2 μm (G0200, Thermo Fisher) was
+injected in the channel of the fabricated microﬂuidic device
+using a syringe pump (KDS270, KD Scientiﬁc) at the ﬂow
+rate of 1 μl min−1 and the channel was observed using an
+inverted system microscope (IX-71, Olympus) and a chargecoupled device camera (DP72, Olympus).
+3. Results and discussion
+3.1. Fabrication accuracy
+
+To evaluate the fabrication accuracy, the structures on the
+fabricated device were observed using SEM, and designed
+and measured values of the structures were compared. The
+
+prototype mold has a channel with micrometer line-andspaces and millimeter interfaces. Figure 5(a) shows a
+photograph of the prototype mold for the microﬂuidic device,
+and Figs. 5(b)–5(d) and 5(e) show SEM images of the lineand-spaces and interfaces of the fabricated device. As shown
+in Fig. 5, the micrometer structures and the millimeter
+structures were seamlessly and simultaneously fabricated
+with the single material. In addition, Table II shows the
+comparison of the measured values that were obtained from
+the SEM images and the designed values. As shown in
+Table II, both micrometer and millimeter structures were
+fabricated with an error within ±5%. Photolithography and
+3D printing have a different range of fabrication sizes, and in
+the proposed technique, micrometer structures are fabricated
+by photolithography and millimeter structures are fabricated
+by 3D printing. As a result, high fabrication accuracy is
+obtained with a wide range.
+3.2. Surface roughness
+The effect of the resist surface roughness on micrometer
+structures was evaluated. As we mentioned, a master mold
+was fabricated by 3D printing. As a result, the surface of the
+
+SDDL10-3
+
+© 2019 The Japan Society of Applied Physics
+
+Jpn. J. Appl. Phys. 58, SDDL10 (2019)
+
+T. Tamura and T. Suzuki
+
+Fig. 4. (Color online) Evaluation of fabrication characteristics. (a) Schematic of a prototype microﬂuidic device mold. (b) Fabrication characteristics of the
+proposed fabrication technique. (1) Object size, (2) surface roughness, (3) object shape.
+
+Fig. 5. (Color online) Evaluation of fabrication accuracy. (a) Photograph of the prototype mold for a microﬂuidic device. (b)–(d) SEM images of micrometer
+line-and-space in the channel from the top surface. Line widths of designed values are (b) 100 μm, (c) 50 μm, (d) 25 μm. (e) SEM image of cross-sectional
+view of millimeter interface. Designed value of interface diameter is 2 mm.
+Table II.
+
+Comparison between designed and measured dimensions.
+Line-and-space in the
+channel (μm)
+
+Designed size
+Measured size
+Error
+
+100
+98
+−2%
+
+50
+49
+−2%
+
+25
+24
+−4%
+
+Interface diameter (mm)
+2.00
+1.96
+−2%
+
+master mold is rough20,32) and this roughness is transferred to
+the SU-8 surface. In this evaluation, two devices fabricated
+using a polished mold and an unpolished mold were
+compared to evaluate the effect of surface roughness on
+micrometer structures. The mold surface was polished with a
+cloth using liquid metal polish (Pikal, Nihon Maryo-Kogyo)
+until the surface had luster. Figure 6 shows SEM images of
+the fabricated devices. The devices shown in Figs. 6(a) and
+6(b) were fabricated with the polished master mold and
+unpolished master mold, respectively. The top image shows
+the SEM image from above of the device, the bottom left
+image shows the SEM image from diagonally above with
+high magniﬁcation, and the bottom right ﬁgure shows the
+behavior of the UV light when the micrometer structures
+are exposed. From Fig. 6(a), the surface of the fabricated
+device using the polished mold is relatively smooth, and the
+
+micrometer structures were fabricated without roughness. On
+the other hand, the surface of the device fabricated with the
+unpolished mold is rough, and the fabricated micrometer
+structures are also rough, as shown in Fig. 6(b). This is
+because irregular reﬂection occurred on the rough resist
+surface. UV light is incident from the back side, then passes
+through the resist and reaches the resist surface. When the
+resist surface is rough, UV light irregularly reﬂects at the
+rough resist surface and exposes masked areas. As a result,
+rough micrometer structures were fabricated as shown in
+Fig. 6(b). From the evaluation, it is necessary to perform
+surface treatment on the master mold to fabricate micrometer
+structures precisely.
+3.3. Object shape
+The object shape of the fabricated millimeter structures was
+evaluated. As shown in Fig. 3, millimeter structures are
+fabricated by molding with a 3D-printed master mold. As a
+result, millimeter structures could break at the separation of a
+PDMS mold and a substrate [Figs. 3(h) and 3(i)]. In this
+evaluation, three types of structures were fabricated with
+three aspect ratios to evaluate millimeter structure fabrication.
+Figure 7(a) shows the cross-sectional views of the fabricated
+devices arranged by the shape of millimeter structures and the
+aspect ratio. Additionally, Fig. 7(b) shows the equipment
+
+SDDL10-4
+
+© 2019 The Japan Society of Applied Physics
+
+Jpn. J. Appl. Phys. 58, SDDL10 (2019)
+
+T. Tamura and T. Suzuki
+
+Fig. 6. (Color online) Effect of resist surface roughness on micrometer structures. (a) SEM images of the fabricated device using a polished mold. (b) SEM
+images of the fabricated device using an unpolished mold. Irregular reﬂection occurred at the rough resist surface and the masked area is also exposed.
+
+Fig. 7. (Color online) Object shape and fabrication of structures. (a) Cross-sectional views of the fabricated structures. Three types of millimeter structures
+(cylinder, square pole, and cone) were fabricated with three aspect ratios (AR: 1, 3 and 5) to evaluate millimeter structure fabrication. (b) Equipment for
+separation of PDMS mold and a glass substrate. (c) Schematic of the three types of resistance forces acting on millimeter structures when separating a PDMS
+mold and a substrate. (d) Surface area per bottom area loading the resistance forces as a function of the aspect ratio of the millimeter structures.
+
+SDDL10-5
+
+© 2019 The Japan Society of Applied Physics
+
+Jpn. J. Appl. Phys. 58, SDDL10 (2019)
+
+T. Tamura and T. Suzuki
+
+Fig. 8. (Color online) Observation of fracture surface of millimeter structure. (a) Schematic of the SEM observation point of the millimeter structures
+remaining in the PDMS mold after being broken on separation, and the crosslinked SU-8 fracture surface of the structure. (b) SEM images of the crosslinked
+SU-8 fracture surface. The left image was observed from above and the right image was observed from diagonally above with high magniﬁcation.
+
+used for the separation of a PDMS mold and a glass substrate
+with SU-8 millimeter structures. The PDMS mold is ﬁxed on
+the stage using four fasteners and a glass substrate is ﬁxed by
+negative pressure, then the glass substrate is vertically pulled
+up by the Z stage.
+As shown in Fig. 7(a), regarding the aspect ratio 5 with
+10 mm height structures, only the cone structure was
+fabricated and the other two structures were broken when
+separating the PDMS mold and the substrate. There are two
+reasons for this. The ﬁrst is resistance forces acting on the
+millimeter structures upon separation. As shown in the left of
+Fig. 7(c), there are a maximum of three types of resistance
+forces (adhesive force, friction force, and force required to
+deform a PDMS mold) acting on millimeter structures when
+separating a PDMS mold and a substrate. From the difference
+in the shape, the adhesive force and friction force act on the
+cylinder and square pole [upper right of Fig. 7(c)], whereas
+only the adhesive force acts on the cone [bottom right of
+Fig. 7(c)]. The second reason is the difference of surface area
+where resistance forces act. Figure 7(d) shows the surface
+area of the millimeter structures. The horizontal axis is the
+aspect ratio of the millimeter structures, the vertical axis is
+the surface area per bottom area. The plots show that the red
+triangle is the cylinder, the blue square is the square pole, and
+the black circle is the cone. As shown in the ﬁgure, the
+surface area per bottom area of the cone where resistance
+forces act is half that of the other structures. For these
+reasons, the SU-8 cone structure could be fabricated with
+aspect ratio 5, 10 mm height.
+
+In addition, the fracture surface of the millimeter structure
+which remained in the PDMS mold was observed using SEM
+as shown in Fig. 8(a) and SEM images were obtained as
+shown in Fig. 8(b). The left image of Fig. 8(b) was observed
+from above and the right image was observed from diagonally above with high magniﬁcation. From the SEM images
+the breaking of the millimeter structure basically occurred at
+the boundary between the crosslinked SU-8 at the mold side
+and the uncrosslinked SU-8 at the bonding step as shown in
+Fig. 3(g). Since the millimeter structures are fabricated by
+pouring SU-8 into the PDMS mold and molding, the end face
+of the molded SU-8 has a smooth meniscus shape as shown
+in Fig. 8(b). Therefore, the crosslinked SU-8 and the
+uncrosslinked SU-8 are the bonding of smooth faces and it
+couldn’t withstand a peeling force of high aspect ratio
+millimeter structures in the process.
+From the evaluation, for fabricating millimeter structures,
+we should design easy-to-fabricate structures like the cone,
+and modify the shape or properties of the boundary between
+the crosslinked SU-8 and the uncrosslinked SU-8 at the
+bonding step.
+3.4. Application
+A microﬂuidic device was fabricated as an application and
+evaluated by a ﬂuid transportation test. Figure 9 shows the
+ﬂuid transportation test; the left image shows the injection of
+microsphere suspension into the fabricated microﬂuidic
+device and the right image shows the ﬂuorescent microscopic
+image of the channel during the ﬂuid transportation. As
+shown in the right image, ﬂowing microspheres were
+
+SDDL10-6
+
+© 2019 The Japan Society of Applied Physics
+
+Jpn. J. Appl. Phys. 58, SDDL10 (2019)
+
+T. Tamura and T. Suzuki
+
+Fig. 9. (Color online) Fluid transportation test. Left image is a photograph of the PDMS microﬂuidic device fabricated by the proposed technique. The
+microﬂuidic device has a channel of width 500 μm and height 200 μm. The channel has line-and-space patterns of 100 μm, 50 μm, and 25 μm. Right image is
+the ﬂuorescent image of ﬂuid transportation test. The suspension of microspheres with a diameter of 2 μm was injected into the microﬂuidic device using a
+syringe pump at the ﬂow rate of 1 μl min−1.
+
+observed in the channel having the micrometer line-andspaces pattern.
+Since the millimeter interfaces and the micrometer channel
+were seamlessly fabricated by our fabrication technique, it is
+not necessary to fabricate the interfaces after soft lithography.
+In addition, the dead volume is reduced by seamlessly
+fabricating the interfaces and the microchannel. Moreover,
+the fabricated device worked efﬁciently as a microﬂuidic
+device without suspension leakage.
+The cross-sectional shape of the fabricated microchannel is
+a rectangle that can be fabricated by general photolithography. Additionally, the cross-section of a microchannel can
+be determined by 3D printing. So, it will be possible to
+fabricate micrometer structures in a millimeter ﬂuidic channel
+having a more complex cross-sectional shape.
+4. Conclusions
+
+In this study, we fabricated a mold of a microﬂuidic device
+having micrometer structures and millimeter structures, and
+evaluated three characteristics of the proposed fabrication
+technique. First, micrometer to millimeter structures were
+seamlessly fabricated with an error within ±5% in the
+evaluation of fabrication accuracy. Second, the effect of
+resist surface roughness on micrometer structures was seen in
+the evaluation of surface roughness. Third, in the evaluation
+of object shape, a 10 mm high SU-8 structure, difﬁcult for
+general photolithography, was fabricated. Finally, the advantages of the proposed fabrication technique were conﬁrmed by the ﬂuid transportation test.
+Acknowledgments
+
+This research was partially supported by JSPS Science
+Research Grant (JP17H03196) and JST PRESTO (Grant
+No. JPMJPR15R3).
+ORCID iDs
+
+Takaaki Suzuki
+
+https://orcid.org/0000-0003-2574-7971
+
+1) C. Ho and Y. Tai, Annu. Rev. Fluid Mech. 30, 579 (1998).
+2) J. Maire and M. Nomura, Jpn. J. Appl. Phys. 53, 06JE09 (2014).
+
+3) T. Tsukamoto, Y. Umino, S. Shiomi, K. Yamada, and T. Suzuki, Sci.
+Technol. Adv. Mater. 19, 660 (2018).
+4) J. Park et al., Jpn. J. Appl. Phys. 51, 081301 (2012).
+5) S. Kumagai, C. Chang, J. Jeong, M. Kobayashi, T. Shimizu, and M. Sasaki,
+Jpn. J. Appl. Phys. 55, 01AF01 (2016).
+6) T. Shibata, T. Ozawa, Y. Ito, K. Yamamoto, and M. Nagai, Jpn. J. Appl.
+Phys. 56, 017001 (2017).
+7) J. Suzuki, Y. Onishi, K. Terao, H. Takao, F. Shimokawa, F. Oohira,
+H. Miyagawa, T. Namazu, and T. Suzuki, Jpn. J. Appl. Phys. 55, 06GP01
+(2016).
+8) Y. Chen, Microelectron. Eng. 135, 57 (2015).
+9) H. Becker and U. Heim, Sens Actuators A Phys. 83, 130 (2000).
+10) S. Moore, J. Gomez, D. Lek, B. H. You, N. Kim, and I. Song,
+Microelectron. Eng. 162, 57 (2016).
+11) C. M. B. Ho, S. H. Ng, K. H. H. Li, and Y. Yoon, Lab Chip. 15, 3627 (2015).
+12) M. B. Dentry, J. R. Friend, and L. Y. Yeo, Lab Chip. 14, 750 (2014).
+13) M. Singh et al., Lab Chip. 17, 2561 (2017).
+14) K. C. Bhargava, B. Thompson, and N. Malmstadt, Proc. Natl Acad. Sci. 111,
+15013 (2014).
+15) Y. L. Kong, I. A. Tamargo, H. Kim, B. N. Johnson, M. K. Gupta, T. Koh,
+H. Chin, D. A. Steingart, B. P. Rand, and M. C. McAlpine, Nano Lett. 14,
+7017 (2014).
+16) M. Zarek, M. Layani, I. Cooperstein, E. Sachyani, D. Cohn, and
+S. Magdassi, Adv. Mater. 28, 4449 (2016).
+17) Y. Temiz, R. D. Lovchik, G. V. Kaigala, and E. Delamarche, Microelectron.
+Eng. 132, 156 (2015).
+18) C. K. Fredrickson and Z. H. Fan, Lab Chip. 4, 526 (2004).
+19) S. H. Ng, Z. F. Wang, and N. F. de Rooij, Microelectron. Eng. 86, 1354
+(2009).
+20) J. M. Lee, M. Zhang, and W. Y. Yeong, Microﬂuid Nanoﬂuid. 20, 5 (2016).
+21) A. O. Olanrewaju, A. Robillard, M. Dagher, and D. Juncker, Lab Chip 16,
+3804 (2016).
+22) M. J. Madou, Manufacturing Techniques for Microfabrication and
+Nanotechnology (CRC Press, Boca Raton, FL, 2011) 3rd ed., p. 356.
+23) C. Lin, G. Lee, B. Chang, and G. Chang, J. Micromech. Microeng. 12, 590
+(2002).
+24) A. del. Campo and C. Greiner, J. Micromech. Microeng. 17, R81 (2007).
+25) Y. Xia and G. M. Whitesides, Angew. Chem. Int. Ed. 37, 550 (1998).
+26) K. Kamei, Y. Mashimo, Y. Koyama, C. Fockenberg, M. Nakashima,
+M. Nakajima, J. Li, and Y. Chen, Biomed. Microdevices 17, 36 (2015).
+27) S. K. Mitra and S. Chakraborty, Microﬂuidics and Nanoﬂuidics Handbook
+(CRC Press, Boca Raton, FL, 2018) 1st ed., p. 231.
+28) L. Xu, H. Lee, D. Jetta, and K. W. Oh, Lab Chip 15, 3962 (2015).
+29) A. T. Cannistra and T. J. Suleski, J. Micro/Nanolith. MEMS MOEMS 9,
+013025 (2010).
+30) T. Tsukamoto, N. Furuya, T. Shimagami, R. Sato, F. Shimokawa,
+K. Akimitsu, and T. Suzuki, Electron Comm Jpn. 101, 45 (2018).
+31) S. Bhattacharya, A. Datta, J. M. Berg, and S. Gangopadhyay, J
+Microelectromechanical Syst. 14, 590 (2005).
+32) Y. Hwang, O. H. Paydar, and R. N. Candler, Sens Actuators A Phys. 226,
+136 (2015).
+
+SDDL10-7
+
+© 2019 The Japan Society of Applied Physics
+
+

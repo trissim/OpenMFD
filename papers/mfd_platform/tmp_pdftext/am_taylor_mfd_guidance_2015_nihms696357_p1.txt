@@ -1,0 +1,55 @@
+HHS Public Access
+Author manuscript
+Author Manuscript
+
+Lab Chip. Author manuscript; available in PMC 2016 July 07.
+Published in final edited form as:
+Lab Chip. 2015 July 7; 15(13): 2781–2789. doi:10.1039/c5lc00503e.
+
+Passive microfluidic chamber for long-term imaging of axon
+guidance in response to soluble gradients
+A. M. Taylora,c,d, S. Menonb, and S. L. Guptonb,c,e
+A. M. Taylor: amtaylor@unc.edu; S. L. Gupton: sgupton@email.unc.edu
+aUNC/NCSU Joint Department of Biomedical Engineering, UNC-Chapel Hill, Campus Box 7575,
+
+Chapel Hill NC 27599-7575, USA
+
+Author Manuscript
+
+bUNC Department of Cell Biology and Physiology, UNC-Chapel Hill, Campus Box 7545, Chapel
+
+Hill, NC 27599-7545, USA
+cUNC Neuroscience Center, USA
+dCarolina Institute for Developmental Disabilities, USA
+eUNC Lineberger Comprehensive Cancer Center, USA
+
+Abstract
+
+Author Manuscript
+Author Manuscript
+
+Understanding how axons are guided to target locations within the brain is of fundamental
+importance for neuroscience, and is a widely studied area of research. Biologists have an unmet
+need for reliable and easily accessible methods that generate stable, soluble molecular gradients
+for the investigation of axon guidance. Here we developed a microfluidic device with contiguous
+media-filled compartments that uses gravity-driven flow to generate a stable and highly
+reproducible gradient within a viewing compartment only accessible to axons. This device uses
+high-resistance microgrooves to both direct the growth of axons into an isolated region and to
+generate a stable gradient within the fluidically isolated axon viewing compartment for over 22 h.
+Establishing a stable gradient relies on a simple and quick pipetting procedure with no external
+pump or tubing. Since the axons extend into the axonal compartment through aligned microgrooves, the analysis of turning is simplified. Further, the multiple microgrooves in parallel
+alignment serve to increase sample sizes, improving statistical analyses. We used this method to
+examine growth cone turning in response to the secreted axon guidance cue netrin-1. We report the
+novel finding that growth cones of embryonic mouse cortical axons exhibited attractive turning in
+the lower concentrations of netrin-1, but were repulsed when exposed to higher concentrations. We
+also performed immunocytochemistry in growth cones exposed to a netrin-1 gradient within the
+axon viewing compartment and show that netrin receptors associated with both attraction and
+repulsion, DCC and UNC5H, localized to these growth cones. Together, we developed an
+accessible gradient chamber for higher throughput axon guidance studies and demonstrated its
+capabilities.
+
+Correspondence to: A. M. Taylor, amtaylor@unc.edu; S. L. Gupton, sgupton@email.unc.edu.
+Yes there is potential competing interest. A.M.T. is an inventor of microfluidic chambers to compartmentalize neurons (US 7419822
+B2) and has financial interest in Xona Microfluidics, LLC. S.M. and S.L.G. declare no competing financial interests.
+
+

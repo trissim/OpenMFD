@@ -1,0 +1,95 @@
+FULL PAPER
+www.advancedscience.com
+
+3D-Printed Soft Lithography for Complex
+Compartmentalized Microﬂuidic Neural Devices
+Janko Kajtez,* Sebastian Buchmann, Shashank Vasudevan, Marcella Birtele,
+Stefano Rocchetti, Christian Jonathan Pless, Arto Heiskanen, Roger A. Barker,
+Alberto Martínez-Serrano, Malin Parmar, Johan Ulrik Lind,* and Jenny Emnéus
+
+Compartmentalized microﬂuidic platforms are an invaluable tool in
+neuroscience research. However, harnessing the full potential of this
+technology remains hindered by the lack of a simple fabrication approach for
+the creation of intricate device architectures with high-aspect ratio features.
+Here, a hybrid additive manufacturing approach is presented for the
+fabrication of open-well compartmentalized neural devices that provides
+larger freedom of device design, removes the need for manual
+postprocessing, and allows an increase in the biocompatibility of the system.
+Suitability of the method for multimaterial integration allows to tailor the
+device architecture for the long-term maintenance of healthy human stem-cell
+derived neurons and astrocytes, spanning at least 40 days. Leveraging
+fast-prototyping capabilities at both micro and macroscale, a
+proof-of-principle human in vitro model of the nigrostriatal pathway is
+created. By presenting a route for novel materials and unique architectures in
+microﬂuidic systems, the method provides new possibilities in biological
+research beyond neuroscience applications.
+
+1. Introduction
+
+The complexity of the human brain renders
+it challenging to model the number of
+simultaneous processes occurring in vivo
+at any one time. However, culturing neuronal populations in compartmentalized
+microﬂuidic devices for neurite guidance
+provides better means by which to deconstruct the spatiotemporal complexity
+of normal development and establishment of brain circuits in vitro.[1,2] Such
+compartmentalized devices have become
+a widely applied tool for the studying
+of neuronal microenvironments.[3] They
+typically consist of two main components: microﬂuidic compartments for
+the culture of physically separated neuronal populations and microchannel
+array connecting the compartments that
+allows neurite outgrowth while preventing
+cell migration. Since the ﬁrst experiments with the Campenot chamber were performed more than four decades ago,[4]
+compartmentalized devices have been extensively used to
+
+Dr. J. Kajtez, M. Birtele, Prof. M. Parmar
+Department of Experimental Medical Sciences
+Wallenberg Neuroscience Center
+Division of Neurobiology and Lund Stem Cell Center
+BMC A11
+Lund University
+Lund S-22184, Sweden
+E-mail: janko.kajtez@med.lu.se
+S. Buchmann, S. Vasudevan, S. Rocchetti, Dr. A. Heiskanen,
+Prof. J. Emnéus
+Department of Biotechnology and Biomedicine (DTU Bioengineering)
+Technical University of Denmark
+Produktionstorvet, Building 423, Lyngby 2800 Kgs., Denmark
+
+The ORCID identiﬁcation number(s) for the author(s) of this article
+can be found under https://doi.org/10.1002/advs.202001150
+© 2020 The Authors. Published by WILEY-VCH Verlag GmbH & Co.
+KGaA, Weinheim. This is an open access article under the terms of the
+Creative Commons Attribution License, which permits use, distribution
+and reproduction in any medium, provided the original work is properly
+cited.
+
+C. J. Pless, Dr. J. U. Lind
+Department of Healthcare Technology (DTU Health Tech)
+Technical University of Denmark
+Produktionstorvet, Building 423, Lyngby 2800 Kgs., Denmark
+E-mail: joli@dtu.dk
+Prof. R. A. Barker
+John van Geest Centre for Brain Repair & Department of Neurology
+Department of Clinical Neurosciences and WT-MRC Cambridge Stem
+Cell Institute
+University of Cambridge
+Cambridge CB2 1TN, UK
+Prof. A. Martínez-Serrano
+Department of Molecular Biology
+Universidad Autónoma de Madrid
+and Department of Molecular Neuropathology
+Center of Molecular Biology Severo Ochoa (UAM-CSIC)
+Nicolás Cabrera 1
+Madrid 28049, Spain
+
+DOI: 10.1002/advs.202001150
+
+Adv. Sci. 2020, 7, 2001150
+
+2001150 (1 of 14)
+
+© 2020 The Authors. Published by WILEY-VCH Verlag GmbH & Co. KGaA, Weinheim
+
+

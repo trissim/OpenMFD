@@ -1,0 +1,571 @@
+Molecular and Cellular Neuroscience 60 (2014) 43–52
+
+Contents lists available at ScienceDirect
+
+Molecular and Cellular Neuroscience
+journal homepage: www.elsevier.com/locate/ymcne
+
+A microﬂuidic based in vitro model of synaptic competition
+Ainsley Coquinco a, Luba Kojic a, Wendy Wen a, Yu Tian Wang a, Noo Li Jeon b,
+Austen J. Milnerwood a,c,d, Max Cynader a,⁎
+a
+
+Brain Research Centre, University of British Columbia, Vancouver, BC V6T-2B5, Canada
+Division of World Class University Multiscale Mechanical Design, School of Mechanical & Aerospace Engineering, Seoul National University, Seoul 151-744, Republic of Korea
+Division of Neurology, Department of Medicine, University of British Columbia, Vancouver, BC V6T-2B5, Canada
+d
+Centre for Applied Neurogenetics, University of British Columbia, Vancouver, BC V6T-2B5, Canada
+b
+c
+
+a r t i c l e
+
+i n f o
+
+Article history:
+Received 12 September 2013
+Revised 11 March 2014
+Accepted 15 March 2014
+Available online 21 March 2014
+Keywords:
+Synaptic plasticity
+Microﬂuidics
+Competition
+
+a b s t r a c t
+Synaptic competition is widely believed to be central to the formation and function of neuronal networks, yet the
+underlying mechanisms are poorly described. To investigate synaptic competition in vitro, we have developed a
+novel two input pathway competition model using a 3-compartment microﬂuidic device. Axons from cultured
+rat cortical neurons from two different lateral compartments (inputs) innervate a common neuronal population
+in a separate central compartment. Inhibiting one input's activity, using the GABAAR agonist muscimol, resulted
+in increased synapse numbers and axon elongation of the opposing untreated (uninhibited) inputs in the central
+compartment. Time lapse imaging revealed that uninhibited inputs outgrew and outconnected their inhibited
+counterparts. This form of competition occurs during a sensitive period ending prior to 21 DIV and is NMDAR
+and CamKII dependent. Surprisingly, this form of plasticity was dependent on the age of the center compartment
+neurons but not of the competing inputs.
+© 2014 Elsevier Inc. All rights reserved.
+
+Introduction
+In the developing brain, neurons undergo a substantial number of
+morphological and synaptic changes (Hua and Smith, 2004; Katz and
+Shatz, 1996). A constant balance of synapse formation, stabilization
+and elimination is required for the proper development and formation
+of neural circuits (Hua and Smith, 2004). A major contribution to
+these mechanisms is driven by the experience/activity/input that the
+brain receives during development (Hensch, 2005). One extensively
+studied example of this phenomenon occurs in the development of
+the visual cortex. When one eye is closed during development, electrophysiological observations show increases in activity and territory in
+favor of the open eye (Hensch, 2004; Hubel and Wiesel, 1970). These
+changes are also readily observable with anatomical techniques which
+show wider ocular dominance columns associated with the nondeprived eye than those related to the deprived eye (Gordon and
+Stryker, 1996; Wiesel and Hubel, 1963). The mechanism by which
+neural activity shapes neural circuitry during development remains a
+key question to be resolved in neuroscience research.
+While visual cortex plasticity is one of the more well studied models
+of neural development, it is not without its own difﬁculties. Because of
+
+the complexity of the mammalian brain, it is difﬁcult to observe changes
+on cellular and molecular scales. The use of primary neuronal cultures
+allows for easier observation and genetic manipulation of neurons
+(Gartner et al., 2006; Okabe et al., 2001; Zeitelhofer et al., 2009). However, changing the activity of neurons in culture is limited to nonselective chemical treatment of the entire culture or genetic modiﬁcation
+of a small population of neurons within the culture (Adesnik et al.,
+2008; Burrone et al., 2002; Harms et al., 2005; Lee et al., 1998; Lu
+et al., 2001; Otmakhov et al., 2004).
+Microﬂuidic technology now provides us with the ability to grow
+neurons in distinct chemical environments. Microﬂuidics is a ﬁeld of
+study utilizing minute volumes to control and manipulate ﬂuid movement to create chemically isolated environments (Park et al., 2006;
+Whitesides, 2006). By manipulating the volumes of the individual compartments, distinct chemical environments can be created due to the
+hydrostatic forces present between compartments. Park et al. (2006)
+fabricated a two compartment microﬂuidic device in which two neuronal groups could remain chemically isolated but were still allowed to
+interact with each other through their axonal projections. Here, we
+use a three compartment microﬂuidic device to create a new dual
+input model to study in vitro synaptic competition.
+Results
+
+⁎ Corresponding author at: 2211 Wesbrook Mall, Brain Research Centre, University of
+British Columbia, Vancouver, BC V6T-2B5, Canada.
+E-mail address: cynader@brain.ubc.ca (M. Cynader).
+
+http://dx.doi.org/10.1016/j.mcn.2014.03.001
+1044-7431/© 2014 Elsevier Inc. All rights reserved.
+
+Using a 3-compartment microﬂuidic device, which is a specialized
+version of the multicompartment chamber ﬁrst developed by Park
+
+44
+
+A. Coquinco et al. / Molecular and Cellular Neuroscience 60 (2014) 43–52
+
+et al. (2006), neuronal populations were grown separately in three
+chemically isolated environments. Microgrooves between the compartments allowed only axons to traverse between the compartment
+barriers, while ﬂuidic pressure prevented the exchange of solutions
+between compartments (Fig. 1) (Park et al., 2006). To distinguish the
+source of afferents from the two lateral input compartments, neurons
+in each compartment were differentially labeled by transfection with
+YFP- or mcherry-tagged synaptophysin (Fig. 1b) prior to plating
+(AMAXA nucleofection). At a later age, the GABAAR agonist, muscimol,
+was used to reduce the activity of neurons in only one lateral compartment (Fig. 1a) while the other two compartments remained untreated.
+Muscimol induced inhibition causes a shift in synapse distribution
+To ensure that chronic inhibition with muscimol did not lead to
+desensitization of the GABA receptors, acute (Fig. 2a) and chronic
+(Fig. 2b) inhibition of neuronal activity with this treatment was
+conﬁrmed by electrophysiological whole-cell patch clamp recording of
+cortical cells in standard culture conditions. In all cases, spontaneous
+network burst ﬁring was rapidly eliminated by muscimol treatment,
+whereas quantal glutamate transmission and synaptic connectivity
+were retained. These changes remained constant even when assessed
+48 h later. The data demonstrate that muscimol treatment silences all
+synchronous activity while synaptic connectivity remains intact.
+At DIV 12–14, muscimol (10 μM) was applied to one lateral compartment for 48 h. Following muscimol treatment neurons were ﬁxed (1%
+PFA followed by methanol) and the center compartment (target) neurons were immunostained for the postsynaptic marker, PSD-95 (Afﬁnity
+BioReagents). Axons from the muscimol treated compartment formed
+
+fewer synapses (as deﬁned by colocalized synaptophysin and PSD-95
+clusters) than axons from the untreated compartment (Fig. 3, 15.41 ±
+2.40 and 28.69 ± 4.19 synapses/ﬁeld respectively; t-test, p b 0.0078,
+n = 32). Control cultures, in which neither lateral compartment was
+treated with muscimol, had synapse numbers similar to those from
+the muscimol treated compartment (Fig. 3a, ANOVA: p b 0.0001,
+Bonferroni post-test, where ncontrol = 90). This surprising result indicates that treatment of one input with muscimol results in enhanced
+synapse numbers from the opposing compartment's inputs.
+To identify potential mechanisms underlying this difference, we
+interfered with several signaling pathways only within the center compartment (Fig. 4a). NMDARs are central players in activity dependent
+developmental competition due to their role as “Hebbian” coincidence
+detectors (Cull-Candy, 2004) and their subunit composition changes
+as neurons mature (Liu et al., 2004). Application of the NMDAR antagonist, APV (50 μM), speciﬁcally to neurons in the center compartment
+(Fig. 4c, left), prevented the muscimol induced synaptic shift (muscimol
+treated: 12.13 ± 2.20 synapses/ﬁeld, untreated: 12.29 ± 1.57 synapses/
+ﬁeld; t-test: p = 0.95, n = 38). NMDAR activity leads to the activation
+of CamKII (Bayer et al., 2001) which in turn results in AMPAR phosphorylation and enhanced insertion into the postsynaptic membrane
+(Malinow and Malenka, 2002); a candidate mechanism for increases
+in synaptic weighting such as LTP. Treatment of the center compartment
+neurons with a CamKII inhibitor, KN-93 (1 μM) (Fig. 4c, middle), also
+prevented the competitive effects induced by muscimol application
+(muscimol treated: 11.14 ± 1.79 synapses/ﬁeld, untreated: 12.32 ±
+1.33 synapses/ﬁeld; t-test: p = 0.60, n = 37). Previous studies have
+reported a link between long term depression and synapse elimination
+(Bastrikova et al., 2008) and prevention of GluA2 receptor internalization
+
+Fig. 1. Experimental set-up: a) illustration of the 3 compartment microﬂuidic device competition experiment. Each pair of wells is connected by a narrow channel to form a single
+compartment. Embryonic neurons are placed into the wells and allowed to ﬂow through into the channels. b) Magniﬁed view of the 3 compartment chamber viewed directly from
+above (center of the device, perpendicularly across the three channels). The compartment channels are separated by a series of microgrooves whose width and length allow only for axonal
+projections to pass through into the adjacent compartments. The image (40× magniﬁcation) shows that only axons pass through the intercompartment microgrooves and into the next
+compartment while the cell bodies remain in their original chamber. The center compartment houses the ‘target’ neurons (unlabeled). The lateral compartment's neurons are differentially
+labeled with two different ﬂuorescent proteins for purposes of identiﬁcation of the compartment of origin.
+
+A. Coquinco et al. / Molecular and Cellular Neuroscience 60 (2014) 43–52
+
+45
+
+Fig. 2. 10 μM muscimol treatment results in sustained inhibition. a) Example traces of whole-cell patch-clamp recording of cortical neurons showing inhibitory silencing of spontaneous
+synaptic burst activity immediately after muscimol (10 μM) application (DIV 12) and b) sustained inhibition 48 h later (DIV 14).
+
+has been shown to block LTD (Ahmadian et al., 2004). Furthermore,
+GluA2 expression levels correlate with synapse number, size, density
+and stability in vitro (Passafaro et al., 2003; Ripley et al., 2010;
+Saglietti et al., 2007). However, application of the TAT-GluR23y peptide,
+which has been shown to prevent GluA2 internalization (Ahmadian
+et al., 2004), to the center compartment neurons (Fig. 4c, right) did
+not prevent the competitive synaptic changes that we observed
+(muscimol treated: 16.90 ± 2.04 synapses/ﬁeld, untreated: 26.62 ±
+2.95 synapses/ﬁeld; t-test: p = 0.0083, n = 42). Fig. 4b shows that as
+in our previous results (Fig. 3a), when a change in synapse number
+occurred it resulted from an increase in the number of synapses from
+the untreated input compartment.
+Surprisingly, no signiﬁcant difference in synapse density (deﬁned as
+the number of synapses per 10 μm of axon length) between the treated
+(0.210 ± 0.041 synapses/10 μm, n = 25) and untreated (0.309 ±
+0.058 synapses/10 μm, n = 25) inputs was observed (ANOVA = 0.33;
+control: 0.265 ± 0.36 synapses/10 μm, n = 33; Fig. 5a). This suggests
+that the observed difference in synapse number between treated and
+untreated inputs might be due to differences in axonal length and,
+therefore, growth. To examine this point directly, we assessed axonal
+extension and motility using time lapse imaging at 30 min intervals.
+The overall motility of axons (observed over 10–20 h during the
+muscimol treatment period) originating from the treated and untreated
+lateral compartments in the center compartment was classiﬁed into
+three categories: advancing, retracting and unchanged. At this age
+(DIV 12–14), independent of treatment, both sets of lateral compartment axons showed a net positive growth. However, the degree of
+axonal growth was different for the two incoming groups of axons.
+Afferents originating from the untreated compartment (9.25 ±
+0.88 μm/30 min, n = 11) on average moved twice as fast and farther
+than those from the muscimol treated compartment (4.99 ± 0.58 μm/
+30 min, n = 11). The average growth rate of axons from the muscimol
+
+treated compartment was not signiﬁcantly different from that of axons
+in cultures in which neither lateral compartment was treated with
+muscimol (6.34 ± 0.73 μm/30 min, n = 17). Rather axons from the
+untreated compartment increased their outgrowth and synapse number
+when opposed by muscimol treated axons (Fig. 5b, ANOVA p = 0.0025,
+Bonferroni post-test). The surprising result is that untreated inputs
+undergo enhanced axon growth in a competitive environment when
+the activity of a competing group of inputs is reduced by muscimol
+application.
+Changes in synapse distribution induced by muscimol no longer occur by
+3 weeks in vitro
+To determine whether developmental age plays a role in this process, 48 h muscimol treatments were initiated at DIV 8, 19 and 26
+(Fig. 6b–c, d–e, f–g, respectively). Muscimol treatment from DIV 8–10,
+led to a signiﬁcant difference in the synapse number between treated
+and untreated lateral compartment axons (muscimol treated: 3.14 ±
+0.71 synapses/ﬁeld; untreated: 6.60 ± 0.67 synapses/ﬁeld; t-test:
+p = 0.0007; n = 35). However, there were no effects at the later ages
+of DIV 19–21 (muscimol treated: 16.56 ± 2.62 synapses/ﬁeld; untreated:
+20.86 ± 2.79 synapses/ﬁeld; t-test p = 0.26, n = 36) or DIV 26–28
+(muscimol treated: 20.38 ± 2.75 synapses/ﬁeld; untreated: 17.71 ±
+1.78 synapses/ﬁeld; t-test: p = 0.42, n = 34). These experiments demonstrate that the age of the cultures is an important variable in this
+model (Fig. 6a) and suggests the existence of a sensitive period.
+The age of the neuronal ‘target’ group is a critical factor for the muscimol
+induced changes
+To isolate the role of incoming afferents versus target cells in this age
+dependent process, two experiments were performed in which the
+
+46
+
+A. Coquinco et al. / Molecular and Cellular Neuroscience 60 (2014) 43–52
+
+Fig. 3. Differences in activity between inputs result in a change of synapse numbers in the center compartment: a) shows that muscimol treatment of one lateral compartment leads to
+increases in synapse number for the opposing (untreated) lateral compartment's inputs, ANOVA p b 0.0001, Bonferroni post-test. b) Example of a DIV 14 image taken from the center
+compartment in which one lateral compartment was treated with muscimol. All images were taken at the middle of the center compartment to prevent proximity bias for lateral inputs.
+Red indicates PSD-95, green indicates afferents from the untreated lateral compartment, and blue indicates afferents from the muscimol treated lateral compartment for all images.
+c) Cropped section of b. Top, left to right: merged image of treated and untreated afferents and PSD-95; PSD-95 with outlines (green) of overlapping synaptophysin originating from
+the untreated lateral compartment; right: PSD-95 with outlines (blue) of overlapping synaptophysin originating from the muscimol treated lateral compartment; Bottom, left to right:
+separated images of PSD-95, synaptophysin from the untreated lateral compartment and synaptophysin from the muscimol treated lateral compartment respectively.
+
+lateral compartment inputs and the center compartment neurons
+differed in developmental age by 2 weeks (inputs DIV 12 or 26 and
+vice versa for center compartments, Fig. 7a). Using muscimol to reduce
+neural activity of one lateral compartment, as before, no difference in
+synapse number was observed between treated and untreated inputs
+when the “target” neurons were two weeks older than the input
+axons. However, when the lateral compartment axons were treated
+from DIV 26–28 and the “target” neurons were 2 weeks younger (DIV
+12–14), fewer center compartment synapses were formed by afferents
+from the muscimol treated compartment than by the untreated inputs
+(Fig. 7b, ANOVA p b 0.0001, Bonferroni post-test). These results
+
+demonstrate that muscimol induced changes depend on the age of the
+center compartment (target) neurons. In addition, these changes
+showed a similar pattern to that seen in Figs. 3a and 4b using neurons
+of the same age. Again, the difference in synapse number appears to
+result from an increase in synapses of the untreated competing inputs.
+Furthermore, these changes can still occur when the input axons were
+beyond the ages at which these effects normally occur, provided that
+the center compartment (target) neurons were at the appropriate age.
+Interestingly, we also observed in these heterochronic situations that
+“older” postsynaptic targets would readily form more synapses with
+younger presynaptic afferents compared to the reverse situation.
+
+A. Coquinco et al. / Molecular and Cellular Neuroscience 60 (2014) 43–52
+
+47
+
+Fig. 4. Pharmacological treatments applied to the center (‘target’ neurons) compartment can prevent muscimol induced competition. a) Illustration of the 3 compartment competition
+experiment with various pharmacological treatments in the center compartment. b) Comparison of the number of synapses per ﬁeld of all treatments, ANOVA p b 0.0001, Bonferroni
+post-test (n = 90, 32, 32, 70, 38, 38, 72, 37, 37, 42, 42, 63, 63, 40, 36 in order of appearance on the graph). This panel shows that treating the center compartment with the 3Y peptide,
+a scrambled peptide control or leaving it untreated results in increased synapse numbers from the untreated lateral compartment when the other compartment is treated with muscimol.
+Note that the muscimol treatment does not reduce the number of synapses/ﬁeld relative to control conditions in which both lateral compartments remain untreated. Rather the effect is to
+increase synapse numbers from the untreated compartment. This effect is blocked by treatment with APV or KN-93 in the center compartment. c) Cropped images of observed ﬁelds and
+colocalization of inputs and PSD-95 staining within the center compartment of cultures treated (in the center compartment) with either APV, KN-93 or 3Y peptide in which one lateral
+compartment was treated with muscimol (blue) and the other remained untreated (green).
+
+However, whether this occurs due to an actual age preference or
+whether it is simply the case that the older presynaptic neurons
+would just have more readily available synaptic targets remains to be
+determined.
+Discussion
+We used a 3-compartment microﬂuidic device to create a novel
+in vitro dual input synaptic competition model. Reducing the activity
+of inputs from one lateral compartment, while leaving the other
+unchanged, results in increased synapse numbers associated with the
+untreated input afferents. These effects are due primarily to untreated
+axons advancing further/more rapidly in the center (target) compartment than muscimol treated axons as opposed to increases in synapse
+density along the axon. One possible explanation is that the stabilization
+of presynaptic markers such as synaptophysin correlates with further
+axonal branching and growth (Ruthazer et al., 2006) and these sites
+are more likely candidates for becoming stable presynaptic terminals
+for synapses (Sabo et al., 2006). Therefore, the increased axonal growth
+
+in our model may be due to the increased stability of synaptic
+connections on ‘winning’ afferents which then promotes further axonal
+branching and growth.
+The mechanisms underlying these changes involve NMDAR
+activation and CamKII dependent signaling; however, further work is
+required to determine whether LTP-like AMPAR membrane insertions
+play a signiﬁcant role in this competition model. Furthermore, the
+changes appear independent of GluR2 internalization and LTD-like
+processes. LTD is associated with synapse elimination and retraction
+(Bastrikova et al., 2008) while our model appears to predominantly
+involve increased growth. L-type calcium channels have also been
+shown to have a role in activity dependent synaptic plasticity (Goold
+and Nicoll, 2010; Wang et al., 2011; Wu et al., 2008). Future studies
+examining their role will help to further our understanding of synaptic
+competition.
+Previous experiments have shown that synapse formation and
+maturation in cultured neurons occur most rapidly at approximately
+two weeks in culture (Craig et al., 1993). The effects observed here
+were found to be age dependent, suggesting a sensitive period akin to
+
+48
+
+A. Coquinco et al. / Molecular and Cellular Neuroscience 60 (2014) 43–52
+
+Fig. 5. a) Comparison of synaptic densities per 10 μm of axon, ANOVA: p = 0.33. Despite the marked changes in synapse numbers among the muscimol treated and untreated inputs, the
+density of synapses per unit length remained the same for the treated and untreated compartments' inputs. b) Comparison of axon growth rate, ANOVA: p = 0.0025, Bonferroni post-test.
+The untreated axons show greater/faster growth. c) Time lapse image of axon growth of treated and untreated afferents in the ‘target’ compartment over 10 h.
+
+the in vivo critical period. This sensitive period was speciﬁcally dependent on the age of the center compartment (target) neurons and not
+the age of the lateral compartment (input) neurons. Because this
+model is dependent on the age of the center compartment neurons,
+further investigations into the postsynaptic role of synapse selection
+are required. In addition, center compartment axonal projections will
+also form synapses with lateral compartment dendrites, and the roles
+that these connections play may also provide valuable insight into this
+model of competition.
+Our study has demonstrated that decreased neuronal activity within
+one population of incoming afferents can inﬂuence the synapse formation and growth of axons of a competing neuronal population. The
+experimental model we introduce here has many potential uses in the
+study of activity dependent synaptic plasticity.
+Experimental methods
+Microﬂuidic devices
+Microﬂuidic devices were constructed as detailed in (Park et al.,
+2006) with an additional center compartment 0.5 mm in width. Devices
+were soaked in PBS, rinsed in water and dried prior to assembly. Devices
+were then placed onto No. 1.5 glass coverslips. Assembled devices were
+ﬁlled with poly-D-lysine and kept at 37 °C for at least 24 h. Devices were
+
+then washed with distilled water and kept at 37 °C (while compartments were still ﬁlled with water) until use.
+
+Cell culture and treatment
+All animal experiments were approved by the Animal Care
+Committee of the University of British Columbia. Primary cortical
+neuronal cultures were prepared from Wistar rats' (University of
+British Columbia Animal Care Centre, Vancouver, BC, Canada) brains at
+embryonic days 18–19. Cultures were maintained in Neurobasal
+medium supplemented with B27, 0.5 mm Glutamax (Invitrogen) and
+Penicillin–Streptomycin (Invitrogen).
+Transfections were performed via nucleofection at DIV 0 using
+plasmids containing the pLL3.7 backbone with synapsin promoter
+and expressing synaptophysin-YFP or -mcherry. Freshly dissociated
+neurons (4 million) were pelleted for nucleofection using an Amaxa
+Nucleofector II (Lonza) program O-003 with 2 μg of plasmid DNA and
+then immediately resuspended in 1 mL DMEM (Invitrogen) with 10%
+FBS (Invitrogen) for plating.
+Plating of neurons into the microﬂuidic devices was done by placing
+10 μL of the neuronal cell suspension (4 million cells/mL for transfected
+neurons, 3 million cells/mL for nontransfected) into each compartment
+of the device. Cells were allowed to ﬂow through the compartment and
+
+A. Coquinco et al. / Molecular and Cellular Neuroscience 60 (2014) 43–52
+
+49
+
+Fig. 6. The developmental age (in vitro) of the neurons is an important contributor to the effects observed: a) shows the effects of varying the age at which muscimol was applied to one
+lateral compartment. Changes in synapse density between treated and untreated lateral inputs were observed at DIV 8–10 and 12–14 but not at later ages. b–g) Cropped images of the
+center compartment in which one lateral compartment was treated with muscimol for 48 h then imaged at DIV 10 (b, c), 21 (d, e), and 28. (f, g) Cultures respectively (the puncta
+representing untreated inputs are in green, muscimol treated inputs in blue. Images on the top are merged images. Images on the bottom highlight where the colocalization occurs).
+
+wells were topped up with Neurobasal medium once the neurons
+settled.
+After plating and before ﬁxation, compartments were qualitatively
+assessed to ensure neuronal densities in each channel compartment
+were similar. We counterbalanced muscimol treatments between
+mcherry and YFP labeled compartments to rule out any effect of
+ﬂuorophore composition in our results.
+Treatments
+Tests using ﬂuorescent dyes (ﬂuorescein or cresyl violet) to ﬁll one
+lateral compartment (120 μL total volume of dye) showed that after
+48 h a dye concentration of less than 1% was found in the other 2
+compartments (with total volumes of 600 μL each). When the center
+compartment was ﬁlled with a total dye volume of 250 μL, there was a
+
+4.1 ± 4.3% concentration of dye found in a lateral compartment containing a total volume of 120 μL of water. The other lateral compartment
+containing a total volume of 600 μL of water had a dye concentration
+of less than 1% after 48 h. %concentration was based on starting dye concentration of the ﬁlled well (100 μM ﬂuorescein or crystal violet). We
+maintained conditions in the experiments reported here that would
+allow for less than 1% muscimol leakage into adjacent compartments
+during the 48 h treatment period.
+Immunocytochemistry
+Neurons were quickly washed with PBS, then ﬁxed with 1% PFA for
+4 min followed immediately by methanol (− 20 °C) for 8 min, then
+washed with PBS again. Neurons were then stained for PSD-95 (Afﬁnity
+
+50
+
+A. Coquinco et al. / Molecular and Cellular Neuroscience 60 (2014) 43–52
+
+A. Coquinco et al. / Molecular and Cellular Neuroscience 60 (2014) 43–52
+
+BioReagents, 1:1000 dilution in 3% BSA in PBS) overnight followed by
+secondary antibody staining (anti mouse Alexa 647, Invitrogen,
+1:1000 dilution in 3% BSA in PBS) for 1 h. Coverslips were then mounted
+on slides using Flouromount-G and left at room temperature overnight
+before imaging.
+Imaging microscopy and analysis
+Image acquisition
+Images were acquired on a Zeiss Axioplan2 microscope with a 63×
+1.4 numerical aperture oil objective and Photometrics Sensys cooled
+CCD camera using MetaVue imaging software (Molecular Devices)
+and customized ﬁlter sets (immunocytochemistry).
+Images were acquired on a Zeiss AxioObserver microscope with a
+63 × 1.4 numerical aperture oil objective (immunocytochemistry) or
+40 × 0.95 numerical aperture air objective (live imaging) and Zeiss
+HRM camera using Axiovision imaging software (Zeiss) and customized
+ﬁlter sets.
+For immunocytochemistry experiments n equals the number of ﬁeld
+images taken from at least 3 independent experiments. All ﬁelds were
+taken at the center line of the ‘target’ compartment to prevent any proximity bias between lateral afferent compartments. A ﬁeld is deﬁned as
+the ﬁeld of view observed under the microscope (i.e. 1 image taken
+under 63× magniﬁcation for the immunocytochemistry experiments).
+For time lapse image experiments, n equals the numbers of axons
+observed from at least 2 independent experiments. All time lapse
+imaging experiments used observations at the center line of the center
+compartment to prevent any proximity bias between lateral afferents.
+Colocalization image analysis was performed using the ImageJ
+colocalization plugin found on the ImageJ website (http://rsbweb.nih.
+gov/ij/index.html). Before running the plugin, images were (blindly)
+thresholded using ImageJ and binary masks were made to include
+only puncta 5–300 pixels in size (1 pixel = 0.1 μm). Axon segments
+were (blindly) selected under the criterion that segments were clearly
+distinguishable as a single axon from a single source.
+Growth classiﬁcation analysis was done by identifying all axon
+growth cones in the ﬁeld of view. Growth cones were observed over
+the duration of the imaging or until outside the ﬁeld of view.
+Axon growth rate was obtained by identifying and selecting axon
+growth cones within the ﬁeld of view 4–24 h into treatment. Axons
+were observed until imaging concluded or axons moved out of the
+ﬁeld of view. Axon growth segments were (blindly) selected under
+the criterion that segments were clearly distinguishable as a single
+axon from a single source.
+All imaging values are described by mean ± SEM.
+Electrophysiology
+Whole-cell patch-clamp recordings were performed on CTX cells at
+DIV 12–14, voltage clamp recordings were obtained at Vh − 60 mV
+and the membrane test function was used to determine intrinsic
+membrane properties ~1 min after obtaining whole-cell conﬁguration,
+as described previously (Kaufman et al., 2012; Milnerwood et al.,
+2012; Tapia et al., 2012). Brieﬂy, neurones were perfused at room
+temperature with extracellular solution (ECS) containing (in mM unless
+stated): 167 NaCl, 2.4 KCl, 1 MgCl2, 10 glucose, 10 HEPES, 2 CaCl2,
+
+51
+
+pH 7.3, and 300 mOsm. Pipette resistance (Rp) was 3–6 MΩ when ﬁlled
+with (in mM): 130 Cs methanesulfonate, 5 CsCl, 4 NaCl, 1 MgCl2, 5 EGTA,
+10 HEPES, 5 QX-314, 0.5 GTP, 10 Na2-phosphocreatine, and 5 MgATP,
+0.1 spermine, pH 7.2, 290 mOsm. Data were acquired by Multiclamp
+700B ampliﬁer and signals were ﬁltered at 2 kHz, digitized at 10 kHz,
+and analyzed in Clampﬁt10 (Molecular Devices). Tolerance for series
+resistance (Rs) was b 25 MΩ and uncompensated; Delta Rs tolerance
+was b10%. Muscimol was added by bath infusion or already added to
+the ECS for experiments with 24 h treatments and mEPSCs were visualized using Clampﬁt10.
+
+Acknowledgments
+This work was supported by the Canadian Institutes of Health
+Research (CIHR) and the Natural Sciences and Engineering Research
+Council of Canada (NSERC).
+A.J.M. is supported by the Canadian Institutes of Health Research
+grant MOP-119347. The Centre for Applied Neurogenetics is funded by
+the Canada Excellence Research Chair Program and the Leading Edge
+Endowment Fund.
+We would like to thank Dr. Ann Marie Craig and her lab (UBC) for the
+gift of synapsin promoter driven plasmids and conceptual input.
+
+References
+Adesnik, H., Li, G., During, M.J., Pleasure, S.J., Nicoll, R.A., 2008. NMDA receptors inhibit
+synapse unsilencing during brain development. Proc. Natl. Acad. Sci. 105, 5597–5602.
+Ahmadian, G., Ju, W., Liu, L., Wyszynski, M., Lee, S.H., Dunah, A.W., Taghibiglou, C., Wang,
+Y., Lu, J., Wong, T.P., Sheng, M., Wang, Y.T., 2004. Tyrosine phosphorylation of GluR2 is
+required for insulin-stimulated AMPA receptor endocytosis and LTD. EMBO J. 23,
+1040–1050.
+Bastrikova, N., Gardner, G.A., Reece, J.M., Jeromin, A., Dudek, S.M., 2008. Synapse elimination
+accompanies functional plasticity in hippocampal neurons. Proc. Natl. Acad. Sci. U. S. A.
+105, 3123–3127.
+Bayer, K.U., De Koninck, P., Leonard, A.S., Hell, J.W., Schulman, H., 2001. Interaction with
+the NMDA receptor locks CaMKII in an active conformation. Nature 411, 801–805.
+Burrone, J., O'Byrne, M., Murthy, V., 2002. Multiple forms of synaptic plasticity triggered
+by selective suppression of activity in individual neurons. Nature 420, 414–418.
+Craig, A.M., Blackstone, C.D., Huganir, R.L., Banker, G., 1993. The distribution of glutamate
+receptors in cultured rat hippocampal neurons: postsynaptic clustering of AMPAselective subunits. Neuron 10, 1055–1068.
+Cull-Candy, S.G., Leszkiewicz, D.N., 2004. Role of distinct NMDA receptor subtypes at central synapses. Sci. STKE re16.
+Gartner, A., Collin, L., Lalli, G., 2006. Nucleofection of primary neurons. Methods Enzymol.
+406, 374–388.
+Goold, C.P., Nicoll, R.A., 2010. Single-cell optogenetic excitation drives homeostatic
+synaptic depression. Neuron 68, 512–528.
+Gordon, J.A., Stryker, M.P., 1996. Experience-dependent plasticity of binocular responses
+in the primary visual cortex of the mouse. J. Neurosci. 16, 3274–3286.
+Harms, K.J., Tovar, K.R., Craig, A.M., 2005. Synapse-speciﬁc regulation of AMPA receptor
+subunit composition by activity. J. Neurosci. 25, 6379–6388.
+Hensch, T.K., 2004. Critical period regulation. Annu. Rev. Neurosci. 27, 549–579.
+Hensch, T.K., 2005. Critical period plasticity in local cortical circuits. Nat. Rev. Neurosci. 6,
+877–888.
+Hua, J.Y., Smith, S.J., 2004. Neural activity and the dynamics of central nervous system
+development. Nat. Neurosci. 7, 327–332.
+Hubel, D.H., Wiesel, T.N., 1970. The period of susceptibility to the physiological effects of
+unilateral eye closure in kittens. J. Physiol. 206, 419–436.
+Katz, L.C., Shatz, C.J., 1996. Synaptic activity and the construction of cortical circuits.
+Science 274, 1133–1138.
+Kaufman, A.M., Milnerwood, A.J., Sepers, M.D., Coquinco, A., She, K., Wang, L., Lee, H.,
+Craig, A.M., Cynader, M., Raymond, L.A., 2012. Opposing roles of synaptic and
+extrasynaptic NMDA receptor signaling in cocultured striatal and cortical neurons.
+J. Neurosci. 32, 3992–4003.
+
+Fig. 7. Muscimol induced competition in this model requires the center ‘target’ compartment neurons to be an appropriate age. a) Illustration of heterochronic experiments with (below)
+corresponding cropped images of the center compartment in which one lateral compartment was treated with muscimol (the puncta of untreated inputs are in green, muscimol treated
+inputs in blue). Left side: illustration of heterochronic experiment with lateral compartment neurons at DIV 28 and center compartment neurons at DIV 14, top image: merged image of
+treated and untreated afferents and PSD-95, and bottom image: PSD-95 from the center compartment with outlines (green) of overlapping synaptophysin originating from the untreated
+lateral compartment and outlines (blue) of overlapping synaptophysin originating from the muscimol treated lateral compartment. Right side: illustration of heterochronic experiment
+with lateral compartment neurons at DIV 14 and center compartment neurons at DIV 28, top image: merged image of treated and untreated afferents and PSD-95, and bottom image:
+PSD-95 from the center compartment with outlines (green) of overlapping synaptophysin originating from the untreated lateral compartment and outlines (blue) of overlapping
+synaptophysin originating from the muscimol treated lateral compartment. b) Treating one lateral compartment with muscimol creates synaptic asymmetry in the center compartment
+only when the postsynaptic neurons are at an appropriate age, ANOVA p b 0.0001, Bonferroni post-test (n = 38, 24, 24, 34, 23, 23 in order of appearance on the graph).
+
+52
+
+A. Coquinco et al. / Molecular and Cellular Neuroscience 60 (2014) 43–52
+
+Lee, H.K., Kameyama, K., Huganir, R.L., Bear, M.F., 1998. NMDA induces long-term synaptic
+depression and dephosphorylation of the GluR1 subunit of AMPA receptors in
+hippocampus. Neuron 21, 1151–1162.
+Liu, X.B., Murray, K.D., Jones, E.G., 2004. Switching of NMDA receptor 2A and 2B subunits
+at thalamic and cortical synapses during early postnatal development. J. Neurosci. 24,
+8885–8895.
+Lu, W., Man, H., Ju, W., Trimble, W.S., MacDonald, J.F., Wang, Y.T., 2001. Activation of
+synaptic NMDA receptors induces membrane insertion of new AMPA receptors and
+LTP in cultured hippocampal neurons. Neuron 29, 243–254.
+Milnerwood, A.J., Kaufman, A.M., Sepers, M.D., Gladding, C.M., Zhang, L., Wang, L., Fan, J.,
+Coquinco, A., Qiao, J.Y., Lee, H., Wang, Y.T., Cynader, M., Raymond, L.A., 2012. Mitigation of augmented extrasynaptic NMDAR signaling and apoptosis in cortico-striatal
+co-cultures from Huntington's disease mice. Neurobiol. Dis. 48, 40–51.
+Malinow, R., Malenka, R.C., 2002. AMPA receptor trafﬁcking and synaptic plasticity. Annu.
+Rev. Neurosci. 25, 103–126.
+Okabe, S., Miwa, A., Okado, H., 2001. Spine formation and correlated assembly of presynaptic and postsynaptic molecules. J. Neurosci. 21, 6105–6114.
+Otmakhov, N., Khibnik, L., Carpenter, S., Riahi, S., Asrican, B., Lisman, J., 2004. Forskolininduced LTP in the CA1 hippocampal region is NMDA receptor dependent. J.
+Neurophysiol. 91, 1955–1962.
+Park, J.W., Vahidi, B., Taylor, A.M., Rhee, S.W., Jeon, N.L., 2006. Microﬂuidic culture platform for neuroscience research. Nat. Protoc. 1, 2128–2136.
+Passafaro, M.N.T., Sala, C., Sheng, M., 2003. Induction of dendritic spines by an extracellular
+domain of AMPA receptor subunit GluR2. Nature 424, 677–681.
+Ripley, B., Otto, S., Tiglio, K., Williams, M.E., Ghosh, A., 2010. Regulation of synaptic stability
+by AMPA receptor reverse signaling. Proc. Natl. Acad. Sci. 108, 367–372.
+
+Ruthazer, E.S., Li, J., Cline, H.T., 2006. Stabilization of axon branch dynamics by synaptic
+maturation. J. Neurosci. 26, 3594–3603.
+Sabo, S.L., Gomes, R.A., McAllister, A.K., 2006. Formation of presynaptic terminals at
+predeﬁned sites along axons. J. Neurosci. 26, 10813–10825.
+Saglietti, L., Dequidt, C., Kamieniarz, K., Rousset, M.-C., Valnegri, P., Thoumine, O., Beretta,
+F., Fagni, L., Choquet, D., Sala, C., 2007. Extracellular interactions between GluR2 and
+N-cadherin in spine regulation. Neuron 54, 461–477.
+Tapia, L., Milnerwood, A.J., Guo, A., Mills, F., Yoshida, E., Vasuta, C., Mackenzie, I.R.,
+Raymond, L., Cynader, M., Jia, W., Bamji, S.X., 2012. Progranulin deﬁciency decreases
+gross neural connectivity but enhances transmission at individual synapses. J.
+Neurosci. 31, 11126–11132.
+Wang, H.L., Zhang, Z., Hintze, M., Chen, L., 2011. Decrease in calcium concentration
+triggers neuronal retinoic acid synthesis during homeostatic synaptic plasticity. J.
+Neurosci. 31, 17764–17771.
+Whitesides, G.M., 2006. The origins and the future of microﬂuidics. Nature 442, 368–373.
+Wiesel, T.N., Hubel, D.H., 1963. Single cell responses in striate cortex of kittens deprived of
+vision in one eye. J. Neurophysiol. 26, 1003–1017.
+Wu, W.W., Chan, C.S., Surmeier, D.J., Disterhoft, J.F., 2008. Coupling of L-type Ca2+
+channels to KV7/KCNQ channels creates a novel, activity-dependent, homeostatic
+intrinsic plasticity. J. Neurophysiol. 100, 1897–1908.
+Zeitelhofer, M., Vessey, J.P., Thomas, S., Kiebler, M., Dahm, R., 2009. Transfection of Cultured Primary Neurons via Nucleofection. Curr. Protoc. Neurosci. 47, 4.32.1–4.32.21.
+
+
