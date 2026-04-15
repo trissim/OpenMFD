@@ -49,7 +49,7 @@ The complete process from device fabrication to endpoint imaging typically spans
 
 Device Fabrication
 
-*<img src="media/image1.png" style="width:0.49097in;height:0.27083in" /><img src="media/image2.png" style="width:0.25069in;height:0.37847in" />Prepare and curing PDMS in the mold*
+*![PDMS preparation icon](media/image1.png) ![PDMS mold icon](media/image2.png) Prepare and curing PDMS in the mold*
 
 - > Cut a round aluminum foil sheet form a dish surrounding the wafer/mold with sealed aluminum foil walls
 
@@ -63,7 +63,7 @@ Device Fabrication
 
 - > Move the bubble-free PDMS casted mold into an over @100C for 1hour
 
-*<img src="media/image3.png" style="width:0.28542in;height:0.34931in" /><img src="media/image4.png" style="width:0.43194in;height:0.23056in" />3D printing the frame*
+*![Frame printing icon](media/image3.png) ![Frame icon](media/image4.png) 3D printing the frame*
 
 - > While the PDMS cures, you can print the frame using the 3D model provided in the link in the materials
 
@@ -133,7 +133,7 @@ Bonding to glass
 
 - > Once cured, trim away any excess glue using a razor blade
 
-*<img src="media/image5.png" style="width:0.24583in;height:0.31667in" /><img src="media/image6.png" style="width:0.48681in;height:0.29028in" />Culturing Cells*
+*![Cell culture icon](media/image5.png) ![Culture workflow icon](media/image6.png) Culturing Cells*
 
 - > Plasma-clean the assembled device in frame with the same conditions as bonding but leave for at least 10 minutes. This ensures that the surfaces are sterilized and that the glass and PDMS are hydrophilic. If you do not plasma clean or if you leave the surfaces exposed to air for more than 15 mins after plasma cleaning, aqueous solutions will not pass through the microchannels ruining the experiment.
 
@@ -149,7 +149,7 @@ Bonding to glass
 
 Axotomy
 
-- > <img src="media/image7.png" style="width:1.40139in;height:0.24167in" />Day prior to axotomy (day10), add 1ug/mL CtB-647 to the axonal cell body compartment. Ensure the volume in the cell body compartment is 2x the axonal after addition of ctb (Cellbody 50uL, Axon 25ul)
+- > ![CTB-647 timing icon](media/image7.png) Day prior to axotomy (day10), add 1ug/mL CtB-647 to the axonal cell body compartment. Ensure the volume in the cell body compartment is 2x the axonal after addition of ctb (Cellbody 50uL, Axon 25ul)
 
 - > On the day of the axotomy, image the cells before axotomizing, with the brightfield and Ctb-647 channel (far-red/cy5)
 
@@ -165,7 +165,7 @@ Axotomy
 
 *End point imaging:*
 
-- > <img src="media/image8.png" style="width:1.29792in;height:0.25208in" />Day prior to endpoint (day end-1), add 1ug/mL CtB-568 to the axonal cell body compartment. Ensure the volume in the cell body compartment is 2x the axonal after addition of ctb (Cellbody 50uL, Axon 25ul)
+- > ![CTB-568 timing icon](media/image8.png) Day prior to endpoint (day end-1), add 1ug/mL CtB-568 to the axonal cell body compartment. Ensure the volume in the cell body compartment is 2x the axonal after addition of ctb (Cellbody 50uL, Axon 25ul)
 
 - > On endpoint day, 1uM of calcein-AM to axonal compartment and image whole device
 

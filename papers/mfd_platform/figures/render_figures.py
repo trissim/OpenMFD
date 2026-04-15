@@ -31,6 +31,8 @@ FIGURE_SPECS = (
     FigureRenderSpec("Fig4_mold_casts_package", "mold_casts_package.pdf"),
     FigureRenderSpec("Fig5_plate_layout_validation", "validation.pdf"),
     FigureRenderSpec("Fig6_generalizability", "generalizability.pdf"),
+    FigureRenderSpec("Supp_FigS1_noLP360", "supp_fig_s1_no_lp360.pdf"),
+    FigureRenderSpec("Supp_FigS2_delamination", "supp_fig_s2_delamination.pdf"),
 )
 
 

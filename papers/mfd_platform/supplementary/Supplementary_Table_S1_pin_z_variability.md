@@ -1,6 +1,6 @@
 # Supplementary Table S1. 3D-printed insert pin height (z) variability across a 96-position array
 
-Pin heights were measured across one 8×12 insert array (rows A–H, columns 1–12; *n* = 96). Values below are reported as measured in millimeters (mm) and as deviation from the mean in micrometers (µm).
+Pin heights were measured across one 8×12 insert array (rows A-H, columns 1-12; *n* = 96). Values below are reported as measured in millimeters (mm) and as deviation from the mean in micrometers (µm).
 
 - Mean height: **5.550771 mm**
 - Standard deviation: **26.7 µm**
@@ -32,4 +32,3 @@ Pin heights were measured across one 8×12 insert array (rows A–H, columns 1�
 | F | -28.8 | -19.8 | -2.8 | -6.8 | -10.8 | -10.8 | -7.8 | -8.8 | -14.8 | -19.8 | -22.8 | -28.8 |
 | G | -31.8 | -22.8 | -8.8 | -7.8 | -14.8 | -15.8 | -12.8 | -12.8 | -18.8 | -21.8 | -29.8 | -49.8 |
 | H | -51.8 | -34.8 | -25.8 | -25.8 | -29.8 | -30.8 | -21.8 | -33.8 | -33.8 | -47.8 | -55.8 | -67.8 |
-

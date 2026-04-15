@@ -23,6 +23,15 @@ README_NAME = "README.md"
 WORD_DOCUMENT_XML = "word/document.xml"
 WORD_NAMESPACE = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 TABLE_FONT_SIZE_HALF_POINTS = "20"
+SUPPLEMENTARY_DIR = ROOT / "supplementary"
+SUPPLEMENTARY_FILES = (
+    SUPPLEMENTARY_DIR / "Supplementary_Table_S1_pin_z_variability.md",
+    SUPPLEMENTARY_DIR / "Supplementary_Note_S1_LP360_filter.md",
+    SUPPLEMENTARY_DIR / "Supplementary_Note_S2_base_layer_adhesion.md",
+    SUPPLEMENTARY_DIR / "Protocol_S1_device_assembly_and_axotomy.md",
+)
+SUPPLEMENTARY_MEDIA_PREFIX = "media/"
+DOCX_SUPPLEMENTARY_MEDIA_PREFIX = "../supplementary/media/"
 
 
 def run(cmd: list[str], cwd: Path | None = None) -> None:
@@ -90,14 +99,37 @@ def build_docx_reference_map() -> dict[str, str]:
 
         destination_ref = (DOCX_RENDERED_PREFIX / target_name).as_posix()
         references[source_ref] = destination_ref
+        references[f"../{source_ref}"] = destination_ref
 
     return references
 
 
 def build_temp_markdown() -> None:
-    text = SOURCE_MD.read_text()
-    for source_ref, destination_ref in build_docx_reference_map().items():
+    sections = [SOURCE_MD.read_text()]
+
+    supplementary_sections = [
+        file_path.read_text() for file_path in SUPPLEMENTARY_FILES if file_path.exists()
+    ]
+    if supplementary_sections:
+        sections.append("## Supplementary Information")
+        sections.extend(supplementary_sections)
+
+    text = "\n\n".join(sections)
+
+    reference_map = build_docx_reference_map()
+    for source_ref, destination_ref in sorted(
+        reference_map.items(), key=lambda item: len(item[0]), reverse=True
+    ):
         text = text.replace(source_ref, destination_ref)
+
+    text = text.replace(
+        f"({SUPPLEMENTARY_MEDIA_PREFIX}",
+        f"({DOCX_SUPPLEMENTARY_MEDIA_PREFIX}",
+    )
+    text = text.replace(
+        f'src="{SUPPLEMENTARY_MEDIA_PREFIX}',
+        f'src="{DOCX_SUPPLEMENTARY_MEDIA_PREFIX}',
+    )
 
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
     TMP_MD.write_text(text)
