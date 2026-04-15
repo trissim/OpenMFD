@@ -35,8 +35,6 @@ The complete process from device fabrication to endpoint imaging typically spans
 
 - > Loctite 5140 glue [https://www.digikey.ca/en/products/detail/loctite/135264/2486659?gclsrc=aw.ds&&utm_adgroup=General&productid=2486659](https://www.digikey.ca/en/products/detail/loctite/135264/2486659?gclsrc=aw.ds&&utm_adgroup=General&productid=2486659&utm_id=go_cmp-17855401585_adg-_ad-__dev-c_ext-_prd-2486659_sig-EAIaIQobChMI2tS_t9G3jAMVTDUIBR1AlhrXEAQYASABEgL42PD_BwE&gad_source=1&gclid=EAIaIQobChMI2tS_t9G3jAMVTDUIBR1AlhrXEAQYASABEgL42PD_BwE&gclsrc=aw.ds)
 
-- > 5” long 0.5” head cleanroom swab: [*https://www.amazon.ca/Rectangle-Cleaning-Solvent-Printer-Equipment/dp/B077BQWMTY/ref=sr_1_5?crid=327FMT48WBZWY&dib=eyJ2IjoiMSJ9.b1FW7LzBqZqUhhICXpp5XMJNIuvF3H9CnVUThm3SavcdDMkW9qer_nWWnNNcXJj2Ge25E6L9I8xGJIWqhADHzIl7eVRO9Mtgf7rDNJpi8ZhcE_Bl35fhKGJeUKQ9rWzPlcTflokavOkKYRPfRnhmyWvebhzT2_yYjuOlm8F78kv1YfJDmcuP_CaTAzZENC4mdYmIh8EaqoUN96HqWOaWoW5TMeuOJZwVW9JWj-3ySPWYvL6xBd064-06NK_KGOFs80t8uXX-cKQAT2C5ImojN0plMRLadmw8NrJROfA_5jI.fi5kY8sC8X6I3oP2sgyMmEPJ6FS7Wa4b9LCVbmrWfE8&dib_tag=se&keywords=clean+room+swab&qid=1760991003&sprefix=clean+room+swab%2Caps%2C100&sr=8-5*](https://www.amazon.ca/Rectangle-Cleaning-Solvent-Printer-Equipment/dp/B077BQWMTY/ref=sr_1_5?crid=327FMT48WBZWY&dib=eyJ2IjoiMSJ9.b1FW7LzBqZqUhhICXpp5XMJNIuvF3H9CnVUThm3SavcdDMkW9qer_nWWnNNcXJj2Ge25E6L9I8xGJIWqhADHzIl7eVRO9Mtgf7rDNJpi8ZhcE_Bl35fhKGJeUKQ9rWzPlcTflokavOkKYRPfRnhmyWvebhzT2_yYjuOlm8F78kv1YfJDmcuP_CaTAzZENC4mdYmIh8EaqoUN96HqWOaWoW5TMeuOJZwVW9JWj-3ySPWYvL6xBd064-06NK_KGOFs80t8uXX-cKQAT2C5ImojN0plMRLadmw8NrJROfA_5jI.fi5kY8sC8X6I3oP2sgyMmEPJ6FS7Wa4b9LCVbmrWfE8&dib_tag=se&keywords=clean+room+swab&qid=1760991003&sprefix=clean+room+swab%2Caps%2C100&sr=8-5)
-
 - > Calcein-am: <https://www.thermofisher.com/order/catalog/product/C3099?SID=srch-srp-C3099>
 
 - > alexa-647/568-conjugated-choleratoxin-beta (CtB-647/568) <https://www.thermofisher.com/order/catalog/product/C34778?SID=srch-srp-C34778>
@@ -69,15 +67,15 @@ Device Fabrication
 
 - > While the PDMS cures, you can print the frame using the 3D model provided in the link in the materials
 
-- > You must use an enclosed FDM 3D printer that supports HIPS filament. The Creality K1C printer is an easy-to-use all-in-one printer suitable for printing the frames
+- > You must use an enclosed FDM 3D printer that supports HIPS filament. The Creality K1C printer is an easy-to-use all-in-one printer suitable for printing the frames. HIPS was selected because it has low hygroscopicity and lower thermal contraction than polypropylene, the only other low-hygroscopicity filament we evaluated.
 
-- > The provided settings should be used, or the following principles should be respected:
+- > The provided settings should be used, or the following principles should be respected to reduce frame warping:
 
   - > Turn off the fans, this will allow the ambient air to stay warm, allowing the plate to remain flat rather than warp due to rapid cooling
 
   - > Print slowly and avoid using the corners of the build plate if the calibration is not on point. This will also reduce the odds of detaching.
 
-  - > Print with a brim, this increases the surface area of the first layer also increasing adhesion strength to prevent detachment. The first itself can be made thicker but will make removing during post-processing more difficult
+  - > Use the enclosure to keep the print environment warm and reduce warping during fabrication
 
 Demolding and cutting the cured device
 
@@ -131,9 +129,9 @@ Bonding to glass
 
 - > Inspect that the glue has sealed the entire perimeter of the glass slide and frame device insert.
 
-- > Use a clean 5” long 0.5” wide head clean room swap to clean away any extra glue by cleaning from inside the glass with a clean swap and dragging towards the frame. This will prevent glue from being dragged on the glass while cleaning the excess.
-
 - > Let the glue dry for 3 days at room temperature before using the device.
+
+- > Once cured, trim away any excess glue using a razor blade
 
 *<img src="media/image5.png" style="width:0.24583in;height:0.31667in" /><img src="media/image6.png" style="width:0.48681in;height:0.29028in" />Culturing Cells*
 
@@ -143,7 +141,7 @@ Bonding to glass
 
 - > Add 50uL NB+ to axonal compartment
 
-- > Seed cells in 50uL DMEM+ (5,000-10,000 cells/well) in cellbody compartment
+- > Seed E18 Sprague Dawley rat cortical neurons in 50uL DMEM+ (5,000-10,000 cells/well) in cellbody compartment
 
 - > After the cells have seeded for at least 30 minutes, media swap the cell body compartment with 50uL NB+
 
