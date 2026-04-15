@@ -1,4 +1,4 @@
-# Hybrid SU-8 + resin-insert molding enables microtiter-plate-format PDMS microfluidics without manual punching (working title)
+# Hybrid SU-8/resin wafer molds for plate-format PDMS microfluidics
 
 **Authors:** Tristan Simas, Yonatan Morocz, Jathav Puvirajan, David Juncker, and Alyson Fournier  
 **Affiliations:** McGill University  
