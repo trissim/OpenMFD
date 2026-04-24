@@ -7,7 +7,7 @@ from solid.utils import union, difference
 from .config import InsertConfiguration, PinConfiguration, SkirtConfiguration
 from .chamfer import deg_taper_len, linear_extrude_if_flat
 from .pins import create_pin_array
-from .skirts import create_dual_skirt
+from .skirts import SkirtProfileContext, create_dual_skirt
 
 
 def create_well_insert(
@@ -63,9 +63,7 @@ def create_well_insert(
     ... )
     """
     # Calculate taper length for outer chamfer
-    taper_len = deg_taper_len(
-        insert_config.outer_taper.height, insert_config.outer_taper.degrees
-    )
+    taper_len = deg_taper_len(insert_config.outer_taper.height, insert_config.outer_taper.degrees)
     taper_len += insert_config.outer_taper.extra_length
 
     # Adjust dimensions for taper
@@ -298,12 +296,14 @@ def assemble_well_inserts(
     if skirt_config is not None:
         skirts = create_dual_skirt(
             insert_geometry=solid.projection()(insert_array),
-            thickness1=-skirt_config.thickness1,  # Negative to shrink inward
-            height1=skirt_config.height1,
-            empty1=skirt_config.empty1,
-            thickness2=-skirt_config.thickness2,  # Negative to shrink inward
-            height2=skirt_config.height2,
-            pin_height=pin_height,
+            context=SkirtProfileContext.from_fields(
+                thickness1=-skirt_config.thickness1,
+                height1=skirt_config.height1,
+                empty1=skirt_config.empty1,
+                thickness2=-skirt_config.thickness2,
+                height2=skirt_config.height2,
+                pin_height=pin_height,
+            ),
         )
         components.append(skirts)
 
@@ -329,4 +329,3 @@ def assemble_well_inserts(
     assembly = solid.scale([pdms_scale, pdms_scale, 1])(assembly)
 
     return assembly
-

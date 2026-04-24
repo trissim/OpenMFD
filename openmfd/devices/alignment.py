@@ -4,10 +4,55 @@ This module provides functions for creating alignment marks used in
 multi-layer photolithography for precise layer-to-layer alignment.
 """
 
-from typing import List, Optional, Tuple
+from enum import Enum
+from typing import Callable, List, Optional, Tuple
 
 import solid
 from solid.utils import difference, union
+
+
+class AlignmentMarkMode(str, Enum):
+    """Closed set of array alignment-mark behaviors."""
+
+    FULL = "full"
+    HOLLOW = "hollow"
+    PARTIAL = "partial"
+    NONE = "none"
+
+    @classmethod
+    def from_value(cls, value: object) -> "AlignmentMarkMode":
+        if value is None:
+            return cls.NONE
+        if isinstance(value, cls):
+            return value
+        try:
+            return cls(value)
+        except ValueError as exc:
+            raise ValueError(
+                f"Unsupported alignment_mode {value!r}. Expected one of: "
+                f"{', '.join(mode.value for mode in cls)}"
+            ) from exc
+
+
+class AlignmentPatternType(str, Enum):
+    """Closed set of standalone alignment-pattern families."""
+
+    CROSSHAIR = "crosshair"
+    TARGET = "target"
+    CORNER = "corner"
+    VERNIER = "vernier"
+
+    @classmethod
+    def from_value(cls, value: object) -> "AlignmentPatternType":
+        if isinstance(value, cls):
+            return value
+        try:
+            return cls(value)
+        except ValueError as exc:
+            raise ValueError(
+                f"Unsupported pattern_type {value!r}. Expected one of: "
+                f"{', '.join(pattern.value for pattern in cls)}"
+            ) from exc
 
 
 def create_single_L_mark(
@@ -92,7 +137,7 @@ def create_alignment_marks(
     array: solid.OpenSCADObject,
     dims: List[float],
     grid_size: List[int],
-    alignment_mode: str = "full",
+    alignment_mode: Optional[str] = "full",
     units_from_center: Optional[Tuple[float, float]] = None,
     corner_length: Optional[float] = None,
 ) -> solid.OpenSCADObject:
@@ -142,7 +187,8 @@ def create_alignment_marks(
     ...     alignment_mode="hollow", units_from_center=(3, 4)
     ... )
     """
-    if alignment_mode is None or alignment_mode == "none":
+    mark_mode = AlignmentMarkMode.from_value(alignment_mode)
+    if mark_mode is AlignmentMarkMode.NONE:
         return array
 
     # Compute corner length if not provided
@@ -184,16 +230,11 @@ def create_alignment_marks(
     # When the wafer mask subtracts the array, hollow marks create registration holes.
     marks = []
     for x, y in positions:
-        if alignment_mode == "full":
-            # Solid crosshair (two L-shapes forming +)
-            mark = create_full_alignment_mark(corner_length, thickness_divisor=8.0)
-        elif alignment_mode == "hollow":
-            # Hollow crosshair (outer crosshair minus inner crosshair = ring shape)
+        if mark_mode is AlignmentMarkMode.HOLLOW:
             inner = create_full_alignment_mark(corner_length, thickness_divisor=8.0)
-            outer = create_full_alignment_mark(corner_length, thickness_divisor=4.0)  # Thicker
+            outer = create_full_alignment_mark(corner_length, thickness_divisor=4.0)
             mark = difference()(outer, inner)
         else:
-            # Fallback to solid mark
             mark = create_full_alignment_mark(corner_length, thickness_divisor=8.0)
 
         mark = solid.translate([x, y])(mark)
@@ -345,16 +386,22 @@ def create_custom_alignment_pattern(pattern_type: str, size: float) -> solid.Ope
     --------
     >>> pattern = create_custom_alignment_pattern("crosshair", size=5.0)
     """
-    if pattern_type == "crosshair":
-        return create_crosshair_mark(size, thickness=size / 20)
-    elif pattern_type == "target":
-        return create_alignment_target(size, size / 5, num_rings=3)
-    elif pattern_type == "corner":
-        return create_corner_mark(size, thickness_divisor=3.0)
-    elif pattern_type == "vernier":
-        return create_vernier_scale(
-            size, num_marks=10, mark_thickness=size / 100, mark_height=size / 5
-        )
-    else:
-        # Default to crosshair
-        return create_crosshair_mark(size, thickness=size / 20)
+    pattern_kind = AlignmentPatternType.from_value(pattern_type)
+    builders: dict[AlignmentPatternType, Callable[[float], solid.OpenSCADObject]] = {
+        AlignmentPatternType.CROSSHAIR: lambda pattern_size: create_crosshair_mark(
+            pattern_size, thickness=pattern_size / 20
+        ),
+        AlignmentPatternType.TARGET: lambda pattern_size: create_alignment_target(
+            pattern_size, pattern_size / 5, num_rings=3
+        ),
+        AlignmentPatternType.CORNER: lambda pattern_size: create_single_L_mark(
+            pattern_size, thickness_divisor=3.0
+        ),
+        AlignmentPatternType.VERNIER: lambda pattern_size: create_vernier_scale(
+            pattern_size,
+            num_marks=10,
+            mark_thickness=pattern_size / 100,
+            mark_height=pattern_size / 5,
+        ),
+    }
+    return builders[pattern_kind](size)

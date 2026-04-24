@@ -1,11 +1,16 @@
 """Configuration dataclasses for 3D printed insert generation."""
 
 from dataclasses import dataclass
-from typing import Tuple, Optional
+from typing import List, Optional, Tuple
+
+from openmfd.core import ConfigurationContract, PositiveFieldsConfiguration
+from openmfd.geometry.channels import ChannelConfiguration
+from openmfd.geometry.chambers import ChamberConfiguration
+from openmfd.geometry.wells import WellConfiguration
 
 
 @dataclass
-class TaperConfiguration:
+class TaperConfiguration(ConfigurationContract):
     """Configuration for tapered/chamfered extrusion.
 
     Parameters
@@ -32,9 +37,15 @@ class TaperConfiguration:
     extra_length: float = 0.0
     segments: int = 20
 
+    def _validate(self) -> None:
+        if self.height <= 0:
+            raise ValueError(f"height must be positive, got {self.height}")
+        if self.segments <= 0:
+            raise ValueError(f"segments must be positive, got {self.segments}")
+
 
 @dataclass
-class InsertConfiguration:
+class InsertConfiguration(PositiveFieldsConfiguration):
     """Configuration for well insert geometry.
 
     Parameters
@@ -72,9 +83,16 @@ class InsertConfiguration:
     chamber_width: Optional[float] = None
     add_chambers: bool = True
 
+    def _positive_fields(self) -> dict[str, float | None]:
+        return {
+            "well_radius": self.well_radius,
+            "channel_length": self.channel_length,
+            "chamber_width": self.chamber_width,
+        }
+
 
 @dataclass
-class PinConfiguration:
+class PinConfiguration(ConfigurationContract):
     """Configuration for alignment pins.
 
     Alignment pins fit into square holes in the PDMS wafer to ensure
@@ -111,9 +129,17 @@ class PinConfiguration:
     offset: float
     hole_dims: Tuple[float, float]
 
+    def _validate(self) -> None:
+        if self.height <= 0:
+            raise ValueError(f"height must be positive, got {self.height}")
+        if self.inner_height <= 0:
+            raise ValueError(f"inner_height must be positive, got {self.inner_height}")
+        if any(value <= 0 for value in (*self.dims, *self.hole_dims)):
+            raise ValueError("dims and hole_dims must contain only positive values")
+
 
 @dataclass
-class SkirtConfiguration:
+class SkirtConfiguration(ConfigurationContract):
     """Configuration for sealing skirts.
 
     Skirts provide better adhesion and sealing between the insert and
@@ -152,3 +178,32 @@ class SkirtConfiguration:
     thickness2: float
     height2: float
 
+    def _validate(self) -> None:
+        if self.thickness1 <= 0 or self.thickness2 <= 0:
+            raise ValueError("thickness1 and thickness2 must be positive")
+        if self.height1 <= 0 or self.height2 <= 0:
+            raise ValueError("height1 and height2 must be positive")
+        if self.empty1 < 0:
+            raise ValueError(f"empty1 must be non-negative, got {self.empty1}")
+
+
+@dataclass
+class CompleteInsertConfiguration(ConfigurationContract):
+    """Top-level nominal configuration for complete insert assemblies."""
+
+    wells: WellConfiguration
+    channels: ChannelConfiguration
+    chambers: ChamberConfiguration
+    outer_taper: TaperConfiguration
+    inner_taper: Optional[TaperConfiguration] = None
+    pins: Optional[PinConfiguration] = None
+    skirts: Optional[SkirtConfiguration] = None
+    pdms_scale: float = 1.0
+    well_positions: Optional[List[Tuple[float, float]]] = None
+    dims: Tuple[float, float, float] = (0.0, 0.0, 0.0)
+
+    def _validate(self) -> None:
+        if self.pdms_scale <= 0:
+            raise ValueError(f"pdms_scale must be positive, got {self.pdms_scale}")
+        if len(self.dims) != 3 or any(value <= 0 for value in self.dims):
+            raise ValueError("dims must contain exactly three positive values")

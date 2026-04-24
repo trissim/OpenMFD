@@ -4,15 +4,17 @@ This module provides configuration dataclasses for controlling export
 of device geometries to various file formats.
 """
 
-from typing import List, Optional, Tuple
 from dataclasses import dataclass, field
 from pathlib import Path
+from typing import List, Optional, Tuple
+
+from openmfd.core import ConfigurationContract
 
 
 @dataclass
-class FileNamingConfig:
+class FileNamingConfig(ConfigurationContract):
     """Configuration for file naming conventions.
-    
+
     Attributes
     ----------
     prefix : str, default=''
@@ -24,24 +26,28 @@ class FileNamingConfig:
     suffix : str, default=''
         Additional suffix for filename.
     """
-    prefix: str = ''
+
+    prefix: str = ""
     version: Optional[str] = None
     grid_size: Optional[Tuple[int, int]] = None
-    suffix: str = ''
-    
+    suffix: str = ""
+
+    def _validate(self) -> None:
+        return None
+
     def generate_filename(self, extension: str) -> str:
         """Generate filename from configuration.
-        
+
         Parameters
         ----------
         extension : str
             File extension (e.g., 'scad', 'dxf', 'stl').
-            
+
         Returns
         -------
         str
             Generated filename.
-            
+
         Examples
         --------
         >>> config = FileNamingConfig(prefix='device', version='v1', grid_size=(8, 12))
@@ -49,32 +55,32 @@ class FileNamingConfig:
         'v1_device_8x12_units_.scad'
         """
         parts = []
-        
+
         # Add version
         if self.version:
             parts.append(self.version)
-        
+
         # Add prefix
         if self.prefix:
             parts.append(self.prefix)
-        
+
         # Add grid size
         if self.grid_size:
             parts.append(f"{self.grid_size[0]}x{self.grid_size[1]}_units_")
-        
+
         # Add suffix
         if self.suffix:
             parts.append(self.suffix)
-        
+
         # Join parts and add extension
-        base_name = '_'.join(parts) if parts else 'output'
+        base_name = "_".join(parts) if parts else "output"
         return f"{base_name}.{extension}"
 
 
 @dataclass
-class ExportConfiguration:
+class ExportConfiguration(ConfigurationContract):
     """Configuration for exporting device geometries.
-    
+
     Attributes
     ----------
     output_directory : Path
@@ -92,38 +98,37 @@ class ExportConfiguration:
     overwrite : bool, default=True
         Whether to overwrite existing files.
     """
+
     output_directory: Path
-    base_name: str = 'device'
-    formats: List[str] = field(default_factory=lambda: ['scad'])
+    base_name: str = "device"
+    formats: List[str] = field(default_factory=lambda: ["scad"])
     render_stl: bool = False
     dxf_conversion: bool = False
     create_directories: bool = True
     overwrite: bool = True
-    
-    def __post_init__(self):
-        """Validate and normalize configuration."""
-        # Convert string path to Path object
+
+    def _normalize(self) -> None:
         if isinstance(self.output_directory, str):
             self.output_directory = Path(self.output_directory)
-        
-        # Validate formats
-        valid_formats = {'scad', 'dxf', 'stl'}
+
+    def _validate(self) -> None:
+        valid_formats = {"scad", "dxf", "stl"}
         for fmt in self.formats:
             if fmt not in valid_formats:
                 raise ValueError(f"Invalid format '{fmt}'. Must be one of {valid_formats}")
-        
-        # Create directory if requested
+
+    def _derive(self) -> None:
         if self.create_directories:
             self.output_directory.mkdir(parents=True, exist_ok=True)
-    
+
     def get_output_path(self, filename: str) -> Path:
         """Get full output path for a filename.
-        
+
         Parameters
         ----------
         filename : str
             Filename (with extension).
-            
+
         Returns
         -------
         Path
@@ -133,9 +138,9 @@ class ExportConfiguration:
 
 
 @dataclass
-class RenderConfiguration:
+class RenderConfiguration(ConfigurationContract):
     """Configuration for rendering previews and images.
-    
+
     Attributes
     ----------
     width : int, default=800
@@ -147,13 +152,13 @@ class RenderConfiguration:
     camera_rotation : tuple of (float, float, float), optional
         Camera rotation (x, y, z) in degrees.
     """
+
     width: int = 800
     height: int = 800
     camera_distance: Optional[float] = None
     camera_rotation: Optional[Tuple[float, float, float]] = None
-    
-    def __post_init__(self):
-        """Validate configuration."""
+
+    def _validate(self) -> None:
         if self.width <= 0:
             raise ValueError(f"width must be positive, got {self.width}")
         if self.height <= 0:
@@ -161,9 +166,9 @@ class RenderConfiguration:
 
 
 @dataclass
-class OpenSCADConfig:
+class OpenSCADConfig(ConfigurationContract):
     """Configuration for OpenSCAD CLI operations.
-    
+
     Attributes
     ----------
     openscad_path : str, default='openscad'
@@ -173,12 +178,15 @@ class OpenSCADConfig:
     extra_args : list of str, optional
         Additional arguments to pass to OpenSCAD.
     """
-    openscad_path: str = 'openscad'
+
+    openscad_path: str = "openscad"
     timeout: int = 300
     extra_args: Optional[List[str]] = None
-    
-    def __post_init__(self):
-        """Validate configuration."""
+
+    def _normalize(self) -> None:
+        if self.extra_args is None:
+            self.extra_args = []
+
+    def _validate(self) -> None:
         if self.timeout <= 0:
             raise ValueError(f"timeout must be positive, got {self.timeout}")
-

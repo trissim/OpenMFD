@@ -1,5 +1,7 @@
 """Geometric primitives for microfluidic devices."""
 
+from openmfd.core import derive_public_exports
+
 from .types import (
     Position2D,
     Position3D,
@@ -43,37 +45,4 @@ from .chambers import (
     make_chambers,
 )
 
-__all__ = [
-    # Types
-    "Position2D",
-    "Position3D",
-    "Position",
-    "Dimensions2D",
-    "Dimensions3D",
-    "Dimensions",
-    "MeasurementRange",
-    "Measurements",
-    # Primitives
-    "make_well",
-    "make_channel",
-    "make_chamber",
-    # Positioning
-    "wells_pos_from_center_2",
-    "wells_pos_from_center_4",
-    "corners_from_x_y",
-    "grid_positions",
-    "circular_positions",
-    "custom_positions",
-    # Wells
-    "WellConfiguration",
-    "wells_top_bottom",
-    "four_corner",
-    "well_array",
-    # Channels
-    "ChannelConfiguration",
-    "make_channels",
-    # Chambers
-    "ChamberConfiguration",
-    "make_chambers",
-]
-
+__all__ = derive_public_exports(globals())

@@ -1,7 +1,39 @@
 """Sealing skirt generation for well inserts."""
 
+from dataclasses import dataclass
 import solid
 from solid.utils import union, difference
+
+
+@dataclass(frozen=True)
+class SkirtProfileContext:
+    """Nominal context for the shared dual-skirt parameter family."""
+
+    thickness1: float
+    height1: float
+    empty1: float
+    thickness2: float
+    height2: float
+    pin_height: float
+
+    @classmethod
+    def from_fields(
+        cls,
+        thickness1: float,
+        height1: float,
+        empty1: float,
+        thickness2: float,
+        height2: float,
+        pin_height: float,
+    ) -> "SkirtProfileContext":
+        return cls(
+            thickness1=thickness1,
+            height1=height1,
+            empty1=empty1,
+            thickness2=thickness2,
+            height2=height2,
+            pin_height=pin_height,
+        )
 
 
 def create_skirt_layer(
@@ -66,12 +98,7 @@ def create_skirt_layer(
 
 def create_dual_skirt(
     insert_geometry: solid.OpenSCADObject,
-    thickness1: float,
-    height1: float,
-    empty1: float,
-    thickness2: float,
-    height2: float,
-    pin_height: float,
+    context: SkirtProfileContext,
 ) -> solid.OpenSCADObject:
     """Create a two-layer skirt system for better adhesion.
 
@@ -85,18 +112,9 @@ def create_dual_skirt(
     ----------
     insert_geometry : solid.OpenSCADObject
         2D projection of the insert geometry to create skirts around.
-    thickness1 : float
-        First (upper) skirt thickness (mm). Negative value shrinks inward.
-    height1 : float
-        First skirt height (mm).
-    empty1 : float
-        Empty space fill height at top of skirt1 (mm).
-    thickness2 : float
-        Second (lower) skirt thickness (mm). Negative value shrinks inward.
-    height2 : float
-        Second skirt height (mm).
-    pin_height : float
-        Height of alignment pins (mm). Used for positioning.
+    context : SkirtProfileContext
+        Shared skirt profile context containing the two skirt thicknesses,
+        heights, empty-fill height, and pin offset.
 
     Returns
     -------
@@ -112,12 +130,7 @@ def create_dual_skirt(
     >>> # Create dual skirt with standard parameters
     >>> skirts = create_dual_skirt(
     ...     insert_geometry=insert_2d,
-    ...     thickness1=-0.75,
-    ...     height1=0.66,
-    ...     empty1=0.3,
-    ...     thickness2=-0.8,
-    ...     height2=0.04,
-    ...     pin_height=0.06
+    ...     context=SkirtProfileContext.from_fields(-0.75, 0.66, 0.3, -0.8, 0.04, 0.06)
     ... )
 
     Notes
@@ -133,14 +146,14 @@ def create_dual_skirt(
     # Create first (upper) skirt ring
     skirt1_ring = create_skirt_layer(
         insert_geometry=insert_geometry,
-        thickness=thickness1,
-        height=height1,
+        thickness=context.thickness1,
+        height=context.height1,
     )
-    skirt1_ring = solid.translate([0, 0, pin_height])(skirt1_ring)
+    skirt1_ring = solid.translate([0, 0, context.pin_height])(skirt1_ring)
 
     # Create empty space fill (solid fill at top of skirt1)
-    skirt1_empty = solid.linear_extrude(height=empty1)(insert_geometry)
-    skirt1_empty = solid.translate([0, 0, pin_height + (height1 - empty1)])(
+    skirt1_empty = solid.linear_extrude(height=context.empty1)(insert_geometry)
+    skirt1_empty = solid.translate([0, 0, context.pin_height + (context.height1 - context.empty1)])(
         skirt1_empty
     )
 
@@ -150,28 +163,23 @@ def create_dual_skirt(
     # Create second (lower) skirt ring
     skirt2 = create_skirt_layer(
         insert_geometry=insert_geometry,
-        thickness=thickness2,
-        height=height2,
+        thickness=context.thickness2,
+        height=context.height2,
     )
-    skirt2 = solid.translate([0, 0, pin_height - height2])(skirt2)
+    skirt2 = solid.translate([0, 0, context.pin_height - context.height2])(skirt2)
 
     # Combine both skirts
     combined_skirts = union()(skirt1, skirt2)
 
     # Final translation (legacy pattern)
-    combined_skirts = solid.translate([0, 0, height2])(combined_skirts)
+    combined_skirts = solid.translate([0, 0, context.height2])(combined_skirts)
 
     return combined_skirts
 
 
 def create_skirt_from_projection(
     insert_3d: solid.OpenSCADObject,
-    thickness1: float,
-    height1: float,
-    empty1: float,
-    thickness2: float,
-    height2: float,
-    pin_height: float,
+    context: SkirtProfileContext,
 ) -> solid.OpenSCADObject:
     """Create dual skirt from 3D insert geometry.
 
@@ -182,18 +190,9 @@ def create_skirt_from_projection(
     ----------
     insert_3d : solid.OpenSCADObject
         3D insert geometry to create skirts around.
-    thickness1 : float
-        First (upper) skirt thickness (mm). Negative value shrinks inward.
-    height1 : float
-        First skirt height (mm).
-    empty1 : float
-        Empty space fill height at top of skirt1 (mm).
-    thickness2 : float
-        Second (lower) skirt thickness (mm). Negative value shrinks inward.
-    height2 : float
-        Second skirt height (mm).
-    pin_height : float
-        Height of alignment pins (mm). Used for positioning.
+    context : SkirtProfileContext
+        Shared skirt profile context containing the two skirt thicknesses,
+        heights, empty-fill height, and pin offset.
 
     Returns
     -------
@@ -208,25 +207,13 @@ def create_skirt_from_projection(
     >>> # Create skirts from 3D geometry
     >>> skirts = create_skirt_from_projection(
     ...     insert_3d=insert_3d,
-    ...     thickness1=-0.75,
-    ...     height1=0.66,
-    ...     empty1=0.3,
-    ...     thickness2=-0.8,
-    ...     height2=0.04,
-    ...     pin_height=0.06
+    ...     context=SkirtProfileContext.from_fields(-0.75, 0.66, 0.3, -0.8, 0.04, 0.06)
     ... )
     """
     # Project 3D insert to 2D
     insert_2d = solid.projection()(insert_3d)
 
-    # Create dual skirt
     return create_dual_skirt(
         insert_geometry=insert_2d,
-        thickness1=thickness1,
-        height1=height1,
-        empty1=empty1,
-        thickness2=thickness2,
-        height2=height2,
-        pin_height=pin_height,
+        context=context,
     )
-

@@ -11,7 +11,7 @@ from openmfd.inserts.config import (
 )
 from openmfd.inserts.chamfer import deg_taper_len, linear_extrude_if_flat
 from openmfd.inserts.pins import create_insert_pin, create_pin_array, create_insert_holes
-from openmfd.inserts.skirts import create_skirt_layer, create_dual_skirt
+from openmfd.inserts.skirts import SkirtProfileContext, create_skirt_layer, create_dual_skirt
 
 
 class TestTaperCalculation:
@@ -96,12 +96,14 @@ class TestSkirtGeneration:
 
         skirts = create_dual_skirt(
             insert_geometry=insert_2d,
-            thickness1=-0.75,
-            height1=0.66,
-            empty1=0.3,
-            thickness2=-0.8,
-            height2=0.04,
-            pin_height=0.06,
+            context=SkirtProfileContext.from_fields(
+                thickness1=-0.75,
+                height1=0.66,
+                empty1=0.3,
+                thickness2=-0.8,
+                height2=0.04,
+                pin_height=0.06,
+            ),
         )
         assert isinstance(skirts, solid.OpenSCADObject)
 

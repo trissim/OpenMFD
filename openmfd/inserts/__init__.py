@@ -5,7 +5,10 @@ chamfered/tapered walls, alignment pins, and sealing skirts. These inserts enabl
 easier pipetting access, precise alignment, and better sealing for microfluidic devices.
 """
 
+from openmfd.core import derive_public_exports
+
 from .config import (
+    CompleteInsertConfiguration,
     InsertConfiguration,
     PinConfiguration,
     SkirtConfiguration,
@@ -33,24 +36,4 @@ from .skirts import (
     create_dual_skirt,
 )
 
-__all__ = [
-    # Config
-    "InsertConfiguration",
-    "PinConfiguration",
-    "SkirtConfiguration",
-    "TaperConfiguration",
-    # Chamfer
-    "deg_taper_len",
-    "chamfer_extrude_wrapper",
-    # Wells
-    "create_well_insert",
-    "create_well_insert_array",
-    "assemble_well_inserts",
-    # Pins
-    "create_insert_pin",
-    "create_pin_array",
-    # Skirts
-    "create_skirt_layer",
-    "create_dual_skirt",
-]
-
+__all__ = derive_public_exports(globals())
