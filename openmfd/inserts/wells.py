@@ -1,13 +1,217 @@
 """Well insert generation with chamfered walls."""
 
-from typing import Tuple, List, Optional, Callable
+from typing import Callable, List, Optional, Tuple
 import solid
 from solid.utils import union, difference
 
-from .config import InsertConfiguration, PinConfiguration, SkirtConfiguration
+from openmfd.geometry.chambers import make_chambers
+from openmfd.geometry.channels import make_channels
+from openmfd.geometry.wells import WellPatternContext, four_corner, wells_top_bottom
+
+from .config import CompleteInsertConfiguration, InsertConfiguration, PinConfiguration, SkirtConfiguration
 from .chamfer import deg_taper_len, linear_extrude_if_flat
 from .pins import create_pin_array
 from .skirts import SkirtProfileContext, create_dual_skirt
+
+
+def _taper_length(taper) -> float:
+    return deg_taper_len(taper.height, taper.degrees) + taper.extra_length
+
+
+def _build_insert_pattern(
+    config: CompleteInsertConfiguration,
+    well_radius: float,
+    channel_length: float,
+    chamber_width: Optional[float],
+) -> solid.OpenSCADObject:
+    wells_cfg = config.wells
+    positions = wells_cfg.positions or []
+    if not positions:
+        raise ValueError("CompleteInsertConfiguration.wells.positions must be provided")
+
+    if len(positions) == 2:
+        wells = wells_top_bottom(
+            WellPatternContext.from_fields(well_radius, positions=positions, dxf=True)
+        )
+    elif len(positions) == 4:
+        dims = well_radius if wells_cfg.shape == "circle" else (well_radius, well_radius)
+        wells = four_corner(
+            WellPatternContext.from_fields(dims, positions=positions, dxf=True)
+        )
+    else:
+        raise ValueError(f"Unsupported number of well positions for insert build: {len(positions)}")
+
+    channels, measurements = make_channels(
+        length=channel_length,
+        width=config.channels.width,
+        height=None,
+        num_chans=config.channels.num_channels,
+        max_chans=config.channels.max_channels,
+        spacing=config.channels.spacing,
+        dxf=True,
+        rotate_channels=config.channels.rotate,
+    )
+
+    geometry_parts = [wells]
+    if config.chambers is not None:
+        geometry_parts.append(
+            make_chambers(
+                msrs=measurements,
+                height=None,
+                extra=config.chambers.extra,
+                len_until=config.chambers.len_until,
+                width=chamber_width,
+                dxf=True,
+            )
+        )
+
+    return union()(*geometry_parts)
+
+
+def _adjust_insert_dimensions(
+    config: CompleteInsertConfiguration,
+    taper_len: float,
+) -> Tuple[float, float, float]:
+    if config.wells.radius is None:
+        raise ValueError("CompleteInsertConfiguration.wells.radius must be provided")
+
+    well_radius = config.wells.radius - taper_len
+    channel_length = config.channels.length + taper_len * 2
+    configured_chamber_width = None
+    if config.chambers is not None:
+        configured_chamber_width = config.chambers.width
+    chamber_width = (configured_chamber_width or config.wells.radius * 2) - taper_len * 2
+    return well_radius, channel_length, chamber_width
+
+
+def _build_insert_footprint_array(
+    config: CompleteInsertConfiguration,
+    grid_size: Tuple[int, int],
+    well_radius: float,
+    channel_length: float,
+    chamber_width: float,
+    alignment_offset: Optional[Tuple[float, float]],
+) -> solid.OpenSCADObject:
+    footprint = _build_insert_pattern(config, well_radius, channel_length, chamber_width)
+    return create_well_insert_array(
+        insert_unit=footprint,
+        dims=list(config.dims),
+        grid_size=list(grid_size),
+        alignment_offset=alignment_offset,
+    )
+
+
+def _create_tapered_insert_array(
+    config: CompleteInsertConfiguration,
+    grid_size: Tuple[int, int],
+    alignment_offset: Optional[Tuple[float, float]],
+) -> solid.OpenSCADObject:
+    taper_len = _taper_length(config.outer_taper)
+    well_radius, channel_length, chamber_width = _adjust_insert_dimensions(config, taper_len)
+
+    outer_footprint = _build_insert_footprint_array(
+        config,
+        grid_size,
+        well_radius,
+        channel_length,
+        chamber_width,
+        alignment_offset,
+    )
+    insert_array = linear_extrude_if_flat(
+        outer_footprint,
+        height=config.outer_taper.height,
+        degrees=config.outer_taper.degrees,
+        segments=config.outer_taper.segments,
+    )
+
+    if config.inner_taper is not None:
+        inner_taper_len = _taper_length(config.inner_taper)
+        inner_well_radius, inner_channel_length, inner_chamber_width = _adjust_insert_dimensions(
+            config,
+            taper_len + inner_taper_len,
+        )
+        inner_footprint = _build_insert_footprint_array(
+            config,
+            grid_size,
+            inner_well_radius,
+            inner_channel_length,
+            inner_chamber_width,
+            alignment_offset,
+        )
+        inner_insert = linear_extrude_if_flat(
+            inner_footprint,
+            height=config.inner_taper.height,
+            degrees=config.inner_taper.degrees,
+            segments=config.inner_taper.segments,
+        )
+        insert_array = difference()(insert_array, inner_insert)
+
+    return insert_array
+
+
+def _base_feature_offsets(config: CompleteInsertConfiguration) -> Tuple[float, float, float]:
+    pin_height = config.pins.height if config.pins is not None else 0.0
+    skirt_height = 0.0
+    if config.skirts is not None:
+        skirt_height = config.skirts.height1 + config.skirts.height2
+    return pin_height, skirt_height, pin_height + skirt_height
+
+
+def _create_insert_skirts(
+    insert_array: solid.OpenSCADObject,
+    config: CompleteInsertConfiguration,
+) -> solid.OpenSCADObject:
+    assert config.skirts is not None
+    pin_height, _, _ = _base_feature_offsets(config)
+    return create_dual_skirt(
+        insert_geometry=solid.projection()(insert_array),
+        context=SkirtProfileContext.from_fields(
+            thickness1=-config.skirts.thickness1,
+            height1=config.skirts.height1,
+            empty1=config.skirts.empty1,
+            thickness2=-config.skirts.thickness2,
+            height2=config.skirts.height2,
+            pin_height=pin_height,
+        ),
+    )
+
+
+def _create_insert_pin_unit(config: CompleteInsertConfiguration) -> solid.OpenSCADObject:
+    assert config.pins is not None
+    positions = config.well_positions or config.wells.positions or []
+    pin_height, skirt_height, _ = _base_feature_offsets(config)
+    return create_pin_array(
+        well_positions=positions,
+        dims=config.pins.dims,
+        height=pin_height + config.pins.inner_height + skirt_height,
+        offset=config.pins.offset,
+    )
+
+
+def build_insert(
+    config: CompleteInsertConfiguration,
+    grid_size: Tuple[int, int],
+    alignment_offset: Optional[Tuple[float, float]] = None,
+) -> solid.OpenSCADObject:
+    """Build an insert array directly from a nominal complete insert config."""
+    insert_array = _create_tapered_insert_array(config, grid_size, alignment_offset)
+    _, _, insert_z_offset = _base_feature_offsets(config)
+    insert_array = solid.translate([0, 0, insert_z_offset])(insert_array)
+
+    components = [insert_array]
+    if config.skirts is not None:
+        components.append(_create_insert_skirts(insert_array, config))
+    if config.pins is not None:
+        pin_array = create_well_insert_array(
+            insert_unit=_create_insert_pin_unit(config),
+            dims=list(config.dims),
+            grid_size=list(grid_size),
+            alignment_offset=alignment_offset,
+        )
+        components.append(pin_array)
+
+    assembly = union()(*components)
+    return solid.scale([config.pdms_scale, config.pdms_scale, 1])(assembly)
 
 
 def create_well_insert(
@@ -138,7 +342,7 @@ def create_well_insert_array(
         unit=insert_unit,
         dims=dims,
         grid_size=grid_size,
-        dxf=False,  # 3D geometry
+        dxf=True,  # Keep existing z placement for already-extruded insert geometry.
         alignment=None,  # No alignment marks on inserts
     )
 

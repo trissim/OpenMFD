@@ -25,6 +25,7 @@ export_config = load_module("test_export_config", "openmfd/export/config.py")
 inserts_config = load_module("test_inserts_config", "openmfd/inserts/config.py")
 
 CasingConfiguration = devices_config.CasingConfiguration
+PDMSConfiguration = devices_config.PDMSConfiguration
 ExportConfiguration = export_config.ExportConfiguration
 OpenSCADConfig = export_config.OpenSCADConfig
 TaperConfiguration = inserts_config.TaperConfiguration
@@ -84,6 +85,11 @@ def test_openscad_config_normalizes_extra_args_to_empty_list() -> None:
 def test_existing_device_config_validation_still_runs_through_contract() -> None:
     with pytest.raises(ValueError, match="x must be positive"):
         CasingConfiguration(x=0, y=5)
+
+
+@pytest.mark.unit
+def test_pdms_scale_factor_matches_legacy_heat_shrinkage_fit() -> None:
+    assert PDMSConfiguration(cure_temp=100).scale_factor() == pytest.approx(1.0226)
 
 
 @pytest.mark.unit

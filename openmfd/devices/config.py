@@ -196,7 +196,8 @@ class PDMSConfiguration(ConfigurationContract):
     """Configuration for PDMS shrinkage compensation."""
 
     cure_temp: int = 100
-    shrinkage_per_degree: float = 0.002
+    shrinkage_per_degree: float = 0.018
+    baseline_shrinkage_percent: float = 0.46
 
     def _validate(self) -> None:
         if self.cure_temp <= 0:
@@ -205,11 +206,20 @@ class PDMSConfiguration(ConfigurationContract):
             raise ValueError(
                 f"shrinkage_per_degree must be non-negative, got {self.shrinkage_per_degree}"
             )
+        if self.baseline_shrinkage_percent < 0:
+            raise ValueError(
+                "baseline_shrinkage_percent must be non-negative, "
+                f"got {self.baseline_shrinkage_percent}"
+            )
         if self.scale_factor() <= 0:
             raise ValueError("PDMS scale_factor must remain positive")
 
     def scale_factor(self) -> float:
-        return 1.0 - (self.cure_temp * self.shrinkage_per_degree)
+        if not 40 <= self.cure_temp <= 150:
+            return 1.0
+        shrinkage_percent = self.shrinkage_per_degree * self.cure_temp
+        shrinkage_percent += self.baseline_shrinkage_percent
+        return 1.0 + shrinkage_percent / 100.0
 
 
 @dataclass

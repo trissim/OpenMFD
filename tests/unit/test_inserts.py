@@ -2,6 +2,9 @@
 
 import pytest
 import solid
+from solid import scad_render
+
+from openmfd.devices.presets import TwoCompartmentDeviceConfig
 
 from openmfd.inserts.config import (
     TaperConfiguration,
@@ -12,6 +15,7 @@ from openmfd.inserts.config import (
 from openmfd.inserts.chamfer import deg_taper_len, linear_extrude_if_flat
 from openmfd.inserts.pins import create_insert_pin, create_pin_array, create_insert_holes
 from openmfd.inserts.skirts import SkirtProfileContext, create_skirt_layer, create_dual_skirt
+from openmfd.inserts.wells import build_insert
 
 
 class TestTaperCalculation:
@@ -185,3 +189,16 @@ class TestExtrusion:
         obj = solid.circle(r=3.0)
         result = linear_extrude_if_flat(obj, height=5.0, degrees=15, segments=20)
         assert isinstance(result, solid.OpenSCADObject)
+
+
+class TestPresetInsertRegression:
+    def test_two_compartment_insert_matches_legacy_shape_signatures(self):
+        config = TwoCompartmentDeviceConfig().insert_config()
+        rendered = scad_render(build_insert(config=config, grid_size=(1, 1)))
+
+        assert "scale(v = [1.0226000000, 1.0226000000, 1])" in rendered
+        assert "chamfer_extrude($fn = 20, angle = 16.0000000000, height = 3.8000000000)" in rendered
+        assert "circle($fn = 64, r = 1.1103675341)" in rendered
+        assert "square(center = true, size = [2.9603675341, 2.2207350682])" in rendered
+        assert "square(center = true, size = [1.8500000000, 1.8500000000])" in rendered
+        assert "square(center = true, size = [3.0792649318, 0.0100000000])" not in rendered

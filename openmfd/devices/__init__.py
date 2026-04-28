@@ -24,6 +24,7 @@ from .assembly import (
     assemble_device,
     assemble_unit,
 )
+from .builder import build_device_layer, build_device_stack
 from .config import (
     ArrayConfiguration,
     CasingConfiguration,
@@ -43,6 +44,13 @@ from .outline import (
     create_glass_outline,
     create_outline,
     create_solid_outline,
+)
+from .presets import (
+    CompartmentalizedDevicePreset,
+    DevicePreset,
+    FourByFourDeviceConfig,
+    MicrofluidicDevicePreset,
+    TwoCompartmentDeviceConfig,
 )
 from .text import (
     create_centered_text,

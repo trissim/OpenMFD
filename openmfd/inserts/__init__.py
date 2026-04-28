@@ -21,6 +21,7 @@ from .chamfer import (
 )
 
 from .wells import (
+    build_insert,
     create_well_insert,
     create_well_insert_array,
     assemble_well_inserts,

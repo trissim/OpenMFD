@@ -205,5 +205,5 @@ class CompleteInsertConfiguration(ConfigurationContract):
     def _validate(self) -> None:
         if self.pdms_scale <= 0:
             raise ValueError(f"pdms_scale must be positive, got {self.pdms_scale}")
-        if len(self.dims) != 3 or any(value <= 0 for value in self.dims):
-            raise ValueError("dims must contain exactly three positive values")
+        if len(self.dims) != 3 or self.dims[0] <= 0 or self.dims[1] <= 0 or self.dims[2] < 0:
+            raise ValueError("dims must contain positive x/y pitch and a non-negative z offset")

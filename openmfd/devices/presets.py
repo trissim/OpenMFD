@@ -246,12 +246,22 @@ class TwoCompartmentDeviceConfig(CompartmentalizedDevicePreset):
     num_channels: Optional[int] = None  # Computed from well_radius / (channel_gap + channel_width)
 
     # Insert parameters
-    insert_height: float = 3.0
-    insert_height_inner: float = 1.5
+    insert_height: float = 3.8
+    insert_height_inner: float = 0.40
     outer_taper_degrees: float = 16.0
     inner_taper_degrees: float = 35.0
+    outer_taper_extra_length: float = 0.300
+    inner_taper_extra_length: float = 0.91
     insert_hole_dims: Tuple[float, float] = (2.0, 2.0)  # Square hole dimensions
+    insert_pin_dims: Tuple[float, float] = (1.85, 1.85)
+    insert_pin_height: float = 0.14
+    insert_pin_inner_height: float = 2.0
     insert_pin_offset: float = -0.5  # Offset for pin positioning
+    skirt_thickness1: float = 0.75
+    skirt_height1: float = 0.660
+    skirt_empty1: float = 0.3
+    skirt_thickness2: float = 0.8
+    skirt_height2: float = 0.04
 
     # Alignment parameters
     alignment_offset: Tuple[float, float] = (0.0, 0.0)
@@ -379,6 +389,11 @@ class TwoCompartmentDeviceConfig(CompartmentalizedDevicePreset):
         wells_cfg = self.wells_config()
         channels_cfg = self.channels_config()
         chambers_cfg = self.chambers_config()
+        insert_pin_offset_from_center = self.wells_pos + self.insert_pin_offset
+        insert_pin_positions = [
+            (insert_pin_offset_from_center, 0.0),
+            (-insert_pin_offset_from_center, 0.0),
+        ]
 
         return CompleteInsertConfiguration(
             wells=wells_cfg,
@@ -387,30 +402,26 @@ class TwoCompartmentDeviceConfig(CompartmentalizedDevicePreset):
             outer_taper=TaperConfiguration(
                 height=self.insert_height,
                 degrees=self.outer_taper_degrees,
-                extra_length=0.0
+                extra_length=self.outer_taper_extra_length
             ),
-            inner_taper=TaperConfiguration(
-                height=self.insert_height_inner,
-                degrees=self.inner_taper_degrees,
-                extra_length=0.0
-            ),
+            inner_taper=None,
             pins=PinConfiguration(
-                dims=(1.0, 1.0),
-                height=2.0,
-                inner_height=1.0,
+                dims=self.insert_pin_dims,
+                height=self.insert_pin_height,
+                inner_height=self.insert_pin_inner_height,
                 offset=0.0,
-                hole_dims=(1.2, 1.2)
+                hole_dims=self.insert_hole_dims
             ),
             skirts=SkirtConfiguration(
-                thickness1=0.5,
-                height1=0.5,
-                empty1=0.2,
-                thickness2=0.3,
-                height2=0.3
+                thickness1=self.skirt_thickness1,
+                height1=self.skirt_height1,
+                empty1=self.skirt_empty1,
+                thickness2=self.skirt_thickness2,
+                height2=self.skirt_height2
             ),
             pdms_scale=self.pdms_config().scale_factor(),
-            well_positions=wells_cfg.positions,
-            dims=(self.casing_x, self.casing_y, self.insert_height)
+            well_positions=insert_pin_positions,
+            dims=(self.casing_x, self.casing_y, 0.0)
         )
 
     def bottom_layer(self) -> CompleteDeviceConfiguration:
@@ -535,4 +546,3 @@ class FourByFourDeviceConfig(TwoCompartmentDeviceConfig):
     grid_size: Tuple[int, int] = (4, 4)  # vs (6, 8) for 96-well
 
     # All other parameters and methods inherited from TwoCompartmentDeviceConfig!
-
