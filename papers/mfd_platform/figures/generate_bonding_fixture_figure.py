@@ -32,6 +32,7 @@ PHOTO_TRANSFER = PHOTO_DIR / "clamp_assembly_seperated.jpg"
 PHOTO_CLAMPED = PHOTO_DIR / "clamp_assembly.jpg"
 PHOTO_GLUED = OUTPUT_DIR / "glued.png"
 PHOTO_REAL_SUEX = OUTPUT_DIR / "real_suex.png"
+SUBFIGURE_DPI = 600
 SUEX_200_THICKNESS_MM = 0.20
 LOCK_VIEW_Z_EXAGGERATION = 3.0
 
@@ -192,7 +193,11 @@ def setup_axis(ax: plt.Axes) -> None:
 
 
 def add_text(ax: plt.Axes, x: float, y: float, value: str, role: TextRole) -> None:
-    ax.text(x, y, value, **TEXT[role].kwargs())
+    kwargs = TEXT[role].kwargs()
+    if role is TextRole.PANEL_BADGE:
+        kwargs["clip_on"] = False
+        kwargs["zorder"] = 100
+    ax.text(x, y, value, **kwargs)
 
 
 def add_rect(ax: plt.Axes, x: float, y: float, width: float, height: float, role: BoxRole) -> None:
@@ -228,14 +233,20 @@ def rounded_border(ax: plt.Axes, x: float, y: float, width: float, height: float
 
 
 def panel_label(ax: plt.Axes, label: str, title: str) -> None:
+    panel_badge(ax, label)
+    add_text(ax, 0.105, 0.965, title, TextRole.PANEL_TITLE)
+
+
+def panel_badge(ax: plt.Axes, label: str) -> None:
     ax.text(
         0.02,
         0.97,
         label,
         bbox={"boxstyle": "round,pad=0.25", "facecolor": COLORS["ink"], "edgecolor": "none"},
+        clip_on=False,
+        zorder=100,
         **TEXT[TextRole.PANEL_BADGE].kwargs(),
     )
-    add_text(ax, 0.105, 0.965, title, TextRole.PANEL_TITLE)
 
 
 def crop_to_aspect(image: Image.Image, aspect: float) -> Image.Image:
@@ -258,7 +269,7 @@ def read_photo(path: Path, aspect: float) -> Image.Image:
 
 def draw_photo_panel(ax: plt.Axes, path: Path) -> None:
     setup_axis(ax)
-    photo_box = (0.02, 0.98, 0.04, 0.845)
+    photo_box = (0.02, 0.98, 0.025, 0.925)
     photo_aspect = (photo_box[1] - photo_box[0]) / (photo_box[3] - photo_box[2])
     image = read_photo(path, photo_aspect)
     ax.imshow(image, extent=photo_box, zorder=1)
@@ -266,18 +277,18 @@ def draw_photo_panel(ax: plt.Axes, path: Path) -> None:
 
 def draw_labeled_photo_panel(ax: plt.Axes, path: Path, label: str, title: str) -> None:
     draw_photo_panel(ax, path)
-    panel_label(ax, label, title)
+    panel_badge(ax, label)
 
 
 def draw_clamp_symbol(ax: plt.Axes) -> None:
     color = "#3b434f"
-    x = 0.155
-    y0 = 0.145
-    y1 = 0.710
-    arm = 0.060
-    ax.plot([x, x], [y0, y1], color=color, lw=3.2, solid_capstyle="round")
-    ax.plot([x, x + arm], [y1, y1], color=color, lw=3.2, solid_capstyle="round")
-    ax.plot([x, x + arm], [y0, y0], color=color, lw=3.2, solid_capstyle="round")
+    x = 0.177
+    y0 = 0.125
+    y1 = 0.735
+    arm = 0.055
+    ax.plot([x, x], [y0, y1], color=color, lw=3.2, solid_capstyle="round", clip_on=False)
+    ax.plot([x, x + arm], [y1, y1], color=color, lw=3.2, solid_capstyle="round", clip_on=False)
+    ax.plot([x, x + arm], [y0, y0], color=color, lw=3.2, solid_capstyle="round", clip_on=False)
     ax.add_patch(
         FancyArrowPatch(
             (x + arm - 0.012, y1 - 0.008),
@@ -286,6 +297,7 @@ def draw_clamp_symbol(ax: plt.Axes) -> None:
             mutation_scale=11,
             color=color,
             lw=1.5,
+            clip_on=False,
         )
     )
 
@@ -414,12 +426,11 @@ def draw_side_stack(
     title: str = "Bonding fixture cross-section",
 ) -> None:
     setup_axis(ax)
-    panel_label(ax, label, title)
+    panel_badge(ax, label)
     draw_clamp_symbol(ax)
     for layer in STACK_LAYERS:
         draw_stack_layer(ax, layer)
     draw_insert_cross_section(ax, cfg)
-    add_text(ax, 0.18, 0.735, "clamp pressure", TextRole.CALLOUT)
 
 
 def cuboid_triangles(x0: float, x1: float, y0: float, y1: float, z0: float, z1: float) -> np.ndarray:
@@ -642,9 +653,24 @@ def dimension_arrow(
     label: str,
     text_xy: tuple[float, float],
     rotation: float = 0.0,
+    extension_points: tuple[tuple[float, float], tuple[float, float]] | None = None,
+    text_background: bool = False,
 ) -> None:
+    if extension_points is not None:
+        for edge_point, arrow_point in zip(extension_points, (start, end), strict=True):
+            ax.plot(
+                [edge_point[0], arrow_point[0]],
+                [edge_point[1], arrow_point[1]],
+                color=COLORS["ink"],
+                lw=0.65,
+                linestyle=(0, (1.0, 2.0)),
+                zorder=8,
+            )
     ax.add_patch(FancyArrowPatch(start, end, arrowstyle="<->", mutation_scale=9, color=COLORS["ink"], lw=0.8))
-    ax.text(*text_xy, label, fontsize=7.6, color=COLORS["ink"], ha="center", va="center", rotation=rotation)
+    bbox = None
+    if text_background:
+        bbox = {"boxstyle": "round,pad=0.10", "facecolor": "white", "edgecolor": "none", "alpha": 0.92}
+    ax.text(*text_xy, label, fontsize=7.6, color=COLORS["ink"], ha="center", va="center", rotation=rotation, bbox=bbox)
 
 
 def convex_hull(points: np.ndarray) -> np.ndarray:
@@ -710,7 +736,7 @@ def draw_lock_view(
     title: str = "Equal-scale XY detail of insert lock",
 ) -> None:
     setup_axis(ax)
-    panel_label(ax, label, title)
+    panel_badge(ax, label)
 
     insert_cfg = cfg.insert_config()
     pins = insert_cfg.pins
@@ -718,9 +744,12 @@ def draw_lock_view(
         raise ValueError("The v27 XY projection requires pin configuration")
     geometry = source_cross_section_geometry(cfg)
     center_y = cfg.casing_y / 2
+    wells = cfg.wells_config()
+    platform_y = x_range(center_y, wells.radius * 2)
     lock_y = x_range(center_y, pins.hole_dims[1])
     pin_y = x_range(center_y, pins.dims[1])
     right_insert = geometry.inserts[-1]
+    platform_x = right_insert.platform_x
     hull = insert_projection_hull(stl, cfg, right_side=True)
     skirt = insert_cfg.skirts
     if skirt is None:
@@ -733,17 +762,24 @@ def draw_lock_view(
     hull_min = hull.min(axis=0)
     hull_max = hull.max(axis=0)
     pad = 0.65
-    crop = (hull_min[0] - pad, hull_max[0] + pad, hull_min[1] - pad, hull_max[1] + pad)
+    crop = (
+        hull_min[0] - 0.85,
+        max(hull_max[0] + pad, platform_x[1] + 0.55),
+        hull_min[1] - pad,
+        max(hull_max[1] + pad, platform_y[1] + 0.82),
+    )
+    schematic_left = hull_min[0] - 0.34
 
-    detail_ax = ax.inset_axes([0.025, 0.025, 0.95, 0.840])
+    detail_ax = ax.inset_axes([0.025, 0.020, 0.95, 0.900])
+    detail_ax.set_zorder(0)
     detail_ax.set_xlim(crop[0], crop[1])
     detail_ax.set_ylim(crop[2], crop[3])
     detail_ax.set_aspect("equal", adjustable="box")
     detail_ax.axis("off")
     detail_ax.add_patch(
         Rectangle(
-            (crop[0], crop[2]),
-            crop[1] - crop[0],
+            (schematic_left, crop[2]),
+            crop[1] - schematic_left,
             crop[3] - crop[2],
             facecolor="#f1f4f8",
             edgecolor="none",
@@ -755,7 +791,7 @@ def draw_lock_view(
         Polygon(
             hull,
             closed=True,
-            facecolor=mcolors.to_rgba(BOX[BoxRole.INSERT].color, 0.28),
+            facecolor=mcolors.to_rgba(BOX[BoxRole.INSERT].color, 0.30),
             edgecolor=BOX[BoxRole.INSERT].edge,
             linewidth=1.2,
             zorder=2,
@@ -763,20 +799,9 @@ def draw_lock_view(
     )
     detail_ax.add_patch(
         Polygon(
-            hull,
-            closed=True,
-            facecolor="none",
-            edgecolor="#a46200",
-            linewidth=1.6,
-            linestyle="--",
-            zorder=4,
-        )
-    )
-    detail_ax.add_patch(
-        Polygon(
             skirt_inner_hull,
             closed=True,
-            facecolor="none",
+            facecolor=mcolors.to_rgba("#f6dfbf", 0.94),
             edgecolor="#a46200",
             linewidth=1.1,
             linestyle="--",
@@ -785,7 +810,7 @@ def draw_lock_view(
     )
     source_rect(detail_ax, right_insert.lock_x, lock_y, BoxRole.HOLE, 1.0, 5)
     source_rect(detail_ax, right_insert.pin_x, pin_y, BoxRole.INSERT, 0.85, 6)
-    top_segments = intersecting_segments(dxf, crop)
+    top_segments = intersecting_segments(dxf, (schematic_left, crop[1], crop[2], crop[3]))
     detail_ax.add_collection(LineCollection(top_segments, colors=BOX[BoxRole.SUEX].edge, linewidths=1.05, alpha=0.96, zorder=7))
 
     insert_arrow_y = hull_min[1] - 0.34
@@ -797,6 +822,7 @@ def draw_lock_view(
         p_insert_1,
         f"{hull_max[0] - hull_min[0]:.2f} mm insert",
         ((p_insert_0[0] + p_insert_1[0]) / 2, p_insert_0[1] - 0.22),
+        extension_points=((hull_min[0], hull_min[1]), (hull_max[0], hull_min[1])),
     )
     insert_arrow_x = hull_min[0] - 0.34
     p_insert_2 = (insert_arrow_x, hull_min[1])
@@ -808,6 +834,32 @@ def draw_lock_view(
         f"{hull_max[1] - hull_min[1]:.2f} mm",
         (p_insert_2[0] - 0.24, (p_insert_2[1] + p_insert_3[1]) / 2),
         90.0,
+        extension_points=((hull_min[0], hull_min[1]), (hull_min[0], hull_max[1])),
+        text_background=True,
+    )
+
+    platform_arrow_y = platform_y[1] + 0.38
+    platform_p0 = (platform_x[0], platform_arrow_y)
+    platform_p1 = (platform_x[1], platform_arrow_y)
+    dimension_arrow(
+        detail_ax,
+        platform_p0,
+        platform_p1,
+        f"{platform_x[1] - platform_x[0]:.2f} mm platform",
+        (platform_p0[0] + 2.20, platform_p0[1] + 0.18),
+        extension_points=((platform_x[0], platform_y[1]), (platform_x[1], platform_y[1])),
+    )
+    platform_arrow_x = platform_x[1] + 0.28
+    platform_p2 = (platform_arrow_x, platform_y[0])
+    platform_p3 = (platform_arrow_x, platform_y[1])
+    dimension_arrow(
+        detail_ax,
+        platform_p2,
+        platform_p3,
+        f"{platform_y[1] - platform_y[0]:.2f} mm",
+        (platform_p2[0] + 0.18, (platform_p2[1] + platform_p3[1]) / 2),
+        90.0,
+        extension_points=((platform_x[1], platform_y[0]), (platform_x[1], platform_y[1])),
     )
 
     lock_arrow_y = lock_y[1] + 0.62
@@ -819,6 +871,7 @@ def draw_lock_view(
         p1,
         f"{pins.hole_dims[0]:.2f} mm SUEX lock",
         ((p0[0] + p1[0]) / 2, p0[1] + 0.22),
+        extension_points=((right_insert.lock_x[0], lock_y[1]), (right_insert.lock_x[1], lock_y[1])),
     )
     pin_arrow_y = pin_y[0] - 0.50
     p2 = (right_insert.pin_x[0], pin_arrow_y)
@@ -829,24 +882,48 @@ def draw_lock_view(
         p3,
         f"{pins.dims[0]:.2f} mm printed pin",
         ((p2[0] + p3[0]) / 2, p2[1] - 0.22),
+        extension_points=((right_insert.pin_x[0], pin_y[0]), (right_insert.pin_x[1], pin_y[0])),
     )
 
 
-def build_figure() -> plt.Figure:
+def save_subfigure_images(fig: plt.Figure, axes: dict[str, plt.Axes]) -> None:
+    subfigure_dir = OUTPUT_DIR / "subfigures"
+    subfigure_dir.mkdir(parents=True, exist_ok=True)
+    for path in subfigure_dir.glob("*.png"):
+        path.unlink()
+
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    for label, ax in axes.items():
+        bbox = ax.get_tightbbox(renderer).expanded(1.03, 1.05)
+        bbox_inches = bbox.transformed(fig.dpi_scale_trans.inverted())
+        fig.savefig(subfigure_dir / f"{label}.png", dpi=SUBFIGURE_DPI, bbox_inches=bbox_inches, pad_inches=0.02)
+
+
+def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
     cfg = TwoCompartmentDeviceConfig()
     stl = StlSources.from_generated_design()
     dxf = DxfSources.from_generated_design()
-    fig, axes = plt.subplots(3, 2, figsize=(8.25, 8.25))
+    fig, axes_grid = plt.subplots(3, 2, figsize=(7.15, 8.25))
     fig.patch.set_facecolor("white")
-    for ax in axes.ravel():
+    for ax in axes_grid.ravel():
         ax.set_facecolor(COLORS["paper"])
 
-    draw_labeled_photo_panel(axes[0, 0], PHOTO_TRANSFER, "A", "Wafer and insert transfer plate")
-    draw_lock_view(axes[0, 1], cfg, stl, dxf, "B", "Equal-scale XY detail of insert lock")
-    draw_labeled_photo_panel(axes[1, 0], PHOTO_CLAMPED, "C", "Clamped fixture for acetone wash")
-    draw_side_stack(axes[1, 1], cfg, "D", "Bonding fixture cross-section")
-    draw_labeled_photo_panel(axes[2, 0], PHOTO_GLUED, "E", "Glued insert-wafer interface")
-    draw_labeled_photo_panel(axes[2, 1], PHOTO_REAL_SUEX, "F", "Real SUEX lock micrograph")
+    axes = {
+        "A": axes_grid[0, 0],
+        "B": axes_grid[0, 1],
+        "C": axes_grid[1, 0],
+        "D": axes_grid[1, 1],
+        "E": axes_grid[2, 0],
+        "F": axes_grid[2, 1],
+    }
+
+    draw_labeled_photo_panel(axes["A"], PHOTO_TRANSFER, "A", "Wafer and insert transfer plate")
+    draw_lock_view(axes["B"], cfg, stl, dxf, "B", "Equal-scale XY detail of insert lock")
+    draw_labeled_photo_panel(axes["C"], PHOTO_CLAMPED, "C", "Clamped fixture for acetone wash")
+    draw_side_stack(axes["D"], cfg, "D", "Bonding fixture cross-section")
+    draw_labeled_photo_panel(axes["E"], PHOTO_GLUED, "E", "Glued insert-wafer interface")
+    draw_labeled_photo_panel(axes["F"], PHOTO_REAL_SUEX, "F", "Real SUEX lock micrograph")
 
     fig.suptitle(
         "Printed insert arrays register to SUEX locks before wafer bonding",
@@ -855,15 +932,16 @@ def build_figure() -> plt.Figure:
         color=COLORS["ink"],
         y=0.985,
     )
-    fig.subplots_adjust(left=0.035, right=0.985, bottom=0.040, top=0.920, wspace=0.012, hspace=0.020)
-    return fig
+    fig.subplots_adjust(left=0.035, right=0.985, bottom=0.040, top=0.920, wspace=-0.180, hspace=0.020)
+    return fig, axes
 
 
 def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    fig = build_figure()
+    fig, axes = build_figure()
     fig.savefig(OUTPUT_DIR / "draft_figure.pdf", bbox_inches="tight")
     fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300, bbox_inches="tight")
+    save_subfigure_images(fig, axes)
     plt.close(fig)
     return 0
 

@@ -22,6 +22,7 @@ from PIL import Image, ImageOps
 ROOT = Path(__file__).resolve().parents[3]
 FIGURE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = FIGURE_DIR / "final_drop" / "Fig1_openmfd_design"
+SUBFIGURE_DPI = 600
 DESIGN_DIR = ROOT / "designs" / "open_chamber" / "2_compartment_96_well_300um_suex200_v27"
 DESIGN_STEM = "2_compartment_96_well_300um_suex200_v27"
 FRAME_STL = ROOT / "plates" / "96_well_plate_reservoirs_print_hips_2" / "96_well_plate_reservoirs_print_hips_2.stl"
@@ -282,18 +283,20 @@ FIGURE_ONE_LAYOUT = FigureOneLayout(
     column_gap=0.025,
     row_gap=0.075,
     insets=FigureOneInsets(
-        unit_dxf=AxisBox(0.025, 0.235, 0.950, 0.585),
-        wafer_mask=AxisBox(0.050, 0.095, 0.900, 0.755),
-        insert_single=AxisBox(0.050, 0.150, 0.430, 0.720),
-        insert_array=AxisBox(0.520, 0.150, 0.430, 0.720),
-        frame_stl=AxisBox(0.010, 0.135, 0.980, 0.720),
-        device_photo=AxisBox(0.015, 0.140, 0.970, 0.710),
+        unit_dxf=AxisBox(0.025, 0.075, 0.950, 0.820),
+        wafer_mask=AxisBox(0.020, 0.030, 0.960, 0.900),
+        insert_single=AxisBox(0.035, 0.035, 0.455, 0.900),
+        insert_array=AxisBox(0.510, 0.035, 0.455, 0.900),
+        frame_stl=AxisBox(0.010, 0.030, 0.980, 0.900),
+        device_photo=AxisBox(0.015, 0.035, 0.970, 0.895),
     ),
 )
 
 
 def add_inset(ax: plt.Axes, box: AxisBox) -> plt.Axes:
-    return ax.inset_axes(box.mpl())
+    inset = ax.inset_axes(box.mpl())
+    inset.set_zorder(0)
+    return inset
 
 
 class TextRole(Enum):
@@ -348,7 +351,7 @@ TEXT_STYLES = {
         axes=True,
     ),
     TextRole.PANEL_TITLE: TextStyle(10.8, COLORS["ink"], ha="left", va="top", fontweight="bold", axes=True),
-    TextRole.PRESET_TITLE: TextStyle(10.2, COLORS["ink"], ha="left", fontweight="bold"),
+    TextRole.PRESET_TITLE: TextStyle(10.0, COLORS["ink"], ha="left", fontweight="bold"),
     TextRole.MUTED_LEFT: TextStyle(8.5, COLORS["muted"], ha="left"),
     TextRole.TABLE_KEY: TextStyle(7.7, COLORS["muted"], ha="left"),
     TextRole.TABLE_VALUE: TextStyle(7.9, COLORS["ink"], ha="right"),
@@ -393,7 +396,11 @@ PATCH_STYLES = {
 
 
 def add_text(ax: plt.Axes, x: float, y: float, label: str, style: TextRole) -> None:
-    ax.text(x, y, label, **TEXT_STYLES[style].kwargs(ax))
+    kwargs = TEXT_STYLES[style].kwargs(ax)
+    if style is TextRole.PANEL_BADGE:
+        kwargs["clip_on"] = False
+        kwargs["zorder"] = 100
+    ax.text(x, y, label, **kwargs)
 
 
 def add_rect(ax: plt.Axes, xy: tuple[float, float], width: float, height: float, style: PatchRole) -> None:
@@ -671,6 +678,10 @@ def panel_label(ax: plt.Axes, label: str, title: str) -> None:
     add_text(ax, 0.11, 0.956, title, TextRole.PANEL_TITLE)
 
 
+def panel_badge(ax: plt.Axes, label: str) -> None:
+    add_text(ax, 0.02, 0.96, label, TextRole.PANEL_BADGE)
+
+
 def setup_axis(ax: plt.Axes) -> None:
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
@@ -719,11 +730,11 @@ def add_arrow(ax: plt.Axes, start: tuple[float, float], end: tuple[float, float]
 
 def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     setup_axis(ax)
-    panel_label(ax, "A", "Parameterized OpenMFD preset")
+    panel_badge(ax, "A")
 
     rounded_box(ax, (0.055, 0.11), 0.52, 0.75, "white", COLORS["grid"], linewidth=1.0)
-    add_text(ax, 0.08, 0.80, "OpenMFD preset", TextRole.PRESET_TITLE)
-    add_text(ax, 0.08, 0.748, "editable defaults", TextRole.MUTED_LEFT)
+    add_text(ax, 0.08, 0.805, "OpenMFD preset", TextRole.PRESET_TITLE)
+    add_text(ax, 0.08, 0.735, "editable defaults", TextRole.MUTED_LEFT)
 
     channels = cfg.channels_config()
     rows, columns = cfg.grid_size
@@ -737,7 +748,7 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
         ("outer taper", f"{cfg.outer_taper_degrees:.0f} deg, {cfg.insert_height:.1f} mm tall"),
         ("PDMS scale", f"x{cfg.pdms_config().scale_factor():.4f} at {cfg.cure_temp} deg C"),
     ]
-    y = 0.665
+    y = 0.650
     for name, value in values:
         add_text(ax, 0.085, y, name, TextRole.TABLE_KEY)
         add_text(ax, 0.555, y, value, TextRole.TABLE_VALUE)
@@ -767,9 +778,9 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     add_text(ax, 0.805, 0.16, "same coordinates\nfor every output", TextRole.BOX_NOTE)
 
 
-def draw_unit_geometry(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
+def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
     setup_axis(ax)
-    panel_label(ax, "B", "Actual single-unit photomask DXFs")
+    panel_badge(ax, "B")
 
     bounds = Bounds.combine((dxf.single_top, dxf.single_bottom))
     pad_x = 0.55
@@ -777,49 +788,19 @@ def draw_unit_geometry(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig, dxf: DxfSo
     drawing_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.unit_dxf)
     setup_raw_dxf_axis(drawing_ax, bounds, pad_x, pad_y)
     add_bounds_background(drawing_ax, bounds, pad_x, pad_y)
-    draw_dxf_layer_raw(drawing_ax, dxf.single_bottom, COLORS["bottom"], 1.25, 0.88)
-    draw_dxf_layer_raw(drawing_ax, dxf.single_top, COLORS["top"], 1.65, 0.92)
-
-    add_text(
-        ax,
-        0.50,
-        0.850,
-        f"single {cfg.casing_x:.0f} x {cfg.casing_y:.0f} mm unit",
-        TextRole.CAPTION,
-    )
-    add_text(
-        ax,
-        0.50,
-        0.125,
-        "actual v27 single_top/bottom DXFs",
-        TextRole.SMALL_MUTED,
-    )
-    add_text(ax, 0.24, 0.198, "top wells", TextRole.TOP_LABEL)
-    add_text(ax, 0.73, 0.198, f"{cfg.channels_config().num_channels} bottom channels", TextRole.CHANNEL_LABEL)
-
-    legend_y = 0.032
-    legend = [(COLORS["bottom"], "single_bottom.dxf"), (COLORS["top"], "single_top.dxf")]
-    x = 0.105
-    for color, label in legend:
-        add_colored_rect(ax, (x, legend_y), 0.035, 0.025, color, 0.85)
-        add_text(ax, x + 0.045, legend_y + 0.012, label, TextRole.LEGEND)
-        x += 0.410
+    draw_dxf_layer_raw(drawing_ax, dxf.single_bottom, COLORS["bottom"], 0.10, 0.55)
+    draw_dxf_layer_raw(drawing_ax, dxf.single_top, COLORS["top"], 1.15, 0.92)
 
 
 def draw_insert_stls(
     ax: plt.Axes,
-    cfg: TwoCompartmentDeviceConfig,
+    _cfg: TwoCompartmentDeviceConfig,
     stl: StlSources,
     label: str = "A",
-    title: str = "Generated insert STLs",
+    _title: str = "Generated insert STLs",
 ) -> None:
     setup_axis(ax)
-    panel_label(ax, label, title)
-
-    hole = cfg.insert_hole_dims[0]
-    pin = cfg.insert_pin_dims[0]
-    total_clearance_um = (hole - pin) * 1000
-    side_clearance_um = total_clearance_um / 2
+    panel_badge(ax, label)
 
     single_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.insert_single)
     array_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.insert_array)
@@ -854,22 +835,10 @@ def draw_insert_stls(
         ),
     )
 
-    add_axis_text(single_ax, 0.50, 0.90, "single_insert.stl", TextRole.SMALL_LIGHT)
-    add_axis_text(array_ax, 0.50, 0.90, "wells_insert.stl", TextRole.SMALL_LIGHT)
-    add_text(ax, 0.50, 0.118, "equal-aspect source projections; true z scale", TextRole.SMALL_MUTED)
-    rounded_box(ax, (0.055, 0.020), 0.89, 0.065, "#fff8ea", "#f2c46d", linewidth=0.9)
-    add_text(
-        ax,
-        0.085,
-        0.052,
-        f"pin/hole rule: {pin:.2f}/{hole:.2f} mm = {total_clearance_um:.0f} um total clearance ({side_clearance_um:.0f} um/side)",
-        TextRole.RULE_NOTE,
-    )
-
 
 def draw_frame_cad(ax: plt.Axes, stl: StlSources) -> None:
     setup_axis(ax)
-    panel_label(ax, "E", "Generated plate-frame STL")
+    panel_badge(ax, "E")
 
     card_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.frame_stl)
     draw_stl_mesh_raw_equal(
@@ -887,12 +856,6 @@ def draw_frame_cad(ax: plt.Axes, stl: StlSources) -> None:
             edge_color="#070b12",
         ),
     )
-    add_axis_text(card_ax, 0.50, 0.90, "frame STL", TextRole.SMALL_LIGHT)
-    add_axis_text(card_ax, 0.50, 0.08, "printed frame STL", TextRole.SMALL_LIGHT)
-
-    rounded_box(ax, (0.06, 0.060), 0.88, 0.065, "#eef3f8", COLORS["grid"], linewidth=0.8)
-    add_text(ax, 0.50, 0.091, "package CAD generated alongside mold outputs", TextRole.PLATE_CAPTION)
-
 
 def crop_to_aspect(image: Image.Image, aspect: float) -> Image.Image:
     width, height = image.size
@@ -914,7 +877,7 @@ def read_assembled_device_photo() -> Image.Image:
 
 def draw_assembled_device(ax: plt.Axes) -> None:
     setup_axis(ax)
-    panel_label(ax, "F", "Assembled plate-format device")
+    panel_badge(ax, "F")
 
     image_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.device_photo)
     image = read_assembled_device_photo()
@@ -931,12 +894,10 @@ def draw_assembled_device(ax: plt.Axes) -> None:
             linewidth=0.8,
         )
     )
-    add_text(ax, 0.50, 0.072, "framed PDMS device in microplate-compatible package", TextRole.PLATE_CAPTION)
 
-
-def draw_plate_outputs(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
+def draw_plate_outputs(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
     setup_axis(ax)
-    panel_label(ax, "C", "Plate-format wafer-mask DXF")
+    panel_badge(ax, "C")
 
     pad_x = dxf.aligned.bounds.width * 0.035
     pad_y = dxf.aligned.bounds.height * 0.035
@@ -946,12 +907,22 @@ def draw_plate_outputs(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig, dxf: DxfSo
     draw_dxf_layer_raw(mask_ax, dxf.aligned, "#bfe7ee", 0.48, 0.42)
     draw_dxf_layer_raw(mask_ax, dxf.aligned, "#0f8ea5", 0.24, 0.92)
 
-    rows, columns = cfg.grid_size
-    add_text(ax, 0.50, 0.865, "actual v27 aligned.dxf", TextRole.PLATE_TITLE)
-    add_text(ax, 0.50, 0.075, f"top + bottom masks with wafer outline; {rows} x {columns} units, {rows * columns * 2} wells", TextRole.PLATE_CAPTION)
+
+def save_subfigure_images(fig: plt.Figure, axes: dict[str, plt.Axes]) -> None:
+    subfigure_dir = OUTPUT_DIR / "subfigures"
+    subfigure_dir.mkdir(parents=True, exist_ok=True)
+    for path in subfigure_dir.glob("*.png"):
+        path.unlink()
+
+    fig.canvas.draw()
+    renderer = fig.canvas.get_renderer()
+    for label, ax in axes.items():
+        bbox = ax.get_tightbbox(renderer).expanded(1.03, 1.05)
+        bbox_inches = bbox.transformed(fig.dpi_scale_trans.inverted())
+        fig.savefig(subfigure_dir / f"{label}.png", dpi=SUBFIGURE_DPI, bbox_inches=bbox_inches, pad_inches=0.02)
 
 
-def build_figure() -> plt.Figure:
+def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
     cfg = TwoCompartmentDeviceConfig()
     dxf = DxfSources.from_generated_design()
     stl = StlSources.from_generated_design()
@@ -989,14 +960,15 @@ def build_figure() -> plt.Figure:
         y=0.982,
     )
     fig.subplots_adjust(**FIGURE_ONE_LAYOUT.subplot_adjust_kwargs())
-    return fig
+    return fig, axes
 
 
 def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    fig = build_figure()
+    fig, axes = build_figure()
     fig.savefig(OUTPUT_DIR / "draft_figure.pdf", bbox_inches="tight")
     fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300, bbox_inches="tight")
+    save_subfigure_images(fig, axes)
     plt.close(fig)
     return 0
 
