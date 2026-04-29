@@ -1,7 +1,7 @@
-# Figure 1
+# Retired Workflow Overview Source
 
 Dump here:
-- final workflow schematic
+- optional graphical abstract or supplementary workflow schematic
 - any editable source used to assemble it
 
 What it should show:
@@ -12,3 +12,5 @@ What it should show:
 - parylene coating
 - PDMS casting
 - framed packaged device
+
+The active generated Figure 1 reuses the assembled-device photograph embedded in this folder's `draft_figure.odp`.

@@ -9,14 +9,12 @@ Combine fine-feature SU-8 photolithography (∼1–20 µm channels) with millime
 3. **Design automation:** An open-source Python layout generator that outputs mask files and enforces plate-format constraints (spacing, well geometry, alignment features).
 4. **Demonstration assay:** A 96-well-format axon isolation / injury / regeneration workflow using “chemical axotomy” via liquid handling (automation-friendly).
 
-## Figure plan (write as if figures exist)
-- **Figure 1 — Workflow overview.** End-to-end pipeline: Python CAD → photomask → SU-8 mold → printed well inserts → bonding + cleanup → PDMS casting → assembled plate-format device.
-- **Figure 2 — Design of the well insert + lock-and-key alignment.** CAD render + dimensions + pin/hole alignment concept; tolerance callouts.
-- **Figure 3 — Bonding fixture and glue interface.** Exploded view of build plates, clamps, wafer, insert array; epoxy fill path and squeeze-out region.
-- **Figure 4 — Mold results.** Photos of finished hybrid mold (macro wells + SU-8 channels) and representative PDMS cast.
-- **Figure 5 — Plate-format device layout.** 96-well mapping, channel routing, compartment structure, compatibility with multichannel pipette.
-- **Figure 6 — Validation/benchmarking.** Yield metrics, well-to-well variability, leakage rate, burst pressure, alignment error histogram, time/cost comparison vs punching.
-- **Figure 7 — Application: automation-friendly axotomy + regeneration readouts.** Schematic + representative images/plots (neurite length, survival, regrowth curves).
+## Figure plan
+- **Figure 1 — OpenMFD design-to-device overview.** Parameterized preset, actual photomask DXFs, wafer-mask DXF, generated insert STLs, generated frame STL, and assembled-device photo.
+- **Figure 2 — Insert-array registration and bonding.** Transfer photo, non-stretched equal-scale insert-lock/skirt detail, source-derived bonding stack, clamped-fixture photograph, glued interface, and real SUEX lock micrograph.
+- **Figure 3 — Hybrid mold, PDMS casts, and packaged device.** Mold/cast photos, parallel casting, trimmed device, and final framed assembly.
+- **Figure 4 — Combined validation.** Dye retention, neuronal culture, CTB tracing, and plate-level cell metrics.
+- **Figure 5 — Platform generalizability.** Additional literature-derived device architectures rendered into the same plate-format workflow.
 
 ## Proposed paper structure
 1. **Abstract**
@@ -58,4 +56,3 @@ Combine fine-feature SU-8 photolithography (∼1–20 µm channels) with millime
 - SU-8 stack (target thicknesses for well rim + channels)
 - Plate footprint and spacing constraints (SBS standard compliance?)
 - Device performance metrics and assay details
-

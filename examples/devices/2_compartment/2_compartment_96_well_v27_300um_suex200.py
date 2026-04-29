@@ -3,7 +3,7 @@ from functools import partial
 import numpy as np
 import pudb
 version=27
-base_path="./designs/open_chamber/2_compartment_96_well_300um_suex200_v"+str(version)+"/"
+base_path="./designs/open_chamber/2_compartment_96_well_300um_suex200_v"+str(version)+"_LEGACY/"
 device_name="2_compartment_96_well_300um_suex200_v"+str(version)
 
 design = "open"

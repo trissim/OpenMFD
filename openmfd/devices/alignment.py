@@ -25,13 +25,13 @@ class AlignmentMarkMode(str, Enum):
             return cls.NONE
         if isinstance(value, cls):
             return value
-        try:
-            return cls(value)
-        except ValueError as exc:
-            raise ValueError(
-                f"Unsupported alignment_mode {value!r}. Expected one of: "
-                f"{', '.join(mode.value for mode in cls)}"
-            ) from exc
+        modes = {mode.value: mode for mode in cls}
+        if value in modes:
+            return modes[value]
+        raise ValueError(
+            f"Unsupported alignment_mode {value!r}. Expected one of: "
+            f"{', '.join(mode.value for mode in cls)}"
+        )
 
 
 class AlignmentPatternType(str, Enum):
@@ -46,13 +46,13 @@ class AlignmentPatternType(str, Enum):
     def from_value(cls, value: object) -> "AlignmentPatternType":
         if isinstance(value, cls):
             return value
-        try:
-            return cls(value)
-        except ValueError as exc:
-            raise ValueError(
-                f"Unsupported pattern_type {value!r}. Expected one of: "
-                f"{', '.join(pattern.value for pattern in cls)}"
-            ) from exc
+        patterns = {pattern.value: pattern for pattern in cls}
+        if value in patterns:
+            return patterns[value]
+        raise ValueError(
+            f"Unsupported pattern_type {value!r}. Expected one of: "
+            f"{', '.join(pattern.value for pattern in cls)}"
+        )
 
 
 def create_single_L_mark(

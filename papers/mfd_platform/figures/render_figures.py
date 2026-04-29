@@ -12,10 +12,15 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parent
 FINAL_DROP = ROOT / "final_drop"
 RENDERED = ROOT / "rendered"
+RENDERED_DOCX = ROOT / "rendered_docx"
 README_NAME = "README.md"
 LIBREOFFICE_CMD = "libreoffice"
 DRAFT_FIGURE_STEM = "draft_figure"
 PREFERRED_SOURCE_STEMS = (DRAFT_FIGURE_STEM,)
+GENERATED_SOURCE_SCRIPTS = (
+    ROOT / "generate_openmfd_design_figure.py",
+    ROOT / "generate_bonding_fixture_figure.py",
+)
 
 
 @dataclass(frozen=True)
@@ -25,9 +30,8 @@ class FigureRenderSpec:
 
 
 FIGURE_SPECS = (
-    FigureRenderSpec("Fig1_workflow", "workflow.pdf"),
-    FigureRenderSpec("Fig2_insert_alignment", "insert_alignment.pdf"),
-    FigureRenderSpec("Fig3_bonding_fixture", "bonding_fixture.pdf"),
+    FigureRenderSpec("Fig1_openmfd_design", "openmfd_design.pdf"),
+    FigureRenderSpec("Fig2_insert_bonding", "insert_bonding.pdf"),
     FigureRenderSpec("Fig4_mold_casts_package", "mold_casts_package.pdf"),
     FigureRenderSpec("Fig5_plate_layout_validation", "validation.pdf"),
     FigureRenderSpec("Fig6_generalizability", "generalizability.pdf"),
@@ -100,12 +104,25 @@ def clean_rendered_directory(expected_files: set[str]) -> None:
             path.unlink()
 
 
+def generate_scripted_sources() -> None:
+    for script in GENERATED_SOURCE_SCRIPTS:
+        run([sys.executable, str(script)])
+
+
 def render_figure(spec: FigureRenderSpec) -> None:
-    source_pdf = ensure_source_pdf(resolve_source_base(spec))
+    source_base = resolve_source_base(spec)
+    source_pdf = ensure_source_pdf(source_base)
     shutil.copy2(source_pdf, RENDERED / spec.rendered_name)
+
+    source_png = source_base.with_suffix(".png")
+    if source_png.exists():
+        RENDERED_DOCX.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(source_png, RENDERED_DOCX / Path(spec.rendered_name).with_suffix(".png").name)
 
 
 def main() -> int:
+    generate_scripted_sources()
+
     expected_files = {spec.rendered_name for spec in FIGURE_SPECS}
     clean_rendered_directory(expected_files)
 

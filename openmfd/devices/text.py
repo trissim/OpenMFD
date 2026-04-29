@@ -25,13 +25,13 @@ class DeviceLabelPosition(str, Enum):
     def from_value(cls, value: object) -> "DeviceLabelPosition":
         if isinstance(value, cls):
             return value
-        try:
-            return cls(value)
-        except ValueError as exc:
-            raise ValueError(
-                f"Unsupported position {value!r}. Expected one of: "
-                f"{', '.join(position.value for position in cls)}"
-            ) from exc
+        positions = {position.value: position for position in cls}
+        if value in positions:
+            return positions[value]
+        raise ValueError(
+            f"Unsupported position {value!r}. Expected one of: "
+            f"{', '.join(position.value for position in cls)}"
+        )
 
 
 @dataclass(frozen=True)

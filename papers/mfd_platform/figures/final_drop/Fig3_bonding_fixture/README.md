@@ -1,4 +1,6 @@
-# Figure 3
+# Retired Bonding Fixture Source
+
+This folder now supplies the existing bonding photographs used by the active generated `Fig2_insert_bonding` composite.
 
 Dump here:
 - clamp assembly photo

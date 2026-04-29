@@ -22,9 +22,8 @@ python papers/mfd_platform/figures/render_figures.py
 
 Current stable outputs:
 
-- `workflow.pdf`
-- `insert_alignment.pdf`
-- `bonding_fixture.pdf`
+- `openmfd_design.pdf`
+- `insert_bonding.pdf`
 - `mold_casts_package.pdf`
 - `validation.pdf`
 - `generalizability.pdf`
