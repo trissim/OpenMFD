@@ -6,8 +6,6 @@ This surface non-flatness directly compromises the insert-to-wafer adhesive bond
 
 Using an LP360 filter (as specified in the main Methods) substantially reduced these artifacts and produced a flatter top surface, enabling reliable epoxy bonding of the resin inserts.
 
-**Supplementary Figure S1.** Ridge artifacts around feature edges in the no-LP360 condition.
+**Supplementary Figure S1.** Ridge artifacts around feature edges in the no-LP360 condition. This note documents the process-limiting surface artifact observed during development; quantitative flatness measurements were not acquired for this comparison.
 
 ![Supplementary Figure S1. Ridge-like edge artifacts observed in SUEX features processed without the LP360 filter.](../figures/rendered/supp_fig_s1_no_lp360.pdf)
-
-[TODO: insert images and add brief quantitative flatness metric if available (e.g., profilometry line scan or focus-map proxy).]

@@ -184,6 +184,16 @@ STACK_LAYERS = (
     StackLayer(BoxRole.MAGNET, "magnetic build plate magnet", 0.601, 0.044),
     StackLayer(BoxRole.METAL, "top clamp build plate", 0.660, 0.050),
 )
+STACK_SOURCE_BOTTOM = min(layer.y for layer in STACK_LAYERS)
+STACK_SOURCE_TOP = max(layer.y + layer.height for layer in STACK_LAYERS)
+STACK_DRAW_BOTTOM = 0.110
+STACK_DRAW_TOP = 0.830
+STACK_DRAW_SCALE = (STACK_DRAW_TOP - STACK_DRAW_BOTTOM) / (STACK_SOURCE_TOP - STACK_SOURCE_BOTTOM)
+STACK_LEFT = 0.205
+STACK_WIDTH = 0.535
+STACK_LABEL_X = 0.760
+INSERT_DRAW_LEFT = 0.220
+INSERT_DRAW_WIDTH = 0.520
 
 
 def setup_axis(ax: plt.Axes) -> None:
@@ -282,9 +292,9 @@ def draw_labeled_photo_panel(ax: plt.Axes, path: Path, label: str, title: str) -
 
 def draw_clamp_symbol(ax: plt.Axes) -> None:
     color = "#3b434f"
-    x = 0.177
-    y0 = 0.125
-    y1 = 0.735
+    x = 0.150
+    y0 = 0.090
+    y1 = 0.825
     arm = 0.055
     ax.plot([x, x], [y0, y1], color=color, lw=3.2, solid_capstyle="round", clip_on=False)
     ax.plot([x, x + arm], [y1, y1], color=color, lw=3.2, solid_capstyle="round", clip_on=False)
@@ -303,9 +313,23 @@ def draw_clamp_symbol(ax: plt.Axes) -> None:
 
 
 def draw_stack_layer(ax: plt.Axes, layer: StackLayer) -> None:
-    add_rect(ax, 0.24, layer.y, 0.50, layer.height, layer.role)
+    draw_y = stack_draw_y(layer.y)
+    draw_height = stack_draw_height(layer.height)
+    add_rect(ax, STACK_LEFT, draw_y, STACK_WIDTH, draw_height, layer.role)
     if layer.label:
-        add_text(ax, 0.76, layer.y + layer.height / 2, layer.label, TextRole.LAYER_LABEL)
+        add_text(ax, STACK_LABEL_X, draw_y + draw_height / 2, layer.label, TextRole.LAYER_LABEL)
+
+
+def stack_draw_y(y: float) -> float:
+    return STACK_DRAW_BOTTOM + (y - STACK_SOURCE_BOTTOM) * STACK_DRAW_SCALE
+
+
+def stack_draw_height(height: float) -> float:
+    return height * STACK_DRAW_SCALE
+
+
+def stack_draw_layer(layer: StackLayer) -> StackLayer:
+    return StackLayer(layer.role, layer.label, stack_draw_y(layer.y), stack_draw_height(layer.height))
 
 
 def x_range(center: float, width: float) -> tuple[float, float]:
@@ -372,12 +396,12 @@ def stack_layer(role: BoxRole) -> StackLayer:
 
 def draw_insert_cross_section(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     geometry = source_cross_section_geometry(cfg)
-    wafer = stack_layer(BoxRole.WAFER)
-    magnetic_plate = stack_layer(BoxRole.MAGNETIC_PLATE)
+    wafer = stack_draw_layer(stack_layer(BoxRole.WAFER))
+    magnetic_plate = stack_draw_layer(stack_layer(BoxRole.MAGNETIC_PLATE))
     source_height = geometry.suex_height + geometry.base_height + geometry.taper_height
     x_min, x_max = geometry.source_x
-    x_scale = 0.47 / (x_max - x_min)
-    x_offset = 0.255 - x_min * x_scale
+    x_scale = INSERT_DRAW_WIDTH / (x_max - x_min)
+    x_offset = INSERT_DRAW_LEFT - x_min * x_scale
     y_scale = (magnetic_plate.y - (wafer.y + wafer.height)) / source_height
 
     def draw_x(source_x: float) -> float:
@@ -415,8 +439,8 @@ def draw_insert_cross_section(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> 
             )
         )
 
-    add_text(ax, 0.76, (suex_y + suex_top_y) / 2 + 0.018, "SUEX lock platforms", TextRole.LAYER_LABEL)
-    add_text(ax, 0.76, (suex_top_y + taper_top_y) / 2, "separate tapered inserts; one pin each", TextRole.LAYER_LABEL)
+    add_text(ax, STACK_LABEL_X, (suex_y + suex_top_y) / 2 + 0.018, "SUEX lock platforms", TextRole.LAYER_LABEL)
+    add_text(ax, STACK_LABEL_X, (suex_top_y + taper_top_y) / 2, "separate tapered inserts;\none pin each", TextRole.LAYER_LABEL)
 
 
 def draw_side_stack(
@@ -763,12 +787,12 @@ def draw_lock_view(
     hull_max = hull.max(axis=0)
     pad = 0.65
     crop = (
-        hull_min[0] - 0.85,
+        hull_min[0] - 1.00,
         max(hull_max[0] + pad, platform_x[1] + 0.55),
         hull_min[1] - pad,
         max(hull_max[1] + pad, platform_y[1] + 0.82),
     )
-    schematic_left = hull_min[0] - 0.34
+    schematic_left = hull_min[0] - 0.55
 
     detail_ax = ax.inset_axes([0.025, 0.020, 0.95, 0.900])
     detail_ax.set_zorder(0)
@@ -824,7 +848,7 @@ def draw_lock_view(
         ((p_insert_0[0] + p_insert_1[0]) / 2, p_insert_0[1] - 0.22),
         extension_points=((hull_min[0], hull_min[1]), (hull_max[0], hull_min[1])),
     )
-    insert_arrow_x = hull_min[0] - 0.34
+    insert_arrow_x = hull_min[0] - 0.55
     p_insert_2 = (insert_arrow_x, hull_min[1])
     p_insert_3 = (insert_arrow_x, hull_max[1])
     dimension_arrow(
