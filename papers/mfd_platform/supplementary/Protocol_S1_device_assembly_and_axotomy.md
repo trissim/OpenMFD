@@ -51,7 +51,7 @@ Device Fabrication
 
 *![PDMS preparation icon](media/image1.png) ![PDMS mold icon](media/image2.png) Prepare and curing PDMS in the mold*
 
-- > Cut a round aluminum foil sheet form a dish surrounding the wafer/mold with sealed aluminum foil walls
+- > Cut a round aluminum foil sheet to form a dish surrounding the wafer/mold with sealed aluminum foil walls
 
 - > For each device prepare 35mL of PDMS using a 1A:10B ratio (3.5mL part A 31.5mL part B) in a large red solo cup on a scale
 
@@ -137,19 +137,19 @@ Bonding to glass
 
 - > Plasma-clean the assembled device in frame with the same conditions as bonding but leave for at least 10 minutes. This ensures that the surfaces are sterilized and that the glass and PDMS are hydrophilic. If you do not plasma clean or if you leave the surfaces exposed to air for more than 15 mins after plasma cleaning, aqueous solutions will not pass through the microchannels ruining the experiment.
 
-- > The wells are all coated with 30ul of 10ug/ml dPGA for 10 minutes and washed with ddH2O once
+- > The wells are all coated with 30 µL of 10 µg/mL dPGA for 10 minutes and washed with ddH2O once
 
-- > Add 50uL NB+ to axonal compartment
+- > Add 50 µL NB+ to axonal compartment
 
-- > Seed E18 Sprague Dawley rat cortical neurons in 50uL DMEM+ (5,000-10,000 cells/well) in cellbody compartment
+- > Seed E18 Sprague Dawley rat cortical neurons in 50 µL DMEM+ (5,000-10,000 cells/well) in cellbody compartment
 
-- > After the cells have seeded for at least 30 minutes, media swap the cell body compartment with 50uL NB+
+- > After the cells have seeded for at least 30 minutes, media swap the cell body compartment with 50 µL NB+
 
-- > Remove 25uL from axon compartment, setting up a gradient 50ul-\>25uL  
+- > Remove 25 µL from axon compartment, setting up a gradient 50 µL-\>25 µL
 
 Axotomy
 
-- > ![CTB-647 timing icon](media/image7.png) Day prior to axotomy (day10), add 1ug/mL CtB-647 to the axonal cell body compartment. Ensure the volume in the cell body compartment is 2x the axonal after addition of ctb (Cellbody 50uL, Axon 25ul)
+- > ![CTB-647 timing icon](media/image7.png) Day prior to axotomy (day10), add 1 µg/mL CtB-647 to the axonal cell body compartment. Ensure the volume in the cell body compartment is 2x the axonal after addition of ctb (Cellbody 50 µL, Axon 25 µL)
 
 - > On the day of the axotomy, image the cells before axotomizing, with the brightfield and Ctb-647 channel (far-red/cy5)
 
@@ -165,9 +165,9 @@ Axotomy
 
 *End point imaging:*
 
-- > ![CTB-568 timing icon](media/image8.png) Day prior to endpoint (day end-1), add 1ug/mL CtB-568 to the axonal cell body compartment. Ensure the volume in the cell body compartment is 2x the axonal after addition of ctb (Cellbody 50uL, Axon 25ul)
+- > ![CTB-568 timing icon](media/image8.png) Day prior to endpoint (day end-1), add 1 µg/mL CtB-568 to the axonal cell body compartment. Ensure the volume in the cell body compartment is 2x the axonal after addition of ctb (Cellbody 50 µL, Axon 25 µL)
 
-- > On endpoint day, 1uM of calcein-AM to axonal compartment and image whole device
+- > On endpoint day, 1 µM of calcein-AM to axonal compartment and image whole device
 
 - > You may also stain for DAPI in the cell body compartment to count total cells in cell body compartment
 

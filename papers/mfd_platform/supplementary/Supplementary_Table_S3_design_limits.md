@@ -1,8 +1,8 @@
 # Supplementary Table S3. Practical Design Limits for the Demonstrated Workflow
 
-The demonstrated SUEX-200 design provides recommended starting values for new layouts rather than hard process limits. Reducing clearances, margins, taper allowances, or contact lands below the demonstrated values should be treated as new process development and verified locally.
+The demonstrated 18 x 9 mm unit pitch and SUEX-200 design provide recommended starting values for new layouts rather than hard process limits. Reducing clearances, margins, taper allowances, or contact lands below the demonstrated values should be treated as new process development and verified locally.
 
-| Design feature | Demonstrated nominal value | Built-in tolerance or allowance | Revalidate if changed |
+| Design feature | Demonstrated nominal value | Built-in tolerance or allowance | When local validation is recommended |
 |---|---:|---|---|
 | Plate-format pitch | 6 x 8 two-well units; 18 x 9 mm unit pitch; wells at +/-4.5 mm from unit center | Well centers remain on a 9 mm grid, so each two-well unit occupies two plate columns by one plate row | Any non-9 mm well pitch, nonstandard array pitch, or layout intended for a different liquid handler or imager |
 | Array/package envelope | 108 x 72 mm device array on a 110 x 74 mm glass outline; 150 mm wafer with 57.5 mm flat | Glass outline provides 1 mm nominal margin per side around the generated device array; wafer, cut, and frame outlines are generated from the same coordinate system | Smaller glass margins, larger arrays, different wafer diameter, or manually edited cutting/frame outlines |

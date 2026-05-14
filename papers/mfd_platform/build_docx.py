@@ -15,17 +15,24 @@ FIGURES_RENDERED = ROOT / "figures" / "rendered"
 DOCX_FIGURES = ROOT / "figures" / "rendered_docx"
 BUILD_DIR = ROOT / "build"
 SOURCE_MD = ROOT / "paper.md"
-TMP_MD = BUILD_DIR / "paper_for_docx.md"
+TMP_DOCX_MD = BUILD_DIR / "paper_for_docx.md"
+TMP_PDF_MD = BUILD_DIR / "paper_for_pdf.md"
 OUTPUT_DOCX = BUILD_DIR / "paper_review.docx"
+OUTPUT_PDF = BUILD_DIR / "paper_review.pdf"
 PAPER_RENDERED_PREFIX = Path("figures") / "rendered"
 DOCX_RENDERED_PREFIX = Path("..") / "figures" / "rendered_docx"
+PDF_RENDERED_PREFIX = Path("..") / "figures" / "rendered"
 README_NAME = "README.md"
 WORD_DOCUMENT_XML = "word/document.xml"
 WORD_NAMESPACE = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 TABLE_FONT_SIZE_HALF_POINTS = "20"
+TABLE_BORDER_SIZE_EIGHTH_POINTS = "4"
+TABLE_BORDER_COLOR = "808080"
 SUPPLEMENTARY_DIR = ROOT / "supplementary"
 SUPPLEMENTARY_FILES = (
     SUPPLEMENTARY_DIR / "Supplementary_Table_S1_pin_z_variability.md",
+    SUPPLEMENTARY_DIR / "Supplementary_Table_S2_fabrication_strategies.md",
+    SUPPLEMENTARY_DIR / "Supplementary_Table_S3_design_limits.md",
     SUPPLEMENTARY_DIR / "Supplementary_Note_S1_LP360_filter.md",
     SUPPLEMENTARY_DIR / "Supplementary_Note_S2_base_layer_adhesion.md",
     SUPPLEMENTARY_DIR / "Protocol_S1_device_assembly_and_axotomy.md",
@@ -84,7 +91,11 @@ def sync_docx_figures() -> None:
             shutil.copy2(path, DOCX_FIGURES / path.name)
 
 
-def build_docx_reference_map() -> dict[str, str]:
+def build_figure_reference_map(
+    rendered_prefix: Path,
+    *,
+    convert_pdf_to_png: bool,
+) -> dict[str, str]:
     references: dict[str, str] = {}
 
     for path in FIGURES_RENDERED.iterdir():
@@ -92,19 +103,19 @@ def build_docx_reference_map() -> dict[str, str]:
             continue
 
         source_ref = (PAPER_RENDERED_PREFIX / path.name).as_posix()
-        if path.suffix.lower() == ".pdf":
+        if convert_pdf_to_png and path.suffix.lower() == ".pdf":
             target_name = f"{path.stem}.png"
         else:
             target_name = path.name
 
-        destination_ref = (DOCX_RENDERED_PREFIX / target_name).as_posix()
+        destination_ref = (rendered_prefix / target_name).as_posix()
         references[source_ref] = destination_ref
         references[f"../{source_ref}"] = destination_ref
 
     return references
 
 
-def build_temp_markdown() -> None:
+def build_source_text() -> str:
     sections = [SOURCE_MD.read_text()]
 
     supplementary_sections = [
@@ -114,13 +125,21 @@ def build_temp_markdown() -> None:
         sections.append("## Supplementary Information")
         sections.extend(supplementary_sections)
 
-    text = "\n\n".join(sections)
+    return "\n\n".join(sections)
 
-    reference_map = build_docx_reference_map()
-    for source_ref, destination_ref in sorted(
+
+def rewrite_references(text: str, reference_map: dict[str, str]) -> str:
+    placeholders: dict[str, str] = {}
+
+    for index, (source_ref, destination_ref) in enumerate(sorted(
         reference_map.items(), key=lambda item: len(item[0]), reverse=True
-    ):
-        text = text.replace(source_ref, destination_ref)
+    )):
+        placeholder = f"__OPENMFD_REFERENCE_{index}__"
+        text = text.replace(source_ref, placeholder)
+        placeholders[placeholder] = destination_ref
+
+    for placeholder, destination_ref in placeholders.items():
+        text = text.replace(placeholder, destination_ref)
 
     text = text.replace(
         f"({SUPPLEMENTARY_MEDIA_PREFIX}",
@@ -131,15 +150,97 @@ def build_temp_markdown() -> None:
         f'src="{DOCX_SUPPLEMENTARY_MEDIA_PREFIX}',
     )
 
+    return text
+
+
+def build_temp_markdown() -> None:
+    source_text = build_source_text()
+
+    docx_text = rewrite_references(
+        source_text,
+        build_figure_reference_map(DOCX_RENDERED_PREFIX, convert_pdf_to_png=True),
+    )
+    pdf_text = rewrite_references(
+        source_text,
+        build_figure_reference_map(PDF_RENDERED_PREFIX, convert_pdf_to_png=False),
+    )
+
     BUILD_DIR.mkdir(parents=True, exist_ok=True)
-    TMP_MD.write_text(text)
+    TMP_DOCX_MD.write_text(docx_text)
+    TMP_PDF_MD.write_text(pdf_text)
 
 
 def build_docx() -> None:
-    run(["pandoc", str(TMP_MD.name), "-o", str(OUTPUT_DOCX.name)], cwd=BUILD_DIR)
+    run(["pandoc", str(TMP_DOCX_MD.name), "-o", str(OUTPUT_DOCX.name)], cwd=BUILD_DIR)
 
 
-def shrink_table_font_size() -> None:
+def build_pdf_from_docx() -> bool:
+    converter = shutil.which("libreoffice") or shutil.which("soffice")
+    if converter is None:
+        return False
+
+    if OUTPUT_PDF.exists():
+        OUTPUT_PDF.unlink()
+
+    run(
+        [
+            converter,
+            "--headless",
+            "--convert-to",
+            "pdf",
+            "--outdir",
+            str(BUILD_DIR),
+            str(OUTPUT_DOCX),
+        ],
+        cwd=ROOT,
+    )
+
+    if not OUTPUT_PDF.exists():
+        raise RuntimeError(f"LibreOffice did not create expected PDF: {OUTPUT_PDF}")
+
+    return True
+
+
+def build_pdf_with_pandoc() -> None:
+    errors: list[str] = []
+
+    for engine in ("lualatex", "xelatex", "pdflatex"):
+        if shutil.which(engine) is None:
+            continue
+
+        try:
+            run(
+                [
+                    "pandoc",
+                    str(TMP_PDF_MD.name),
+                    f"--pdf-engine={engine}",
+                    "-V",
+                    "geometry:margin=0.75in",
+                    "-o",
+                    str(OUTPUT_PDF.name),
+                ],
+                cwd=BUILD_DIR,
+            )
+            return
+        except subprocess.CalledProcessError as exc:
+            errors.append(f"{engine}: exit status {exc.returncode}")
+
+    attempted = "; ".join(errors) if errors else "no supported PDF engine found"
+    raise RuntimeError(f"Could not build PDF review copy ({attempted})")
+
+
+def build_pdf() -> None:
+    if build_pdf_from_docx():
+        return
+
+    build_pdf_with_pandoc()
+
+
+def word_tag(tag_name: str) -> str:
+    return f"{{{WORD_NAMESPACE}}}{tag_name}"
+
+
+def style_docx_tables() -> None:
     namespace = {"w": WORD_NAMESPACE}
     ET.register_namespace("w", WORD_NAMESPACE)
 
@@ -147,17 +248,37 @@ def shrink_table_font_size() -> None:
         document_xml = source_zip.read(WORD_DOCUMENT_XML)
 
         root = ET.fromstring(document_xml)
+
+        for table in root.findall(".//w:tbl", namespace):
+            properties = table.find("w:tblPr", namespace)
+            if properties is None:
+                properties = ET.Element(word_tag("tblPr"))
+                table.insert(0, properties)
+
+            borders = properties.find("w:tblBorders", namespace)
+            if borders is None:
+                borders = ET.SubElement(properties, word_tag("tblBorders"))
+
+            for border_name in ("top", "left", "bottom", "right", "insideH", "insideV"):
+                border = borders.find(f"w:{border_name}", namespace)
+                if border is None:
+                    border = ET.SubElement(borders, word_tag(border_name))
+                border.set(word_tag("val"), "single")
+                border.set(word_tag("sz"), TABLE_BORDER_SIZE_EIGHTH_POINTS)
+                border.set(word_tag("space"), "0")
+                border.set(word_tag("color"), TABLE_BORDER_COLOR)
+
         for run in root.findall(".//w:tbl//w:r", namespace):
             properties = run.find("w:rPr", namespace)
             if properties is None:
-                properties = ET.Element(f"{{{WORD_NAMESPACE}}}rPr")
+                properties = ET.Element(word_tag("rPr"))
                 run.insert(0, properties)
 
             for tag_name in ("sz", "szCs"):
                 size = properties.find(f"w:{tag_name}", namespace)
                 if size is None:
-                    size = ET.SubElement(properties, f"{{{WORD_NAMESPACE}}}{tag_name}")
-                size.set(f"{{{WORD_NAMESPACE}}}val", TABLE_FONT_SIZE_HALF_POINTS)
+                    size = ET.SubElement(properties, word_tag(tag_name))
+                size.set(word_tag("val"), TABLE_FONT_SIZE_HALF_POINTS)
 
         updated_xml = ET.tostring(root, encoding="utf-8", xml_declaration=True)
 
@@ -179,8 +300,10 @@ def main() -> int:
     sync_docx_figures()
     build_temp_markdown()
     build_docx()
-    shrink_table_font_size()
+    style_docx_tables()
+    build_pdf()
     print(f"DOCX written to {OUTPUT_DOCX}")
+    print(f"PDF written to {OUTPUT_PDF}")
     return 0
 
 
