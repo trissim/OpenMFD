@@ -37,6 +37,12 @@ from .config import (
     WaferMaskConfiguration,
     WallConfiguration,
 )
+from .open_chamber import (
+    OpenChamberSpec,
+    build_open_chamber,
+    crossed_diamond,
+    linear_chain,
+)
 from .outline import (
     compute_outline_dimensions,
     create_custom_outline,

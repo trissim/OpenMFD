@@ -68,13 +68,22 @@ The previous workflow overview slide is no longer part of the main figure sequen
 ### Figure 5. Platform generalizability across published geometries
 
 - **Purpose:** Show that the same design-rule and hybrid-mold workflow can be applied beyond the validated compartmentalized neuron device.
-- **Existing source assets:**
-- Myelination device: `designs/open_chamber/gradient_layout/devices_myelination_multi_device.dxf`
-- Guidance device: `designs/open_chamber/gradient_layout/devices_gradient_multi_device.dxf`
-- Related guidance STL / insert geometry: `designs/open_chamber/gradient_layout/2compartment_96_well_inserts_v9_1000um/wall_2_compartment_96_well_1000um.stl`
-- Draft slide: `papers/mfd_platform/figures/final_drop/Fig6_generalizability/draft_figure.odp`
+- **Generated source:** `papers/mfd_platform/figures/generate_generalizability_figure.py`
+- **Generated input assets:**
+- `designs/open_chamber/openmfd_legacy_ports/myelination/*_single_top.dxf`
+- `designs/open_chamber/openmfd_legacy_ports/myelination/*_single_bottom.dxf`
+- `designs/open_chamber/openmfd_legacy_ports/myelination/*_aligned.dxf`
+- `designs/open_chamber/openmfd_legacy_ports/myelination/*_single_insert.scad`
+- `designs/open_chamber/openmfd_legacy_ports/myelination/*_wells_insert.scad`
+- `designs/open_chamber/openmfd_legacy_ports/myelination/wall_*.scad`
+- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/*_single_top.dxf`
+- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/*_single_bottom.dxf`
+- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/*_aligned.dxf`
+- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/*_single_insert.scad`
+- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/*_wells_insert.scad`
+- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/wall_*.scad`
 - **Rendered asset:** `papers/mfd_platform/figures/rendered/generalizability.pdf`
-- **Status:** Current slide supports the intended generalizability claim. Optional later cleanup could emphasize DXF/STL pairing more explicitly.
+- **Status:** Current figure is generated from the same plotting/file-rendering infrastructure as Figure 1 and now uses the new legacy open-chamber DXF outputs plus generated insert/wall preview meshes directly.
 
 ## Supplementary Figures
 

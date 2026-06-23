@@ -8,7 +8,12 @@ from openmfd.geometry.chambers import make_chambers
 from openmfd.geometry.channels import make_channels
 from openmfd.geometry.wells import WellPatternContext, four_corner, wells_top_bottom
 
-from .config import CompleteInsertConfiguration, InsertConfiguration, PinConfiguration, SkirtConfiguration
+from .config import (
+    CompleteInsertConfiguration,
+    InsertConfiguration,
+    PinConfiguration,
+    SkirtConfiguration,
+)
 from .chamfer import deg_taper_len, linear_extrude_if_flat
 from .pins import create_pin_array
 from .skirts import SkirtProfileContext, create_dual_skirt
@@ -35,9 +40,7 @@ def _build_insert_pattern(
         )
     elif len(positions) == 4:
         dims = well_radius if wells_cfg.shape == "circle" else (well_radius, well_radius)
-        wells = four_corner(
-            WellPatternContext.from_fields(dims, positions=positions, dxf=True)
-        )
+        wells = four_corner(WellPatternContext.from_fields(dims, positions=positions, dxf=True))
     else:
         raise ValueError(f"Unsupported number of well positions for insert build: {len(positions)}")
 
@@ -185,6 +188,7 @@ def _create_insert_pin_unit(config: CompleteInsertConfiguration) -> solid.OpenSC
         dims=config.pins.dims,
         height=pin_height + config.pins.inner_height + skirt_height,
         offset=config.pins.offset,
+        rotation=config.pins.rotation,
     )
 
 
@@ -523,6 +527,7 @@ def assemble_well_inserts(
             dims=pin_config.dims,
             height=total_pin_height,
             offset=pin_config.offset,
+            rotation=pin_config.rotation,
         )
         components.append(pins)
 

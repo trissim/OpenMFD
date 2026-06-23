@@ -19,10 +19,12 @@ In this work, we address the bottleneck by making PDMS microfluidic devices that
 We demonstrate the full workflow with a compartmentalized neuronal culture device, spanning file generation, hybrid mold fabrication, repeated PDMS casting, plate-format handling, imaging, fluidic isolation, and long-term culture. We also use two additional literature-derived layouts to show that published designs exist whose geometries can be expressed as OpenMFD-compatible mask, insert, and frame files when they stay within the demonstrated practical size and alignment window of the method.
 
 ## Materials and Methods
-### Workflow overview
-The platform separates repeated PDMS device replication, the step biology labs perform routinely, from the facility-based step used to make the reusable mold. For each design, OpenMFD generates the coordinated fabrication blueprints for photolithography, resin insert printing, and the final plate package. The remaining operations follow the same sequence across compatible designs: SU-8/SUEX processing, insert transfer and bonding, parylene coating of the hybrid mold, PDMS casting, demolding, glass bonding, frame assembly, plasma cleaning, and culture preparation. Because these operations are shared, the Methods describe the shared workflow and the parameters used for the demonstrated device.
+### Experimental workflow and supplementary protocol
+The platform separates repeated PDMS device replication, the step biology labs perform routinely, from the facility-based step used to make the reusable mold. The validated workflow is described here at the level needed to reproduce the demonstrated compartmentalized-neuron device. Step-by-step bench instructions for routine device assembly, culture preparation, chemical axotomy, endpoint staining, and imaging are provided in Supplementary Protocol S1.
 
-### Design automation (open-source Python layout generator)
+For each design, OpenMFD generates coordinated fabrication blueprints for photolithography, resin insert printing, and the final plate package. The remaining operations follow the same sequence across compatible designs: SU-8/SUEX mold fabrication, resin insert bonding, parylene coating, PDMS casting, device packaging, plasma cleaning, culture preparation, fluidic-isolation testing, and imaging.
+
+### OpenMFD design and fabrication-file generation
 OpenMFD is intended to reduce the manual CAD coordination that would otherwise be required to convert a biological device layout into a mold, insert array, and plate package.
 
 The workflow begins in OpenMFD, an open-source Python layout generator for plate-format microfluidics and hybrid molds (`https://github.com/trissim/OpenMFD`). A user specifies device dimensions such as well spacing, chamber size, channel geometry, and array layout once, and the software derives the matched physical outputs needed for fabrication. These include (i) photolithography masks for SU-8/SUEX microfeatures, (ii) top-layer lock features for insert registration, (iii) 3D-printable well insert arrays with pins, skirts, and tapered walls, and (iv) wafer and frame-related outlines used for alignment, trimming, and packaging. The generator also provides parameterized geometric primitives, array/tiling utilities, wafer-mask generation, multi-layer alignment marks, and shrinkage compensation.
@@ -37,7 +39,7 @@ Layer separation is handled by exporting separate geometries for each fabricatio
 
 ![Figure 1: OpenMFD-generated files and assembled plate-format device. (A) Editable preset defining the shared device geometry. (B,C) Generated single-device and wafer-scale photomask DXFs. (D) Single and arrayed 3D-printable resin insert STLs. (E) Plate-frame STL for the final package. (F) Assembled framed device.](figures/rendered/openmfd_design.pdf)
 
-### SU-8 fabrication of microfeatures
+### Hybrid mold fabrication
 Once the coordinate system is fixed in software, the first physical requirement is a wafer surface that can support both fine microchannels and a flat, mechanically registered bonding interface for the 3D-printed resin inserts.
 
 We fabricate fine microfeatures using a three-layer negative photoresist stack consisting of two thin SU-8 2005 layers (MicroChem) and a thick SUEX K200 dry-film layer (DJ MicroLaminates). Unless otherwise noted, processing steps for SU-8 2005 follow the manufacturer’s recommendations for a 5 µm target thickness.
@@ -60,14 +62,12 @@ Use of the LP360 long-pass filter during SUEX exposure was important for achievi
 
 During process development, the photolithographic stack exposed three failure modes that needed control: (i) delamination of 5 µm SU-8 microchannel features from bare silicon, (ii) ridge-like edge artifacts that produced a non-flat SUEX top surface and prevented uniform sealing to the 3D-printed resin inserts, and (iii) stress-induced lifting of the thick SUEX layer during thermal processing. These issues were mitigated by combining a flood-exposed SU-8 base layer beneath the microchannels, LP360-filtered SUEX exposure, and slow oven ramping during both post-exposure bake and hard bake. When these mitigations were used together, the SU-8/SUEX stack reproducibly yielded flat, adherent substrates suitable for hybrid mold assembly.
 
-### 3D printing of resin well inserts
 The 3D-printed resin inserts are deliberately used for the features that resin printing can produce reliably: millimeter-scale wells, tapers, skirts, and alignment pins. Micron-scale channels remain photolithographic.
 
 Well inserts are printed using an Elegoo Mars 3 Pro resin printer and a high-temperature resin (Siraya Tech Sculpt, Clear). The manufacturer reports a heat deflection temperature of 180°C for Sculpt Clear/Grey, above the 100°C PDMS cure used here (Siraya Tech, 2026). The insert STL is exported with the same in-plane PDMS shrinkage-compensation factor as the photomask layers, so the insert pins and wafer locks remain in the same compensated coordinate system. No additional manuscript-level correction for printed-resin shrinkage is applied; printer- and resin-specific variation is instead accommodated by the 150 µm pin-lock clearance and checked empirically by measuring printed pin heights across the array before bonding (Supplementary Table S1). Layer height, exposure, washing, and post-cure settings are treated as printer-specific process parameters rather than design-generator parameters.
 
 Well inserts are printed as an array such that each insert contains a protruding alignment pin (“key”). The SU-8 design contains corresponding holes (“locks”) at the intended insert locations. Insert height sets the molded well depth during PDMS casting.
 
-### Insert transfer, alignment, and adhesive bonding
 To avoid time-consuming manual placement of individual inserts, inserts are printed in their correct relative positions on a detachable magnetic build plate (or equivalent transfer fixture). The insert array is then transferred onto a larger bonding plate suitable for clamping against a full wafer.
 
 Low-viscosity epoxy is applied in excess to a cavity on the underside (pin side) of each insert. Using excess epoxy makes glue placement less sensitive and allows repeated alignment attempts while seating the pins, because uncured squeeze-out can be washed away before it gels and contaminates the SU-8 microfeatures. The wafer is placed with SU-8 features facing the insert pins and is aligned until all pins seat into their corresponding SU-8-defined holes, providing self-alignment across the full insert array. A second flat plate is placed above the wafer, and uniform pressure is applied using clamps to spread epoxy at the insert-wafer interface.
@@ -82,10 +82,9 @@ During process development, incomplete seating of pins due to z-height variation
 
 ![Figure 2: Insert transfer and wafer bonding for the hybrid mold. (A) Wafer and 3D-printed resin insert array before clamping. (B) Equal-scale XY detail of the printed resin insert, SUEX lock, skirt/glue-footprint outline, and pin-lock clearance. (C) Clamped assembly during acetone washing and room-temperature cure. (D) Side-view schematic of the compliant bonding stack. (E) Bonded insert-wafer interface. (F) SUEX lock micrograph.](figures/rendered/insert_bonding.pdf)
 
-### Parylene insulation coating
 After insert bonding, the assembled hybrid mold is coated with 1 µm parylene C. The coating provides a conformal barrier between the 3D-printed resin/adhesive and downstream PDMS casting and cell culture, reducing exposure to potentially cytotoxic printed-material residues, and it facilitates PDMS release during demolding, which helps preserve mold usability over repeated casts (Musgrove et al., 2023; Chen et al., 2013). Parylene deposition was performed using the Specialty Coating Systems (SCS) 200 parylene coater available at the McGill Nanotools Micro, Nanofabrication Facility.
 
-### PDMS casting and device assembly
+### PDMS device casting, packaging, and preparation for culture
 PDMS (Sylgard 184) is mixed at a 10:1 base:curing-agent ratio, degassed for 20 min at −15 inHg, and cured for 30 min at 100°C. This cure temperature is below both the manufacturer-reported heat deflection temperature of the printed resin and the thermal stability range reported for EPO-TEK 301-2, for which the technical data sheet lists 0.01% weight loss at 200°C and an intermittent operating temperature below 300°C (Epoxy Technology, 2021; Siraya Tech, 2026). PDMS is cast onto the hybrid mold such that the tall insert features define the wells during curing. Casting can be parallelized by pouring, degassing, and curing multiple molds in parallel. No silanization is used; the parylene-coated mold improves PDMS release and provides insulation. After curing and demolding, the device is bonded to a substrate (e.g., glass) following standard plasma bonding protocols.
 
 To improve demolding reliability, macro-scale mold features should avoid vertical 90° walls; draft angles and tapered walls facilitate demolding, consistent with prior insert-assisted mold designs. During demolding, the wafer should be supported on a flat surface while applying force to reduce the risk of snapping. We typically initiate demolding from corners and progress toward the center, pulling not only upward but also backward to stretch the PDMS and reduce local peel stress.
@@ -94,7 +93,6 @@ Because PDMS shrinks at elevated curing temperatures, device geometry can be uni
 
 ![Figure 3: Hybrid mold use and plate-format device assembly. Top: wafer tower and rack used for parallel PDMS casting, including the mold in the curing oven. Bottom: close-up of a PDMS cast on the hybrid mold, a cut-out view of the device footprint in the mold, and final framed assembly using 3D-printed components and adhesive.](figures/rendered/mold_casts_package.pdf)
 
-### Device trimming, framing, and final assembly (plate-format package)
 To facilitate rapid, repeatable device packaging, the mold includes a rectangular cutting guide surrounding the array. After demolding, devices are trimmed to a standardized rectangular footprint using an industrial paper guillotine aligned to this guide.
 
 The trimmed PDMS device is bonded to a 110 × 74 mm coverslip-glass sheet. The PDMS-on-glass assembly is autoclaved in sterilization pouches using a dry 121°C cycle and then mounted into a 3D-printed plastic frame. Before assembly, the frame is sterilized with 70% ethanol. Loctite 5140 is dispensed into the frame grooves (typically 0.5-1 mL per frame), and the bonded device is aligned and seated onto the adhesive interface. The adhesive is then cured at room temperature for 3 days before use, after which excess cured adhesive is trimmed away with a razor blade.
@@ -103,16 +101,20 @@ The trimmed PDMS device is bonded to a 110 × 74 mm coverslip-glass sheet. The P
 
 Frames are printed using a Creality K1C printer with HIPS filament (e.g., Filamentum or eSUN). To reduce frame warping during fabrication, printing is performed in an enclosure with part-cooling fans turned off and reduced print speed.
 
-### Pre-use plasma cleaning
 After Loctite curing, assembled devices are plasma-cleaned using a Harrick PDC-001 benchtop plasma system (high power; 30 W, 10 min, 400 mTorr) to further sterilize the device and render surfaces hydrophilic before coating and neuronal culture. Dry ambient air is used as the process gas to control for humidity.
 
-### Dye-based fluidic isolation validation
+### Fluidic isolation and plate-format imaging
 To assess multi-day compartmental isolation prior to biological experiments, assembled devices were loaded with 50 µL of Alexa Fluor 488 solution in one compartment and 25 µL of Alexa Fluor 568 solution in the opposing compartment. Devices were imaged immediately after loading and again after 3 days to assess dye crossover between compartments under this imposed volume asymmetry.
 
-### Demonstration assay: plate-format neuronal culture and axon tracing
+Plate-format imaging compatibility was evaluated on Opera Phenix and ImageXpress high-content screening microscopes using the assembled framed devices. Autofocus and acquisition were tested without custom plate handling or instrument modification.
+
+### Primary cortical neuron culture and retrograde tracing
 For the main platform demonstration, assembled devices were used for compartmentalized culture of E18 Sprague Dawley rat cortical neurons followed by endpoint retrograde tracing rather than axotomy. Wells were coated with 30 µL of 10 µg/mL dPGA for 10 min and washed once with water. Neurons were seeded into the soma compartment in 50 µL DMEM + 10% FBS at 5,000-10,000 cells per well, allowed to attach for at least 30 min, and then switched to supplemented Neurobasal Plus medium (1% N2, 2% B27, 1% glutamine). A 50 µL volume was maintained in the soma compartment and 25 µL in the axon compartment to preserve compartmentalization by passive fluidic isolation.
 
 Cultures were maintained for 11 days in vitro (DIV11). To label neurons whose axons extended into the distal compartment, Alexa Fluor-conjugated cholera toxin subunit B (CTB) was applied to the axon compartment at 1 µg/mL 24 h before imaging, enabling retrograde labeling of the corresponding cell bodies. A more detailed chemical-axotomy workflow used during platform development is retained outside the main manuscript in Supplementary Protocol S1.
+
+### Literature-derived design-file examples
+Two published microfluidic layouts were used as design-generation examples: an oligodendrocyte myelination platform based on Wang et al. (2018) and an axon guidance chamber with orthogonal gradients adapted from Taylor et al. (2015). Each layout was encoded within the same demonstrated size, spacing, and alignment window as the neuronal culture device, and OpenMFD was used to generate the corresponding multi-layer photomask DXFs, 3D-printable well-insert CAD/STL outputs, shrinkage-compensated wafer-mask layouts, and wall CAD from the same pipeline used for Figure 1. These examples were not fabricated or biologically validated in this study.
 
 ## Results
 We evaluated the workflow at the points that determine whether a new microfluidic format is useful for cell biology: whether devices can be produced reproducibly, handled like a plate, imaged on standard high-content microscopes, maintained with predictable compartmental isolation, and used for long-term primary neuron culture.
@@ -149,11 +151,11 @@ Taken together, these engineering and biological readouts show plate-format comp
 ### Literature-derived layouts generate matched fabrication files
 Two literature-derived layouts were adapted within the same demonstrated size, spacing, and alignment window as the neuronal culture device.
 
-The two examples were (i) an oligodendrocyte myelination platform based on Wang et al. (2018) and (ii) an axon guidance chamber with orthogonal gradients adapted from Taylor et al. (2015). For each design, the software generated the same coordinated output classes used for the demonstrated device: multi-layer photomask DXFs, 3D-printable well-insert STLs with lock-and-key registration features, shrinkage-compensated wafer-mask layouts, and plate-frame CAD for final assembly.
+The two examples were (i) an oligodendrocyte myelination platform based on Wang et al. (2018) and (ii) an axon guidance chamber with orthogonal gradients adapted from Taylor et al. (2015). For each design, the software generated the same coordinated output classes used for the demonstrated device: multi-layer photomask DXFs, 3D-printable well-insert CAD/STL outputs with lock-and-key registration features, shrinkage-compensated wafer-mask layouts, and wall CAD for final assembly.
 
-These examples were not fabricated. They show that published layouts within the demonstrated window can generate the mask, insert, and frame files required by the approach; layouts outside that window should be treated as new local process development rather than simple reuse of this demonstrated preset.
+These examples were not fabricated. They show that published layouts within the demonstrated window generate the mask, insert, and frame files required by the approach; layouts outside that window should be treated as new local process development rather than simple reuse of this demonstrated preset.
 
-![Figure 5: OpenMFD-generated fabrication files for additional published microfluidic architectures. Representative outputs are shown for two literature-derived architectures that fit the demonstrated design window: (A) oligodendrocyte myelination (Wang et al., 2018) and (B) axon guidance with orthogonal gradients (Taylor et al., 2015). These panels show generated layouts and fabrication specifications rather than fabricated devices.](figures/rendered/generalizability.pdf)
+![Figure 5: OpenMFD-generated fabrication files for additional published microfluidic architectures, rendered with the same file-generation infrastructure used for Figure 1. Representative outputs are shown for two literature-derived architectures that fit the demonstrated design window: (A) oligodendrocyte myelination (Wang et al., 2018) and (B) axon guidance with orthogonal gradients (Taylor et al., 2015). These panels show generated layouts and fabrication specifications rather than fabricated devices.](figures/rendered/generalizability.pdf)
 
 ## Discussion
 Wafer-bonded 3D-printed resin inserts provide a practical route from established low-throughput PDMS microfluidic geometries to plate-format devices without replacing SU-8 photolithography or relying on industrial hard-plastic fabrication. The key change is where the wells are made: instead of punching each cured PDMS device, tall 3D-printed resin insert features are bonded to the wafer mold once and then reused to cast wells into every device. This preserves the resolution advantage of SU-8, removes manual well punching, and makes the reusable mold the bridge between one-time facility fabrication and benchtop device replication.

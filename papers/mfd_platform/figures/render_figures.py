@@ -8,7 +8,6 @@ import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-
 ROOT = Path(__file__).resolve().parent
 FINAL_DROP = ROOT / "final_drop"
 RENDERED = ROOT / "rendered"
@@ -20,6 +19,7 @@ PREFERRED_SOURCE_STEMS = (DRAFT_FIGURE_STEM,)
 GENERATED_SOURCE_SCRIPTS = (
     ROOT / "generate_openmfd_design_figure.py",
     ROOT / "generate_bonding_fixture_figure.py",
+    ROOT / "generate_generalizability_figure.py",
 )
 
 

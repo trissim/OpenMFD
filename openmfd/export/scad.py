@@ -11,12 +11,10 @@ from .config import ExportConfiguration, FileNamingConfig
 
 
 def export_scad(
-    geometry: solid.OpenSCADObject,
-    output_path: Path,
-    header: Optional[str] = None
+    geometry: solid.OpenSCADObject, output_path: Path, header: Optional[str] = None
 ) -> Path:
     """Export geometry to SCAD file.
-    
+
     Parameters
     ----------
     geometry : solid.OpenSCADObject
@@ -25,49 +23,60 @@ def export_scad(
         Output file path.
     header : str, optional
         Header comment to add to SCAD file.
-        
+
     Returns
     -------
     Path
         Path to created SCAD file.
-        
+
     Raises
     ------
     IOError
         If file cannot be written.
-        
+
     Examples
     --------
     >>> from pathlib import Path
     >>> import solid
-    >>> 
+    >>>
     >>> geometry = solid.cube([10, 10, 10])
     >>> output_path = Path('output/device.scad')
     >>> export_scad(geometry, output_path)
     """
     # Ensure parent directory exists
     output_path.parent.mkdir(parents=True, exist_ok=True)
-    
+
     # Render to file
     try:
         solid.scad_render_to_file(geometry, str(output_path))
     except Exception as e:
         raise IOError(f"Failed to write SCAD file to {output_path}: {e}")
-    
+
+    _normalize_scad_file(output_path)
+
     # Add header if provided
     if header:
         _add_header_to_scad(output_path, header)
-    
+        _normalize_scad_file(output_path)
+
     return output_path
+
+
+def _normalize_scad_file(scad_path: Path) -> None:
+    """Strip trailing whitespace from generated SCAD text."""
+    content = scad_path.read_text()
+    normalized = "\n".join(line.rstrip() for line in content.splitlines()) + "\n"
+    if normalized != content:
+        scad_path.write_text(normalized)
 
 
 def export_multiple_scad(
     geometries: Dict[str, solid.OpenSCADObject],
     config: ExportConfiguration,
-    naming_config: Optional[FileNamingConfig] = None
+    naming_config: Optional[FileNamingConfig] = None,
 ) -> Dict[str, Path]:
     """Export multiple geometries to SCAD files.
-    
+
     Parameters
     ----------
     geometries : dict
@@ -77,12 +86,12 @@ def export_multiple_scad(
         Export configuration.
     naming_config : FileNamingConfig, optional
         File naming configuration.
-        
+
     Returns
     -------
     dict
         Dictionary mapping prefixes to output paths.
-        
+
     Examples
     --------
     >>> geometries = {
@@ -94,7 +103,7 @@ def export_multiple_scad(
     >>> paths = export_multiple_scad(geometries, config)
     """
     output_paths = {}
-    
+
     for prefix, geometry in geometries.items():
         # Create naming config for this geometry
         if naming_config:
@@ -102,25 +111,25 @@ def export_multiple_scad(
                 prefix=prefix,
                 version=naming_config.version,
                 grid_size=naming_config.grid_size,
-                suffix=naming_config.suffix
+                suffix=naming_config.suffix,
             )
         else:
             file_config = FileNamingConfig(prefix=prefix)
-        
+
         # Generate filename
-        filename = file_config.generate_filename('scad')
+        filename = file_config.generate_filename("scad")
         output_path = config.get_output_path(filename)
-        
+
         # Export
         export_scad(geometry, output_path)
         output_paths[prefix] = output_path
-    
+
     return output_paths
 
 
 def _add_header_to_scad(scad_path: Path, header: str):
     """Add header comment to existing SCAD file.
-    
+
     Parameters
     ----------
     scad_path : Path
@@ -129,22 +138,20 @@ def _add_header_to_scad(scad_path: Path, header: str):
         Header text to add.
     """
     # Read existing content
-    with open(scad_path, 'r') as f:
+    with open(scad_path, "r") as f:
         content = f.read()
-    
+
     # Prepend header
     header_comment = f"// {header}\n\n"
-    with open(scad_path, 'w') as f:
+    with open(scad_path, "w") as f:
         f.write(header_comment + content)
 
 
 def generate_scad_header(
-    device_name: str,
-    version: Optional[str] = None,
-    description: Optional[str] = None
+    device_name: str, version: Optional[str] = None, description: Optional[str] = None
 ) -> str:
     """Generate SCAD file header comment.
-    
+
     Parameters
     ----------
     device_name : str
@@ -153,12 +160,12 @@ def generate_scad_header(
         Version string.
     description : str, optional
         Device description.
-        
+
     Returns
     -------
     str
         Header comment text.
-        
+
     Examples
     --------
     >>> header = generate_scad_header(
@@ -170,27 +177,27 @@ def generate_scad_header(
     lines = []
     lines.append("=" * 60)
     lines.append(f"Device: {device_name}")
-    
+
     if version:
         lines.append(f"Version: {version}")
-    
+
     if description:
         lines.append(f"Description: {description}")
-    
+
     lines.append("Generated by OpenMFD")
     lines.append("=" * 60)
-    
-    return '\n'.join(lines)
+
+    return "\n".join(lines)
 
 
 def validate_scad_file(scad_path: Path) -> bool:
     """Validate that SCAD file exists and is readable.
-    
+
     Parameters
     ----------
     scad_path : Path
         Path to SCAD file.
-        
+
     Returns
     -------
     bool
@@ -198,15 +205,14 @@ def validate_scad_file(scad_path: Path) -> bool:
     """
     if not scad_path.exists():
         return False
-    
+
     if not scad_path.is_file():
         return False
-    
+
     # Try to read file
     try:
-        with open(scad_path, 'r') as f:
+        with open(scad_path, "r") as f:
             content = f.read()
         return len(content) > 0
     except Exception:
         return False
-

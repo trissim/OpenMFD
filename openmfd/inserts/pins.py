@@ -10,6 +10,7 @@ def create_insert_pin(
     dims: Tuple[float, float],
     height: float,
     offset: float = 0.0,
+    rotation: float = 0.0,
 ) -> solid.OpenSCADObject:
     """Create a single alignment pin at specified position.
 
@@ -27,6 +28,10 @@ def create_insert_pin(
         Pin height (mm).
     offset : float, default=0.0
         Offset from position (mm). Applied in both x and y directions.
+    rotation : float, default=0.0
+        Rotation of the pin about its own center (degrees). Used to align
+        the square pin with non-axis-aligned channels (e.g. 45 deg for
+        diamond-arranged devices).
 
     Returns
     -------
@@ -53,13 +58,15 @@ def create_insert_pin(
     # Create rectangular pin base
     pin_base = solid.square([dims[0], dims[1]], center=True)
 
+    # Rotate about its own center to align with the channel direction
+    if rotation:
+        pin_base = solid.rotate([0, 0, rotation])(pin_base)
+
     # Extrude to height
     pin_3d = solid.linear_extrude(height=height)(pin_base)
 
     # Apply offset and position
-    pin_positioned = solid.translate(
-        [position[0] + offset, position[1] + offset, 0]
-    )(pin_3d)
+    pin_positioned = solid.translate([position[0] + offset, position[1] + offset, 0])(pin_3d)
 
     return pin_positioned
 
@@ -69,6 +76,7 @@ def create_pin_array(
     dims: Tuple[float, float],
     height: float,
     offset: float = 0.0,
+    rotation: float = 0.0,
 ) -> solid.OpenSCADObject:
     """Create an array of alignment pins at well positions.
 
@@ -85,6 +93,8 @@ def create_pin_array(
         Pin height (mm).
     offset : float, default=0.0
         Offset from well centers (mm). Applied in both x and y directions.
+    rotation : float, default=0.0
+        Rotation of each pin about its own center (degrees).
 
     Returns
     -------
@@ -113,7 +123,9 @@ def create_pin_array(
     pins = []
 
     for pos in well_positions:
-        pin = create_insert_pin(position=pos, dims=dims, height=height, offset=offset)
+        pin = create_insert_pin(
+            position=pos, dims=dims, height=height, offset=offset, rotation=rotation
+        )
         pins.append(pin)
 
     return union()(*pins)
@@ -123,6 +135,7 @@ def create_insert_holes(
     well_positions: List[Tuple[float, float]],
     hole_dims: Tuple[float, float],
     offset: float = 0.0,
+    rotation: float = 0.0,
 ) -> solid.OpenSCADObject:
     """Create square holes for insert pins in the wafer.
 
@@ -137,6 +150,9 @@ def create_insert_holes(
         Hole dimensions (x, y) in mm.
     offset : float, default=0.0
         Offset from well centers (mm). Applied in both x and y directions.
+    rotation : float, default=0.0
+        Rotation of each hole about its own center (degrees). Must match the
+        corresponding pin rotation so the pin still seats in the hole.
 
     Returns
     -------
@@ -162,8 +178,9 @@ def create_insert_holes(
 
     for pos in well_positions:
         hole = solid.square([hole_dims[0], hole_dims[1]], center=True)
+        if rotation:
+            hole = solid.rotate([0, 0, rotation])(hole)
         hole_positioned = solid.translate([pos[0] + offset, pos[1] + offset])(hole)
         holes.append(hole_positioned)
 
     return union()(*holes)
-

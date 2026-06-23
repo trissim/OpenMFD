@@ -82,4 +82,7 @@ designs/**/devices_myelination_multi_device.dxf
 *.tmp
 *.bak
 *.log
+.~lock*#
 
+# Ad hoc figure-review renders
+papers/mfd_platform/figures/final_drop/*/diagnostics/

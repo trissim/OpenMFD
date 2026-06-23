@@ -16,6 +16,8 @@ This directory contains manuscripts and publications related to OpenMFD.
 
 **Location:** `mfd_platform/paper.md`
 
+**Style guide:** `mfd_platform/style_guide.md`
+
 **Abstract:** High-throughput microfluidic screening platform using hybrid mold fabrication (SU-8 photolithography + 3D-printed resin inserts) to enable academic labs to fabricate 96-well-format PDMS devices without manual well punching.
 
 **Key contributions:**

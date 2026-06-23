@@ -110,6 +110,10 @@ class PinConfiguration(ConfigurationContract):
         Offset from well center (mm). Negative values move pins inward.
     hole_dims : tuple of (float, float)
         Dimensions of square holes in wafer for pins (x, y) in mm.
+    rotation : float, default=0.0
+        Rotation of each pin (and its matching hole) about its own center
+        (degrees). Used to align the square pins with non-axis-aligned
+        channels, e.g. 45 deg for diamond-arranged devices.
 
     Examples
     --------
@@ -128,6 +132,7 @@ class PinConfiguration(ConfigurationContract):
     inner_height: float
     offset: float
     hole_dims: Tuple[float, float]
+    rotation: float = 0.0
 
     def _validate(self) -> None:
         if self.height <= 0:
