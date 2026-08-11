@@ -121,16 +121,17 @@ def main() -> int:
     panel_label(ax_ct_b_overview, "B")
 
     ax_counts = fig.add_subplot(outer[2])
-    show_image(ax_counts, ct_b_counts, "CTB-positive soma counts across three plates")
+    show_image(ax_counts, ct_b_counts, "Mean CTB-positive soma count by plate")
     panel_label(ax_counts, "C")
     ax_counts.text(
         0.5,
         -0.055,
-        "One E18 donor preparation; three technical plate replicates; 69 eligible interior device positions",
+        "Bars: plate mean; error bars: SD across analyzed interior device positions\n"
+        "One E18 donor preparation; three technical plate replicates; 69 positions analyzed",
         transform=ax_counts.transAxes,
         ha="center",
         va="top",
-        fontsize=12.5,
+        fontsize=11.5,
         color=MUTED,
     )
     ax_counts.text(

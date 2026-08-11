@@ -6,8 +6,8 @@ This file maps the current manuscript figures to source assets and generated out
 
 1. OpenMFD design-to-device overview
 2. Insert-array registration and wafer bonding
-3. Hybrid mold, PDMS casts, and packaged device
-4. Combined validation: fluidic isolation, neuronal culture, and CTB tracing
+3. Post-mold device replication and assembly
+4. Combined validation: directional fluidic bias and distal CTB uptake
 5. Platform generalizability across published device geometries
 
 The previous workflow overview slide is no longer part of the main figure sequence. Keep `papers/mfd_platform/figures/final_drop/Fig1_workflow/` as an optional graphical-abstract or supplementary source if needed.
@@ -51,20 +51,21 @@ The previous workflow overview slide is no longer part of the main figure sequen
 - `papers/mfd_platform/figures/rendered_docx/insert_bonding.png`
 - **Status:** Reproducible generated composite. It uses actual single-insert STL projection, actual top-layer DXF lock geometry, source-derived skirt/insert/pin/platform dimensions, equal-aspect XY rendering, bonding fixture photographs, and interface micrographs.
 
-### Figure 3. Hybrid mold, PDMS casts, and packaged device
+### Figure 3. Post-mold device replication and assembly
 
-- **Purpose:** Show the finished hybrid mold, representative PDMS casts, parallel casting, and framed plate-format assembly.
-- **Source assets:** `papers/mfd_platform/figures/final_drop/Fig4_mold_casts_package/`
-- **Generated post-mold assembly panel:** `papers/mfd_platform/figures/final_drop/Fig4_mold_casts_package/assembly_protocol_schematic.pdf` from `papers/mfd_platform/figures/generate_device_assembly_protocol.py`
+- **Purpose:** Show the repeated six-step workflow from a completed hybrid mold to a framed, plasma-cleaned PDMS device.
+- **Generated source:** `papers/mfd_platform/figures/generate_device_assembly_protocol.py`
+- **Primary source asset:** `papers/mfd_platform/figures/final_drop/Fig4_mold_casts_package/assembly_protocol_schematic.pdf`
+- **Supporting photo composite retained in source folder:** `papers/mfd_platform/figures/final_drop/Fig4_mold_casts_package/draft_figure.pdf`
 - **Rendered asset:** `papers/mfd_platform/figures/rendered/mold_casts_package.pdf`
-- **Status:** Current composite supports the mold-to-device transition after the insert-bonding figure.
+- **Status:** The generated schematic is the main figure. The earlier photo composite remains available as supporting fabrication documentation.
 
 ### Figure 4. Combined platform validation
 
-- **Purpose:** Show fluidic isolation behavior, long-term neuronal culture, endpoint CTB tracing, and plate-level cell metrics.
+- **Purpose:** Show the qualitative directional dye-bias test, endpoint CTB tracing, and descriptive plate-level CTB-positive soma counts.
 - **Source assets:** `papers/mfd_platform/figures/final_drop/Fig5_plate_layout_validation/`
 - **Rendered asset:** `papers/mfd_platform/figures/rendered/validation.pdf`
-- **Status:** Current merged validation slide supports the primary engineering and biological validation claims.
+- **Status:** The current A-C figure excludes exploratory ICC and significance annotations and reports one donor preparation across three technical plate replicates.
 
 ### Figure 5. Platform generalizability across published geometries
 

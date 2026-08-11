@@ -34,6 +34,7 @@ SUPPLEMENTARY_FILES = (
     SUPPLEMENTARY_DIR / "Supplementary_Table_S2_fabrication_strategies.md",
     SUPPLEMENTARY_DIR / "Supplementary_Table_S3_design_limits.md",
     SUPPLEMENTARY_DIR / "Supplementary_Table_S4_resin_insert_printing_settings.md",
+    SUPPLEMENTARY_DIR / "Supplementary_Table_S5_process_qc.md",
     SUPPLEMENTARY_DIR / "Supplementary_Note_S1_LP360_filter.md",
     SUPPLEMENTARY_DIR / "Supplementary_Note_S2_base_layer_adhesion.md",
     SUPPLEMENTARY_DIR / "Supplementary_Protocol_S1_device_assembly_culture_and_CTB.md",
@@ -269,6 +270,14 @@ def style_docx_tables() -> None:
                 border.set(word_tag("sz"), TABLE_BORDER_SIZE_EIGHTH_POINTS)
                 border.set(word_tag("space"), "0")
                 border.set(word_tag("color"), TABLE_BORDER_COLOR)
+
+            for row in table.findall("w:tr", namespace):
+                row_properties = row.find("w:trPr", namespace)
+                if row_properties is None:
+                    row_properties = ET.Element(word_tag("trPr"))
+                    row.insert(0, row_properties)
+                if row_properties.find("w:cantSplit", namespace) is None:
+                    ET.SubElement(row_properties, word_tag("cantSplit"))
 
         for run in root.findall(".//w:tbl//w:r", namespace):
             properties = run.find("w:rPr", namespace)

@@ -6,10 +6,9 @@ Dump here:
 - photo of a trimmed or glass-bonded device
 - photo of the final framed device if available
 
-Best fit for this figure:
-- what the finished mold looks like
-- what the cast device looks like
-- what the packaged device looks like
+The main manuscript now uses the generated post-mold assembly schematic. The
+older `draft_figure.pdf` and `.odp` photo composite are retained here as
+supporting fabrication documentation rather than as the rendered Figure 3.
 
 Generated post-mold assembly panel:
 - `assembly_protocol_schematic.png`

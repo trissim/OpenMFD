@@ -13,7 +13,8 @@ The demonstrated plate contains 48 two-compartment devices and 96
 pipette-accessible wells on a 9 mm well grid. The two-well device units are
 arrayed at an 18 x 9 mm unit pitch. Because the filament-printed frame did not
 maintain equivalent perimeter conditions during long-term culture, only
-interior device positions were eligible for the biological endpoint.
+interior device positions were eligible for the biological endpoint. Each plate
+contains 24 interior and 24 perimeter device positions.
 
 ## Materials and equipment
 
@@ -126,9 +127,10 @@ interior device positions were eligible for the biological endpoint.
 
 ## F. Eligibility, exclusions, and reporting
 
-- Restrict the primary biological summary to interior device positions because
-  the filament-printed frame did not maintain equivalent conditions at the
-  plate perimeter during long-term culture.
+- Restrict the primary biological summary to the 24 interior device positions
+  per plate because the filament-printed frame did not maintain equivalent
+  conditions at the 24 perimeter positions during long-term culture. Across
+  three plates, this excludes 72 perimeter positions before image-level QC.
 - Exclude a position only when late-stage microbial contamination is visible or
   when an observable technical failure in culture or image acquisition renders
   the CTB-positive count uninterpretable. Count magnitude alone is not an
@@ -136,11 +138,13 @@ interior device positions were eligible for the biological endpoint.
 - Report the donor preparation as one biological replicate. Report the three
   separately assembled plates as technical plate replicates and device
   positions as technical replicates nested within plate and donor.
-- In the demonstrated experiment, 69 eligible interior device positions across
-  three plates contributed to the descriptive CTB-positive-cell summary.
-- Summarize CTB-positive counts descriptively by plate. Do not use comparisons
-  among these three plates as evidence of biological reproducibility because
-  all plates received cells from the same donor preparation.
+- In the demonstrated experiment, three of the 72 predefined interior positions
+  met the technical exclusion criteria, leaving 69 positions in the
+  CTB-positive-cell summary.
+- Summarize CTB-positive counts descriptively by plate as the plate mean and
+  standard deviation across analyzed interior positions. Do not use comparisons
+  among these three plates as evidence of biological reproducibility because all
+  plates received cells from the same donor preparation.
 
 ## Reference
 

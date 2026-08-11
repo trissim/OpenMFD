@@ -27,39 +27,67 @@ the current figure set, and supplementary materials.
 
 ## High-priority remaining edits
 
-- [ ] Move the main manuscript toward a result-first structure. Figures 1-3
+- [x] Move the main manuscript toward a result-first structure. Figures 1-3
   should become technology-overview/result figures rather than living inside
   Materials and Methods.
-- [ ] Add a main or supplementary QC table with denominators: molds attempted,
+- [x] Add a main or supplementary QC table with denominators: molds attempted,
   molds passing visible QC, mechanically broken molds, casts attempted, usable
   casts, failed casts, and definition of "usable".
-- [ ] Add quantitative dye-retention analysis: fluorescence ratios, timepoints,
-  n, chamber definition, and analysis criteria.
-- [ ] Add biological validation denominators: plate count, device/well count,
+- [x] Reframe the dye-retention panel as a qualitative directional-bias test
+  because calibrated fluorescence ratios were not acquired; do not imply a
+  quantitative isolation coefficient or permeability measurement.
+- [x] Add biological validation denominators: plate count, device/well count,
   interior positions analyzed, edge positions excluded, CTB-positive counts or
   rates, and failure criteria.
-- [ ] Add microscope acquisition details and analysis/statistics methods for
-  Figure 4 plots, including the source of N, ICC, and significance labels.
-- [ ] Decide whether the prior-art comparison should be main Table 1 or remain
+- [ ] Remove exploratory ICC and significance labels from Figure 4 and add the
+  source of N, descriptive summary, error-bar definition, and no-inference
+  statement. The labels, N, and no-inference statement are complete. Confirm
+  from the original analysis whether the retained error bars are SD, SEM, or a
+  confidence interval; SD is currently a documented provisional interpretation.
+  Exact microscope acquisition settings also remain author-supplied.
+- [x] Decide whether the prior-art comparison should be main Table 1 or remain
   Supplementary Table S2; avoid keeping duplicate table sources.
 
 ## Figure-specific remaining edits
 
-- [ ] Decide whether Figure 3 should remain a photo composite with the
+- [x] Decide whether Figure 3 should remain a photo composite with the
   post-mold schematic as a supporting/generated panel, or be redesigned as a
   two-lane "one-time mold fabrication / repeated device assembly" workflow.
-- [ ] Add or verify panel labels, arrows, and material labels on the Figure 3
-  photo composite.
-- [ ] If Figure 5 remains in the main text, keep its caption explicit that the
+- [x] Use the generated six-step post-mold workflow as Figure 3; retain the
+  earlier photo composite as supporting source material.
+- [x] If Figure 5 remains in the main text, keep its caption explicit that the
   myelination and axon-guidance designs are generated design-file examples,
   not fabricated or biologically validated devices.
 
 ## Supplement-specific remaining edits
 
-- [ ] Fill any local cleanroom-specific values missing from Supplementary
-  Protocol S2, especially resin printer exposure/wash/post-cure settings and
-  any measured lateral registration data if available.
+- [x] Fill retained local resin-printer, cleaning, and post-cure values in
+  Supplementary Table S4 and Protocol S2. The SUEX PEB hold duration and
+  measured lateral registration remain author-supplied because they are absent
+  from the retained records.
 - [ ] Confirm Protocol S1 still matches the lab's current bench protocol after
   the 1 h PDMS cure and frame-sterilization edits.
-- [ ] Add source-data paths for pin-height, Figure 4 measurements, dye-retention
-  images, and culture replicate metadata.
+- [ ] Complete the source-data package. Repository paths are now stated for the
+  pin-height measurements, Figure 4 source images, and Figure 4 build script.
+  Add the per-position CTB count table and culture replicate metadata; the
+  original count-analysis script was not located in the repository.
+
+## Author confirmations before submission
+
+- [ ] Add the institutional animal-use approval statement for the E18 rat
+  cortical-neuron preparation.
+- [ ] Add exact microscope, objective, exposure, autofocus, and field-layout
+  settings used for the Figure 4 endpoint images.
+- [ ] Confirm the Figure 4C error-bar definition against the original count
+  analysis and deposit the per-position count table.
+- [ ] Confirm the SUEX post-exposure-bake hold duration at 50 degrees C.
+- [ ] Add measured lateral-registration data if it exists; otherwise retain the
+  current bounded statement that lateral registration was constrained by the
+  pin/lock seating geometry and was not measured directly.
+- [ ] Confirm Supplementary Protocol S1 against the current bench record,
+  especially the 1 h PDMS cure, dry-cycle autoclave step, ethanol frame
+  sterilization, and 3-day Loctite cure.
+- [ ] Complete affiliations, corresponding-author email, author contributions,
+  funding, and competing-interest statements.
+- [ ] Coordinate disclosure and image/data reuse with the other manuscript that
+  may report material from the same one-donor validation experiment.

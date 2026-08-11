@@ -29,12 +29,17 @@ GENERATED_SOURCE_SCRIPTS = (
 class FigureRenderSpec:
     folder_name: str
     rendered_name: str
+    source_stem: str = DRAFT_FIGURE_STEM
 
 
 FIGURE_SPECS = (
     FigureRenderSpec("Fig1_openmfd_design", "openmfd_design.pdf"),
     FigureRenderSpec("Fig2_insert_bonding", "insert_bonding.pdf"),
-    FigureRenderSpec("Fig4_mold_casts_package", "mold_casts_package.pdf"),
+    FigureRenderSpec(
+        "Fig4_mold_casts_package",
+        "mold_casts_package.pdf",
+        "assembly_protocol_schematic",
+    ),
     FigureRenderSpec("Fig5_plate_layout_validation", "validation.pdf"),
     FigureRenderSpec("Fig6_generalizability", "generalizability.pdf"),
     FigureRenderSpec("Supp_FigS1_noLP360", "supp_fig_s1_no_lp360.pdf"),
@@ -47,7 +52,7 @@ def run(cmd: list[str]) -> None:
 
 
 def source_stems(spec: FigureRenderSpec) -> tuple[str, ...]:
-    return PREFERRED_SOURCE_STEMS
+    return (spec.source_stem,)
 
 
 def resolve_source_base(spec: FigureRenderSpec) -> Path:
