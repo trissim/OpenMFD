@@ -26,6 +26,7 @@ SUBFIGURE_DPI = 600
 DESIGN_DIR = ROOT / "designs" / "open_chamber" / "2_compartment_96_well_300um_suex200_v27"
 DESIGN_STEM = "2_compartment_96_well_300um_suex200_v27"
 FRAME_STL = ROOT / "plates" / "96_well_plate_reservoirs_print_hips_2" / "96_well_plate_reservoirs_print_hips_2.stl"
+ASSEMBLED_DEVICE_PHOTO = OUTPUT_DIR / "assembled_device_photo.png"
 WORKFLOW_ODP = FIGURE_DIR / "final_drop" / "Fig1_workflow" / "draft_figure.odp"
 WORKFLOW_ASSEMBLED_PHOTO = "Pictures/100000000000120000000D80C7A47E4B.jpg"
 STL_DISPLAY_Z_SCALE = 1.0
@@ -870,8 +871,15 @@ def crop_to_aspect(image: Image.Image, aspect: float) -> Image.Image:
 
 
 def read_assembled_device_photo() -> Image.Image:
-    with ZipFile(WORKFLOW_ODP) as archive:
-        image = Image.open(BytesIO(archive.read(WORKFLOW_ASSEMBLED_PHOTO))).convert("RGB")
+    if ASSEMBLED_DEVICE_PHOTO.exists():
+        image = Image.open(ASSEMBLED_DEVICE_PHOTO).convert("RGB")
+    elif WORKFLOW_ODP.exists():
+        with ZipFile(WORKFLOW_ODP) as archive:
+            image = Image.open(BytesIO(archive.read(WORKFLOW_ASSEMBLED_PHOTO))).convert("RGB")
+    else:
+        raise FileNotFoundError(
+            f"Missing assembled-device photo source: {ASSEMBLED_DEVICE_PHOTO} or {WORKFLOW_ODP}"
+        )
     return ImageOps.autocontrast(image, cutoff=1)
 
 

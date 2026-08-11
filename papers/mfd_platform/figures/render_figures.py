@@ -19,6 +19,8 @@ PREFERRED_SOURCE_STEMS = (DRAFT_FIGURE_STEM,)
 GENERATED_SOURCE_SCRIPTS = (
     ROOT / "generate_openmfd_design_figure.py",
     ROOT / "generate_bonding_fixture_figure.py",
+    ROOT / "generate_device_assembly_protocol.py",
+    ROOT / "generate_validation_figure.py",
     ROOT / "generate_generalizability_figure.py",
 )
 

@@ -51,6 +51,9 @@ OUTPUT_ROOT = Path("./designs/open_chamber/openmfd_legacy_ports")
 CURE_TEMP = 100
 PDMS_SCALE = PDMSConfiguration(cure_temp=CURE_TEMP).scale_factor()
 SHORT_CHANNEL_LENGTH = 0.3
+FIGURE1_WELL_RADIUS = 2.5
+FIGURE1_CURE_TEXT_OFFSET_Y = -49.5
+FIGURE1_ALIGNMENT_OFFSET_MM = (7.0 * 18.0, 4.75 * 9.0)
 
 WAFER_SIZE = 150
 WAFER_FLAT_LEN = 57.5
@@ -66,7 +69,7 @@ GLASS_SIZE = [110, 74]
 GLASS_ERROR = 4
 OUTLINE_ALIGNMENT_THICKNESS = 1
 
-INSERT_PIN_OFFSET = -0.5
+INSERT_PIN_OFFSET = 0.0
 CHAMBER_HOLE_DIMS = (2.0, 2.0)
 PIN_DIMS = (1.85, 1.85)
 PIN_HEIGHT = 0.14
@@ -134,11 +137,12 @@ def inset_toward_origin(
     position: tuple[float, float] | list[float],
     inset: float = INSERT_PIN_OFFSET,
 ) -> tuple[float, float]:
-    """Move a lock/pin position along its radial device arm.
+    """Place a lock/pin from the circular reservoir center.
 
-    The current two-compartment preset stores already-offset lock positions
-    rather than relying on the older scalar x/y offset. This helper generalizes
-    that convention to diagonal layouts.
+    The connected insert surface may include chambers or bridge sections whose
+    centroid differs from the round reservoir center. Pin and matching hole
+    positions are therefore derived from the explicit reservoir circle centers,
+    with an optional radial inset for layouts that need it.
     """
     x, y = float(position[0]), float(position[1])
     radius = math.hypot(x, y)
@@ -179,6 +183,14 @@ def absolute_pin_positions(
         for center_x, center_y in unit_center_offsets(dims, grid_size)
         for local_x, local_y in local_positions
     ]
+
+
+def figure1_alignment_units_from_center(dims: list[float]) -> tuple[float, float]:
+    """Use the Figure 1 registration-mark placement with any unit pitch."""
+    return (
+        FIGURE1_ALIGNMENT_OFFSET_MM[0] / dims[0],
+        FIGURE1_ALIGNMENT_OFFSET_MM[1] / dims[1],
+    )
 
 
 def make_cure_text(
@@ -373,7 +385,7 @@ def build_three_compartment(
     microchannel_length: float | None = None,
 ) -> None:
     well_gap = 4.5
-    well_rad = 6.94 / 2.0
+    well_rad = FIGURE1_WELL_RADIUS
     legacy_chamber_len_until = (well_gap - well_rad) * 2.0
     chan_l = microchannel_length if microchannel_length is not None else legacy_chamber_len_until
     chan_gap = 0.01
@@ -470,7 +482,7 @@ def build_three_compartment(
         grid_size,
         dxf=True,
         alignment="full",
-        units_from_center=None,
+        units_from_center=figure1_alignment_units_from_center(dims),
         alignment_offset=None,
         alignment_mark_size=1.0,
     )
@@ -480,7 +492,7 @@ def build_three_compartment(
         grid_size,
         dxf=True,
         alignment="hollow",
-        units_from_center=None,
+        units_from_center=figure1_alignment_units_from_center(dims),
         alignment_offset=None,
         alignment_mark_size=1.0,
     )
@@ -579,7 +591,7 @@ def build_myelination(
     microchannel_length: float | None = None,
 ) -> None:
     well_gap = 6.36
-    well_rad = 6.94 / 2.0
+    well_rad = FIGURE1_WELL_RADIUS
     legacy_chamber_len_until = (well_gap - well_rad) * 2.0
     chan_l = microchannel_length if microchannel_length is not None else legacy_chamber_len_until
     chan_gap = 0.01
@@ -691,7 +703,7 @@ def build_myelination(
         grid_size,
         dxf=True,
         alignment="full",
-        units_from_center=None,
+        units_from_center=figure1_alignment_units_from_center(dims),
         alignment_offset=None,
         alignment_mark_size=1.0,
     )
@@ -701,7 +713,7 @@ def build_myelination(
         grid_size,
         dxf=True,
         alignment="hollow",
-        units_from_center=None,
+        units_from_center=figure1_alignment_units_from_center(dims),
         alignment_offset=None,
         alignment_mark_size=1.0,
     )
@@ -715,6 +727,7 @@ def build_myelination(
         multi_top=multi_top,
         grid_size=grid_size,
         dims=dims,
+        text_offset=FIGURE1_CURE_TEXT_OFFSET_Y,
     )
 
     def insert_surface_builder() -> solid.OpenSCADObject:
@@ -823,7 +836,7 @@ def build_axon_guidance(
 ) -> None:
     # Faithful port of the legacy ``closed_gradient.py`` device.
     well_gap = 6.36
-    well_rad = 6.94 / 2.0
+    well_rad = FIGURE1_WELL_RADIUS
     # The crossing channels span the full well gap (not (well_gap-well_rad)*2),
     # and the array is deliberately thinned (well_rad / 1.5) so the central
     # closed chamber stays small and the four microchannel arms remain exposed.
@@ -933,7 +946,7 @@ def build_axon_guidance(
         grid_size,
         dxf=True,
         alignment="full",
-        units_from_center=None,
+        units_from_center=figure1_alignment_units_from_center(dims),
         alignment_offset=None,
         alignment_mark_size=1.0,
     )
@@ -943,7 +956,7 @@ def build_axon_guidance(
         grid_size,
         dxf=True,
         alignment="hollow",
-        units_from_center=None,
+        units_from_center=figure1_alignment_units_from_center(dims),
         alignment_offset=None,
         alignment_mark_size=1.0,
     )
@@ -957,6 +970,7 @@ def build_axon_guidance(
         multi_top=multi_top,
         grid_size=grid_size,
         dims=dims,
+        text_offset=FIGURE1_CURE_TEXT_OFFSET_Y,
     )
 
     insert_surface = footprint_builder(

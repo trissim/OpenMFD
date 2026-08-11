@@ -25,7 +25,7 @@ The previous workflow overview slide is no longer part of the main figure sequen
 - `designs/open_chamber/2_compartment_96_well_300um_suex200_v27/*_single_insert.stl`
 - `designs/open_chamber/2_compartment_96_well_300um_suex200_v27/*_wells_insert.stl`
 - `plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl`
-- assembled-device photograph embedded in `papers/mfd_platform/figures/final_drop/Fig1_workflow/draft_figure.odp`
+- assembled-device photograph source: `papers/mfd_platform/figures/final_drop/Fig1_openmfd_design/assembled_device_photo.png`
 - `openmfd.devices.presets.TwoCompartmentDeviceConfig`
 - **Rendered assets:**
 - `papers/mfd_platform/figures/final_drop/Fig1_openmfd_design/draft_figure.pdf`
@@ -55,6 +55,7 @@ The previous workflow overview slide is no longer part of the main figure sequen
 
 - **Purpose:** Show the finished hybrid mold, representative PDMS casts, parallel casting, and framed plate-format assembly.
 - **Source assets:** `papers/mfd_platform/figures/final_drop/Fig4_mold_casts_package/`
+- **Generated post-mold assembly panel:** `papers/mfd_platform/figures/final_drop/Fig4_mold_casts_package/assembly_protocol_schematic.pdf` from `papers/mfd_platform/figures/generate_device_assembly_protocol.py`
 - **Rendered asset:** `papers/mfd_platform/figures/rendered/mold_casts_package.pdf`
 - **Status:** Current composite supports the mold-to-device transition after the insert-bonding figure.
 

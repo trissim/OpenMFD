@@ -3,11 +3,17 @@
 from __future__ import annotations
 
 import math
+import sys
 from dataclasses import dataclass
 from pathlib import Path
+from typing import Callable
 
 import matplotlib.pyplot as plt
 import numpy as np
+from matplotlib.patches import Rectangle
+
+ROOT = Path(__file__).resolve().parents[3]
+sys.path.insert(0, str(ROOT))
 
 from openmfd.devices import PDMSConfiguration
 
@@ -24,26 +30,33 @@ from generate_openmfd_design_figure import (
     add_inset,
     add_text,
     draw_dxf_layer_raw,
+    draw_stl_polygons,
     draw_stl_mesh_raw_equal,
     panel_badge,
+    project_stl_render,
     rounded_box,
     setup_axis,
     setup_raw_dxf_axis,
 )
 
-ROOT = Path(__file__).resolve().parents[3]
 FIGURE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = FIGURE_DIR / "final_drop" / "Fig6_generalizability"
+SUBFIGURE_DIR = OUTPUT_DIR / "subfigures"
+INDIVIDUAL_SUBFIGURE_DIR = SUBFIGURE_DIR / "individual"
 
 CURE_TEMP = 100
 PDMS_SCALE = PDMSConfiguration(cure_temp=CURE_TEMP).scale_factor()
-PIN_INSET = -0.5
+PIN_INSET = 0.0
 PIN_DIMS = (1.85, 1.85)
 PIN_HEIGHT = 0.14
 PIN_INNER_HEIGHT = 2.0
 SKIRT_HEIGHT = 0.70
 INSERT_HEIGHT = 3.8
+FIGURE1_WELL_RADIUS = 2.5
 DIAMOND_PIN_ROTATION = 45.0
+SINGLE_INSERT_AZIMUTH = 0.0
+ARRAY_INSERT_AZIMUTH = 0.0
+ARRAY_INSERT_ELEVATION = 28.0
 WALL_THICKNESS = 7.0
 WALL_PAD = 9.0
 
@@ -62,6 +75,10 @@ class GeneralizabilityDesign:
     layout_note: str
     single_top: DxfDrawing
     single_bottom: DxfDrawing
+    multi_top: DxfDrawing
+    multi_bottom: DxfDrawing
+    wafer_top: DxfDrawing
+    wafer_bottom: DxfDrawing
     aligned: DxfDrawing
     single_insert: StlMesh
 
@@ -93,15 +110,21 @@ class GeneralizabilityDesign:
             layout_note=layout_note,
             single_top=DxfDrawing.from_file(design_dir / f"{stem}_single_top.dxf"),
             single_bottom=DxfDrawing.from_file(design_dir / f"{stem}_single_bottom.dxf"),
+            multi_top=DxfDrawing.from_file(design_dir / f"{stem}_multi_top.dxf"),
+            multi_bottom=DxfDrawing.from_file(design_dir / f"{stem}_multi_bottom.dxf"),
+            wafer_top=DxfDrawing.from_file(design_dir / f"{stem}_top.dxf"),
+            wafer_bottom=DxfDrawing.from_file(design_dir / f"{stem}_bottom.dxf"),
             aligned=DxfDrawing.from_file(design_dir / f"{stem}_aligned.dxf"),
             single_insert=StlMesh.from_file(design_dir / f"{stem}_single_insert.stl"),
         )
 
 
-def make_designs() -> tuple[GeneralizabilityDesign, GeneralizabilityDesign]:
+def make_designs() -> tuple[GeneralizabilityDesign, ...]:
     base = ROOT / "designs" / "open_chamber" / "openmfd_legacy_ports"
-    unit_dims = (18.0, 18.0, 0.0)
-    grid_size = (6, 4)
+    diamond_unit_dims = (18.0, 18.0, 0.0)
+    diamond_grid_size = (6, 4)
+    linear_unit_dims = (27.0, 9.0, 0.0)
+    linear_grid_size = (4, 8)
     diamond_well = 6.36 / math.sqrt(2.0)
     diamond_pins = tuple(
         inset_toward_origin(position)
@@ -112,20 +135,28 @@ def make_designs() -> tuple[GeneralizabilityDesign, GeneralizabilityDesign]:
             (diamond_well, diamond_well),
         )
     )
+    linear_pins = tuple(
+        inset_toward_origin(position)
+        for position in (
+            (-9.0, 0.0),
+            (0.0, 0.0),
+            (9.0, 0.0),
+        )
+    )
     myelination = GeneralizabilityDesign.from_assets(
         label="A",
         title="Myelination assay",
         stem="myelination",
         design_dir=base / "myelination",
-        dims=unit_dims,
-        grid_size=grid_size,
+        dims=diamond_unit_dims,
+        grid_size=diamond_grid_size,
         pin_positions=diamond_pins,
         pin_rotation=DIAMOND_PIN_ROTATION,
         summary_rows=(
             ("unit pitch", "18 x 18 mm"),
             ("array", "6 x 4 units"),
-            ("well radius", "3.47 mm"),
-            ("microchannels", "173 at 10 um"),
+            ("well radius", f"{FIGURE1_WELL_RADIUS:.2f} mm"),
+            ("microchannels", "125 at 10 um"),
             ("pin / hole", "1.85 / 2.00 mm"),
             ("outer taper", "16 deg, 3.8 mm tall"),
             ("PDMS scale", f"x{PDMS_SCALE:.4f}"),
@@ -137,22 +168,42 @@ def make_designs() -> tuple[GeneralizabilityDesign, GeneralizabilityDesign]:
         title="Axon guidance assay",
         stem="axon_guidance",
         design_dir=base / "axon_guidance",
-        dims=unit_dims,
-        grid_size=grid_size,
+        dims=diamond_unit_dims,
+        grid_size=diamond_grid_size,
         pin_positions=diamond_pins,
         pin_rotation=DIAMOND_PIN_ROTATION,
         summary_rows=(
             ("unit pitch", "18 x 18 mm"),
             ("array", "6 x 4 units"),
-            ("well radius", "3.47 mm"),
-            ("microchannels", "115 at 10 um"),
+            ("well radius", f"{FIGURE1_WELL_RADIUS:.2f} mm"),
+            ("microchannels", "83 at 10 um"),
             ("pin / hole", "1.85 / 2.00 mm"),
             ("outer taper", "16 deg, 3.8 mm tall"),
             ("PDMS scale", f"x{PDMS_SCALE:.4f}"),
         ),
         layout_note="legacy open-chamber build with symmetric crossing gradient arms and the same pin/skirt system as Fig. 1",
     )
-    return myelination, axon_guidance
+    three_compartment = GeneralizabilityDesign.from_assets(
+        label="F",
+        title="Three-compartment assay",
+        stem="three_compartment",
+        design_dir=base / "three_compartment",
+        dims=linear_unit_dims,
+        grid_size=linear_grid_size,
+        pin_positions=linear_pins,
+        pin_rotation=0.0,
+        summary_rows=(
+            ("unit pitch", "27 x 9 mm"),
+            ("array", "4 x 8 units"),
+            ("well radius", f"{FIGURE1_WELL_RADIUS:.2f} mm"),
+            ("pin / hole", "1.85 / 2.00 mm"),
+            ("outer taper", "16 deg, 3.8 mm tall"),
+            ("PDMS scale", f"x{PDMS_SCALE:.4f}"),
+            ("microchannels", "125 at 10 um"),
+        ),
+        layout_note="legacy open-chamber build with three compartments and the same pin/skirt system as Fig. 1",
+    )
+    return myelination, axon_guidance, three_compartment
 
 
 def point_key(point: tuple[float, float]) -> tuple[float, float]:
@@ -315,6 +366,66 @@ def insert_preview_mesh(design: GeneralizabilityDesign, *, array: bool) -> StlMe
     return StlMesh(np.concatenate(triangles, axis=0))
 
 
+def array_insert_render_spec(design: GeneralizabilityDesign) -> StlRenderSpec:
+    return StlRenderSpec(
+        design.single_insert,
+        26000,
+        azimuth=ARRAY_INSERT_AZIMUTH,
+        elevation=ARRAY_INSERT_ELEVATION,
+        z_scale=1.0,
+        edge_alpha=0.0,
+        linewidth=0.0,
+        base_color="#d2932c",
+        highlight_color="#f2ca78",
+        edge_color="#593100",
+    )
+
+
+def draw_insert_array_preview(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+    spec = array_insert_render_spec(design)
+    polygons, depth, normals = project_stl_render(spec)
+    unit_bounds = Bounds.from_points(polygons.reshape((-1, 2)))
+    base_offset = np.array(unit_offsets(design, array=False)[0], dtype=float)
+    projected_centers: list[tuple[float, float]] = []
+    y_projection_scale = math.cos(math.radians(ARRAY_INSERT_ELEVATION))
+    for offset in unit_offsets(design, array=True):
+        delta = (np.array(offset, dtype=float) - base_offset) * PDMS_SCALE
+        projected_centers.append((float(delta[0]), float(delta[1] * y_projection_scale)))
+
+    min_x = min(center_x + unit_bounds.min_x for center_x, _ in projected_centers)
+    max_x = max(center_x + unit_bounds.max_x for center_x, _ in projected_centers)
+    min_y = min(center_y + unit_bounds.min_y for _, center_y in projected_centers)
+    max_y = max(center_y + unit_bounds.max_y for _, center_y in projected_centers)
+    bounds = Bounds(min_x, min_y, max_x, max_y)
+    x_pad = bounds.width * 0.08
+    y_pad = bounds.height * 0.10
+
+    ax.set_xlim(bounds.min_x - x_pad, bounds.max_x + x_pad)
+    ax.set_ylim(bounds.min_y - y_pad, bounds.max_y + y_pad)
+    ax.set_aspect("equal", adjustable="box")
+    ax.axis("off")
+    ax.add_patch(
+        Rectangle(
+            (bounds.min_x - x_pad, bounds.min_y - y_pad),
+            bounds.width + 2 * x_pad,
+            bounds.height + 2 * y_pad,
+            facecolor=COLORS["dark_card"],
+            edgecolor=COLORS["frame"],
+            linewidth=1.1,
+            zorder=0,
+        )
+    )
+    for center_x, center_y in projected_centers:
+        draw_stl_polygons(
+            ax,
+            polygons + np.array([center_x, center_y], dtype=float),
+            depth,
+            normals,
+            spec,
+            zorder=2,
+        )
+
+
 def frame_preview_mesh(design: GeneralizabilityDesign) -> StlMesh:
     width = design.grid_size[0] * design.dims[0] + WALL_PAD * 2.0
     height = design.grid_size[1] * design.dims[1] + WALL_PAD * 2.0
@@ -374,9 +485,9 @@ def draw_summary_panel(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
         add_arrow(ax, (0.585, 0.50), (x, y_out + 0.051), color)
 
 
-def draw_dxf_panel(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+def draw_dxf_panel(ax: plt.Axes, design: GeneralizabilityDesign, panel_label: str) -> None:
     setup_axis(ax)
-    panel_badge(ax, chr(ord(design.label) + 1))
+    panel_badge(ax, panel_label)
     add_text(ax, 0.11, 0.956, f"{design.title} DXF outputs", TextRole.PANEL_TITLE)
 
     single_box = AxisBox(0.03, 0.16, 0.40, 0.68)
@@ -393,32 +504,48 @@ def draw_dxf_panel(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
     draw_dxf_layer_raw(single_ax, design.single_bottom, COLORS["bottom"], 0.12, 0.60)
     draw_dxf_layer_raw(single_ax, design.single_top, COLORS["top"], 1.10, 0.94)
 
-    aligned_bounds = design.aligned.bounds
+    aligned_bounds = Bounds.combine((design.wafer_top, design.wafer_bottom))
     aligned_pad_x = max(aligned_bounds.width * 0.035, 0.55)
     aligned_pad_y = max(aligned_bounds.height * 0.035, 0.55)
     setup_raw_dxf_axis(aligned_ax, aligned_bounds, aligned_pad_x, aligned_pad_y)
     add_bounds_background(aligned_ax, aligned_bounds, aligned_pad_x, aligned_pad_y)
-    draw_dxf_layer_raw(aligned_ax, design.aligned, "#0f8ea5", 0.28, 0.92)
+    draw_dxf_layer_raw(aligned_ax, design.wafer_bottom, COLORS["bottom"], 0.16, 0.58)
+    draw_dxf_layer_raw(aligned_ax, design.wafer_top, COLORS["top"], 0.34, 0.92)
 
     add_text(ax, 0.16, 0.085, "single unit", TextRole.SMALL_MUTED)
     add_text(ax, 0.65, 0.085, "wafer-scale mask", TextRole.SMALL_MUTED)
 
 
-def draw_output_panel(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+def draw_output_panel(
+    ax: plt.Axes,
+    design: GeneralizabilityDesign,
+    *,
+    panel_label: str,
+    show_frame: bool = True,
+) -> None:
     setup_axis(ax)
-    panel_badge(ax, chr(ord(design.label) + 2))
+    panel_badge(ax, panel_label)
     add_text(ax, 0.11, 0.956, f"{design.title} insert outputs", TextRole.PANEL_TITLE)
 
-    single_ax = add_inset(ax, AxisBox(0.035, 0.315, 0.295, 0.545))
-    array_ax = add_inset(ax, AxisBox(0.355, 0.315, 0.295, 0.545))
-    wall_ax = add_inset(ax, AxisBox(0.675, 0.315, 0.295, 0.545))
+    if show_frame:
+        single_box = AxisBox(0.035, 0.315, 0.295, 0.545)
+        array_box = AxisBox(0.355, 0.315, 0.295, 0.545)
+        wall_box = AxisBox(0.675, 0.315, 0.295, 0.545)
+    else:
+        single_box = AxisBox(0.035, 0.315, 0.430, 0.545)
+        array_box = AxisBox(0.535, 0.315, 0.430, 0.545)
+        wall_box = None
+
+    single_ax = add_inset(ax, single_box)
+    array_ax = add_inset(ax, array_box)
+    wall_ax = add_inset(ax, wall_box) if wall_box is not None else None
 
     draw_stl_mesh_raw_equal(
         single_ax,
         StlRenderSpec(
             insert_preview_mesh(design, array=False),
             26000,
-            azimuth=-44.0,
+            azimuth=SINGLE_INSERT_AZIMUTH,
             elevation=24.0,
             z_scale=1.0,
             edge_alpha=0.32,
@@ -428,40 +555,40 @@ def draw_output_panel(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
             edge_color="#593100",
         ),
     )
-    draw_stl_mesh_raw_equal(
-        array_ax,
-        StlRenderSpec(
-            insert_preview_mesh(design, array=True),
-            70000,
-            azimuth=-48.0,
-            elevation=28.0,
-            z_scale=1.0,
-            edge_alpha=0.48,
-            linewidth=0.008,
-            base_color="#d8871f",
-            highlight_color="#ffe2a3",
-            edge_color="#593100",
-        ),
-    )
-    draw_stl_mesh_raw_equal(
-        wall_ax,
-        StlRenderSpec(
-            frame_preview_mesh(design),
-            2000,
-            azimuth=-36.0,
-            elevation=25.0,
-            z_scale=1.35,
-            edge_alpha=0.52,
-            linewidth=0.020,
-            base_color="#485466",
-            highlight_color="#d3d9e2",
-            edge_color="#070b12",
-        ),
-    )
+    draw_insert_array_preview(array_ax, design)
+    if wall_ax is not None:
+        draw_stl_mesh_raw_equal(
+            wall_ax,
+            StlRenderSpec(
+                frame_preview_mesh(design),
+                2000,
+                azimuth=-36.0,
+                elevation=25.0,
+                z_scale=1.35,
+                edge_alpha=0.52,
+                linewidth=0.020,
+                base_color="#485466",
+                highlight_color="#d3d9e2",
+                edge_color="#070b12",
+            ),
+        )
 
-    add_text(ax, 0.182, 0.245, "single insert", TextRole.SMALL_MUTED)
-    add_text(ax, 0.502, 0.245, "array insert", TextRole.SMALL_MUTED)
-    add_text(ax, 0.822, 0.245, "wall frame", TextRole.SMALL_MUTED)
+    add_text(
+        ax,
+        single_box.left + single_box.width / 2.0,
+        0.245,
+        "single insert",
+        TextRole.SMALL_MUTED,
+    )
+    add_text(
+        ax,
+        array_box.left + array_box.width / 2.0,
+        0.245,
+        "array insert",
+        TextRole.SMALL_MUTED,
+    )
+    if wall_box is not None:
+        add_text(ax, wall_box.left + wall_box.width / 2.0, 0.245, "wall frame", TextRole.SMALL_MUTED)
 
     add_text(
         ax,
@@ -473,44 +600,230 @@ def draw_output_panel(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
     )
 
 
-def build_figure() -> plt.Figure:
-    myelination, axon_guidance = make_designs()
+def draw_clean_dxf_subfigure(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+    setup_axis(ax)
 
-    fig = plt.figure(figsize=(13.6, 8.8))
-    fig.patch.set_facecolor("white")
-    grid = fig.add_gridspec(
-        2,
-        3,
-        width_ratios=(1.16, 1.06, 1.18),
-        height_ratios=(1.0, 1.0),
-        left=0.025,
-        right=0.985,
-        bottom=0.035,
-        top=0.945,
-        wspace=0.05,
-        hspace=0.08,
+    single_box = AxisBox(0.025, 0.05, 0.43, 0.90)
+    aligned_box = AxisBox(0.50, 0.03, 0.475, 0.94)
+    single_ax = add_inset(ax, single_box)
+    aligned_ax = add_inset(ax, aligned_box)
+
+    single_bounds = Bounds.combine((design.single_top, design.single_bottom))
+    single_pad_x = max(single_bounds.width * 0.05, 0.55)
+    single_pad_y = max(single_bounds.height * 0.05, 0.55)
+    setup_raw_dxf_axis(single_ax, single_bounds, single_pad_x, single_pad_y)
+    add_bounds_background(single_ax, single_bounds, single_pad_x, single_pad_y)
+    draw_dxf_layer_raw(single_ax, design.single_bottom, COLORS["bottom"], 0.12, 0.60)
+    draw_dxf_layer_raw(single_ax, design.single_top, COLORS["top"], 1.10, 0.94)
+
+    aligned_bounds = Bounds.combine((design.wafer_top, design.wafer_bottom))
+    aligned_pad_x = max(aligned_bounds.width * 0.035, 0.55)
+    aligned_pad_y = max(aligned_bounds.height * 0.035, 0.55)
+    setup_raw_dxf_axis(aligned_ax, aligned_bounds, aligned_pad_x, aligned_pad_y)
+    add_bounds_background(aligned_ax, aligned_bounds, aligned_pad_x, aligned_pad_y)
+    draw_dxf_layer_raw(aligned_ax, design.wafer_bottom, COLORS["bottom"], 0.16, 0.58)
+    draw_dxf_layer_raw(aligned_ax, design.wafer_top, COLORS["top"], 0.34, 0.92)
+
+
+def draw_clean_insert_subfigure(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+    setup_axis(ax)
+
+    single_ax = add_inset(ax, AxisBox(0.025, 0.06, 0.43, 0.88))
+    array_ax = add_inset(ax, AxisBox(0.50, 0.06, 0.475, 0.88))
+
+    draw_stl_mesh_raw_equal(
+        single_ax,
+        StlRenderSpec(
+            insert_preview_mesh(design, array=False),
+            26000,
+            azimuth=SINGLE_INSERT_AZIMUTH,
+            elevation=24.0,
+            z_scale=1.0,
+            edge_alpha=0.32,
+            linewidth=0.018,
+            base_color="#d8871f",
+            highlight_color="#ffe2a3",
+            edge_color="#593100",
+        ),
+    )
+    draw_insert_array_preview(array_ax, design)
+
+
+def draw_single_unit_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+    bounds = Bounds.combine((design.single_top, design.single_bottom))
+    pad_x = max(bounds.width * 0.06, 0.55)
+    pad_y = max(bounds.height * 0.06, 0.55)
+    setup_raw_dxf_axis(ax, bounds, pad_x, pad_y)
+    add_bounds_background(ax, bounds, pad_x, pad_y)
+    draw_dxf_layer_raw(ax, design.single_bottom, COLORS["bottom"], 0.14, 0.60)
+    draw_dxf_layer_raw(ax, design.single_top, COLORS["top"], 1.25, 0.94)
+
+
+def draw_wafer_mask_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+    bounds = Bounds.combine((design.wafer_top, design.wafer_bottom))
+    pad_x = max(bounds.width * 0.035, 0.55)
+    pad_y = max(bounds.height * 0.035, 0.55)
+    setup_raw_dxf_axis(ax, bounds, pad_x, pad_y)
+    add_bounds_background(ax, bounds, pad_x, pad_y)
+    draw_dxf_layer_raw(ax, design.wafer_bottom, COLORS["bottom"], 0.18, 0.58)
+    draw_dxf_layer_raw(ax, design.wafer_top, COLORS["top"], 0.36, 0.92)
+
+
+def draw_plate_layout_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+    bounds = Bounds.combine((design.multi_top, design.multi_bottom))
+    pad_x = max(bounds.width * 0.025, 0.55)
+    pad_y = max(bounds.height * 0.025, 0.55)
+    setup_raw_dxf_axis(ax, bounds, pad_x, pad_y)
+    add_bounds_background(ax, bounds, pad_x, pad_y)
+    draw_dxf_layer_raw(ax, design.multi_bottom, COLORS["bottom"], 0.18, 0.58)
+    draw_dxf_layer_raw(ax, design.multi_top, COLORS["top"], 0.36, 0.92)
+
+
+def draw_single_insert_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+    draw_stl_mesh_raw_equal(
+        ax,
+        StlRenderSpec(
+            insert_preview_mesh(design, array=False),
+            26000,
+            azimuth=SINGLE_INSERT_AZIMUTH,
+            elevation=24.0,
+            z_scale=1.0,
+            edge_alpha=0.32,
+            linewidth=0.018,
+            base_color="#d8871f",
+            highlight_color="#ffe2a3",
+            edge_color="#593100",
+        ),
     )
 
-    axes = {
-        "A": fig.add_subplot(grid[0, 0]),
-        "B": fig.add_subplot(grid[0, 1]),
-        "C": fig.add_subplot(grid[0, 2]),
-        "D": fig.add_subplot(grid[1, 0]),
-        "E": fig.add_subplot(grid[1, 1]),
-        "F": fig.add_subplot(grid[1, 2]),
-    }
-    for ax in axes.values():
-        ax.set_facecolor(COLORS["paper"])
 
-    draw_summary_panel(axes["A"], myelination)
-    draw_dxf_panel(axes["B"], myelination)
-    draw_output_panel(axes["C"], myelination)
-    draw_summary_panel(axes["D"], axon_guidance)
-    draw_dxf_panel(axes["E"], axon_guidance)
-    draw_output_panel(axes["F"], axon_guidance)
+def draw_array_insert_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+    draw_insert_array_preview(ax, design)
+
+
+def save_clean_subfigure(
+    output_path: Path,
+    design: GeneralizabilityDesign,
+    draw_function: Callable[[plt.Axes, GeneralizabilityDesign], None],
+) -> None:
+    fig = plt.figure(figsize=(6.8, 3.3))
+    fig.patch.set_facecolor("white")
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.set_facecolor(COLORS["paper"])
+    draw_function(ax, design)
+    fig.savefig(output_path, dpi=300, bbox_inches="tight", pad_inches=0.02)
+    plt.close(fig)
+
+
+def save_individual_subfigure(
+    output_path: Path,
+    design: GeneralizabilityDesign,
+    draw_function: Callable[[plt.Axes, GeneralizabilityDesign], None],
+    *,
+    figsize: tuple[float, float],
+) -> None:
+    fig = plt.figure(figsize=figsize)
+    fig.patch.set_facecolor("white")
+    ax = fig.add_axes([0, 0, 1, 1])
+    ax.set_facecolor(COLORS["paper"])
+    draw_function(ax, design)
+    fig.savefig(output_path, dpi=300, bbox_inches="tight", pad_inches=0.02)
+    plt.close(fig)
+
+
+def export_clean_subfigures(designs: tuple[GeneralizabilityDesign, ...]) -> None:
+    SUBFIGURE_DIR.mkdir(parents=True, exist_ok=True)
+    exports = (
+        ("A", "dxf_outputs", designs[0], draw_clean_dxf_subfigure),
+        ("B", "insert_outputs", designs[0], draw_clean_insert_subfigure),
+        ("C", "dxf_outputs", designs[1], draw_clean_dxf_subfigure),
+        ("D", "insert_outputs", designs[1], draw_clean_insert_subfigure),
+        ("E", "dxf_outputs", designs[2], draw_clean_dxf_subfigure),
+        ("F", "insert_outputs", designs[2], draw_clean_insert_subfigure),
+    )
+    for label, suffix, design, draw_function in exports:
+        output_path = SUBFIGURE_DIR / f"{label}_{design.stem}_{suffix}.png"
+        save_clean_subfigure(output_path, design, draw_function)
+
+
+def export_individual_subfigures(designs: tuple[GeneralizabilityDesign, ...]) -> None:
+    INDIVIDUAL_SUBFIGURE_DIR.mkdir(parents=True, exist_ok=True)
+    exports = (
+        ("myelination", designs[0]),
+        ("axon_guidance", designs[1]),
+        ("three_compartment", designs[2]),
+    )
+    for prefix, design in exports:
+        save_individual_subfigure(
+            INDIVIDUAL_SUBFIGURE_DIR / f"{prefix}_single_unit_dxf.png",
+            design,
+            draw_single_unit_dxf_asset,
+            figsize=(3.8, 3.8),
+        )
+        save_individual_subfigure(
+            INDIVIDUAL_SUBFIGURE_DIR / f"{prefix}_wafer_mask_dxf.png",
+            design,
+            draw_wafer_mask_dxf_asset,
+            figsize=(4.8, 4.8),
+        )
+        save_individual_subfigure(
+            INDIVIDUAL_SUBFIGURE_DIR / f"{prefix}_plate_layout_dxf.png",
+            design,
+            draw_plate_layout_dxf_asset,
+            figsize=(5.2, 3.4),
+        )
+        save_individual_subfigure(
+            INDIVIDUAL_SUBFIGURE_DIR / f"{prefix}_single_insert.png",
+            design,
+            draw_single_insert_asset,
+            figsize=(3.8, 3.8),
+        )
+        save_individual_subfigure(
+            INDIVIDUAL_SUBFIGURE_DIR / f"{prefix}_array_insert.png",
+            design,
+            draw_array_insert_asset,
+            figsize=(5.2, 3.4),
+        )
+
+
+def build_figure() -> plt.Figure:
+    myelination, axon_guidance, three_compartment = make_designs()
+
+    fig = plt.figure(figsize=(13.6, 11.5))
+    fig.patch.set_facecolor("white")
+    grid = fig.add_gridspec(
+        3,
+        2,
+        width_ratios=(1.0, 1.0),
+        height_ratios=(1.0, 1.0, 1.0),
+        left=0.025,
+        right=0.985,
+        bottom=0.03,
+        top=0.98,
+        wspace=0.07,
+        hspace=0.06,
+    )
+
+    layout = (
+        ("A", "B", myelination),
+        ("C", "D", axon_guidance),
+        ("E", "F", three_compartment),
+    )
+    for row, (dxf_label, insert_label, design) in enumerate(layout):
+        dxf_ax = fig.add_subplot(grid[row, 0])
+        insert_ax = fig.add_subplot(grid[row, 1])
+        dxf_ax.set_facecolor(COLORS["paper"])
+        insert_ax.set_facecolor(COLORS["paper"])
+        draw_dxf_panel(dxf_ax, design, panel_label=dxf_label)
+        draw_output_panel(
+            insert_ax,
+            design,
+            panel_label=insert_label,
+            show_frame=False,
+        )
 
     fig.suptitle(
-        "OpenMFD renders legacy myelination and axon-guidance layouts with the same file-generation pipeline used in Figure 1",
+        "OpenMFD renders literature-derived myelination, axon-guidance, and three-compartment layouts with the same pipeline used for Figure 1",
         fontsize=12.0,
         fontweight="bold",
         color=COLORS["ink"],
@@ -521,6 +834,9 @@ def build_figure() -> plt.Figure:
 
 def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    designs = make_designs()
+    export_clean_subfigures(designs)
+    export_individual_subfigures(designs)
     fig = build_figure()
     fig.savefig(OUTPUT_DIR / "draft_figure.pdf", bbox_inches="tight")
     fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300, bbox_inches="tight")

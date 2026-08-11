@@ -33,9 +33,11 @@ SUPPLEMENTARY_FILES = (
     SUPPLEMENTARY_DIR / "Supplementary_Table_S1_pin_z_variability.md",
     SUPPLEMENTARY_DIR / "Supplementary_Table_S2_fabrication_strategies.md",
     SUPPLEMENTARY_DIR / "Supplementary_Table_S3_design_limits.md",
+    SUPPLEMENTARY_DIR / "Supplementary_Table_S4_resin_insert_printing_settings.md",
     SUPPLEMENTARY_DIR / "Supplementary_Note_S1_LP360_filter.md",
     SUPPLEMENTARY_DIR / "Supplementary_Note_S2_base_layer_adhesion.md",
-    SUPPLEMENTARY_DIR / "Protocol_S1_device_assembly_and_axotomy.md",
+    SUPPLEMENTARY_DIR / "Supplementary_Protocol_S1_device_assembly_culture_and_CTB.md",
+    SUPPLEMENTARY_DIR / "Supplementary_Protocol_S2_hybrid_mold_fabrication.md",
 )
 SUPPLEMENTARY_MEDIA_PREFIX = "media/"
 DOCX_SUPPLEMENTARY_MEDIA_PREFIX = "../supplementary/media/"

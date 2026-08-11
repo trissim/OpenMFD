@@ -1,16 +1,18 @@
-Introduction
+# Supplementary Protocol S1. Post-mold device assembly, neuronal culture, and chemical axotomy
 
-This protocol describes the fabrication, assembly, and operation of microfluidic devices for studying axonal injury and regeneration in neuronal cultures. These compartmentalized platforms enable the physical separation of neuronal cell bodies from their axons, allowing targeted axonal injury (axotomy) while preserving the soma. This separation is critical for investigating the cell-autonomous mechanisms of axonal regeneration and screening potential therapeutic interventions.
+## Introduction
+
+This protocol describes post-mold device replication, assembly, and operation of microfluidic devices for studying axonal injury and regeneration in neuronal cultures. It starts from a completed parylene-coated hybrid mold. One-time SU-8/SUEX wafer processing, resin-insert bonding, and parylene coating are covered separately in Supplementary Protocol S2. These compartmentalized platforms enable the physical separation of neuronal cell bodies from their axons, allowing targeted axonal injury (axotomy) while preserving the soma. This separation is critical for investigating the cell-autonomous mechanisms of axonal regeneration and screening potential therapeutic interventions.
 
 The protocol is divided into three main sections:
 
-Device Fabrication and Assembly - Details the complete workflow for creating functional devices, including PDMS molding from silicon wafers, 3D printing of support frames using HIPS filament, plasma bonding to glass coverslips, and final assembly with biocompatible adhesive. The resulting devices are autoclavable and suitable for long-term cell culture.
+Post-mold Device Replication and Assembly - Details the workflow for creating functional devices from completed hybrid molds, including PDMS casting, 3D printing of support frames using HIPS filament, plasma bonding to glass coverslips, and final assembly with biocompatible adhesive. The resulting devices are autoclavable and suitable for long-term cell culture.
 
-Cell Culture and Axotomy - Covers surface preparation, neuronal seeding, and the chemical axotomy procedure using trypsin and Triton X-100. The compartmentalized design maintains fluidic isolation between chambers, enabling selective axonal injury while maintaining cell body viability.
+Cell Culture and Axotomy - Covers surface preparation, neuronal seeding, and the chemical axotomy procedure using trypsin and Triton X-100. The compartmentalized design is operated with a defined volume bias between chambers, enabling selective axonal injury while maintaining cell body viability.
 
 Endpoint Analysis - Describes retrograde labeling strategies using cholera toxin B conjugates and live-cell staining with calcein-AM to quantify both total axonal regeneration and the proportion of neurons successfully regenerating axons. Optional automated analysis using OpenHCS is supported.
 
-The complete process from device fabrication to endpoint imaging typically spans 12-14 days, with devices requiring 3 days of curing post-assembly and cultures typically maintained for 10-11 days before axotomy.
+The complete process from post-mold device replication to endpoint imaging typically spans 12-14 days, with devices requiring 3 days of curing post-assembly and cultures typically maintained for 10-11 days before axotomy.
 
   
 *Materials:*
@@ -47,13 +49,13 @@ The complete process from device fabrication to endpoint imaging typically spans
 
 - > OpenHCS: https://pypi.org/project/openhcs/
 
-Device Fabrication
+Post-mold Device Replication and Assembly
 
 *![PDMS preparation icon](media/image1.png) ![PDMS mold icon](media/image2.png) Prepare and curing PDMS in the mold*
 
 - > Cut a round aluminum foil sheet to form a dish surrounding the wafer/mold with sealed aluminum foil walls
 
-- > For each device prepare 35mL of PDMS using a 1A:10B ratio (3.5mL part A 31.5mL part B) in a large red solo cup on a scale
+- > For each device, prepare 35mL of Sylgard 184 PDMS using a 10:1 base:curing-agent ratio (31.5mL base and 3.5mL curing agent) in a large cup on a scale
 
 - > Transfer 30mL of PDMS from the red cup into 60mL syringes
 
@@ -61,7 +63,7 @@ Device Fabrication
 
 - > Move the molds into the desiccator and leave under negative pressure until bubbles are gone (10-30 minutes)
 
-- > Move the bubble-free PDMS casted mold into an over @100C for 1hour
+- > Move the bubble-free PDMS-casted mold into an oven at 100C for 1 hour
 
 *![Frame printing icon](media/image3.png) ![Frame icon](media/image4.png) 3D printing the frame*
 
@@ -121,6 +123,8 @@ Bonding to glass
 
 - > Take a 3D printed frame and place it with the bottom facing up.
 
+- > Sterilize the HIPS frame with 70% ethanol and allow it to dry before adhesive assembly.
+
 - > Dispense about 0.5-1mL of glue to fill the grooves along the whole or the device
 
 - > Grab the bonded device with index fingers and thumbs withthe device facing down and glass facing up
@@ -149,7 +153,7 @@ Bonding to glass
 
 Axotomy
 
-- > ![CTB-647 timing icon](media/image7.png) Day prior to axotomy (day10), add 1 µg/mL CtB-647 to the axonal cell body compartment. Ensure the volume in the cell body compartment is 2x the axonal after addition of ctb (Cellbody 50 µL, Axon 25 µL)
+- > ![CTB-647 timing icon](media/image7.png) Day prior to axotomy (day10), add 1 µg/mL CtB-647 to the axonal compartment. Ensure the volume in the cell body compartment is 2x the axonal volume after addition of CtB (Cell body 50 µL, Axon 25 µL)
 
 - > On the day of the axotomy, image the cells before axotomizing, with the brightfield and Ctb-647 channel (far-red/cy5)
 
@@ -165,7 +169,7 @@ Axotomy
 
 *End point imaging:*
 
-- > ![CTB-568 timing icon](media/image8.png) Day prior to endpoint (day end-1), add 1 µg/mL CtB-568 to the axonal cell body compartment. Ensure the volume in the cell body compartment is 2x the axonal after addition of ctb (Cellbody 50 µL, Axon 25 µL)
+- > ![CTB-568 timing icon](media/image8.png) Day prior to endpoint (day end-1), add 1 µg/mL CtB-568 to the axonal compartment. Ensure the volume in the cell body compartment is 2x the axonal volume after addition of CtB (Cell body 50 µL, Axon 25 µL)
 
 - > On endpoint day, 1 µM of calcein-AM to axonal compartment and image whole device
 
