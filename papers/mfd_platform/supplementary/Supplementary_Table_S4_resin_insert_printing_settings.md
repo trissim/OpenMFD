@@ -1,15 +1,14 @@
 # Supplementary Table S4. Resin insert 3D-printing and post-processing settings
 
-These settings describe the demonstrated resin insert printing workflow used for
-the wafer-bonded well inserts. The values are local printer/resin process
-parameters rather than OpenMFD design parameters; printer, resin, or slicer
-changes should be treated as local process development.
+These settings were used to print the wafer-bonded resin inserts. Validate
+alternative printers, resins, and slicer profiles for local print quality and
+fit.
 
 ## Printer and resin
 
 | Parameter | Setting |
 |---|---|
-| Resin | Siraya Tech Sculpt high-temperature resistant resin, clear |
+| Resin | Siraya Tech Sculpt Clear high-temperature resin |
 | Printer | Elegoo Mars 3 Pro |
 | Build plate / transfer fixture | Magnetic removable build plate |
 | Slicer/profile name in source screenshots | Siraya High Temp |
@@ -57,7 +56,7 @@ changes should be treated as local process development.
 2. Blow dry with compressed high-pressure nitrogen.
 3. Repeat the acetone spray and nitrogen drying cycle until the pin features are
    completely clean of residual resin. In the demonstrated workflow this
-   required 6-8 cycles.
+   required 6–8 cycles.
 4. Remove the flexible metal plate from the printer build plate.
 5. Place the print inside an Elegoo Mercury X rotating UV cure station.
 6. UV cure for 15 min.

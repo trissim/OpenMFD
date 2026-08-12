@@ -69,7 +69,7 @@ Post-mold Device Replication and Assembly
 
 - > While the PDMS cures, you can print the frame using the 3D model provided in the link in the materials
 
-- > You must use an enclosed FDM 3D printer that supports HIPS filament. The Creality K1C printer is an easy-to-use all-in-one printer suitable for printing the frames. HIPS was selected because it has low hygroscopicity and lower thermal contraction than polypropylene, the only other low-hygroscopicity filament we evaluated.
+- > You must use an enclosed FDM 3D printer that supports HIPS filament. The Creality K1C printer is an easy-to-use all-in-one printer suitable for printing the frames. HIPS and polypropylene were the low-hygroscopicity filaments evaluated; HIPS was selected because it showed less warpage in our printing trials.
 
 - > The provided settings should be used, or the following principles should be respected to reduce frame warping:
 

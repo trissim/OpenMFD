@@ -35,6 +35,7 @@ SUPPLEMENTARY_FILES = (
     SUPPLEMENTARY_DIR / "Supplementary_Table_S3_design_limits.md",
     SUPPLEMENTARY_DIR / "Supplementary_Table_S4_resin_insert_printing_settings.md",
     SUPPLEMENTARY_DIR / "Supplementary_Table_S5_process_qc.md",
+    SUPPLEMENTARY_DIR / "Supplementary_Table_S6_FDM_frame_printing_settings.md",
     SUPPLEMENTARY_DIR / "Supplementary_Note_S1_LP360_filter.md",
     SUPPLEMENTARY_DIR / "Supplementary_Note_S2_base_layer_adhesion.md",
     SUPPLEMENTARY_DIR / "Supplementary_Protocol_S1_device_assembly_culture_and_CTB.md",

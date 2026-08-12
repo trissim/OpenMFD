@@ -823,7 +823,7 @@ def build_figure() -> plt.Figure:
         )
 
     fig.suptitle(
-        "OpenMFD renders literature-derived myelination, axon-guidance, and three-compartment layouts with the same pipeline used for Figure 1",
+        "OpenMFD renders literature-inspired myelination, axon-guidance, and three-compartment assay layouts with the same pipeline used for Figure 1",
         fontsize=12.0,
         fontweight="bold",
         color=COLORS["ink"],

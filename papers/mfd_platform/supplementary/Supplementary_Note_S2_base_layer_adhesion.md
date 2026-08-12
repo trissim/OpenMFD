@@ -1,9 +1,9 @@
-# Supplementary Note S2. Flood-exposed SU-8 base layer prevents microchannel delamination
+# Supplementary Note S2. SU-8 base-layer adhesion and pre-SUEX hard bake
 
-When thin SU-8 microchannel features (5 µm) are patterned directly on bare silicon wafers, we observed delamination of the microchannel structures from the wafer surface during development or subsequent processing steps.
+SU-8 microchannels patterned directly on bare silicon at a target thickness of 5 µm delaminated during development or subsequent processing.
 
-To address this, we introduce a flood-exposed SU-8 base layer of the same material and thickness (SU-8 2005, 5 µm) prior to patterning the microchannel layer. This base layer is exposed without a mask and is not developed, providing an adhesion-promoting interface between the silicon wafer and the patterned microchannel features. With this base layer in place, no dehydration bake or HMDS surface treatment is required.
+A 5 µm flood-exposed SU-8 2005 base layer was therefore added before the patterned microchannel layer. The base layer is exposed without a mask and is not developed. It provides sufficient adhesion without a dehydration bake or HMDS treatment.
 
-**Supplementary Figure S2.** SU-8 microchannel delamination when patterned directly on bare silicon without the flood-exposed base layer.
+The developed two-layer SU-8 stack also requires a 10 min hard bake at 150°C before SUEX lamination. No controlled ramp up or cooldown is used because the combined SU-8 stack is approximately 10 µm thick. Eight wafers were processed in parallel during one process-development batch in which this hard bake was inadvertently omitted. Stress during cooling after subsequent SUEX processing caused the SU-8 stack to warp and delaminate around well features on part of the batch, although some wafers remained intact. A subsequent two-wafer batch included the 150°C hard bake, and both wafers remained intact. These observations distinguish adhesion to bare silicon, addressed by the flood-exposed base layer, from stabilization of the completed SU-8 stack before SUEX processing.
 
-![Supplementary Figure S2. Example images of SU-8 microchannel delamination when features are patterned directly on bare silicon without the flood-exposed base layer.](../figures/rendered/supp_fig_s2_delamination.pdf)
+![Supplementary Figure S2. Representative optical micrographs of SU-8 microchannel delamination when features were patterned directly on bare silicon without the flood-exposed base layer. Scale bars: 100 µm (left) and 200 µm (right).](../figures/rendered/supp_fig_s2_delamination.pdf)

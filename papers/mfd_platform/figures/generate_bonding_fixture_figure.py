@@ -687,7 +687,8 @@ def dimension_arrow(
                 [edge_point[1], arrow_point[1]],
                 color=COLORS["ink"],
                 lw=0.65,
-                linestyle=(0, (1.0, 2.0)),
+                linestyle=(0, (1.2, 1.8)),
+                dash_capstyle="butt",
                 zorder=8,
             )
     ax.add_patch(FancyArrowPatch(start, end, arrowstyle="<->", mutation_scale=9, color=COLORS["ink"], lw=0.8))
@@ -695,6 +696,58 @@ def dimension_arrow(
     if text_background:
         bbox = {"boxstyle": "round,pad=0.10", "facecolor": "white", "edgecolor": "none", "alpha": 0.92}
     ax.text(*text_xy, label, fontsize=7.6, color=COLORS["ink"], ha="center", va="center", rotation=rotation, bbox=bbox)
+
+
+def evenly_dashed_closed_path(
+    ax: plt.Axes,
+    points: np.ndarray,
+    *,
+    color: str,
+    linewidth: float,
+    zorder: float,
+    target_period: float = 0.34,
+    dash_fraction: float = 0.62,
+) -> None:
+    """Draw a closed path with one uniform dash phase around its perimeter."""
+    closed = np.vstack((points, points[0]))
+    vectors = np.diff(closed, axis=0)
+    lengths = np.linalg.norm(vectors, axis=1)
+    cumulative = np.concatenate(([0.0], np.cumsum(lengths)))
+    perimeter = float(cumulative[-1])
+    cycle_count = max(1, round(perimeter / target_period))
+    period = perimeter / cycle_count
+    dash_length = period * dash_fraction
+
+    def point_at(distance: float) -> tuple[np.ndarray, int]:
+        wrapped = distance % perimeter
+        edge = min(int(np.searchsorted(cumulative, wrapped, side="right") - 1), len(lengths) - 1)
+        fraction = (wrapped - cumulative[edge]) / lengths[edge]
+        return closed[edge] + vectors[edge] * fraction, edge
+
+    dash_paths: list[np.ndarray] = []
+    for index in range(cycle_count):
+        start_distance = index * period + (period - dash_length) / 2
+        end_distance = start_distance + dash_length
+        start_point, start_edge = point_at(start_distance)
+        end_point, end_edge = point_at(end_distance)
+        if end_distance < perimeter:
+            intermediate = closed[start_edge + 1 : end_edge + 1]
+            dash_paths.append(np.vstack((start_point, intermediate, end_point)))
+        else:
+            first = closed[start_edge + 1 :]
+            second = closed[1 : end_edge + 1]
+            dash_paths.append(np.vstack((start_point, first, second, end_point)))
+
+    ax.add_collection(
+        LineCollection(
+            dash_paths,
+            colors=color,
+            linewidths=linewidth,
+            capstyle="butt",
+            joinstyle="round",
+            zorder=zorder,
+        )
+    )
 
 
 def convex_hull(points: np.ndarray) -> np.ndarray:
@@ -788,7 +841,7 @@ def draw_lock_view(
     pad = 0.65
     crop = (
         hull_min[0] - 1.00,
-        max(hull_max[0] + pad, platform_x[1] + 0.55),
+        max(hull_max[0] + pad, platform_x[1] + 0.78),
         hull_min[1] - pad,
         max(hull_max[1] + pad, platform_y[1] + 0.82),
     )
@@ -826,18 +879,28 @@ def draw_lock_view(
             skirt_inner_hull,
             closed=True,
             facecolor=mcolors.to_rgba("#f6dfbf", 0.94),
-            edgecolor="#a46200",
-            linewidth=1.1,
-            linestyle="--",
+            edgecolor="none",
             zorder=4,
         )
+    )
+    evenly_dashed_closed_path(
+        detail_ax,
+        skirt_inner_hull,
+        color="#a46200",
+        linewidth=1.1,
+        zorder=4.2,
     )
     source_rect(detail_ax, right_insert.lock_x, lock_y, BoxRole.HOLE, 1.0, 5)
     source_rect(detail_ax, right_insert.pin_x, pin_y, BoxRole.INSERT, 0.85, 6)
     top_segments = intersecting_segments(dxf, (schematic_left, crop[1], crop[2], crop[3]))
     detail_ax.add_collection(LineCollection(top_segments, colors=BOX[BoxRole.SUEX].edge, linewidths=1.05, alpha=0.96, zorder=7))
 
-    insert_arrow_y = hull_min[1] - 0.34
+    outer_dimension_gap = 0.40
+    inner_dimension_clearance = 0.16
+    horizontal_label_gap = 0.20
+    vertical_label_gap = 0.23
+
+    insert_arrow_y = hull_min[1] - outer_dimension_gap
     p_insert_0 = (hull_min[0], insert_arrow_y)
     p_insert_1 = (hull_max[0], insert_arrow_y)
     dimension_arrow(
@@ -845,10 +908,10 @@ def draw_lock_view(
         p_insert_0,
         p_insert_1,
         f"{hull_max[0] - hull_min[0]:.2f} mm insert",
-        ((p_insert_0[0] + p_insert_1[0]) / 2, p_insert_0[1] - 0.22),
+        ((p_insert_0[0] + p_insert_1[0]) / 2, p_insert_0[1] - horizontal_label_gap),
         extension_points=((hull_min[0], hull_min[1]), (hull_max[0], hull_min[1])),
     )
-    insert_arrow_x = hull_min[0] - 0.55
+    insert_arrow_x = hull_min[0] - outer_dimension_gap
     p_insert_2 = (insert_arrow_x, hull_min[1])
     p_insert_3 = (insert_arrow_x, hull_max[1])
     dimension_arrow(
@@ -856,13 +919,13 @@ def draw_lock_view(
         p_insert_2,
         p_insert_3,
         f"{hull_max[1] - hull_min[1]:.2f} mm",
-        (p_insert_2[0] - 0.24, (p_insert_2[1] + p_insert_3[1]) / 2),
+        (p_insert_2[0] - vertical_label_gap, (p_insert_2[1] + p_insert_3[1]) / 2),
         90.0,
         extension_points=((hull_min[0], hull_min[1]), (hull_min[0], hull_max[1])),
         text_background=True,
     )
 
-    platform_arrow_y = platform_y[1] + 0.38
+    platform_arrow_y = platform_y[1] + outer_dimension_gap
     platform_p0 = (platform_x[0], platform_arrow_y)
     platform_p1 = (platform_x[1], platform_arrow_y)
     dimension_arrow(
@@ -870,10 +933,10 @@ def draw_lock_view(
         platform_p0,
         platform_p1,
         f"{platform_x[1] - platform_x[0]:.2f} mm platform",
-        (platform_p0[0] + 2.20, platform_p0[1] + 0.18),
+        ((platform_p0[0] + platform_p1[0]) / 2, platform_p0[1] + horizontal_label_gap),
         extension_points=((platform_x[0], platform_y[1]), (platform_x[1], platform_y[1])),
     )
-    platform_arrow_x = platform_x[1] + 0.28
+    platform_arrow_x = platform_x[1] + outer_dimension_gap
     platform_p2 = (platform_arrow_x, platform_y[0])
     platform_p3 = (platform_arrow_x, platform_y[1])
     dimension_arrow(
@@ -881,12 +944,12 @@ def draw_lock_view(
         platform_p2,
         platform_p3,
         f"{platform_y[1] - platform_y[0]:.2f} mm",
-        (platform_p2[0] + 0.18, (platform_p2[1] + platform_p3[1]) / 2),
+        (platform_p2[0] + vertical_label_gap, (platform_p2[1] + platform_p3[1]) / 2),
         90.0,
         extension_points=((platform_x[1], platform_y[0]), (platform_x[1], platform_y[1])),
     )
 
-    lock_arrow_y = lock_y[1] + 0.62
+    lock_arrow_y = float(skirt_inner_hull[:, 1].max()) + inner_dimension_clearance
     p0 = (right_insert.lock_x[0], lock_arrow_y)
     p1 = (right_insert.lock_x[1], lock_arrow_y)
     dimension_arrow(
@@ -894,10 +957,10 @@ def draw_lock_view(
         p0,
         p1,
         f"{pins.hole_dims[0]:.2f} mm SUEX lock",
-        ((p0[0] + p1[0]) / 2, p0[1] + 0.22),
+        ((p0[0] + p1[0]) / 2, p0[1] + horizontal_label_gap),
         extension_points=((right_insert.lock_x[0], lock_y[1]), (right_insert.lock_x[1], lock_y[1])),
     )
-    pin_arrow_y = pin_y[0] - 0.50
+    pin_arrow_y = float(skirt_inner_hull[:, 1].min()) - inner_dimension_clearance
     p2 = (right_insert.pin_x[0], pin_arrow_y)
     p3 = (right_insert.pin_x[1], pin_arrow_y)
     dimension_arrow(
@@ -905,7 +968,7 @@ def draw_lock_view(
         p2,
         p3,
         f"{pins.dims[0]:.2f} mm printed pin",
-        ((p2[0] + p3[0]) / 2, p2[1] - 0.22),
+        ((p2[0] + p3[0]) / 2, p2[1] - horizontal_label_gap),
         extension_points=((right_insert.pin_x[0], pin_y[0]), (right_insert.pin_x[1], pin_y[0])),
     )
 

@@ -53,7 +53,7 @@ The previous workflow overview slide is no longer part of the main figure sequen
 
 ### Figure 3. Post-mold device replication and assembly
 
-- **Purpose:** Show the repeated six-step workflow from a completed hybrid mold to a framed, plasma-cleaned PDMS device.
+- **Purpose:** Show the repeated nine-panel workflow from a completed hybrid mold to a framed, plasma-cleaned PDMS device, including rack-based degassing and curing, paper-guillotine trimming, glass bonding and autoclaving, and subsequent inverted frame assembly.
 - **Generated source:** `papers/mfd_platform/figures/generate_device_assembly_protocol.py`
 - **Primary source asset:** `papers/mfd_platform/figures/final_drop/Fig4_mold_casts_package/assembly_protocol_schematic.pdf`
 - **Supporting photo composite retained in source folder:** `papers/mfd_platform/figures/final_drop/Fig4_mold_casts_package/draft_figure.pdf`

@@ -4,6 +4,8 @@ from __future__ import annotations
 
 from io import BytesIO
 from pathlib import Path
+import subprocess
+from tempfile import TemporaryDirectory
 from zipfile import ZipFile
 
 import matplotlib.pyplot as plt
@@ -13,6 +15,7 @@ from PIL import Image
 
 FIGURE_DIR = Path(__file__).resolve().parent
 OUTPUT_DIR = FIGURE_DIR / "final_drop" / "Fig5_plate_layout_validation"
+FLUORESCENCE_PDF = OUTPUT_DIR / "fluorescence_microscopy.pdf"
 FLUORESCENCE_ODP = OUTPUT_DIR / "fluorescence_microscopy.odp"
 DYE_DAY0 = OUTPUT_DIR / "dye_gradient_day0.png"
 DYE_DAY3 = OUTPUT_DIR / "dye_gradient_day3.png"
@@ -23,26 +26,62 @@ MUTED = "#687583"
 PANEL_BOX = {"boxstyle": "round,pad=0.25", "facecolor": INK, "edgecolor": INK}
 
 
-def load_odp_images() -> list[Image.Image]:
-    images: list[Image.Image] = []
-    with ZipFile(FLUORESCENCE_ODP) as archive:
-        for name in archive.namelist():
-            if not name.startswith("Pictures/"):
-                continue
-            with Image.open(BytesIO(archive.read(name))) as image:
-                images.append(image.convert("RGB"))
-    return images
-
-
-def select_ctb_images(images: list[Image.Image]) -> tuple[Image.Image, Image.Image]:
-    # The CTB overview is the widest large grayscale mosaic; the representative
-    # field is the remaining large near-square grayscale image.
-    overview = max(images, key=lambda image: image.width)
-    representative = max(
-        (image for image in images if image is not overview and image.width > 4000),
-        key=lambda image: image.width * image.height,
+def crop_fraction(
+    image: Image.Image,
+    bounds: tuple[float, float, float, float],
+) -> Image.Image:
+    left, top, right, bottom = bounds
+    return image.crop(
+        (
+            round(image.width * left),
+            round(image.height * top),
+            round(image.width * right),
+            round(image.height * bottom),
+        )
     )
-    return overview, representative
+
+
+def load_authored_ctb_row() -> Image.Image:
+    # Reuse the exact three-image CTB row authored in the ODP: one overview at
+    # left and two stacked crops at right.
+    with TemporaryDirectory(prefix="openmfd-fluorescence-") as temporary_dir:
+        output_stem = Path(temporary_dir) / "fluorescence"
+        subprocess.run(
+            [
+                "pdftoppm",
+                "-f",
+                "1",
+                "-l",
+                "1",
+                "-png",
+                "-singlefile",
+                "-r",
+                "300",
+                str(FLUORESCENCE_PDF),
+                str(output_stem),
+            ],
+            check=True,
+        )
+        with Image.open(output_stem.with_suffix(".png")) as image:
+            slide = image.convert("RGB")
+            ct_b = crop_fraction(slide, (0.302, 0.355, 0.845, 0.681))
+
+    # The ODP overlays a white channel label on the overview. Replace that
+    # panel with its underlying source raster while retaining the authored
+    # sizing and the two detail crops on the right.
+    with ZipFile(FLUORESCENCE_ODP) as odp:
+        overview_bytes = odp.read(
+            "Pictures/1000000000001D8E00000E6C3664813B.png"
+        )
+    with Image.open(BytesIO(overview_bytes)) as image:
+        overview = image.convert("RGB")
+    overview_width = round(ct_b.width * 10.199 / 14.797)
+    overview = overview.resize(
+        (overview_width, ct_b.height),
+        Image.Resampling.LANCZOS,
+    )
+    ct_b.paste(overview, (0, 0))
+    return ct_b
 
 
 def panel_label(ax: plt.Axes, label: str) -> None:
@@ -69,7 +108,7 @@ def show_image(ax: plt.Axes, image: Image.Image, title: str | None = None) -> No
 
 def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    ct_b_overview, ct_b_field = select_ctb_images(load_odp_images())
+    ct_b_group = load_authored_ctb_row()
 
     with Image.open(DYE_DAY0) as image:
         dye_day0 = image.convert("RGB")
@@ -80,54 +119,47 @@ def main() -> int:
         # the original plate means, error bars, ticks, and plate labels.
         ct_b_counts = image.convert("RGB").crop((70, 390, image.width - 10, image.height - 5))
 
-    fig = plt.figure(figsize=(15, 13), facecolor="white")
+    fig = plt.figure(figsize=(10.0, 15.0), facecolor="white")
     outer = fig.add_gridspec(
         3,
         1,
-        height_ratios=(0.78, 1.08, 1.25),
-        left=0.055,
-        right=0.98,
+        height_ratios=(1.25, 0.87, 1.15),
+        left=0.035,
+        right=0.99,
         bottom=0.055,
-        top=0.925,
-        hspace=0.29,
+        top=0.895,
+        hspace=0.24,
     )
 
     fig.suptitle(
-        "Plate-format devices maintain directional bias and support distal CTB uptake",
+        "Plate-format devices maintain directional bias\n"
+        "and support distal CTB uptake",
         fontsize=23,
         color=INK,
         fontweight="bold",
         y=0.975,
     )
 
-    dye_grid = GridSpecFromSubplotSpec(1, 2, subplot_spec=outer[0], wspace=0.035)
+    dye_grid = GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[0], hspace=0.18)
     ax_day0 = fig.add_subplot(dye_grid[0, 0])
-    ax_day3 = fig.add_subplot(dye_grid[0, 1])
+    ax_day3 = fig.add_subplot(dye_grid[1, 0])
     show_image(ax_day0, dye_day0, "Hour 0")
     show_image(ax_day3, dye_day3, "Hour 72")
     panel_label(ax_day0, "A")
 
-    ct_b_grid = GridSpecFromSubplotSpec(
-        1,
-        2,
-        subplot_spec=outer[1],
-        width_ratios=(2.15, 1.0),
-        wspace=0.035,
-    )
-    ax_ct_b_overview = fig.add_subplot(ct_b_grid[0, 0])
-    ax_ct_b_field = fig.add_subplot(ct_b_grid[0, 1])
-    show_image(ax_ct_b_overview, ct_b_overview, "CTB-647 endpoint overview")
-    show_image(ax_ct_b_field, ct_b_field, "Representative CTB-positive soma field")
-    panel_label(ax_ct_b_overview, "B")
+    validation_grid = GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1])
+    ax_ct_b = fig.add_subplot(validation_grid[0, 0])
+    show_image(ax_ct_b, ct_b_group, "CTB-647 endpoint (DIV11)")
+    panel_label(ax_ct_b, "B")
 
     ax_counts = fig.add_subplot(outer[2])
-    show_image(ax_counts, ct_b_counts, "Mean CTB-positive soma count by plate")
+    show_image(ax_counts, ct_b_counts, "Mean CTB-positive soma count per analyzed device")
     panel_label(ax_counts, "C")
     ax_counts.text(
         0.5,
         -0.055,
-        "Bars: plate mean; error bars: SD across analyzed interior device positions\n"
-        "One E18 donor preparation; three technical plate replicates; 69 positions analyzed",
+        "Bars: plate mean; error bars: SD across analyzed interior devices\n"
+        "One E18 donor preparation; three technical plate replicates; 69 devices analyzed",
         transform=ax_counts.transAxes,
         ha="center",
         va="top",
