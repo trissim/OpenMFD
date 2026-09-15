@@ -1,6 +1,8 @@
 # Rendered Figures
 
-These are the stable figure assets referenced by `papers/mfd_platform/paper.md`.
+These are stable figure assets referenced by `papers/mfd_platform/manuscript.md`
+and its supplementary sources. Ordinary document builds reuse these PDFs and
+the retained PNGs in rendered_docx; they do not regenerate figures.
 
 Workflow:
 
@@ -8,7 +10,7 @@ Workflow:
 2. Run:
 
 ```bash
-python papers/mfd_platform/build_paper.py
+python papers/mfd_platform/build_paper.py build
 ```
 
 or, if you only want to refresh the figures:
@@ -20,12 +22,7 @@ python papers/mfd_platform/figures/render_figures.py
 3. The script prefers `draft_figure.pdf` from each figure folder. If only `draft_figure.odp` is present, it exports a fresh PDF first and then copies that PDF into this folder.
 4. The manuscript keeps referencing the stable files here
 
-Current stable outputs:
-
-- `openmfd_design.pdf`
-- `insert_bonding.pdf`
-- `mold_casts_package.pdf`
-- `validation.pdf`
-- `generalizability.pdf`
+Stable output selection is declared by FigureRenderSpec in render_figures.py;
+the actual document dependencies are derived from canonical Markdown references.
 
 Note: the paper points to the stable outputs in this folder. Live auto-refresh on every save is not configured; re-run the render script after editing an `.odp`.

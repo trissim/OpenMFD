@@ -1,4 +1,8 @@
 # Python
+# Manuscript reading bundles/snapshots are generated, not scientific sources.
+papers/mfd_platform/current
+papers/mfd_platform/.current-*
+papers/mfd_platform/review/
 __pycache__/
 *.py[cod]
 *$py.class

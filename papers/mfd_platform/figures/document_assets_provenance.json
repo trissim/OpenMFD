@@ -1,0 +1,19 @@
+{
+  "validation_scope": "Retained document assets captured before manuscript cutover; no scientific rerun or fresh rendering proof.",
+  "output_sha256": {
+    "rendered/generalizability.pdf": "724a63be11bc03651063a8bf973ff601a738a169efdcc0fa23ec0cd890b19c0a",
+    "rendered_docx/generalizability.png": "6e3009688748c6a8d8e2068d2ecd0a4cff893080f4121379909cbfb207619e5b",
+    "rendered/insert_bonding.pdf": "651a40ae722073fadfd53fcd72aa2585219a8de6d337441a3bfaeebe08e5ca98",
+    "rendered_docx/insert_bonding.png": "6885ab99c243095ccd72dc00abfd5408b8b23dbb337fd2074737fe5b67304c5c",
+    "rendered/mold_casts_package.pdf": "a83261ed4f455b6fa369d0a1984e2d27fe086ad960c284670e03bc3126a23688",
+    "rendered_docx/mold_casts_package.png": "783108132c801556d404ac265348fa1b9740bd03a266f0e8538d6dbb21913729",
+    "rendered/openmfd_design.pdf": "8e24e11ad235e923e3ef7037aaa9d517ef324aeba709073e61181257f088e9d2",
+    "rendered_docx/openmfd_design.png": "f41f953faf782eeabcf7dba7c48066e460a8a1b7fc8d3f6119842a25ce711be4",
+    "rendered/supp_fig_s1_no_lp360.pdf": "7586c435edd4377245a27b2f3987965753ca621ad08cf8990f835743184f3b68",
+    "rendered_docx/supp_fig_s1_no_lp360.png": "b4aef8aa6ccb7357e6a814d5c9d18ea28d842e0c22e109d3d552f5f97807202f",
+    "rendered/supp_fig_s2_delamination.pdf": "1b3d51eb42efda4812b4deb51522942edeb6df4b75cab06f96cc9b6b12a42f69",
+    "rendered_docx/supp_fig_s2_delamination.png": "6a0604755566d1c651db955df795139cb92a47c95d7478282269281856442551",
+    "rendered/validation.pdf": "a767c4f3114fc43e8ca989a01286042f64e62e031fc34896aac9c034f8c91e86",
+    "rendered_docx/validation.png": "6fd5ee6a93f0238d9ad6aa834de2d024bd3f432cb6dd6863f62f37ed03eb0ed1"
+  }
+}
