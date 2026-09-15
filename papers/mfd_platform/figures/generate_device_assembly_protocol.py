@@ -113,7 +113,7 @@ STEPS = (
     Step(4, "Cure in rack", "Transfer the loaded rack directly to the curing oven"),
     Step(5, "Demold cast", "Release the circular PDMS cast with wells facing upward"),
     Step(6, "Tape and trim", "Tape inside the wall marks, cut, and chamfer the corners"),
-    Step(7, "Bond and autoclave", "Plasma-bond to glass, thermally stabilize, and dry-autoclave at 121 degrees C"),
+    Step(7, "Bond and autoclave", "Plasma-bond to glass, thermally stabilize, and autoclave at 121 degrees C for 15 min"),
     Step(8, "Frame assembly", "Fill the inverted frame groove and seat the glass-side-up device"),
     Step(9, "Cure and prepare", "After the 3 d adhesive cure, turn the framed device upright and plasma-treat"),
 )

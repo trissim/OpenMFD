@@ -1,11 +1,11 @@
 # Supplementary Table S1. Resin-insert pin-height variation across a 96-position array
 
-Pin heights were measured across one 8 × 12 resin-insert array (rows A-H, columns 1-12; *n* = 96). Values are reported in millimeters (mm) and as deviations from the mean in micrometers (µm).
+Each pin height was measured individually with a micrometer across one 8 × 12 resin-insert array (rows A-H, columns 1-12; *n* = 96). Values are reported in millimeters (mm) and as deviations from the mean in micrometers (µm).
 
 - Mean height: **5.551 mm**
 - Standard deviation: **26.7 µm**
 - Minimum / maximum height: **5.483 mm** (H12) / **5.599 mm** (A3, A4, and A6)
-- Peak-to-peak range: **116 µm**
+- Difference between tallest and shortest pins: **116 µm**
 
 ## S1A. Measured pin heights (mm)
 

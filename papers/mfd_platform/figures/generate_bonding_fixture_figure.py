@@ -293,23 +293,30 @@ def draw_labeled_photo_panel(ax: plt.Axes, path: Path, label: str, title: str) -
 def draw_clamp_symbol(ax: plt.Axes) -> None:
     color = "#3b434f"
     x = 0.150
-    y0 = 0.090
-    y1 = 0.825
-    arm = 0.055
+    y0 = STACK_DRAW_BOTTOM - 0.070
+    y1 = STACK_DRAW_TOP + 0.070
+    arm_end = STACK_LEFT + 0.055
+    arrow_x = STACK_LEFT + 0.025
     ax.plot([x, x], [y0, y1], color=color, lw=3.2, solid_capstyle="round", clip_on=False)
-    ax.plot([x, x + arm], [y1, y1], color=color, lw=3.2, solid_capstyle="round", clip_on=False)
-    ax.plot([x, x + arm], [y0, y0], color=color, lw=3.2, solid_capstyle="round", clip_on=False)
-    ax.add_patch(
-        FancyArrowPatch(
-            (x + arm - 0.012, y1 - 0.008),
-            (x + arm - 0.012, y1 - 0.090),
-            arrowstyle="-|>",
-            mutation_scale=11,
-            color=color,
-            lw=1.5,
-            clip_on=False,
+    ax.plot([x, arm_end], [y1, y1], color=color, lw=3.2, solid_capstyle="round", clip_on=False)
+    ax.plot([x, arm_end], [y0, y0], color=color, lw=3.2, solid_capstyle="round", clip_on=False)
+    for start_y, end_y in (
+        (y1 - 0.014, STACK_DRAW_TOP + 0.004),
+        (y0 + 0.014, STACK_DRAW_BOTTOM - 0.004),
+    ):
+        ax.add_patch(
+            FancyArrowPatch(
+                (arrow_x, start_y),
+                (arrow_x, end_y),
+                arrowstyle="-|>",
+                mutation_scale=11,
+                shrinkA=0,
+                shrinkB=0,
+                color=color,
+                lw=1.5,
+                clip_on=False,
+            )
         )
-    )
 
 
 def draw_stack_layer(ax: plt.Axes, layer: StackLayer) -> None:
@@ -670,6 +677,24 @@ def source_rect(
     )
 
 
+def dimension_extension_points(
+    outline: np.ndarray,
+    start: tuple[float, float],
+    end: tuple[float, float],
+) -> tuple[tuple[float, float], tuple[float, float]]:
+    """Anchor axis-aligned dimensions to the nearest outline at each extreme."""
+    axis = int(np.argmax(np.abs(np.subtract(end, start))))
+    anchors = []
+    for tip in (start, end):
+        candidates = outline[np.isclose(outline[:, axis], tip[axis], rtol=0, atol=1e-4)]
+        if not len(candidates):
+            raise ValueError("Dimension endpoint does not match an outline extreme")
+        nearest = candidates[np.argmin(np.linalg.norm(candidates - tip, axis=1))].copy()
+        nearest[axis] = tip[axis]
+        anchors.append(tuple(nearest))
+    return anchors[0], anchors[1]
+
+
 def dimension_arrow(
     ax: plt.Axes,
     start: tuple[float, float],
@@ -682,16 +707,27 @@ def dimension_arrow(
 ) -> None:
     if extension_points is not None:
         for edge_point, arrow_point in zip(extension_points, (start, end), strict=True):
+            direction = np.subtract(arrow_point, edge_point)
+            length = float(np.linalg.norm(direction))
+            extension_end = np.asarray(arrow_point, dtype=float)
+            if length:
+                extension_end = extension_end + 0.08 * direction / length
             ax.plot(
-                [edge_point[0], arrow_point[0]],
-                [edge_point[1], arrow_point[1]],
+                [edge_point[0], extension_end[0]],
+                [edge_point[1], extension_end[1]],
                 color=COLORS["ink"],
                 lw=0.65,
                 linestyle=(0, (1.2, 1.8)),
                 dash_capstyle="butt",
                 zorder=8,
             )
-    ax.add_patch(FancyArrowPatch(start, end, arrowstyle="<->", mutation_scale=9, color=COLORS["ink"], lw=0.8))
+    # Dimension tips must meet their extension lines, without annotation padding.
+    ax.add_patch(
+        FancyArrowPatch(
+            start, end, arrowstyle="<->", mutation_scale=9,
+            shrinkA=0, shrinkB=0, color=COLORS["ink"], lw=0.8,
+        )
+    )
     bbox = None
     if text_background:
         bbox = {"boxstyle": "round,pad=0.10", "facecolor": "white", "edgecolor": "none", "alpha": 0.92}
@@ -893,6 +929,7 @@ def draw_lock_view(
     source_rect(detail_ax, right_insert.lock_x, lock_y, BoxRole.HOLE, 1.0, 5)
     source_rect(detail_ax, right_insert.pin_x, pin_y, BoxRole.INSERT, 0.85, 6)
     top_segments = intersecting_segments(dxf, (schematic_left, crop[1], crop[2], crop[3]))
+    platform_outline = np.asarray(top_segments).reshape(-1, 2)
     detail_ax.add_collection(LineCollection(top_segments, colors=BOX[BoxRole.SUEX].edge, linewidths=1.05, alpha=0.96, zorder=7))
 
     outer_dimension_gap = 0.40
@@ -909,7 +946,7 @@ def draw_lock_view(
         p_insert_1,
         f"{hull_max[0] - hull_min[0]:.2f} mm insert",
         ((p_insert_0[0] + p_insert_1[0]) / 2, p_insert_0[1] - horizontal_label_gap),
-        extension_points=((hull_min[0], hull_min[1]), (hull_max[0], hull_min[1])),
+        extension_points=dimension_extension_points(hull, p_insert_0, p_insert_1),
     )
     insert_arrow_x = hull_min[0] - outer_dimension_gap
     p_insert_2 = (insert_arrow_x, hull_min[1])
@@ -921,7 +958,7 @@ def draw_lock_view(
         f"{hull_max[1] - hull_min[1]:.2f} mm",
         (p_insert_2[0] - vertical_label_gap, (p_insert_2[1] + p_insert_3[1]) / 2),
         90.0,
-        extension_points=((hull_min[0], hull_min[1]), (hull_min[0], hull_max[1])),
+        extension_points=dimension_extension_points(hull, p_insert_2, p_insert_3),
         text_background=True,
     )
 
@@ -934,7 +971,7 @@ def draw_lock_view(
         platform_p1,
         f"{platform_x[1] - platform_x[0]:.2f} mm platform",
         ((platform_p0[0] + platform_p1[0]) / 2, platform_p0[1] + horizontal_label_gap),
-        extension_points=((platform_x[0], platform_y[1]), (platform_x[1], platform_y[1])),
+        extension_points=dimension_extension_points(platform_outline, platform_p0, platform_p1),
     )
     platform_arrow_x = platform_x[1] + outer_dimension_gap
     platform_p2 = (platform_arrow_x, platform_y[0])
@@ -946,7 +983,7 @@ def draw_lock_view(
         f"{platform_y[1] - platform_y[0]:.2f} mm",
         (platform_p2[0] + vertical_label_gap, (platform_p2[1] + platform_p3[1]) / 2),
         90.0,
-        extension_points=((platform_x[1], platform_y[0]), (platform_x[1], platform_y[1])),
+        extension_points=dimension_extension_points(platform_outline, platform_p2, platform_p3),
     )
 
     lock_arrow_y = float(skirt_inner_hull[:, 1].max()) + inner_dimension_clearance
@@ -981,10 +1018,18 @@ def save_subfigure_images(fig: plt.Figure, axes: dict[str, plt.Axes]) -> None:
 
     fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
-    for label, ax in axes.items():
-        bbox = ax.get_tightbbox(renderer).expanded(1.03, 1.05)
-        bbox_inches = bbox.transformed(fig.dpi_scale_trans.inverted())
-        fig.savefig(subfigure_dir / f"{label}.png", dpi=SUBFIGURE_DPI, bbox_inches=bbox_inches, pad_inches=0.02)
+    visibility = {ax: ax.get_visible() for ax in axes.values()}
+    try:
+        for label, ax in axes.items():
+            # Tight crops may overlap adjacent panels with out-of-axis artwork.
+            for panel in axes.values():
+                panel.set_visible(panel is ax and visibility[panel])
+            bbox = ax.get_tightbbox(renderer).expanded(1.03, 1.05)
+            bbox_inches = bbox.transformed(fig.dpi_scale_trans.inverted())
+            fig.savefig(subfigure_dir / f"{label}.png", dpi=SUBFIGURE_DPI, bbox_inches=bbox_inches, pad_inches=0.02)
+    finally:
+        for ax, visible in visibility.items():
+            ax.set_visible(visible)
 
 
 def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:

@@ -1,17 +1,17 @@
 # Supplementary Protocol S2. One-time hybrid SU-8/SUEX/resin mold fabrication
 
-This protocol describes the one-time mold fabrication performed in a shared
-microfabrication facility before the repeated benchtop device-production and
-culture workflow in Supplementary Protocol S1. It starts from OpenMFD-generated
-masks and insert models and ends with a parylene-coated hybrid mold ready for
-PDMS casting.
+This protocol describes how to make the reusable mold for the neuronal device
+in a shared microfabrication facility, starting from OpenMFD-generated masks
+and insert models. The finished parylene-coated mold is used repeatedly for
+PDMS casting and plate assembly as described in Supplementary Protocol S1.
 
-The protocol describes the compartmentalized-neuron device used here.
+Follow the manufacturers' instructions for routine material processing;
+changes used in this work are specified below.
 Supplementary Table S3 provides validation checks for adapting the array,
 device spacing, well radius, pin clearance, SUEX thickness, channel layout,
 resin, printer, or parylene thickness.
 
-## Inputs
+## Required design files
 
 - OpenMFD-generated channel-layer photomask.
 - OpenMFD-generated SUEX well-layer and insert-alignment photomask.
@@ -46,9 +46,10 @@ resin, printer, or parylene thickness.
 2. Confirm that the channel layer, SUEX well and alignment-hole layer, insert
    pins, insert skirts, taper allowances, and cutting/frame outlines share the
    same coordinate system.
-3. Confirm the PDMS shrinkage compensation factor used for the demonstrated
-   100°C cure is applied consistently to the relevant mask and insert
-   outputs.
+3. Apply the demonstrated horizontal PDMS shrinkage compensation factor of
+   1.0226 (2.26% enlargement) for the 100°C cure consistently to matching mask
+   and insert outputs (Supplementary Table S3). Do not add an independent
+   slicer scale correction.
 4. Before fabrication, inspect the single-device and wafer-scale DXF outputs and
    the single and arrayed insert STL outputs.
 
@@ -87,37 +88,37 @@ Routine inspection after photolithography:
 
 ## C. Print and prepare resin inserts
 
-1. Print the OpenMFD-generated insert array using the validated resin-printer
-   profile for the selected resin. This work used Siraya Tech
-   Sculpt Clear resin on an Elegoo Mars 3 Pro printer with the print profile in
-   Supplementary Table S4.
+1. Print the OpenMFD-generated insert array. This work used Siraya Tech
+   Sculpt Clear resin on an Elegoo Mars 3 Pro printer with the settings in
+   Supplementary Table S4. Test settings for other printers and resins before
+   printing the full array.
 2. Record resin, layer height, exposure, lift/retract, washing, and post-cure
    settings with the local printer profile. These settings apply to the local
    printer and resin, independently of the device dimensions in OpenMFD.
 3. Clean the printed inserts by spraying with acetone and blow drying with
    compressed nitrogen. Repeat until pin features are free of residual resin;
    this work used 6–8 acetone/nitrogen cycles.
-4. Remove the flexible metal plate from the printer build plate and post-cure
+4. Remove the flexible metal build plate from the printer platform and post-cure
    the print in an Elegoo Mercury X rotating UV cure station for 15 min.
-5. Keep the inserts in their printed relative positions on a detachable magnetic
-   build plate or equivalent transfer fixture.
-6. Measure printed pin heights across the insert array before bonding. The
-   measured array had 116 µm peak-to-peak pin-height variation across
-   one 8 × 12 array (Supplementary Table S1).
+5. Keep the inserts in their printed relative positions on the detachable
+   flexible metal build plate or equivalent transfer fixture.
+6. Measure each printed pin individually with a micrometer before bonding.
+   In one 8 × 12 array of 96 pins, the tallest and shortest pins differed by
+   116 µm (Supplementary Table S1).
 
 Routine inspection before bonding:
 
 - Confirm that inserts remain in their intended array positions.
 - Confirm that pins are intact and free of resin debris.
-- Confirm that the compliant bonding fixture can accommodate the measured
-  pin-height variation.
+- Confirm that the compressible clamping layers allow all pins to seat despite
+  the measured differences in height.
 
 ## D. Bond inserts to the SU-8/SUEX wafer
 
 1. Transfer the insert array from the resin-printer build plate to a bonding
    plate suitable for clamping against the full wafer.
 2. Place a 0.03125-inch-thick, 60A EPDM rubber sheet between the fixed magnet
-   on the clamping build plate and the removable magnetic build plate carrying
+   on the clamping build plate and the flexible metal build plate carrying
    the inserts.
 3. Apply EPO-TEK 301-2 epoxy in excess to the underside cavity on the pin side
    of each insert.
@@ -128,13 +129,13 @@ Routine inspection before bonding:
    at the insert-wafer interface.
 7. Submerge the clamped assembly in acetone for 1 min.
 8. Transfer to a fresh acetone bath for a second 1 min wash.
-9. Blow-dry the assembly thoroughly with dry air until the bonding interfaces
-   and nearby feature regions are as dry and visibly clear as possible.
+9. Blow-dry the assembly thoroughly with dry air until the joints and nearby
+   mold features are as dry and visibly clear as possible.
 10. Cure the clamped assembly at room temperature for 48 h.
 11. After cure, sonicate the bonded insert-wafer assembly in acetone for 10 min
     to remove residual material.
 12. Release the bonded insert array from the transfer fixture by flexing the
-    detachable magnetic sheet while preserving the insert-wafer bond.
+    flexible metal build plate while preserving the insert-wafer bond.
 
 Routine inspection after bonding:
 
@@ -159,4 +160,4 @@ Routine inspection during the first casting cycle:
 
 Microscopy confirmed open channels after coating and casting. Specified
 microchannel dimensions in the manuscript and design tables refer to the
-pre-parylene CAD values.
+design dimensions before parylene coating.

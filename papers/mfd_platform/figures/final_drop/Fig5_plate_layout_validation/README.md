@@ -36,12 +36,16 @@ Recommended panel story:
   biological replicates
 
 Suggested result wording:
-- Under asymmetric loading conditions, Alexa 488 showed gradual one-way crossover over 3 days, whereas little or no reverse transfer of Alexa 568 was observed.
-- Interpret this as directional hydrostatic-bias-driven crossover, not rapid bidirectional mixing.
+- Images acquired immediately after loading and at 72 h show Alexa 488 redistribution toward the initially lower-volume compartment, with little visible reverse transfer of Alexa 568.
+- The two endpoints do not establish continuous flow, a sustained pressure difference, a flow rate, or complete compartmental isolation.
 
 This figure should support claims about:
 - plate-format routing
 - imaging compatibility
-- predictable compartmental isolation behavior
+- qualitative directional tracer redistribution
 - neuronal survival in the packaged device
 - axon crossing and retrograde tracing compatibility
+
+Figure 4C currently imports `plate_bar_var_Cell_Before.png`; the assembly script
+does not recompute counts, error bars or exclusions. The per-device table and
+original error-bar definition still require verification before submission.

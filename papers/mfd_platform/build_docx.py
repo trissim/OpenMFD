@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import argparse
+import math
 import shutil
 import subprocess
 import sys
@@ -28,6 +30,7 @@ WORD_NAMESPACE = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 TABLE_FONT_SIZE_HALF_POINTS = "20"
 TABLE_BORDER_SIZE_EIGHTH_POINTS = "4"
 TABLE_BORDER_COLOR = "808080"
+CAPTION_FONT_SIZE_PT = 11
 SUPPLEMENTARY_DIR = ROOT / "supplementary"
 SUPPLEMENTARY_FILES = (
     SUPPLEMENTARY_DIR / "Supplementary_Table_S1_pin_z_variability.md",
@@ -244,7 +247,105 @@ def word_tag(tag_name: str) -> str:
     return f"{{{WORD_NAMESPACE}}}{tag_name}"
 
 
-def style_docx_tables() -> None:
+def move_main_figures_after_text(root: ET.Element) -> None:
+    """Keep review prose continuous without shrinking full-page figures."""
+    body = root.find(word_tag("body"))
+    if body is None:
+        return
+    blocks = list(body)
+    boundary = next((block for block in blocks
+                     if "".join(node.text or "" for node in block.iter(word_tag("t")))
+                     == "Supplementary Information"), None)
+    if boundary is None:
+        boundary = body.find(word_tag("sectPr"))
+    limit = blocks.index(boundary) if boundary is not None else len(blocks)
+    figures = []
+    for figure, caption in zip(blocks[:limit], blocks[1:limit]):
+        style = caption.find(f"{word_tag('pPr')}/{word_tag('pStyle')}")
+        if (figure.find(f".//{word_tag('drawing')}") is not None
+                and style is not None and style.get(word_tag("val")) == "ImageCaption"):
+            figures.extend((figure, caption))
+    for block in figures:
+        body.remove(block)
+    index = list(body).index(boundary) if boundary is not None else len(body)
+    for offset, block in enumerate(figures):
+        body.insert(index + offset, block)
+
+
+def fit_docx_figures(root: ET.Element) -> None:
+    namespaces = {
+        "w": WORD_NAMESPACE,
+        "wp": "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing",
+        "a": "http://schemas.openxmlformats.org/drawingml/2006/main",
+    }
+    section = root.find(".//w:sectPr", namespaces)
+    if section is None:
+        raise ValueError("Document has no page setup")
+    # Make the page budget explicit instead of relying on the Word/Writer default.
+    for name, defaults in (
+        ("pgSz", {"w": "12240", "h": "15840"}),
+        ("pgMar", {"top": "1440", "bottom": "1440", "left": "1440", "right": "1440"}),
+    ):
+        element = section.find(word_tag(name))
+        if element is None:
+            element = ET.SubElement(section, word_tag(name))
+        for key, value in defaults.items():
+            if element.get(word_tag(key)) is None:
+                element.set(word_tag(key), value)
+    size = section.find(word_tag("pgSz"))
+    margins = section.find(word_tag("pgMar"))
+    width_pt = (int(size.get(word_tag("w"))) - int(margins.get(word_tag("left")))
+                - int(margins.get(word_tag("right")))) / 20
+    height_pt = (int(size.get(word_tag("h"))) - int(margins.get(word_tag("top")))
+                 - int(margins.get(word_tag("bottom")))) / 20
+    body = root.find("w:body", namespaces)
+    paragraphs = list(body)
+    for figure, caption in zip(paragraphs, paragraphs[1:]):
+        inline = figure.find(".//wp:inline", namespaces)
+        style = caption.find("w:pPr/w:pStyle", namespaces)
+        if inline is None or style is None or style.get(word_tag("val")) != "ImageCaption":
+            continue
+        for paragraph, flags in ((figure, ("keepNext", "keepLines")),
+                                 (caption, ("keepLines",))):
+            properties = paragraph.find(word_tag("pPr"))
+            if properties is None:
+                properties = ET.Element(word_tag("pPr"))
+                paragraph.insert(0, properties)
+            for flag in flags:
+                element = properties.find(word_tag(flag))
+                if element is None:
+                    element = ET.SubElement(properties, word_tag(flag))
+                element.set(word_tag("val"), "1")
+        properties = figure.find(word_tag("pPr"))
+        alignment = properties.find(word_tag("jc"))
+        if alignment is None:
+            alignment = ET.SubElement(properties, word_tag("jc"))
+        alignment.set(word_tag("val"), "center")
+        for run in caption.findall(".//w:r", namespaces):
+            properties = run.find(word_tag("rPr"))
+            if properties is None:
+                properties = ET.Element(word_tag("rPr"))
+                run.insert(0, properties)
+            for name in ("sz", "szCs"):
+                size = properties.find(word_tag(name))
+                if size is None:
+                    size = ET.SubElement(properties, word_tag(name))
+                size.set(word_tag("val"), str(2 * CAPTION_FONT_SIZE_PT))
+        # Reserve caption space using the same font size applied above.
+        text = "".join(node.text or "" for node in caption.findall(".//w:t", namespaces))
+        lines = math.ceil(len(text) / max(1, int(width_pt / (CAPTION_FONT_SIZE_PT * 0.55))))
+        max_height_pt = height_pt - (lines * CAPTION_FONT_SIZE_PT * 1.25 + 30)
+        if max_height_pt <= 0:
+            raise ValueError("Figure caption is too long to share a page with its image")
+        extent = inline.find("wp:extent", namespaces)
+        width, height = int(extent.get("cx")), int(extent.get("cy"))
+        scale = min(1.0, max_height_pt * 12700 / height, width_pt * 12700 / width)
+        for element in [extent, *inline.findall(".//a:xfrm/a:ext", namespaces)]:
+            element.set("cx", str(round(width * scale)))
+            element.set("cy", str(round(height * scale)))
+
+
+def style_docx_document() -> None:
     namespace = {"w": WORD_NAMESPACE}
     ET.register_namespace("w", WORD_NAMESPACE)
 
@@ -252,6 +353,8 @@ def style_docx_tables() -> None:
         document_xml = source_zip.read(WORD_DOCUMENT_XML)
 
         root = ET.fromstring(document_xml)
+        move_main_figures_after_text(root)
+        fit_docx_figures(root)
 
         for table in root.findall(".//w:tbl", namespace):
             properties = table.find("w:tblPr", namespace)
@@ -308,11 +411,18 @@ def style_docx_tables() -> None:
 
 
 def main() -> int:
-    render_figures()
+    parser = argparse.ArgumentParser(description="Build the manuscript and supplementary DOCX/PDF.")
+    parser.add_argument(
+        "--skip-figures", action="store_true",
+        help="Reuse existing rendered figures for text-only revisions.",
+    )
+    args = parser.parse_args()
+    if not args.skip_figures:
+        render_figures()
     sync_docx_figures()
     build_temp_markdown()
     build_docx()
-    style_docx_tables()
+    style_docx_document()
     build_pdf()
     print(f"DOCX written to {OUTPUT_DOCX}")
     print(f"PDF written to {OUTPUT_PDF}")

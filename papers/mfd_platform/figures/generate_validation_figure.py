@@ -119,7 +119,7 @@ def main() -> int:
         # the original plate means, error bars, ticks, and plate labels.
         ct_b_counts = image.convert("RGB").crop((70, 390, image.width - 10, image.height - 5))
 
-    fig = plt.figure(figsize=(10.0, 15.0), facecolor="white")
+    fig = plt.figure(figsize=(10.0, 11.5), facecolor="white")
     outer = fig.add_gridspec(
         3,
         1,
@@ -127,17 +127,8 @@ def main() -> int:
         left=0.035,
         right=0.99,
         bottom=0.055,
-        top=0.895,
+        top=0.96,
         hspace=0.24,
-    )
-
-    fig.suptitle(
-        "Plate-format devices maintain directional bias\n"
-        "and support distal CTB uptake",
-        fontsize=23,
-        color=INK,
-        fontweight="bold",
-        y=0.975,
     )
 
     dye_grid = GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[0], hspace=0.18)
@@ -149,17 +140,17 @@ def main() -> int:
 
     validation_grid = GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1])
     ax_ct_b = fig.add_subplot(validation_grid[0, 0])
-    show_image(ax_ct_b, ct_b_group, "CTB-647 endpoint (DIV11)")
+    show_image(ax_ct_b, ct_b_group, "CTB-647 labeling at DIV11")
     panel_label(ax_ct_b, "B")
 
     ax_counts = fig.add_subplot(outer[2])
-    show_image(ax_counts, ct_b_counts, "Mean CTB-positive soma count per analyzed device")
+    show_image(ax_counts, ct_b_counts, "Mean CTB-positive cell-body count per analyzed device")
     panel_label(ax_counts, "C")
     ax_counts.text(
         0.5,
         -0.055,
         "Bars: plate mean; error bars: SD across analyzed interior devices\n"
-        "One E18 donor preparation; three technical plate replicates; 69 devices analyzed",
+        "Neurons from one E18 rat embryo; three plates; 69 devices analyzed",
         transform=ax_counts.transAxes,
         ha="center",
         va="top",
@@ -169,7 +160,7 @@ def main() -> int:
     ax_counts.text(
         -0.012,
         0.48,
-        "CTB-positive soma count",
+        "CTB-positive cell-body count",
         transform=ax_counts.transAxes,
         ha="center",
         va="center",

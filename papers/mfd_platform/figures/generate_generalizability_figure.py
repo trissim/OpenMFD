@@ -590,15 +590,6 @@ def draw_output_panel(
     if wall_box is not None:
         add_text(ax, wall_box.left + wall_box.width / 2.0, 0.245, "wall frame", TextRole.SMALL_MUTED)
 
-    add_text(
-        ax,
-        0.085,
-        0.125,
-        "Rendered through the Figure 1 STL projection style from the generated insert geometry,\n"
-        "with matching unit pitch, PDMS scale, skirts, and rotated lock-and-key pins.",
-        TextRole.NOTE,
-    )
-
 
 def draw_clean_dxf_subfigure(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
     setup_axis(ax)
@@ -823,7 +814,7 @@ def build_figure() -> plt.Figure:
         )
 
     fig.suptitle(
-        "OpenMFD renders literature-inspired myelination, axon-guidance, and three-compartment assay layouts with the same pipeline used for Figure 1",
+        "Matched fabrication files for literature-inspired assay layouts",
         fontsize=12.0,
         fontweight="bold",
         color=COLORS["ink"],

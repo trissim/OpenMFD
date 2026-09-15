@@ -11,7 +11,7 @@ fit.
 | Resin | Siraya Tech Sculpt Clear high-temperature resin |
 | Printer | Elegoo Mars 3 Pro |
 | Build plate / transfer fixture | Magnetic removable build plate |
-| Slicer/profile name in source screenshots | Siraya High Temp |
+| Slicer profile name | Siraya High Temp |
 
 ## Print profile
 
@@ -55,7 +55,7 @@ fit.
 1. Spray the printed inserts with acetone.
 2. Blow dry with compressed high-pressure nitrogen.
 3. Repeat the acetone spray and nitrogen drying cycle until the pin features are
-   completely clean of residual resin. In the demonstrated workflow this
+   completely clean of residual resin. In this work, cleaning
    required 6–8 cycles.
 4. Remove the flexible metal plate from the printer build plate.
 5. Place the print inside an Elegoo Mercury X rotating UV cure station.
