@@ -17,7 +17,7 @@ geometry from the 24 devices assessed per plate, technical from biological
 replication, and CTβ-dependent exclusions from the full axon and nuclear counts.
 Immediate cut-verification images in F are separate pre-treatment acquisitions.
 
-Build: `papers/mfd_platform/build/run-20261002T183601-945f8e5e`.
+Build: `papers/mfd_platform/build/run-20261002T185214-06a42b89`.
 The existing shared paper-build environment generated manuscript, supplement,
 and combined-review PDF/DOCX files. Build status reported current with no changed
 inputs. Revised Discussion text was verified in both manuscript and review DOCX
@@ -34,3 +34,9 @@ Retained output ownership: this revision owns the worktree, its build run,
 Discussion page preview, and dated PI-review delivery directory. The checkout is
 retained for the revised sources and reproducible build; no temporary source
 checkout or new package installation was used.
+
+Follow-up edits: renamed the Methods heading to "Fluorescent tracer assay" and
+removed the pixel-calibration detail from the biology figure legend. Measurement
+units and scale bars remain in the legend; calibration remains in the axotomy
+protocol. Panel F and its shortened description remain present. The new heading
+was verified in the rebuilt PDF and both manuscript and review DOCX files.

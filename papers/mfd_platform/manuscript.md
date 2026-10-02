@@ -65,7 +65,7 @@ To test whether cells could grow at the outer positions without the frame, one P
 
 Eight tips were fitted to a 12-channel pipette and aligned with one plate column to fill eight wells in parallel. Compatibility with plate-format imaging was tested by focusing and collecting images on Opera Phenix Plus and ImageXpress Micro Confocal microscopes at the Early Drug Discovery Unit (EDDU), The Neuro, McGill University, without custom plate handling or instrument modification.
 
-### Directional tracer-movement assay
+### Fluorescent tracer assay
 Tracer distributions were compared immediately after loading and after 72 h in 24 two-compartment devices. Alexa Fluor 568-conjugated secondary antibody diluted 1:1000 in phosphate-buffered saline (PBS) was loaded at 25 µL into the left compartment, and Alexa Fluor 488-conjugated secondary antibody diluted 1:1000 in PBS was loaded at 50 µL into the right compartment. The volume difference was established once, and the devices were kept in a cell-culture incubator for 72 h without replenishment or volume adjustment. Images were acquired in widefield mode using a 10× objective with a numerical aperture (NA) of 0.30, 2 × 2 camera binning, a 100 ms exposure, and red and green channels suited to the two fluorophores. Tracer movement was assessed visually by comparing green fluorescence appearing in the initially lower-volume compartment with red fluorescence appearing in the opposite compartment. Flow rate and the duration of the pressure difference were not measured.
 
 ### Primary cortical neuron culture and CTB retrograde axon tracing
