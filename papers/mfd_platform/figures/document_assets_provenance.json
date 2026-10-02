@@ -1,5 +1,5 @@
 {
-  "validation_scope": "Retained document assets captured before manuscript cutover; no scientific rerun or fresh rendering proof.",
+  "validation_scope": "Retained document assets; validation figure refreshed on 2026-10-02 for CT-beta text labels only. Dye images, CT-beta microscopy, and graph bars/ticks match the retained PNG pixel-for-pixel. Other figures reused without regeneration; no scientific analysis rerun.",
   "output_sha256": {
     "rendered/generalizability.pdf": "724a63be11bc03651063a8bf973ff601a738a169efdcc0fa23ec0cd890b19c0a",
     "rendered_docx/generalizability.png": "6e3009688748c6a8d8e2068d2ecd0a4cff893080f4121379909cbfb207619e5b",
@@ -13,7 +13,7 @@
     "rendered_docx/supp_fig_s1_no_lp360.png": "b4aef8aa6ccb7357e6a814d5c9d18ea28d842e0c22e109d3d552f5f97807202f",
     "rendered/supp_fig_s2_delamination.pdf": "1b3d51eb42efda4812b4deb51522942edeb6df4b75cab06f96cc9b6b12a42f69",
     "rendered_docx/supp_fig_s2_delamination.png": "6a0604755566d1c651db955df795139cb92a47c95d7478282269281856442551",
-    "rendered/validation.pdf": "a767c4f3114fc43e8ca989a01286042f64e62e031fc34896aac9c034f8c91e86",
-    "rendered_docx/validation.png": "6fd5ee6a93f0238d9ad6aa834de2d024bd3f432cb6dd6863f62f37ed03eb0ed1"
+    "rendered/validation.pdf": "1f92b45ea0a17bab4f80bb1c897ebd69c696cb12f3047bd204e318361865f947",
+    "rendered_docx/validation.png": "39866435099e49b7bc4304c9a7b6f429a6e30fbb1c508785cfc89d7ed5415991"
   }
 }

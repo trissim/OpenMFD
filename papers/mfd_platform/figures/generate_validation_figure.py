@@ -140,11 +140,11 @@ def main() -> int:
 
     validation_grid = GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1])
     ax_ct_b = fig.add_subplot(validation_grid[0, 0])
-    show_image(ax_ct_b, ct_b_group, "CTB-647 labeling at DIV11")
+    show_image(ax_ct_b, ct_b_group, "CTβ-647 labeling at DIV11")
     panel_label(ax_ct_b, "B")
 
     ax_counts = fig.add_subplot(outer[2])
-    show_image(ax_counts, ct_b_counts, "Mean CTB-positive cell-body count per analyzed device")
+    show_image(ax_counts, ct_b_counts, "Mean CTβ-positive cell-body count per analyzed device")
     panel_label(ax_counts, "C")
     ax_counts.text(
         0.5,
@@ -160,7 +160,7 @@ def main() -> int:
     ax_counts.text(
         -0.012,
         0.48,
-        "CTB-positive cell-body count",
+        "CTβ-positive cell-body count",
         transform=ax_counts.transAxes,
         ha="center",
         va="center",

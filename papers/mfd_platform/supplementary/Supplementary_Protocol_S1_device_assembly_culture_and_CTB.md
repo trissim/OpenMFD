@@ -1,15 +1,15 @@
-# Supplementary Protocol S1. Post-mold device assembly, primary cortical neuron culture, and CTB retrograde axon tracing
+# Supplementary Protocol S1. Post-mold device assembly, primary cortical neuron culture, and CTβ retrograde axon tracing
 
 ## Scope
 
 This protocol covers PDMS casting from the parylene-coated hybrid mold,
 plate assembly, neuronal culture, and imaging. The assays measure tracer
-movement between compartments and count CTB-positive neuronal cell bodies
+movement between compartments and count CTβ-positive neuronal cell bodies
 in each device.
 
 The plate contains 48 two-compartment devices and 96 pipette-accessible wells
 on a 9 mm well grid. The two-well device units are
-spaced 18 × 9 mm apart. CTB-positive cell bodies were counted in the 24
+spaced 18 × 9 mm apart. CTβ-positive cell bodies were counted in the 24
 interior devices on each plate because culture performance was poorer at the
 plate edges during long-term culture. Each plate also contains 24 perimeter
 devices. The safe maximum working volume for this plate is 50 µL per well.
@@ -34,7 +34,7 @@ devices. The safe maximum working volume for this plate is 50 µL per well.
 - DMEM with 10% fetal bovine serum.
 - Neurobasal Plus medium supplemented with 1% N2, 2% B27, and 1% glutamine.
 - Primary E18 Sprague Dawley rat cortical neurons.
-- Alexa Fluor-conjugated cholera toxin subunit B (CTB-647).
+- Alexa Fluor-conjugated cholera toxin subunit B (CTβ-647).
 - Alexa Fluor 488- and Alexa Fluor 568-conjugated secondary antibodies.
 - PerkinElmer Opera Phenix Plus high-content imaging system with a 10×/0.30 NA
   objective.
@@ -115,9 +115,9 @@ are reported in the main Results.
    surface and make it hydrophilic. Begin aqueous coating within 15 min of
    plasma treatment.
 
-## D. Perform the qualitative two-compartment directional fluid movement assay
+## D. Perform the fluorescent tracer assay
 
-1. Reserve 24 assembled two-compartment devices for the directional fluid movement
+1. Reserve 24 assembled two-compartment devices for the fluorescent tracer
    assay.
 2. Prepare Alexa Fluor 488- and Alexa Fluor 568-conjugated secondary antibodies,
    each at a 1:1000 dilution in phosphate-buffered saline (PBS).
@@ -127,7 +127,7 @@ are reported in the main Results.
 6. Keep the devices in a cell-culture incubator for 72 h without replenishing
    either compartment or adjusting the volumes, then image the same devices.
 7. Acquire images in widefield mode using the same 10×/0.30 NA objective,
-   2 × 2 camera binning, and 100 ms fluorescence exposure used for the CTB
+   2 × 2 camera binning, and 100 ms fluorescence exposure used for the CTβ
    imaging, with green and red channels suited to the two fluorophores.
 8. Compare green fluorescence in the initially lower-volume left compartment
    between Hour 0 and 72 h. The readout is qualitative tracer redistribution
@@ -144,26 +144,26 @@ are reported in the main Results.
 3. Add 30 µL of 10 µg/mL dPGA to each culture well, incubate for 10 min, and
    wash once with sterile water. dPGA was selected as the neuronal culture
    substrate based on Clément et al. (2022).
-4. Add 50 µL supplemented Neurobasal Plus medium to the distal
+4. Add 50 µL supplemented Neurobasal Plus medium to the axon
    compartment.
 5. Seed 5,000–10,000 neurons in 50 µL DMEM with 10% fetal bovine serum in the
    cell-body (soma) compartment.
 6. Allow cells to attach for at least 30 min, then replace the soma-compartment
    medium with 50 µL supplemented Neurobasal Plus medium.
-7. Remove 25 µL from the distal compartment. Maintain 50 µL in the soma
-   compartment and 25 µL in the distal compartment to create a small pressure
-   difference that directs fluid from the soma compartment toward the distal
+7. Remove 25 µL from the axon compartment. Maintain 50 µL in the soma
+   compartment and 25 µL in the axon compartment to create a small pressure
+   difference that directs fluid from the soma compartment toward the axon
    compartment.
 8. Maintain cultures for 11 days in vitro (DIV11) following the procedure of Harris
    et al. (2007), with the medium formulation and compartment volumes specified
    above applied across all three plates.
 
-## F. Perform CTB retrograde axon tracing and imaging
+## F. Perform CTβ retrograde axon tracing and imaging
 
-1. At DIV10, add CTB-647 to the 25 µL distal compartment at a final
+1. At DIV10, add CTβ-647 to the 25 µL axon compartment at a final
    concentration of 1 µg/mL.
-2. After adding CTB, keep 50 µL in the soma compartment and 25 µL in the
-   distal compartment.
+2. After adding CTβ, keep 50 µL in the soma compartment and 25 µL in the
+   axon compartment.
 3. Incubate for 24 h.
 4. At DIV11, collect images in widefield mode on a PerkinElmer Opera
    Phenix Plus using a 10×/0.30 NA objective, 2 × 2 camera binning, and the
@@ -181,13 +181,13 @@ are reported in the main Results.
    crop all plates to the same area for cell counting, regardless of whether
    images were collected at 35 or 42 positions. Imaging a larger area does not
    enlarge the area used for counting.
-7. Identify and count CTB-positive neuronal cell bodies using the same cell
-   segmentation settings and criteria for CTB labeling in every cropped image.
-   Record one CTB-positive cell-body count for each cropped device.
+7. Identify and count CTβ-positive neuronal cell bodies using the same cell
+   segmentation settings and criteria for CTβ labeling in every cropped image.
+   Record one CTβ-positive cell-body count for each cropped device.
 
 ## G. Analysis set and descriptive statistics
 
-- CTB-positive cells were counted before axotomy in the February 2026
+- CTβ-positive cells were counted before axotomy in the February 2026
   three-plate DMSO-only experiment.
 - Analysis was restricted to the 24 interior devices per plate because culture
   conditions differed at the plate perimeter. Images from 72 interior devices
@@ -201,6 +201,6 @@ are reported in the main Results.
 - In this experiment, 69 of the 72 interior devices had images suitable for
   cell counting. Three devices had late-stage contamination or a technical
   failure that prevented cell counting in the final image.
-- CTB-positive counts are summarized descriptively as the mean and standard
+- CTβ-positive counts are summarized descriptively as the mean and standard
   deviation across analyzed interior devices within each plate, representing
   variation among devices containing neurons from the same embryo.

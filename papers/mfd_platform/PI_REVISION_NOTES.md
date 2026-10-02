@@ -1,8 +1,9 @@
 # PI revisions, 2 October 2026
 
 Scope: expand the biology Figure S1 legend and discuss the additional generated
-layouts in the OpenMFD manuscript, citing Figure 5. No measurements or images
-were changed, and no scientific analysis was rerun.
+layouts in the OpenMFD manuscript, citing Figure 5, and simplify manuscript
+wording. No measurements or microscopy images were changed, and no scientific
+analysis was rerun.
 
 The edited sources are in this isolated checkout:
 `/home/ts/wt/mfd-pi-legend-discussion-20261002`.
@@ -17,12 +18,15 @@ geometry from the 24 devices assessed per plate, technical from biological
 replication, and CTβ-dependent exclusions from the full axon and nuclear counts.
 Immediate cut-verification images in F are separate pre-treatment acquisitions.
 
-Build: `papers/mfd_platform/build/run-20261002T185214-06a42b89`.
+Build: `papers/mfd_platform/build/run-20261002T185834-e0b45325`.
 The existing shared paper-build environment generated manuscript, supplement,
 and combined-review PDF/DOCX files. Build status reported current with no changed
 inputs. Revised Discussion text was verified in both manuscript and review DOCX
 files and in the manuscript PDF; the PDF Discussion page was visually inspected.
-Existing figure receipts passed, and DOCX ZIP integrity checks passed.
+Figure receipts passed, and DOCX ZIP integrity checks passed. Figure 4 was
+refreshed for CTβ label spelling only; pixel comparisons confirmed that its dye
+images, CTβ microscopy, and graph bars/ticks were unchanged. Its receipt was
+updated to record the label-only revision; all other figures were retained.
 
 The generated build files and legend are delivered in
 `/home/ts/code/projects/mfd/papers/mfd_platform/pi_review_20261002`.
@@ -40,3 +44,11 @@ removed the pixel-calibration detail from the biology figure legend. Measurement
 units and scale bars remain in the legend; calibration remains in the axotomy
 protocol. Panel F and its shortened description remain present. The new heading
 was verified in the rebuilt PDF and both manuscript and review DOCX files.
+
+Final wording pass: standardized "axon compartment" and CTβ throughout the
+manuscript, Figure 4 labels, and the published Supplementary Protocol S1 text.
+Replaced "collective" transfer/bonding with plain descriptions of the entire
+insert array, clarified the two wafer losses, and simplified the final Discussion
+paragraph. The compressed biology legend remains 300 words and was not changed
+by this pass. Revised terminology was verified in all three DOCX files and the
+manuscript PDF; Methods and Discussion/Conclusion pages were visually inspected.
