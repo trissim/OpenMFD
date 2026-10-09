@@ -53,6 +53,7 @@ SUPPLEMENT = DocumentDefinition(
 
 PAPER = PaperDefinition(
     identity='openmfd-platform', root=ROOT, declaration=Path(__file__).resolve(),
+    output_prefix='openmfd',
     documents=(DocumentDefinition(DocumentRole.MANUSCRIPT, (Path('manuscript.md'),),
                                   layout=EndTextFiguresLayout(boundary_heading=SUPPLEMENT.section_heading),
                                   markdown_format='markdown', citeproc=False), SUPPLEMENT),

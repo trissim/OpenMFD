@@ -41,6 +41,7 @@ FRAME_STL = ROOT / "plates" / "96_well_plate_reservoirs_print_hips_2" / "96_well
 RACK_STEP = ROOT / "orders" / "wafer_rack_send_cut_send_dec_9_2024" / "Wafer Rack 2 v5.step"
 BLENDER_RENDERER = FIGURE_DIR / "blender_render_mesh_parts.py"
 BLENDER_BOOLEAN = FIGURE_DIR / "blender_boolean_mesh.py"
+SINGLE_DEVICE_NEGATIVE_STL = FIGURE_DIR / "generated_assets/single_device_pdms_negative.stl"
 # Current v27 mask and insert outputs are generated from the same compensated
 # coordinate system and use the same wafer center.
 GENERATED_WAFER_ORIGIN = np.array([55.2204, 36.8136])
@@ -635,6 +636,16 @@ def cavity_device_mesh(*, trimmed: bool = True) -> StlMesh:
         except FileNotFoundError as error:
             raise RuntimeError("Blender is required to generate the complete PDMS negative") from error
         return StlMesh.from_file(stl_path)
+
+
+@lru_cache(maxsize=1)
+def single_device_cavity_mesh() -> StlMesh:
+    """Load the true one-device PDMS Boolean negative used for the close-up."""
+    if not SINGLE_DEVICE_NEGATIVE_STL.exists():
+        raise FileNotFoundError(
+            f"Generated single-device PDMS negative not found: {SINGLE_DEVICE_NEGATIVE_STL}"
+        )
+    return StlMesh.from_file(SINGLE_DEVICE_NEGATIVE_STL)
 
 
 def tape_guide_mesh(*, z: float) -> StlMesh:
@@ -1345,6 +1356,75 @@ def cavity_device_render_parts(
         alpha=0.78, max_faces=120_000,
         edge_alpha=0.0, roughness=0.34, transparency_overlap=False,
         dissolve_coplanar=True, transmission_weight=0.0,
+    )
+    return outer, cavities
+
+
+def single_device_cavity_render_parts(
+    z: float = 0.0,
+    *,
+    upside_down: bool = True,
+) -> tuple[MeshPart, MeshPart]:
+    """Partition the true inverted PDMS negative into outer and cavity faces."""
+    source = single_device_cavity_mesh()
+    triangles = source.triangles
+    points = triangles.reshape((-1, 3))
+    minimum = points.min(axis=0)
+    maximum = points.max(axis=0)
+    tolerance = 1e-3
+    centroids = triangles.mean(axis=1)
+    normals = np.cross(
+        triangles[:, 1] - triangles[:, 0],
+        triangles[:, 2] - triangles[:, 0],
+    )
+    normal_lengths = np.linalg.norm(normals, axis=1)
+    horizontal = np.divide(
+        np.abs(normals[:, 2]),
+        normal_lengths,
+        out=np.zeros_like(normal_lengths),
+        where=normal_lengths > 0,
+    ) > 0.999
+    # The shallow chamber-footprint cutter leaves coplanar shoulder faces at
+    # 0.6 mm. The reservoirs themselves are through-openings, so drawing those
+    # shoulders as dark cavity faces makes each opening look falsely capped.
+    # Suppress only the shallow cutter shoulder that reads as a false well
+    # floor. Keep the slab skins so the surrounding PDMS remains visibly solid.
+    visible_faces = ~(
+        horizontal
+        & (np.abs(centroids[:, 2] - 0.6) < tolerance)
+    )
+    outer_faces = np.zeros(len(triangles), dtype=bool)
+    for axis in range(3):
+        outer_faces |= np.all(
+            np.abs(triangles[:, :, axis] - minimum[axis]) < tolerance,
+            axis=1,
+        )
+        outer_faces |= np.all(
+            np.abs(triangles[:, :, axis] - maximum[axis]) < tolerance,
+            axis=1,
+        )
+
+    def positioned(mask: np.ndarray) -> StlMesh:
+        return transform_mesh(
+            StlMesh(triangles[mask]),
+            translation=(0.0, 0.0, z),
+            rotation_x=180.0 if upside_down else 0.0,
+            pivot=(0.0, 0.0, 2.5),
+        )
+
+    outer = MeshPart(
+        positioned(outer_faces & visible_faces),
+        "#79a7ca", COLORS["pdms_highlight"], "#416783",
+        alpha=0.58, max_faces=5_000, edge_alpha=0.06, roughness=0.42,
+        transparency_overlap=False, dissolve_coplanar=True,
+        transmission_weight=0.0,
+    )
+    cavities = MeshPart(
+        positioned(~outer_faces & visible_faces),
+        "#507d98", "#a7c2d0", "#315b73",
+        alpha=0.72, max_faces=5_000, edge_alpha=0.04, roughness=0.30,
+        transparency_overlap=False, dissolve_coplanar=True,
+        transmission_weight=0.0,
     )
     return outer, cavities
 
