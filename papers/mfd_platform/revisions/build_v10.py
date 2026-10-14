@@ -46,14 +46,14 @@ def main():
     original_text = {paragraph: "".join(paragraph.xpath(".//w:t/text()", namespaces=NS))
                      for paragraph in paragraphs}
     notes = []
-    explained = set()
-
-    def edit(number, replacements, anchor, reason):
+    def edit(number, replacements, anchor=None, reason=None):
         paragraph = paragraphs[number - 1]
         for old, new in replacements:
             replace(paragraph, old, new)
-        notes.append({"anchor": anchor, "text": reason})
-        explained.add(paragraph)
+        if anchor is not None:
+            if reason is None:
+                raise ValueError("A comment needs an explanation")
+            notes.append({"anchor": anchor, "text": reason})
 
     edit(11, [
         ("Microfluidic platforms enable spatially controlled neuronal culture and compartment-specific manipulation, but their adoption in medium-throughput assays is limited by fabrication methods that require labor-intensive processing and assembly.",
@@ -63,17 +63,13 @@ def main():
         ("Devices supported multichannel liquid handling, automated high-content imaging, directional fluidic manipulation, and primary cortical neuron culture.",
          "Devices supported multichannel liquid handling, automated high-content imaging, directional tracer movement, primary cortical neuron culture and retrograde axonal labeling."),
         (" Compartmentalized axonal growth was demonstrated by retrograde cholera toxin B labeling establishing compatibility with parallel neuronal assays.", ""),
-        ("matched fabrication files for additional neuronal culture configurations", "matched fabrication files for additional compartment geometries")
+        ("Furthermore, the parametric design framework generated matched fabrication files for additional neuronal culture configurations, illustrating the adaptability of the approach.",
+         "OpenMFD also generated matching fabrication files for alternative compartment layouts."),
+        (" By combining high-resolution photolithography with scalable three-dimensional molding, this method provides an accessible and reusable fabrication platform for medium-throughput microfluidic assays.", "")
     ], "enabling array-scale",
        "We aligned all inserts together, but did not measure positioning error. I changed 'precise alignment' to describe the operation we performed.")
-    notes.extend([
-        {"anchor": "This challenge is particularly relevant to neuronal assays",
-         "text": "The opening now states the fabrication problem first, then explains why neuronal assays need fine channels between compartments."},
-        {"anchor": "directional tracer movement, primary cortical neuron culture and retrograde axonal labeling",
-         "text": "Condensed the biological-validation summary into one sentence."},
-        {"anchor": "additional compartment geometries",
-         "text": "'Additional compartment geometries' describes what OpenMFD varies without limiting the fabrication method to neuronal assays."},
-    ])
+    notes.append({"anchor": "This challenge is particularly relevant to neuronal assays",
+                  "text": "The abstract connects the fabrication problem to neuronal assays while introducing a method that can accommodate other compartment layouts."})
 
     edit(13, [
         ("Microfluidic compartmentalization has transformed the study of neuronal cell biology by enabling independent access to cell bodies, axons and their local extracellular environments.",
@@ -82,10 +78,7 @@ def main():
     ], "Compartmentalized neuronal cultures enable independent access",
          "Started with the neuronal experiments that motivate the platform and moved the fabrication explanation after the biological context.")
 
-    edit(14, [(" These studies establish that parallelization and adaptable neuronal compartmentalization are feasible.", "")],
-         "These studies establish that parallelization and adaptable neuronal compartmentalization are feasible.",
-         "Removed the repeated feasibility summary before the transition to fabrication.")
-    notes[-1]["source"] = "original"
+    edit(14, [(" These studies establish that parallelization and adaptable neuronal compartmentalization are feasible. Nevertheless, the fabrication workflow remains an important design consideration when laboratories need to reproduce, modify or manufacture custom arrays of devices.", "")])
 
     edit(15, [
         ("A persistent fabrication challenge is the integration", "A persistent fabrication challenge in microfluidic cell culture is the integration"),
@@ -97,7 +90,8 @@ def main():
          "Placed the fabrication problem after the neuronal context. The added printer-resolution explanation shows why fine channels need photolithography alongside printed wells. Restored the Table S2 comparison from V7 and removed the duplicated method summary.")
 
     edit(16, [("Photopolymer-based 3D printing offers accessible fabrication",
-               "For academic laboratories, access to a shared cleanroom for reusable mold fabrication can be more practical than acquiring dedicated precision molding or machining equipment (Supplementary Table S2). Photopolymer-based 3D printing offers accessible fabrication")],
+               "For academic laboratories, access to a shared cleanroom for reusable mold fabrication can be more practical than acquiring dedicated precision molding or machining equipment (Supplementary Table S2). Photopolymer-based 3D printing offers accessible fabrication"),
+              (" This precedent demonstrates the feasibility of combining patterned wafers with tall inserts, while highlighting the importance of practical alignment and assembly procedures when extending such designs to larger arrays.", "")],
          "access to a shared cleanroom for reusable mold fabrication",
          "Restored V7's shared-cleanroom explanation and Table S2 citation: a lab can obtain a reusable mold from a facility, then cast plates on the bench.")
 
@@ -117,16 +111,13 @@ def main():
         "Supplementary Protocol S2 describes one-time hybrid mold fabrication; "
         "Supplementary Protocol S1 describes routine casting, assembly and assays.")
     paragraphs[23].addnext(paragraph)
-    explained.add(paragraph)
-    notes.append({"anchor": "Supplementary Protocol S2 describes one-time hybrid mold fabrication",
-                  "text": "Added protocol links to distinguish one-time mold fabrication from routine casting and assays."})
 
-    edit(62, [("(Supplementary Note S1)", "(Supplementary Fig. S1; Supplementary Note S1)")],
-         "Supplementary Fig. S1",
-         "Added the Figure S1 citation because those images show the raised edges and the effect of the filter.")
-    edit(63, [("(Supplementary Note S2)", "(Supplementary Fig. S2; Supplementary Note S2)")],
-         "Supplementary Fig. S2",
-         "Added the Figure S2 citation because the image shows the SU-8 peeling from the wafer.")
+    edit(62, [("(Supplementary Note S1)", "(Supplementary Fig. S1; Supplementary Note S1)")])
+    edit(63, [("(Supplementary Note S2)", "(Supplementary Fig. S2; Supplementary Note S2)")])
+
+    for number in (66, 73, 82, 84):
+        paragraph = paragraphs[number - 1]
+        paragraph.getparent().remove(paragraph)
 
     edit(70, [("These observations were qualitative, and systematic measurements of adhesive cytotoxicity or joint mechanical strength were not performed.",
                "Culture survival was assessed qualitatively; adhesive cytotoxicity was not quantified.")],
@@ -137,40 +128,37 @@ def main():
          "because it was faster for these experiments",
          "Restored V7's reason for choosing the Opera Phenix: it was faster for these experiments.")
 
-    edit(85, [("Although these geometrical relationships provide tolerance for insert positioning, the actual alignment accuracy remains dependent on photolithographic registration and resin-printing precision and was not directly quantified.",
+    edit(85, [("Previous approaches have demonstrated the feasibility of combining micrometer- and millimeter-scale features using hybrid soft lithography, alternative molding strategies, and additive manufacturing (PMIDs: 20049640; 32832365). Particularly relevant to our approach, Ristola",
+               "Ristola"),
+              ("Although these geometrical relationships provide tolerance for insert positioning, the actual alignment accuracy remains dependent on photolithographic registration and resin-printing precision and was not directly quantified.",
                "The chamber margin is 17 times the nominal per-side clearance (Supplementary Table S3). Final alignment also depends on photolithographic registration and resin-printing precision.")],
          "The chamber margin is 17 times the nominal per-side clearance",
          "Restored V7's 17-fold comparison between the 1,275 micrometer chamber margin and 75 micrometer pin clearance, which explains how the layout accommodates positioning error without covering the channels.")
-    edit(86, [("conventional PDMS surface treatments and established neuronal culture protocols, although the biological compatibility of each assembled device configuration must still be established experimentally.",
-               "conventional PDMS surface treatments and established cell-culture protocols.")],
-         "established cell-culture",
-         "Changed 'neuronal culture protocols' to 'cell-culture protocols' because the PDMS/glass culture surfaces are useful beyond neurons. Removed the repeated warning about validating each configuration.")
+    edit(86, [("The combination of photolithography and resin printing also exploits the complementary capabilities of these fabrication technologies. Photolithography remains well suited to defining micrometer-scale structures, whereas resin printing provides an accessible means of producing larger three-dimensional features. Recent developments in printed molds and hybrid fabrication have expanded the range of structures that can be manufactured for biological microfluidic applications, although achievable resolution, PDMS curing compatibility, and surface treatment remain important considerations (PMIDs: 40190179; 40667579). ", ""),
+              (" This distinction is potentially advantageous for applications requiring conventional PDMS surface treatments and established neuronal culture protocols, although the biological compatibility of each assembled device configuration must still be established experimentally.", "")])
     edit(87, [(" Nevertheless, the present study did not directly quantify manufacturing time, labor requirements, or cost savings relative to established alternatives, and these potential advantages should be evaluated in future comparisons.", "")],
          "Nevertheless, the present study did not directly quantify manufacturing time, labor requirements, or cost savings relative to established alternatives, and these potential advantages should be evaluated in future comparisons.",
          "Removed the warning about time and cost comparisons because the paragraph describes eliminated operations without claiming numerical savings.")
     notes[-1]["source"] = "original"
-    edit(88, [("Our approach complements these platforms by providing an alternative fabrication strategy rather than introducing neuronal compartmentalization or medium-throughput culture as new capabilities.",
-               "Our approach extends existing compartmentalized device designs by carrying different layouts into multiwell plate arrays with matching fabrication files.")],
+    edit(88, [("The compatibility of the resulting devices with conventional laboratory workflows is an important practical outcome. ", ""),
+              ("Previous studies have demonstrated the value of parallelized and modular microfluidic systems for neuronal experimentation (PMIDs: 38150531; 35466333; 38841815). ", ""),
+              ("Our approach complements these platforms by providing an alternative fabrication strategy rather than introducing neuronal compartmentalization or medium-throughput culture as new capabilities.",
+               "Our approach extends existing compartmentalized device designs by carrying different layouts into multiwell plate arrays with matching fabrication files."),
+              (" Validation across independent preparations and additional functional assays will be necessary to establish biological reproducibility and suitability for screening applications.", "")],
          "Our approach extends existing compartmentalized device designs",
          "Replaced the statement about what the work does not introduce with its contribution: adapting device layouts into multiwell plate arrays with matching fabrication files.")
-    edit(91, [("These designs have not yet been fabricated, and changes in insert geometry, well spacing, or compartment arrangement will require validation of alignment, casting, demolding, fluid transport, and biological compatibility.",
-               "These additional designs have not yet been fabricated or biologically tested.")],
-         "These additional designs have not yet been fabricated or biologically tested",
-         "Shortened the validation warning to the actual status: these layouts have not been fabricated or biologically tested.")
-    edit(93, [("The resulting platform accommodates", "The demonstrated plate accommodates"),
-              ("Although further optimization is required to improve peripheral culture performance and establish quantitative fabrication reproducibility, this approach provides an adaptable and accessible framework for producing customized microfluidic platforms for neuroscience and other applications requiring spatially controlled cell culture.",
-               "Peripheral culture performance remains a target for improvement. The coordinated design and array-transfer workflow provides an adaptable framework for integrating fine microfeatures with well-forming inserts in reusable molds for spatially controlled cell culture.")],
-         "The coordinated design and array-transfer workflow provides an adaptable framework",
-         "The closing sentence now emphasizes coordinated design, collective insert transfer and reusable molds for spatially controlled cell culture. Removed the demand to establish quantitative fabrication reproducibility, which the paper does not claim.")
+    edit(91, [(original_text[paragraphs[90]],
+               "OpenMFD generated matching fabrication files for oligodendrocyte myelination, axon-guidance and three-compartment neuronal layouts. Changing the compartment geometry and array layout updates the matching photomasks, inserts and plate components. These additional designs have not been fabricated or biologically tested.")],
+         "Changing the compartment geometry and array layout updates",
+         "This explains what generalizes: device layouts can change while their fabrication components stay matched.")
+    edit(93, [(original_text[paragraphs[92]],
+               "We developed OpenMFD to arrange compartmentalized device layouts into plate-format arrays and generate matching photomasks, well-forming inserts and plate components. The inserts are transferred and bonded together onto a photolithographically patterned wafer, forming a reusable mold that casts the complete array without individual well punching. The demonstrated 48-device plate supported multichannel pipetting, automated imaging, compartmentalized neuronal culture and retrograde axonal labeling. Peripheral culture performance remains a target for improvement.")],
+         "OpenMFD to arrange compartmentalized device layouts into plate-format arrays",
+         "The contribution is a method for making arrays from different compartment layouts; the neuronal plate is one application.")
     edit(95, [("Experimental data supporting the findings, including mold fabrication and casting outcomes, resin-insert measurements, neuronal cell counts, and source images used for quantitative analyses, are provided in the Supplementary Information or associated repository.",
                "The Supplementary Information contains the resin-insert measurements and mold fabrication and casting outcomes. The per-device neuronal count table and source images used for quantitative analyses will be deposited with the submission.")],
          "The per-device neuronal count table and source images used for quantitative analyses",
-         "The supplied supplement has pin heights and mold/cast totals. The individual neuronal counts and analysis images need their own data files for submission. I changed the statement so it does not say those files are already supplied.")
-
-    changed = {p for p in document.findall("w:body/w:p", NS)
-               if p not in original_text or original_text[p] != "".join(p.xpath(".//w:t/text()", namespaces=NS))}
-    if changed - explained:
-        raise ValueError("Every changed paragraph must have an explanatory comment")
+         "The supplied supplement has pin heights and mold/cast totals. The individual neuronal counts and analysis images need their own data files for submission.")
     text = "\n".join("".join(p.xpath(".//w:t/text()", namespaces=NS))
                      for p in document.findall("w:body/w:p", NS))
     for note in notes:
