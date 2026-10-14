@@ -16,16 +16,17 @@
     "text": "'Additional compartment geometries' describes what OpenMFD varies without limiting the fabrication method to neuronal assays."
   },
   {
+    "anchor": "Compartmentalized neuronal cultures enable independent access",
+    "text": "Started with the neuronal experiments that motivate the platform and moved the fabrication explanation after the biological context."
+  },
+  {
+    "anchor": "These studies establish that parallelization and adaptable neuronal compartmentalization are feasible.",
+    "text": "Removed the repeated feasibility summary before the transition to fabrication.",
+    "source": "original"
+  },
+  {
     "anchor": "practical resolution of desktop resin printers",
-    "text": "Moved the neuronal context after the fabrication problem. The added resolution explanation connects these applications to the need for photolithography for fine channels alongside printing for larger wells."
-  },
-  {
-    "anchor": "Our approach builds on existing compartmentalized device designs",
-    "text": "The revised closing sentence explains how OpenMFD extends earlier work: arranging existing device layouts into multiwell arrays and generating their matching masks, inserts and plate components."
-  },
-  {
-    "anchor": "Fabrication approaches differ in the equipment and operations required to combine these scales",
-    "text": "Moved the fine-channel/large-well paragraph to the start and removed the duplicated method summary. The Table S2 link from V7 restores the broader fabrication comparison."
+    "text": "Placed the fabrication problem after the neuronal context. The added printer-resolution explanation shows why fine channels need photolithography alongside printed wells. Restored the Table S2 comparison from V7 and removed the duplicated method summary."
   },
   {
     "anchor": "access to a shared cleanroom for reusable mold fabrication",
@@ -33,7 +34,7 @@
   },
   {
     "anchor": "an example neuronal application",
-    "text": "Described the plate as an example neuronal application and restored V7's practical benefit: later plates can be made without repeating cleanroom processing."
+    "text": "Described the neuronal plate as an example application and clarified how the platform carries other compartment layouts into plate-format arrays. Restored V7's practical benefit: later plates need no repeated cleanroom processing."
   },
   {
     "anchor": "Supplementary Protocol S2 describes one-time hybrid mold fabrication",

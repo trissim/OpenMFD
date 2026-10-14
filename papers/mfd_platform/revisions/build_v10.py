@@ -77,27 +77,24 @@ def main():
 
     edit(13, [
         ("Microfluidic compartmentalization has transformed the study of neuronal cell biology by enabling independent access to cell bodies, axons and their local extracellular environments.",
-         "Neuronal culture is a particularly useful application of this multiscale fabrication capability. Microfluidic compartmentalization enables independent access to cell bodies, axons and their local extracellular environments."),
-        ("Together, these developments have established compartmentalized microfluidics as a versatile approach for investigating neuronal connectivity and responses to spatially defined perturbations.",
-         "Fine channel-forming features, such as the nominal 10 µm widths used here, can fall below the practical resolution of desktop resin printers. Photolithography provides these fine features, while printed structures form the larger wells (PMID: 40190179).")
-    ], "practical resolution of desktop resin printers",
-         "Moved the neuronal context after the fabrication problem. The added resolution explanation connects these applications to the need for photolithography for fine channels alongside printing for larger wells.")
+         "Compartmentalized neuronal cultures enable independent access to cell bodies, axons and their local extracellular environments."),
+        (" Together, these developments have established compartmentalized microfluidics as a versatile approach for investigating neuronal connectivity and responses to spatially defined perturbations.", "")
+    ], "Compartmentalized neuronal cultures enable independent access",
+         "Started with the neuronal experiments that motivate the platform and moved the fabrication explanation after the biological context.")
 
-    edit(14, [("These studies establish that parallelization and adaptable neuronal compartmentalization are feasible. Nevertheless, the fabrication workflow remains an important design consideration when laboratories need to reproduce, modify or manufacture custom arrays of devices.",
-               "Our approach builds on existing compartmentalized device designs by arranging a chosen device layout into a multiwell plate array and generating matching photomasks, well-forming inserts and plate components.")],
-         "Our approach builds on existing compartmentalized device designs",
-         "The revised closing sentence explains how OpenMFD extends earlier work: arranging existing device layouts into multiwell arrays and generating their matching masks, inserts and plate components.")
+    edit(14, [(" These studies establish that parallelization and adaptable neuronal compartmentalization are feasible.", "")],
+         "These studies establish that parallelization and adaptable neuronal compartmentalization are feasible.",
+         "Removed the repeated feasibility summary before the transition to fabrication.")
+    notes[-1]["source"] = "original"
 
     edit(15, [
         ("A persistent fabrication challenge is the integration", "A persistent fabrication challenge in microfluidic cell culture is the integration"),
         ("which control neurite access and local fluid movement", "which control access and local fluid movement between compartments"),
         ("culture reservoirs are often opened individually after casting.",
-         "culture reservoirs are often opened individually after casting. Fabrication approaches differ in the equipment and operations required to combine these scales (Supplementary Table S2)."),
+         "culture reservoirs are often opened individually after casting. Fine channel-forming features, such as the 10 µm widths designed here, can fall below the practical resolution of desktop resin printers. Photolithography provides these fine features, while printed structures form the larger wells (PMID: 40190179). Fabrication approaches differ in the equipment and operations required to combine these scales (Supplementary Table S2)."),
         ("Building on previous advances in multiscale molding and the elimination of manual reservoir punching, our approach introduces a customizable, parametric design strategy that enables the simultaneous alignment and assembly of large arrays of well-forming inserts onto reusable photolithographically patterned molds, facilitating reproducible, medium-throughput device fabrication.", "")
-    ], "Fabrication approaches differ in the equipment and operations required to combine these scales",
-         "Moved the fine-channel/large-well paragraph to the start and removed the duplicated method summary. The Table S2 link from V7 restores the broader fabrication comparison.")
-
-    paragraphs[11].addnext(paragraphs[14])
+    ], "practical resolution of desktop resin printers",
+         "Placed the fabrication problem after the neuronal context. The added printer-resolution explanation shows why fine channels need photolithography alongside printed wells. Restored the Table S2 comparison from V7 and removed the duplicated method summary.")
 
     edit(16, [("Photopolymer-based 3D printing offers accessible fabrication",
                "For academic laboratories, access to a shared cleanroom for reusable mold fabrication can be more practical than acquiring dedicated precision molding or machining equipment (Supplementary Table S2). Photopolymer-based 3D printing offers accessible fabrication")],
@@ -106,10 +103,10 @@ def main():
 
     edit(17, [("We demonstrate the approach using an array of 48 two-compartment neuronal devices containing 96 wells on a standard 9 mm plate grid.",
                "We demonstrate this combination of fine channels and pipette-accessible wells in an example neuronal application: an array of 48 two-compartment devices containing 96 wells on a standard 9 mm plate grid."),
-              ("providing a customizable strategy for manufacturing plate-format microfluidic devices.",
-               "providing a customizable strategy for manufacturing plate-format microfluidic devices. Once a mold is made, further plates can be cast and assembled on the bench without repeating cleanroom processing.")],
+              ("We further demonstrate that the parametric workflow generates coordinated fabrication files for alternative compartment geometries, providing a customizable strategy for manufacturing plate-format microfluidic devices.",
+               "OpenMFD also arranges alternative compartment geometries into plate-format arrays and generates their matching fabrication files. Once a mold is made, further plates can be cast and assembled on the bench without repeating cleanroom processing.")],
          "an example neuronal application",
-         "Described the plate as an example neuronal application and restored V7's practical benefit: later plates can be made without repeating cleanroom processing.")
+         "Described the neuronal plate as an example application and clarified how the platform carries other compartment layouts into plate-format arrays. Restored V7's practical benefit: later plates need no repeated cleanroom processing.")
 
     paragraph = E.Element("{" + W + "}p")
     properties = paragraphs[24].find("w:pPr", NS)

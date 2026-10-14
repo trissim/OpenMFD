@@ -1,2 +1,2 @@
 # Build-only; install one reviewed shared implementation, never a vendored copy.
-paper-build @ git+https://github.com/OpenHCSDev/papers.git@39c210a3f6568c2279b02111a82e021bcde30560
+paper-build @ git+https://github.com/OpenHCSDev/papers.git@5e14b1f9ed432dad6506093b849b5f3306f8613a
