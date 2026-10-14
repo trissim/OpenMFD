@@ -1,0 +1,1466 @@
+[
+  {
+    "id": "R01",
+    "title": "Title",
+    "v7": [
+      1
+    ],
+    "v8": [
+      1
+    ],
+    "decision": "V7 title",
+    "reason": "V7 names the PDMS devices and the hybrid mold. V8 drops PDMS and SU-8 and makes the title about neuronal culture. The method is the contribution; neurons are its test case.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R02",
+    "title": "Authors and affiliations",
+    "v7": [
+      2
+    ],
+    "v8": [
+      2,
+      3,
+      4,
+      5
+    ],
+    "decision": "V8 layout",
+    "reason": "V8 adds numbered affiliations, new department names and corresponding-author details.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R03",
+    "title": "Abstract",
+    "v7": [
+      4
+    ],
+    "v8": [
+      8
+    ],
+    "decision": "V7 abstract with the analyzed-device count (R53)",
+    "reason": "V8 puts the 69-device count in the abstract and adds a warning about unmeasured channel sizes. V7 already states the edge-growth limit; its geometry discussion already distinguishes designed sizes from measurements.",
+    "feedback": [
+      82,
+      136
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R04",
+    "title": "Introduction: applications",
+    "v7": [
+      6
+    ],
+    "v8": [
+      11
+    ],
+    "decision": "V7 account of the applications",
+    "reason": "V7 explains why the method matters beyond neuronal assays. V8 replaces that with a narrower neuroscience account, understating the generalizability of the platform.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R05",
+    "title": "Introduction: prior plate systems",
+    "v7": [],
+    "v8": [
+      12
+    ],
+    "decision": "Platform context; fabrication methods remain the main comparison",
+    "reason": "V8 P12 compares finished neuronal platforms. V7 P7, V7 P8 and Table S2 compare fabrication steps and equipment. The new references can be added after checking the claims they support. Neuronal platforms provide application context; fabrication methods remain the main comparison.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R06",
+    "title": "Introduction: access to fabrication",
+    "v7": [
+      7
+    ],
+    "v8": [
+      56
+    ],
+    "decision": "V7 equipment-access comparison in the Introduction",
+    "reason": "V8 removes the Introduction’s comparison with acquiring molding or machining equipment, along with its Table S2 citation. V8 P56 retains a shorter shared-facility explanation in Discussion. V7 explains the equipment tradeoff more directly.",
+    "feedback": [
+      415,
+      488
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R07",
+    "title": "Introduction: ways to combine small channels and large wells",
+    "v7": [
+      8
+    ],
+    "v8": [
+      13
+    ],
+    "decision": "V7 comparison",
+    "reason": "V8 changes the literature account and removes the second Table S2 citation. V7 already supplies that citation and compares the operations each method adds.",
+    "feedback": [
+      415,
+      488,
+      498
+    ],
+    "kind": "draft",
+    "checks": [
+      "E13",
+      "E14",
+      "E17"
+    ],
+    "source_checks": [
+      "E14"
+    ]
+  },
+  {
+    "id": "R08",
+    "title": "Introduction: insert-based prior work",
+    "v7": [
+      8,
+      9,
+      68
+    ],
+    "v8": [
+      14
+    ],
+    "decision": "V7 explanation with an earlier prior-work comparison",
+    "reason": "V8 moves the comparison with individually placed metal inserts earlier. V7 already cites that work in P8 and compares it in P68, alongside the explanation of shared coordinates and whole-array transfer.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R09",
+    "title": "Introduction: what this study tests",
+    "v7": [
+      10,
+      16,
+      66
+    ],
+    "v8": [
+      15
+    ],
+    "decision": "V7 description of the study",
+    "reason": "Both describe the same work. V7 is shorter and identifies the untested layouts in Methods P16 and Results P66.",
+    "feedback": [
+      84,
+      327
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R10",
+    "title": "Methods: what is made once and what is repeated",
+    "v7": [
+      12
+    ],
+    "v8": [],
+    "decision": "V7 workflow explanation",
+    "reason": "V8 deletes the sentence separating routine plate production in Protocol S1 from one-time mold fabrication in Protocol S2.",
+    "feedback": [
+      539
+    ],
+    "kind": "draft",
+    "checks": [
+      "E23",
+      "E27"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R11",
+    "title": "Methods: design and generated files",
+    "v7": [
+      13,
+      14,
+      15,
+      16
+    ],
+    "v8": [
+      18
+    ],
+    "decision": "V7’s separate design paragraphs",
+    "reason": "V7 separates software, tested dimensions and untested layouts. V8 combines them in one paragraph.",
+    "feedback": [
+      19,
+      62
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R12",
+    "title": "Methods: SU-8 and SUEX layers",
+    "v7": [
+      17,
+      18,
+      19,
+      20,
+      21
+    ],
+    "v8": [
+      19,
+      20
+    ],
+    "decision": "V7 layer and bake details",
+    "reason": "V7 identifies the base, channel and well layers separately. It also states that the SU-8 bake used direct oven placement without controlled heating or cooling. V8 keeps the temperature but drops that detail.",
+    "feedback": [
+      39,
+      96
+    ],
+    "kind": "draft",
+    "checks": [
+      "A15"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R13",
+    "title": "Methods: resin printing",
+    "v7": [
+      15,
+      22
+    ],
+    "v8": [
+      18,
+      21
+    ],
+    "decision": "V7 print-preparation setting",
+    "reason": "V7 says no shrinkage or tolerance compensation was applied in the print-preparation software. V8 removes that setting. The design already uses a 2.26% correction, so the separate print-preparation setting explains whether a second correction was applied.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R14",
+    "title": "Methods: array transfer and bonding",
+    "v7": [
+      23
+    ],
+    "v8": [
+      22
+    ],
+    "decision": "V7 transfer and bonding steps",
+    "reason": "V7 says where the EPDM sheet sits, how the plates and clamps apply pressure, and when cleaning and release occur. V8 shortens those instructions. These procedure details were already in Methods.",
+    "feedback": [
+      11,
+      39
+    ],
+    "kind": "draft",
+    "checks": [
+      "A01",
+      "A03"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R15",
+    "title": "Methods: parylene coating",
+    "v7": [
+      24
+    ],
+    "v8": [
+      22
+    ],
+    "decision": "V7’s separate coating paragraph",
+    "reason": "V7 separates coating from insert bonding, names the facility and identifies the dimensions before coating. V8 folds coating into the bonding paragraph.",
+    "feedback": [
+      96
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R16",
+    "title": "Methods: frame printing",
+    "v7": [
+      26
+    ],
+    "v8": [
+      24
+    ],
+    "decision": "V7 file and software details",
+    "reason": "V8 retains temperatures and layer size but removes the link to the supplied Creality Print 6.0.4 instruction file.",
+    "feedback": [
+      562
+    ],
+    "kind": "draft",
+    "checks": [
+      "E20"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R17",
+    "title": "Methods: casting, removal and glass bonding",
+    "v7": [
+      25,
+      27,
+      28,
+      29
+    ],
+    "v8": [
+      23
+    ],
+    "decision": "V7 casting and glass-bonding steps",
+    "reason": "V8 drops the rack support, flat-wafer support, peeling direction, cutting guide and named cutting tool.",
+    "feedback": [
+      21,
+      96
+    ],
+    "kind": "draft",
+    "checks": [
+      "A20"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R18",
+    "title": "Methods: frame assembly and surface treatment",
+    "v7": [
+      30,
+      31
+    ],
+    "v8": [
+      24
+    ],
+    "decision": "V7 assembly sequence",
+    "reason": "V7 explains frame orientation, glass orientation, adhesive trimming and the separate second plasma treatment. V8 retains times but removes much of that sequence.",
+    "feedback": [
+      96
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R19",
+    "title": "Methods: how molds and plates were assessed",
+    "v7": [
+      32,
+      33,
+      34,
+      35
+    ],
+    "v8": [
+      25
+    ],
+    "decision": "V8 inspection detail with V7’s stated limits",
+    "reason": "V8 names the filter, base-layer, bake and clamping conditions inspected. Both versions supply inspection criteria and the single unframed control. V7 already states that cell toxicity was not quantified.",
+    "feedback": [
+      46,
+      528
+    ],
+    "kind": "draft",
+    "checks": [
+      "A02"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R20",
+    "title": "Methods: pipetting and microscopy",
+    "v7": [
+      36
+    ],
+    "v8": [
+      26
+    ],
+    "decision": "V7 wording",
+    "reason": "Both report eight fitted pipette tips and two unmodified microscopes.",
+    "feedback": [
+      74
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R21",
+    "title": "Methods: fluorescent tracers",
+    "v7": [
+      37,
+      38
+    ],
+    "v8": [
+      27
+    ],
+    "decision": "V7 tracer details",
+    "reason": "V7 supplies the secondary-antibody description, incubation conditions and explanation of how redistribution was judged. It already states that flow rate and duration were not measured.",
+    "feedback": [
+      78,
+      432
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R22",
+    "title": "Methods: neuronal culture and CTβ",
+    "v7": [
+      39,
+      40,
+      41
+    ],
+    "v8": [
+      28,
+      29
+    ],
+    "decision": "V7 wording",
+    "reason": "V7 supplies the one-embryo preparation, plating conditions, CTβ timing and exclusion rule, using soma and axon compartment.",
+    "feedback": [
+      51
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R23",
+    "title": "Methods: imaging and counting",
+    "v7": [
+      42,
+      43,
+      44
+    ],
+    "v8": [
+      30
+    ],
+    "decision": "V7 imaging explanation",
+    "reason": "V8 deletes the pre-axotomy baseline sentence and the reason Plate 3 needed a larger imaging grid. V7 already gives those explanations, the pixel size, exposures, stitching and common counting area.",
+    "feedback": [
+      25,
+      543,
+      608
+    ],
+    "kind": "draft",
+    "checks": [
+      "E25"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R24",
+    "title": "Methods: statistics",
+    "v7": [
+      45,
+      46
+    ],
+    "v8": [
+      31
+    ],
+    "decision": "V7 statistics explanation",
+    "reason": "V7 already identifies technical repeats and within-plate standard deviations. Its last sentence says the summaries describe this experiment. The extra statement about not inferring other preparations adds no missing information.",
+    "feedback": [
+      26,
+      432
+    ],
+    "kind": "draft",
+    "checks": [
+      "D22"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R25",
+    "title": "Results: four headings become six",
+    "v7": [
+      48,
+      55,
+      62,
+      65
+    ],
+    "v8": [
+      34,
+      37,
+      42,
+      45,
+      47,
+      49
+    ],
+    "decision": "Discuss four versus six Results groups",
+    "reason": "V7 covers fabrication, casting, neuronal validation and design changes in four groups; V8 splits those topics into six. Both already separate procedures from findings.",
+    "feedback": [
+      58
+    ],
+    "kind": "draft",
+    "checks": [
+      "A05",
+      "A06",
+      "A07",
+      "A21",
+      "A22"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R26",
+    "title": "Results: design and plate geometry",
+    "v7": [
+      49
+    ],
+    "v8": [
+      34,
+      35
+    ],
+    "decision": "V7 text under V8’s design heading",
+    "reason": "V7 already explains matched pins, whole-array positioning and wells formed during casting. V8 repeats dimensions from Methods and adds another unmeasured-size warning.",
+    "feedback": [
+      62,
+      136
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R27",
+    "title": "Results: alternative layouts moved to the design section",
+    "v7": [
+      65,
+      66
+    ],
+    "v8": [
+      36
+    ],
+    "decision": "V8 placement with V7 wording",
+    "reason": "V8 puts these outputs beside the design description. V7 already explains which components change together and says fabrication and assay testing remain future work.",
+    "feedback": [
+      84,
+      327
+    ],
+    "kind": "draft",
+    "checks": [
+      "A13",
+      "D27"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R28",
+    "title": "Results: general mold-development introduction",
+    "v7": [
+      49,
+      50,
+      51
+    ],
+    "v8": [
+      37
+    ],
+    "decision": "Begin with the failure-and-solution observations (R29–R30)",
+    "reason": "V8 adds a general paragraph saying fabrication needed bonding surfaces and intact structures. The next paragraphs already give the actual failures and solutions.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R29",
+    "title": "Results: filter and base-layer observations",
+    "v7": [
+      50,
+      51
+    ],
+    "v8": [
+      38
+    ],
+    "decision": "Existing observations with direct Figure S1/S2 links",
+    "reason": "Both versions report raised edges, detachment and the successful changes. These were already Results in V7. The missing direct Figure S1/S2 links are a separate omission in both drafts.",
+    "feedback": [
+      33,
+      34,
+      467,
+      471
+    ],
+    "kind": "draft",
+    "checks": [
+      "A14",
+      "E03",
+      "E06",
+      "E07"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R30",
+    "title": "Results: additional SU-8 bake",
+    "v7": [
+      51
+    ],
+    "v8": [
+      39
+    ],
+    "decision": "Separate paragraph with the existing batch observations",
+    "reason": "V7 reports the eight-wafer and two-wafer observations. V8 separates them into a paragraph, calls the process optimized and adds a warning about isolating variables.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R31",
+    "title": "Results: pin heights and clamping",
+    "v7": [
+      52
+    ],
+    "v8": [
+      40
+    ],
+    "decision": "V8’s height statistics with the existing clamping result",
+    "reason": "V8 brings the mean and standard deviation from Table S1 into main Results. V7 already reports the 116 µm range and the EPDM solution there.",
+    "feedback": [
+      11,
+      127
+    ],
+    "kind": "draft",
+    "checks": [
+      "A04",
+      "B03",
+      "B04",
+      "B06"
+    ],
+    "source_checks": [
+      "B03",
+      "B04"
+    ]
+  },
+  {
+    "id": "R32",
+    "title": "Results: open channels and release",
+    "v7": [
+      53
+    ],
+    "v8": [
+      41
+    ],
+    "decision": "V7 wording",
+    "reason": "Both report open channels and unmeasured cast dimensions. V8 additionally states that alignment error is unquantified. V7 P68 distinguishes design clearance from actual alignment.",
+    "feedback": [
+      136,
+      149
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R33",
+    "title": "Results: repeated casting and mold use",
+    "v7": [
+      54,
+      56
+    ],
+    "v8": [
+      42,
+      43
+    ],
+    "decision": "V7 reuse account with V8’s Figure 3 link",
+    "reason": "V7 already reports five molds, three used, more than 50 casts, two losses and eight months of use. V8 adds a direct Figure 3 callout and a warning about standardized durability testing. V7 reports observed use, not a standardized lifetime test.",
+    "feedback": [
+      48,
+      138,
+      522
+    ],
+    "kind": "draft",
+    "checks": [
+      "A08",
+      "A16",
+      "B05",
+      "E22"
+    ],
+    "source_checks": [
+      "B05",
+      "E22"
+    ]
+  },
+  {
+    "id": "R34",
+    "title": "Results: frame materials and adhesives",
+    "v7": [
+      57,
+      58
+    ],
+    "v8": [
+      44
+    ],
+    "decision": "V7 material and adhesive observations",
+    "reason": "V7 reports the warping and culture outcomes, including cultures that did not survive with the other screened adhesives. It does not claim a general toxicity or mechanical-strength test. V8 adds warnings about those unclaimed tests.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R35",
+    "title": "Results: multichannel loading",
+    "v7": [
+      55,
+      56
+    ],
+    "v8": [
+      45
+    ],
+    "decision": "V7 pipetting result",
+    "reason": "V7 says eight wells were filled with a multichannel pipette. It does not claim robotic dispensing or a measured processing rate. V8 adds a warning that those were not evaluated.",
+    "feedback": [
+      74
+    ],
+    "kind": "draft",
+    "checks": [
+      "A09"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R36",
+    "title": "Results: microscope use",
+    "v7": [
+      60
+    ],
+    "v8": [
+      46
+    ],
+    "decision": "V7’s experiment-specific account",
+    "reason": "Both report imaging without instrument modification. V8 removes V7’s reason for choosing Opera Phenix: it was faster for these experiments.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R37",
+    "title": "Results: tracer movement",
+    "v7": [
+      61
+    ],
+    "v8": [
+      47,
+      48
+    ],
+    "decision": "V7 tracer result and limit",
+    "reason": "V7 already limits the conclusion to observed redistribution at two times and says isolation between them was not characterized. V8 expands the same limit over two paragraphs.",
+    "feedback": [
+      78,
+      432
+    ],
+    "kind": "draft",
+    "checks": [
+      "A10",
+      "E02"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R38",
+    "title": "Results: neuronal labeling",
+    "v7": [
+      62,
+      63
+    ],
+    "v8": [
+      49,
+      50
+    ],
+    "decision": "V7 text with V8’s Figure 4B link",
+    "reason": "V7 already reports labeling in the soma compartment after axon-compartment application. V8 adds the direct Figure 4B callout and a warning about uncounted axonal trajectories. V7 does not claim that measurement.",
+    "feedback": [
+      430
+    ],
+    "kind": "draft",
+    "checks": [
+      "A11"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R39",
+    "title": "Results: 72 assessed and 69 counted devices",
+    "v7": [
+      64
+    ],
+    "v8": [
+      51
+    ],
+    "decision": "V7 count explanation with updated counts (R53)",
+    "reason": "V7 supplies 24 interior devices per plate, 72 assessed, three excluded and 69 counted, with means and SD. V8 adds another biological-reproducibility warning. R53 gives the updated DMSO counts.",
+    "feedback": [
+      53,
+      551
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R40",
+    "title": "Results: unframed control",
+    "v7": [
+      59
+    ],
+    "v8": [
+      52
+    ],
+    "decision": "V7 control observation and limit",
+    "reason": "V7 reports one control, unresolved causes and analysis of interior devices. V8 states what would be needed for routine use of all 48 positions. My preference is V7’s current-scope limit and future-work wording.",
+    "feedback": [
+      55
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R41",
+    "title": "Discussion: contribution and prior inserts",
+    "v7": [
+      68
+    ],
+    "v8": [
+      54,
+      55
+    ],
+    "decision": "V7 quantitative comparison",
+    "reason": "V7 compares three individually placed steel inserts with 96 resin inserts positioned together and gives the 17-fold margin calculation. V8 removes that calculation and adds broad statements about what is not new.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R42",
+    "title": "Discussion: printing, coating and cell contact",
+    "v7": [
+      69
+    ],
+    "v8": [
+      55
+    ],
+    "decision": "V7 wording",
+    "reason": "V7 explains why printing forms the wells and SU-8 forms the fine channels. Printed resin stays in the mold; the culture device is PDMS on glass.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R43",
+    "title": "Discussion: repeated use and later bench production",
+    "v7": [
+      70
+    ],
+    "v8": [
+      56
+    ],
+    "decision": "V7 reuse explanation",
+    "reason": "V7 reports reuse and explains that later casts do not repeat cleanroom work. It does not claim measured superiority in time, cost or production yield. V8 adds warnings about an optimized production economy.",
+    "feedback": [
+      260,
+      500
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R44",
+    "title": "Discussion: limits of biological testing",
+    "v7": [
+      75
+    ],
+    "v8": [
+      57
+    ],
+    "decision": "V7 biological-testing limit",
+    "reason": "Both identify one preparation and further testing. V8 says further studies would be needed to assess screening robustness. My preference is V7’s future-work wording; the present study demonstrates fabrication and culture, not a validated screening assay.",
+    "feedback": [
+      140,
+      432
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R45",
+    "title": "Discussion: parylene and well geometry",
+    "v7": [
+      72,
+      74
+    ],
+    "v8": [
+      58
+    ],
+    "decision": "V7 coating and working-volume explanation",
+    "reason": "V7 explains why coating widens a ridge while leaving its height above the base approximately unchanged. It also explains why increasing the 50 µL safe working volume would need larger, more expensive glass. V8 shortens these explanations.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R46",
+    "title": "Discussion: edge growth",
+    "v7": [
+      73
+    ],
+    "v8": [
+      59
+    ],
+    "decision": "V7 wording",
+    "reason": "Both retain poorer edge growth and the single unframed comparison. V7 already says the cause is unresolved and the frame can change separately.",
+    "feedback": [
+      55
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R47",
+    "title": "Discussion: changes to generated layouts",
+    "v7": [
+      71
+    ],
+    "v8": [
+      60
+    ],
+    "decision": "V7 design explanation",
+    "reason": "V7 explains how pins, holes, adhesive space, sidewall slope and shrinkage correction fit together. V8 shortens that explanation and adds another list of future tests. The untested-layout statement was already in V7.",
+    "feedback": [
+      84,
+      327
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R48",
+    "title": "Conclusion",
+    "v7": [
+      76,
+      77
+    ],
+    "v8": [
+      61,
+      62
+    ],
+    "decision": "V7 conclusion with the cast total",
+    "reason": "V7 already states the contribution and the edge-growth limit. V8 adds the more-than-50-cast result and a list of tests said to be needed for broader assay robustness.",
+    "feedback": [
+      44,
+      140,
+      432
+    ],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R49",
+    "title": "Code, files and data statement",
+    "v7": [
+      78,
+      79,
+      80,
+      81
+    ],
+    "v8": [
+      63,
+      64
+    ],
+    "decision": "V7 file list",
+    "reason": "V7 P79 and V7 P80 name the files and their roles; V8 P64 shortens the list. Both promise a deposit. The DMSO count table is now supplied (R53). The study release, device preset and permanent archive link still need identifying.",
+    "feedback": [
+      551,
+      560,
+      562,
+      564
+    ],
+    "kind": "draft",
+    "checks": [
+      "F05",
+      "F06",
+      "F07",
+      "F13"
+    ],
+    "source_checks": [
+      "F06",
+      "F13"
+    ]
+  },
+  {
+    "id": "R50",
+    "title": "Conflict-of-interest statement",
+    "v7": [],
+    "v8": [
+      65,
+      66
+    ],
+    "decision": "V8 statement before Data availability",
+    "reason": "V8 adds the conflicts statement after Data availability. The journal’s order is conflicts, data availability, then acknowledgements.",
+    "feedback": [
+      581,
+      583
+    ],
+    "kind": "draft",
+    "checks": [
+      "F11"
+    ],
+    "source_checks": [
+      "F11"
+    ]
+  },
+  {
+    "id": "R51",
+    "title": "Acknowledgements and funding",
+    "v7": [
+      82,
+      83
+    ],
+    "v8": [
+      67
+    ],
+    "decision": "V7 thanks with V8 funding details",
+    "reason": "V8 adds CIHR and MS Canada funding details. V7 names the facilities and their contributions.",
+    "feedback": [],
+    "kind": "draft",
+    "checks": [],
+    "source_checks": []
+  },
+  {
+    "id": "R52",
+    "title": "Reference list removed",
+    "v7": [
+      84,
+      85,
+      86,
+      87,
+      88,
+      89,
+      90,
+      91,
+      92,
+      93,
+      94,
+      95,
+      96,
+      97,
+      98,
+      99,
+      100,
+      101,
+      102,
+      103,
+      104,
+      105,
+      106,
+      107,
+      108
+    ],
+    "v8": [],
+    "decision": "V7 reference list with new entries",
+    "reason": "V7 P84 starts a 24-entry bibliography. V8 removes it while adding citations. Check new references against the claims they support, keeping fabrication methods as the main comparison (R05). Final submission needs the complete list and numbered superscript citations.",
+    "feedback": [
+      436,
+      569,
+      571
+    ],
+    "kind": "draft",
+    "checks": [
+      "D28",
+      "E16",
+      "F08",
+      "F09"
+    ],
+    "source_checks": [
+      "D28",
+      "F09"
+    ]
+  },
+  {
+    "id": "R53",
+    "title": "Updated DMSO counts and Figure 4 text",
+    "v7": [
+      41,
+      64,
+      81,
+      116,
+      245,
+      247
+    ],
+    "v8": [
+      29,
+      51,
+      64,
+      77
+    ],
+    "decision": "Integrate the recent DMSO plot and match the text",
+    "reason": "The DMSO package has 72 rows and five counting-artifact exclusions, giving 22, 21 and 24 devices (67 total). Both drafts report three exclusions and 69 devices. The five flags need reconciling with the rule against excluding high or low counts alone (R22). Methods, Protocol S1, Results, Figure 4 and its legend need matching reasons, counts, means and SD (R55).",
+    "feedback": [
+      51,
+      291,
+      551,
+      607
+    ],
+    "kind": "remaining",
+    "checks": [
+      "A12",
+      "A19",
+      "D21",
+      "D24",
+      "F01",
+      "F02",
+      "F04"
+    ],
+    "source_checks": [
+      "F01",
+      "F02",
+      "F04"
+    ]
+  },
+  {
+    "id": "R54",
+    "title": "Figure 4 scale bars",
+    "v7": [
+      43,
+      116
+    ],
+    "v8": [
+      30,
+      77
+    ],
+    "decision": "Use the recent calibrated CTβ views; add tracer bars",
+    "reason": "The recent supplementary-biology figure has calibrated 500 µm CTβ bars, crop dimensions and saved rendering code (Sources R54), not included in V7/V8. Those views can replace the old Figure 4 microscopy. The separate tracer panel still needs its acquisition scale and a bar.",
+    "feedback": [
+      301
+    ],
+    "kind": "remaining",
+    "checks": [
+      "D23"
+    ],
+    "source_checks": [
+      "D23"
+    ]
+  },
+  {
+    "id": "R55",
+    "title": "Counting-method settings",
+    "v7": [
+      241
+    ],
+    "v8": [
+      202
+    ],
+    "decision": "Integrate the saved supplementary-biology counting method",
+    "reason": "The supplementary-biology analysis supplies software, counts and overlays. Sources R55 lists the saved counting configuration. Use the configuration matching the selected count table when updating Methods and Protocol S1; match the exclusion explanation in R53.",
+    "feedback": [
+      51
+    ],
+    "kind": "remaining",
+    "checks": [
+      "A18",
+      "F03"
+    ],
+    "source_checks": [
+      "F03"
+    ]
+  },
+  {
+    "id": "R56",
+    "title": "Animal approval details",
+    "v7": [
+      226
+    ],
+    "v8": [
+      187
+    ],
+    "decision": "Add the approving body, guidelines and approval number",
+    "reason": "V7 P226 and V8 P187 mention an approved procedure but do not name the approving body, guidelines or approval number.",
+    "feedback": [
+      576
+    ],
+    "kind": "remaining",
+    "checks": [
+      "F10"
+    ],
+    "source_checks": [
+      "F10"
+    ]
+  },
+  {
+    "id": "R57",
+    "title": "Supplementary table layout",
+    "v7": [
+      129,
+      131
+    ],
+    "v8": [
+      90,
+      92
+    ],
+    "decision": "Widen the S2/S3 columns",
+    "reason": "The checked render shows split words in Table S2 and dense columns in Table S3. Table S1 numbers fit on one line.",
+    "feedback": [
+      494,
+      507,
+      606
+    ],
+    "kind": "remaining",
+    "checks": [
+      "E11",
+      "E15",
+      "E19"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R58",
+    "title": "Separate supplement and height CSV",
+    "v7": [
+      119,
+      121
+    ],
+    "v8": [
+      80,
+      82
+    ],
+    "decision": "Use the supplied separate supplement and height CSV",
+    "reason": "The Pin-height CSV matches all 96 Table S1 heights. The Separate supplement (DOCX/PDF) has the same 212 nonempty paragraphs and ten tables as V7. File details are in Sources R58.",
+    "feedback": [
+      511,
+      513,
+      609
+    ],
+    "kind": "supplied",
+    "checks": [
+      "E10",
+      "E12",
+      "E26",
+      "F12"
+    ],
+    "source_checks": [
+      "E12",
+      "E26",
+      "F12"
+    ]
+  },
+  {
+    "id": "R59",
+    "title": "Later channel-width measurements",
+    "v7": [
+      53
+    ],
+    "v8": [
+      41,
+      58
+    ],
+    "decision": "Report the width estimates with their measurement method",
+    "reason": "Nine brightfield ruler estimates from three devices span 10.7–13.1 µm. Blurred wall-band placement gives up to 2.37 µm span sensitivity when each endpoint shifts one pixel. The pixel scale, method and overlays accompany the estimates; channel depth remains unmeasured (R61).",
+    "feedback": [
+      136
+    ],
+    "kind": "remaining",
+    "checks": [
+      "B07",
+      "B12",
+      "C10",
+      "F14"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R60",
+    "title": "Individual mold-production records",
+    "v7": [
+      54
+    ],
+    "v8": [
+      43
+    ],
+    "decision": "Keep the reuse observations; include per-mold records if available",
+    "reason": "V7 P54 reports more than 50 casts, more than eight months of use and both mold losses. Existing per-mold records could add detail; no new durability study is proposed. Sources R33 compares Ristola’s reported reuse observations.",
+    "feedback": [
+      138,
+      522
+    ],
+    "kind": "optional",
+    "checks": [
+      "A17",
+      "B08",
+      "B09",
+      "E21"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R61",
+    "title": "Channel depth and between-cast comparisons",
+    "v7": [
+      53,
+      72
+    ],
+    "v8": [
+      41,
+      58
+    ],
+    "decision": "No new depth or cast-to-cast study proposed",
+    "reason": "ChatGPT proposes depth and between-cast measurements. Integrate the width estimates in R59; no depth or cast-to-cast panels are proposed here.",
+    "feedback": [
+      136,
+      346
+    ],
+    "kind": "optional",
+    "checks": [
+      "B10",
+      "B13"
+    ],
+    "source_checks": []
+  },
+  {
+    "id": "R62",
+    "title": "Figure layout and additional plots",
+    "v7": [
+      110,
+      112,
+      114,
+      116,
+      118
+    ],
+    "v8": [
+      71,
+      73,
+      75,
+      77,
+      79
+    ],
+    "decision": "Revisit image sizes and Figure 3/5 layout; no added durability study",
+    "reason": "The recent supplementary-biology figure supplies larger views and device dots to integrate. Existing device/alignment views, Figure 3 length, Figure 5 outputs and in-figure untested labels should be revisited. Height and aggregate mold-outcome plots are ChatGPT suggestions, not proposed additions here. The existing reuse observations remain; a durability study is not part of this revision.",
+    "feedback": [
+      214,
+      238,
+      239,
+      262,
+      291,
+      313,
+      327,
+      398
+    ],
+    "kind": "optional",
+    "checks": [
+      "B01",
+      "B02",
+      "B11",
+      "B14",
+      "B15",
+      "C01",
+      "C02",
+      "C03",
+      "C04",
+      "C05",
+      "C06",
+      "C07",
+      "C08",
+      "C09",
+      "C11",
+      "C12",
+      "D01",
+      "D02",
+      "D03",
+      "D04",
+      "D05",
+      "D06",
+      "D07",
+      "D08",
+      "D09",
+      "D10",
+      "D11",
+      "D12",
+      "D13",
+      "D14",
+      "D15",
+      "D16",
+      "D17",
+      "D18",
+      "D19",
+      "D20",
+      "D25",
+      "D26",
+      "E01"
+    ],
+    "source_checks": [
+      "C06",
+      "C07",
+      "D08"
+    ]
+  },
+  {
+    "id": "R63",
+    "title": "Small supplement edits and extra failure comparisons",
+    "v7": [
+      152,
+      153,
+      155,
+      157,
+      158,
+      159,
+      161,
+      332
+    ],
+    "v8": [
+      113,
+      114,
+      116,
+      118,
+      119,
+      120,
+      122,
+      293
+    ],
+    "decision": "Add note citations and make the protocol instruction clearer",
+    "reason": "Figure S1 can be cited after Note S1’s filtered-exposure observation; Figure S2 after Note S2’s bare-silicon delamination observation. Table S3 already separates tested and files-only designs. The protocol’s open-channel result can become an inspection instruction. No raised-edge measurements are proposed: the filter addresses the observed bonding problem, and Figure S1 documents the comparison.",
+    "feedback": [
+      450,
+      451,
+      475,
+      477,
+      541
+    ],
+    "kind": "optional",
+    "checks": [
+      "E04",
+      "E05",
+      "E08",
+      "E09",
+      "E18",
+      "E24",
+      "E28"
+    ],
+    "source_checks": [
+      "E18"
+    ]
+  }
+]

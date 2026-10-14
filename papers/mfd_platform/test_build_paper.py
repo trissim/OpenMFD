@@ -14,6 +14,13 @@ from paper_build.word import fit_docx_figures
 from build_paper import PAPER
 
 
+def test_upload_names_are_derived_from_the_paper_prefix():
+    assert PAPER.output_prefix == 'openmfd'
+    for role in DocumentRole:
+        for extension in ('pdf', 'docx'):
+            assert PAPER.filename(role, extension) == f'openmfd_{role.value}.{extension}'
+
+
 def test_scientific_source_and_figure_bytes_preserved_after_rename():
     archive = PAPER.root / 'build/refactor-inputs-before-cutover-20260915'
     if not (archive / 'inputs.json').is_file():

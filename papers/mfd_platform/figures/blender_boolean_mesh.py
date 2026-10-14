@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-"""Subtract one STL mesh from another with Blender's manifold Boolean solver."""
+"""Apply manifold Boolean operations to STL meshes in Blender."""
 
 from __future__ import annotations
 
@@ -19,8 +19,24 @@ def import_stl(path: Path, name: str) -> bpy.types.Object:
 
 def main() -> int:
     if "--" not in sys.argv:
-        raise SystemExit("Expected BASE_STL CUTTER_STL OUTPUT_STL after --")
+        raise SystemExit("Expected [--operation OP] BASE_STL CUTTER_STL OUTPUT_STL after --")
     arguments = sys.argv[sys.argv.index("--") + 1 :]
+    operation = "DIFFERENCE"
+    solver = "MANIFOLD"
+    if arguments[:1] == ["--operation"]:
+        if len(arguments) < 3:
+            raise SystemExit("--operation requires DIFFERENCE, INTERSECT, or UNION")
+        operation = arguments[1].upper()
+        arguments = arguments[2:]
+    if arguments[:1] == ["--solver"]:
+        if len(arguments) < 3:
+            raise SystemExit("--solver requires MANIFOLD or EXACT")
+        solver = arguments[1].upper()
+        arguments = arguments[2:]
+    if operation not in {"DIFFERENCE", "INTERSECT", "UNION"}:
+        raise SystemExit(f"Unsupported Boolean operation: {operation}")
+    if solver not in {"MANIFOLD", "EXACT"}:
+        raise SystemExit(f"Unsupported Boolean solver: {solver}")
     if len(arguments) < 3:
         raise SystemExit("Expected BASE_STL CUTTER_STL [CUTTER_STL ...] OUTPUT_STL")
     base_path = Path(arguments[0])
@@ -36,9 +52,9 @@ def main() -> int:
     # negative of every generated mold feature.
     for index, cutter_path in enumerate(cutter_paths):
         cutter = import_stl(cutter_path, f"cutter-{index}")
-        modifier = base.modifiers.new(f"native-mold-negative-{index}", "BOOLEAN")
-        modifier.operation = "DIFFERENCE"
-        modifier.solver = "MANIFOLD"
+        modifier = base.modifiers.new(f"mesh-boolean-{operation.lower()}-{index}", "BOOLEAN")
+        modifier.operation = operation
+        modifier.solver = solver
         modifier.object = cutter
         bpy.context.view_layer.objects.active = base
         base.select_set(True)

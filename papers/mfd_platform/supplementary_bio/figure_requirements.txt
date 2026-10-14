@@ -1,0 +1,13 @@
+solidpython>=1.1.0
+viewscad>=0.2.0
+ezdxf>=1.0.0
+numpy>=1.24.0
+matplotlib>=3.8.0
+Pillow>=10.0.0
+python-pptx>=1.0.0
+pandas>=2.2.0
+openpyxl>=3.1.0
+scikit-image>=0.24.0
+tifffile>=2024.0.0
+roifile>=2024.0.0
+CairoSVG>=2.7.0

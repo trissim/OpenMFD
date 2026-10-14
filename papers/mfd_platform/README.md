@@ -1,8 +1,8 @@
 # OpenMFD platform manuscript
 
-Read the latest successful [manuscript PDF](current/manuscript.pdf),
-[supplement PDF](current/supplement.pdf), or
-[combined review PDF](current/review.pdf). DOCX files, input/output/tool
+Read the latest successful [manuscript PDF](current/openmfd_manuscript.pdf),
+[supplement PDF](current/openmfd_supplement.pdf), or
+[combined review PDF](current/openmfd_review.pdf). DOCX files, input/output/tool
 provenance and complete build logs are beside them. All three switch together.
 
 Edit [manuscript.md](manuscript.md) for the main text and files in
@@ -24,6 +24,21 @@ python -m venv /path/to/paper-build-env
 /path/to/paper-build-env/bin/python papers/mfd_platform/build_paper.py snapshot --label pi-review
 /path/to/paper-build-env/bin/python papers/mfd_platform/build_paper.py history
 ```
+
+To generate a tracked Word copy from two DOCX versions:
+
+```sh
+python /home/ts/code/projects/papers/paper_build/compare.py original.docx revised.docx tracked.docx --author "Tristan Simas"
+```
+
+The shared package's new `compare` command provides the same operation through
+`build_paper.py` once installed from the updated shared source. Generate the
+revised DOCX from Markdown first; the source needs no revision markup. This is
+a native text comparison, retaining the revised layout, rather than exhaustive
+formatting comparison. The system Python needs LibreOffice's UNO bridge.
+With the updated shared package, `build --track-against original.docx
+--track-role review --author "Tristan Simas"` regenerates the clean documents
+and tracked comparison together; `review` includes the supplement.
 
 The requirement pins the tested shared package's exact remote Git revision.
 There is one imported shared implementation, not vendored code to synchronise.

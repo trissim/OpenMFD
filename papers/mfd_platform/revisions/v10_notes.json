@@ -1,0 +1,87 @@
+[
+  {
+    "anchor": "enabling array-scale",
+    "text": "We aligned all inserts together, but did not measure positioning error. I changed 'precise alignment' to describe the operation we performed."
+  },
+  {
+    "anchor": "This challenge is particularly relevant to neuronal assays",
+    "text": "The opening now states the fabrication problem first, then explains why neuronal assays need fine channels between compartments."
+  },
+  {
+    "anchor": "directional tracer movement, primary cortical neuron culture and retrograde axonal labeling",
+    "text": "Condensed the biological-validation summary into one sentence."
+  },
+  {
+    "anchor": "additional compartment geometries",
+    "text": "'Additional compartment geometries' describes what OpenMFD varies without limiting the fabrication method to neuronal assays."
+  },
+  {
+    "anchor": "practical resolution of desktop resin printers",
+    "text": "Moved the neuronal context after the fabrication problem. The added resolution explanation connects these applications to the need for photolithography for fine channels alongside printing for larger wells."
+  },
+  {
+    "anchor": "Our approach builds on existing compartmentalized device designs",
+    "text": "The revised closing sentence explains how OpenMFD extends earlier work: arranging existing device layouts into multiwell arrays and generating their matching masks, inserts and plate components."
+  },
+  {
+    "anchor": "Fabrication approaches differ in the equipment and operations required to combine these scales",
+    "text": "Moved the fine-channel/large-well paragraph to the start and removed the duplicated method summary. The Table S2 link from V7 restores the broader fabrication comparison."
+  },
+  {
+    "anchor": "access to a shared cleanroom for reusable mold fabrication",
+    "text": "Restored V7's shared-cleanroom explanation and Table S2 citation: a lab can obtain a reusable mold from a facility, then cast plates on the bench."
+  },
+  {
+    "anchor": "an example neuronal application",
+    "text": "Described the plate as an example neuronal application and restored V7's practical benefit: later plates can be made without repeating cleanroom processing."
+  },
+  {
+    "anchor": "Supplementary Protocol S2 describes one-time hybrid mold fabrication",
+    "text": "Added protocol links to distinguish one-time mold fabrication from routine casting and assays."
+  },
+  {
+    "anchor": "Supplementary Fig. S1",
+    "text": "Added the Figure S1 citation because those images show the raised edges and the effect of the filter."
+  },
+  {
+    "anchor": "Supplementary Fig. S2",
+    "text": "Added the Figure S2 citation because the image shows the SU-8 peeling from the wafer."
+  },
+  {
+    "anchor": "Culture survival was assessed qualitatively",
+    "text": "Removed the warning about unmeasured bond strength because no strength value is claimed."
+  },
+  {
+    "anchor": "because it was faster for these experiments",
+    "text": "Restored V7's reason for choosing the Opera Phenix: it was faster for these experiments."
+  },
+  {
+    "anchor": "The chamber margin is 17 times the nominal per-side clearance",
+    "text": "Restored V7's 17-fold comparison between the 1,275 micrometer chamber margin and 75 micrometer pin clearance, which explains how the layout accommodates positioning error without covering the channels."
+  },
+  {
+    "anchor": "established cell-culture",
+    "text": "Changed 'neuronal culture protocols' to 'cell-culture protocols' because the PDMS/glass culture surfaces are useful beyond neurons. Removed the repeated warning about validating each configuration."
+  },
+  {
+    "anchor": "Nevertheless, the present study did not directly quantify manufacturing time, labor requirements, or cost savings relative to established alternatives, and these potential advantages should be evaluated in future comparisons.",
+    "text": "Removed the warning about time and cost comparisons because the paragraph describes eliminated operations without claiming numerical savings.",
+    "source": "original"
+  },
+  {
+    "anchor": "Our approach extends existing compartmentalized device designs",
+    "text": "Replaced the statement about what the work does not introduce with its contribution: adapting device layouts into multiwell plate arrays with matching fabrication files."
+  },
+  {
+    "anchor": "These additional designs have not yet been fabricated or biologically tested",
+    "text": "Shortened the validation warning to the actual status: these layouts have not been fabricated or biologically tested."
+  },
+  {
+    "anchor": "The coordinated design and array-transfer workflow provides an adaptable framework",
+    "text": "The closing sentence now emphasizes coordinated design, collective insert transfer and reusable molds for spatially controlled cell culture. Removed the demand to establish quantitative fabrication reproducibility, which the paper does not claim."
+  },
+  {
+    "anchor": "The per-device neuronal count table and source images used for quantitative analyses",
+    "text": "The supplied supplement has pin heights and mold/cast totals. The individual neuronal counts and analysis images need their own data files for submission. I changed the statement so it does not say those files are already supplied."
+  }
+]
