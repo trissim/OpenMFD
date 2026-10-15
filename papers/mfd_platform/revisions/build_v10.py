@@ -72,15 +72,13 @@ def main():
         (" By combining high-resolution photolithography with scalable three-dimensional molding, this method provides an accessible and reusable fabrication platform for medium-throughput microfluidic assays.", "")
     ], "enabling array-scale",
        "We aligned all inserts together, but did not measure positioning error. I changed 'precise alignment' to describe the operation we performed.")
-    notes.append({"anchor": "This challenge is particularly relevant to neuronal assays",
-                  "text": "The abstract connects the fabrication problem to neuronal assays while introducing a method that can accommodate other compartment layouts."})
 
     edit(13, [
         ("Microfluidic compartmentalization has transformed the study of neuronal cell biology by enabling independent access to cell bodies, axons and their local extracellular environments.",
          "Compartmentalized neuronal cultures enable independent access to cell bodies, axons and their local extracellular environments."),
         (" Together, these developments have established compartmentalized microfluidics as a versatile approach for investigating neuronal connectivity and responses to spatially defined perturbations.", "")
     ], "Compartmentalized neuronal cultures enable independent access",
-         "Started with the neuronal experiments that motivate the platform and moved the fabrication explanation after the biological context.")
+         "Neuronal experiments motivate the need for fine channels; the fabrication method then addresses how to reproduce those layouts in plate-format arrays.")
 
     edit(14, [(" These studies establish that parallelization and adaptable neuronal compartmentalization are feasible. Nevertheless, the fabrication workflow remains an important design consideration when laboratories need to reproduce, modify or manufacture custom arrays of devices.", "")])
 
@@ -91,7 +89,7 @@ def main():
          "culture reservoirs are often opened individually after casting. Fine channel-forming features, such as the 10 µm widths designed here, can fall below the practical resolution of desktop resin printers. Photolithography provides these fine features, while printed structures form the larger wells (PMID: 40190179). Fabrication approaches differ in the equipment and operations required to combine these scales (Supplementary Table S2)."),
         ("Building on previous advances in multiscale molding and the elimination of manual reservoir punching, our approach introduces a customizable, parametric design strategy that enables the simultaneous alignment and assembly of large arrays of well-forming inserts onto reusable photolithographically patterned molds, facilitating reproducible, medium-throughput device fabrication.", "")
     ], "practical resolution of desktop resin printers",
-         "Placed the fabrication problem after the neuronal context. The added printer-resolution explanation shows why fine channels need photolithography alongside printed wells. Restored the Table S2 comparison from V7 and removed the duplicated method summary.")
+         "Explained why the fine channels use photolithography while the larger wells use printed inserts. Restored V7's fabrication-method comparison in Table S2.")
 
     edit(16, [("Photopolymer-based 3D printing offers accessible fabrication",
                "For academic laboratories, access to a shared cleanroom for reusable mold fabrication can be more practical than acquiring dedicated precision molding or machining equipment (Supplementary Table S2). Photopolymer-based 3D printing offers accessible fabrication"),
@@ -104,7 +102,7 @@ def main():
               ("We further demonstrate that the parametric workflow generates coordinated fabrication files for alternative compartment geometries, providing a customizable strategy for manufacturing plate-format microfluidic devices.",
                "OpenMFD also arranges alternative compartment geometries into plate-format arrays and generates their matching fabrication files. Once a mold is made, further plates can be cast and assembled on the bench without repeating cleanroom processing.")],
          "an example neuronal application",
-         "Described the neuronal plate as an example application and clarified how the platform carries other compartment layouts into plate-format arrays. Restored V7's practical benefit: later plates need no repeated cleanroom processing.")
+         "The method adapts different compartment layouts into plate-format arrays. The neuronal plate demonstrates one layout; later plates need no repeated cleanroom processing.")
 
     paragraph = E.Element("{" + W + "}p")
     properties = paragraphs[24].find("w:pPr", NS)
@@ -135,8 +133,8 @@ def main():
     edit(85, [("Previous approaches have demonstrated the feasibility of combining micrometer- and millimeter-scale features using hybrid soft lithography, alternative molding strategies, and additive manufacturing (PMIDs: 20049640; 32832365). Particularly relevant to our approach, Ristola",
                "Ristola"),
               ("Although these geometrical relationships provide tolerance for insert positioning, the actual alignment accuracy remains dependent on photolithographic registration and resin-printing precision and was not directly quantified.",
-               "The chamber margin is 17 times the nominal per-side clearance (Supplementary Table S3). Final alignment also depends on photolithographic registration and resin-printing precision.")],
-         "The chamber margin is 17 times the nominal per-side clearance",
+               "The chamber margin is 17 times the per-side pin clearance (Supplementary Table S3). Final alignment also depends on photolithographic registration and resin-printing precision.")],
+         "The chamber margin is 17 times the per-side pin clearance",
          "Restored V7's 17-fold comparison between the 1,275 micrometer chamber margin and 75 micrometer pin clearance, which explains how the layout accommodates positioning error without covering the channels.")
     edit(86, [("The combination of photolithography and resin printing also exploits the complementary capabilities of these fabrication technologies. Photolithography remains well suited to defining micrometer-scale structures, whereas resin printing provides an accessible means of producing larger three-dimensional features. Recent developments in printed molds and hybrid fabrication have expanded the range of structures that can be manufactured for biological microfluidic applications, although achievable resolution, PDMS curing compatibility, and surface treatment remain important considerations (PMIDs: 40190179; 40667579). ", ""),
               (" This distinction is potentially advantageous for applications requiring conventional PDMS surface treatments and established neuronal culture protocols, although the biological compatibility of each assembled device configuration must still be established experimentally.", "")])
@@ -152,13 +150,11 @@ def main():
          "Our approach extends existing compartmentalized device designs",
          "Replaced the statement about what the work does not introduce with its contribution: adapting device layouts into multiwell plate arrays with matching fabrication files.")
     edit(91, [(original_text[paragraphs[90]],
-               "OpenMFD generated matching fabrication files for oligodendrocyte myelination, axon-guidance and three-compartment neuronal layouts. Changing the compartment geometry and array layout updates the matching photomasks, inserts and plate components. These additional designs have not been fabricated or biologically tested.")],
-         "Changing the compartment geometry and array layout updates",
-         "This explains what generalizes: device layouts can change while their fabrication components stay matched.")
+               "OpenMFD generated matching fabrication files for oligodendrocyte myelination, axon-guidance and three-compartment neuronal layouts. Changing the compartment geometry and array layout updates the matching photomasks, inserts and plate components. These additional designs have not been fabricated or biologically tested.")])
     edit(93, [(original_text[paragraphs[92]],
                "We developed OpenMFD to arrange compartmentalized device layouts into plate-format arrays and generate matching photomasks, well-forming inserts and plate components. The inserts are transferred and bonded together onto a photolithographically patterned wafer, forming a reusable mold that casts the complete array without individual well punching. The demonstrated 48-device plate supported multichannel pipetting, automated imaging, compartmentalized neuronal culture and retrograde axonal labeling. Peripheral culture performance remains a target for improvement.")],
          "OpenMFD to arrange compartmentalized device layouts into plate-format arrays",
-         "The contribution is a method for making arrays from different compartment layouts; the neuronal plate is one application.")
+         "Kept the fabrication method as the contribution and the neuronal plate as its demonstrated application.")
     edit(95, [("Experimental data supporting the findings, including mold fabrication and casting outcomes, resin-insert measurements, neuronal cell counts, and source images used for quantitative analyses, are provided in the Supplementary Information or associated repository.",
                "The Supplementary Information contains the resin-insert measurements, mold fabrication and casting outcomes, per-device neuronal counts and channel-width measurements. The count and width tables are also supplied as CSV files. The source images used for quantitative analyses will be deposited with the submission.")],
          "per-device neuronal counts and channel-width measurements",
@@ -171,22 +167,24 @@ def main():
     n_excluded = len(excluded)
     sizes = ", ".join(str(row["n"]) for row in summaries)
     edit(48, [("Devices were excluded only when contamination or a technical failure prevented cell counting in the final image; high or low cell counts alone were not grounds for exclusion.",
-               "Devices flagged for cell-counting artifacts in the saved DMSO analysis were excluded from the plate summaries and retained as red crosses in Fig. 4C. High or low counts alone were not grounds for exclusion. Supplementary Table S7 lists every device count and identifies the exclusions.")])
+               "Counts flagged for segmentation artifacts, including background falsely detected as cell bodies, were excluded from the plate summaries and retained as red crosses in Fig. 4C. High or low counts alone were not grounds for exclusion. Supplementary Table S7 lists every device count and identifies the exclusions.")])
     edit(51, [("Figure 4C shows the mean number of CTβ-positive cell bodies per device for each plate, with the standard deviation across the analyzed interior devices.",
                "Figure 4C shows individual device counts and each plate's mean and standard deviation after exclusion of the flagged counting artifacts.")])
+    edit(50, [("These were baseline images collected before axotomy; Supplementary Protocol S1 describes the dataset.",
+               "These were baseline images collected before axotomy in a dimethyl sulfoxide (DMSO)-only control experiment; Supplementary Protocol S1 describes the dataset.")])
     edit(79, [("Of the 72 interior devices across the three plates, three were excluded because contamination or technical failures prevented reliable cell counting, leaving 69 devices for analysis.",
-               f"The saved DMSO-only analysis flagged {n_excluded} of the 72 interior devices for cell-counting artifacts, leaving {sizes} devices on Plates 1–3, respectively ({total} total; Supplementary Table S7).")],
+               f"Of the 72 interior device counts, {n_excluded} were flagged for segmentation artifacts and excluded from the plate summaries, leaving {sizes} devices on Plates 1–3, respectively ({total} total; Supplementary Table S7).")],
          f"leaving {sizes} devices on Plates 1–3",
-         "Used the saved DMSO analysis: five flagged counting artifacts leave 22, 21 and 24 devices. All 72 saved counts match the original per-device count CSVs. Later ROI exports use a different analysis and were not substituted for these counts.")
+         "Updated the analysis set from 69 to 67 using the five cell-count exclusions in the DMSO dataset. The per-plate counts are 22, 21 and 24; all 72 values remain in Table S7.")
     summary_text = "; ".join(f"Plate {i+1}, {s['mean']:.1f} ± {s['sd']:.1f}"
                              for i, s in enumerate(summaries))
     edit(80, [("The mean number of labeled cell bodies per device and the corresponding within-plate standard deviations are presented for each of the three plates in Fig. 4C.",
                f"Counts per device were {summary_text} (mean ± SD; Fig. 4C).")])
-    edit(88, [("69 interior devices", f"{total} interior devices")])
+    edit(88, [(" However, the tracer experiment did not establish the duration of hydrostatic flow or quantitatively measure fluidic isolation. Similarly, neuronal experiments using 69 interior devices across three plates demonstrate assay feasibility but were performed using a single embryonic neuronal preparation.", "")])
     edit(235, [(original_text[paragraphs[234]],
-                "The saved DMSO analysis flags five device counts as counting artifacts. Retain all values in the count table, but omit flagged values from the plate means and SDs. High or low counts alone are not exclusion criteria.")])
+                "Inspect segmentation overlays for artifacts, including background detected as cell bodies, before summarizing counts. Retain excluded values in the count table, but omit them from the plate means and SDs. High or low counts alone are not exclusion criteria.")])
     edit(237, [(original_text[paragraphs[236]],
-                f"The saved DMSO-only analysis retained {total} of 72 interior devices for the plate summaries: {sizes} on Plates 1–3. The flagged devices were "
+                f"Plate summaries used {total} of 72 interior device counts: {sizes} on Plates 1–3. The flagged devices were "
                 + ", ".join(f"{r['plate'].upper()} {r['device']}" for r in excluded)
                 + ". Supplementary Table S7 retains all 72 values and marks these five exclusions.")])
 
@@ -205,6 +203,22 @@ def main():
                "The brightfield estimates depend on wall-band placement: shifting each endpoint by one pixel changes a span by up to 2.37 µm. Channel depth remains unmeasured.")])
     edit(322, [("Microscopy confirmed open channels after coating and casting.",
                 "Microscopy confirmed open channels after coating and casting. Apparent brightfield widths are reported in Supplementary Table S8 and Fig. S3.")])
+
+    edit(60, [("These examples establish the capacity of the design framework to generate coordinated fabrication files for distinct experimental configurations, although the additional designs were not physically fabricated or biologically evaluated.",
+               "These additional designs were not fabricated or biologically tested.")])
+    edit(61, [(" A central requirement was the integration of micrometer-scale features with millimeter-scale structures while maintaining the integrity of the patterned wafer and enabling simultaneous positioning of the well-forming inserts.", "")])
+    edit(62, [("Several fabrication challenges were identified and addressed during process development. ", "")])
+    edit(80, [(" These measurements demonstrate the feasibility of collecting quantitative retrograde labeling data across multiple compartmentalized neuronal cultures using an automated imaging workflow.", "")])
+    edit(89, [("Several design considerations remain important when adapting the platform to other experimental configurations. ", "")])
+    edit(85, [("Importantly, the same array-transfer procedure", "The same array-transfer procedure")])
+
+    for number, old, new in (
+        (26, "nominal device, channel, pin, taper, and frame dimensions", "device, channel, pin, taper, and frame design dimensions"),
+        (59, "nominal widths of 10 µm", "design widths of 10 µm"),
+        (85, "nominal lateral clearance", "designed lateral clearance"),
+        (89, "nominal widths of 10 µm", "design widths of 10 µm"),
+    ):
+        edit(number, [(old, new)])
 
     legend = ("Figure 4: Directional fluid movement and neuronal compatibility. "
               "(A) Twenty-four devices at loading and after 72 h without volume adjustment. "
@@ -370,6 +384,10 @@ def main():
     ])
 
     tables = document.findall("w:body/w:tbl", NS)
+    for table in tables:
+        for p in table.findall(".//w:p", NS):
+            if "nominal channel width" in "".join(p.xpath(".//w:t/text()", namespaces=NS)):
+                replace(p, "nominal channel width", "design channel width")
     comparison_rows = tables[2].findall("w:tr", NS)
     laser_approach = comparison_rows[2].findall("w:tc", NS)[0].find("w:p", NS)
     replace(laser_approach, "CO2 laser micromachining", "Carbon dioxide (CO2) laser micromachining")
