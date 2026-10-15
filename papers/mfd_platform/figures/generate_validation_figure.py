@@ -1,184 +1,240 @@
 #!/usr/bin/env python3
+"""Render Figure 4 and the channel-width supplement from saved measurements."""
 
 from __future__ import annotations
 
-from io import BytesIO
+import argparse
+import csv
+import hashlib
+import json
+import logging
 from pathlib import Path
-import subprocess
-from tempfile import TemporaryDirectory
-from zipfile import ZipFile
+from statistics import mean, stdev
+import sys
+from xml.etree import ElementTree as ET
 
+import matplotlib
+matplotlib.use("Agg")
 import matplotlib.pyplot as plt
-from matplotlib.gridspec import GridSpecFromSubplotSpec
+import numpy as np
 from PIL import Image
-
+logging.getLogger("fontTools").setLevel(logging.WARNING)
 
 FIGURE_DIR = Path(__file__).resolve().parent
-OUTPUT_DIR = FIGURE_DIR / "final_drop" / "Fig5_plate_layout_validation"
-FLUORESCENCE_PDF = OUTPUT_DIR / "fluorescence_microscopy.pdf"
-FLUORESCENCE_ODP = OUTPUT_DIR / "fluorescence_microscopy.odp"
-DYE_DAY0 = OUTPUT_DIR / "dye_gradient_day0.png"
-DYE_DAY3 = OUTPUT_DIR / "dye_gradient_day3.png"
-CTB_COUNT_PLOT = OUTPUT_DIR / "plate_bar_var_Cell_Before.png"
-
-INK = "#1d2633"
-MUTED = "#687583"
-PANEL_BOX = {"boxstyle": "round,pad=0.25", "facecolor": INK, "edgecolor": INK}
+ROOT = FIGURE_DIR.parent
+OUTPUT_DIR = FIGURE_DIR / "final_drop/Fig5_plate_layout_validation"
+DATA_DIR = ROOT / "supplementary/validation"
+BIO_DIR = ROOT / "supplementary_bio"
+SAVED_FIGURE = BIO_DIR / "figure_output_dmso_only_20260916"
+WIDTH_DIR = ROOT / "build/channel_width_20261013"
+COLORS = ("#0072B2", "#D17800", "#00856A")
 
 
-def crop_fraction(
-    image: Image.Image,
-    bounds: tuple[float, float, float, float],
-) -> Image.Image:
-    left, top, right, bottom = bounds
-    return image.crop(
-        (
-            round(image.width * left),
-            round(image.height * top),
-            round(image.width * right),
-            round(image.height * bottom),
-        )
-    )
+def read_csv(path):
+    with path.open(newline="") as stream:
+        return list(csv.DictReader(stream))
 
 
-def load_authored_ctb_row() -> Image.Image:
-    # Reuse the exact three-image CTB row authored in the ODP: one overview at
-    # left and two stacked crops at right.
-    with TemporaryDirectory(prefix="openmfd-fluorescence-") as temporary_dir:
-        output_stem = Path(temporary_dir) / "fluorescence"
-        subprocess.run(
-            [
-                "pdftoppm",
-                "-f",
-                "1",
-                "-l",
-                "1",
-                "-png",
-                "-singlefile",
-                "-r",
-                "300",
-                str(FLUORESCENCE_PDF),
-                str(output_stem),
-            ],
-            check=True,
-        )
-        with Image.open(output_stem.with_suffix(".png")) as image:
-            slide = image.convert("RGB")
-            ct_b = crop_fraction(slide, (0.302, 0.355, 0.845, 0.681))
-
-    # The ODP overlays a white channel label on the overview. Replace that
-    # panel with its underlying source raster while retaining the authored
-    # sizing and the two detail crops on the right.
-    with ZipFile(FLUORESCENCE_ODP) as odp:
-        overview_bytes = odp.read(
-            "Pictures/1000000000001D8E00000E6C3664813B.png"
-        )
-    with Image.open(BytesIO(overview_bytes)) as image:
-        overview = image.convert("RGB")
-    overview_width = round(ct_b.width * 10.199 / 14.797)
-    overview = overview.resize(
-        (overview_width, ct_b.height),
-        Image.Resampling.LANCZOS,
-    )
-    ct_b.paste(overview, (0, 0))
-    return ct_b
+def write_csv(path, rows):
+    with path.open("w", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=list(rows[0]), lineterminator="\n")
+        writer.writeheader()
+        writer.writerows(rows)
 
 
-def panel_label(ax: plt.Axes, label: str) -> None:
-    ax.text(
-        -0.01,
-        1.04,
-        label,
-        transform=ax.transAxes,
-        ha="right",
-        va="bottom",
-        color="white",
-        fontsize=17,
-        fontweight="bold",
-        bbox=PANEL_BOX,
-    )
+def import_saved_data():
+    """Keep the baseline counts and display crops independent of the external disk."""
+    sys.path.insert(0, str(BIO_DIR))
+    from generate_pre_post_comparison_v3 import prepare_pre_display_image, pre_image_path
+    import tifffile
+
+    manifest = json.loads((SAVED_FIGURE / "figure_manifest.json").read_text())
+    source = Path(manifest["authoritative_data"])
+    if hashlib.sha256(source.read_bytes()).hexdigest() != manifest["data_sha256"]:
+        raise ValueError("The saved DMSO data changed; reconcile before importing")
+    assets = json.loads((source.parent / "asset_manifest.json").read_text())
+    DATA_DIR.mkdir(parents=True, exist_ok=True)
+    rows = [{"plate": row["plate"], "device": row["well"],
+             "ctb_positive_cells": row["pre_cell_count"],
+             "included": str(row["pre_outlier"].lower() != "true"),
+             "exclusion_reason": row["outlier_reason"]}
+            for row in read_csv(source)]
+    analysis_dirs = {}
+    for plate, config in assets["plates"].items():
+        # The archived table uses the original analysis, not the later _final run.
+        directory = Path(assets["dataset_root"]) / config["pre"].removesuffix("_final")
+        analysis_dirs[plate] = directory
+    for row in rows:
+        details = analysis_dirs[row["plate"]] / "images_results" / (
+            f"{row['device'].lower()}f001p001-ch2sk1fk1fl1_cell_counts_step2_details.csv")
+        counts = read_csv(details)
+        if len(counts) != 1 or float(counts[0]["cell_count"]) != float(row["ctb_positive_cells"]):
+            raise ValueError(f"Saved count does not match original analysis: {details}")
+    write_csv(DATA_DIR / "ctb_device_counts.csv", rows)
+    metadata = {"count_source": str(source), "count_source_sha256": manifest["data_sha256"],
+                "analysis_version": "OpenHCS 0.5.15", "ctb_channel": 2,
+                "representatives": {}, "tracer_scale": {
+                    "method": "Estimated from 9 mm well-centre spacing in the exported montage",
+                    "day0_centres_xy": [[490, 260], [1130, 260]],
+                    "day3_centres_xy": [[490, 260], [1130, 260]],
+                    "spacing_um": 9000,
+                }}
+    for plate, key in manifest["representative_devices"].items():
+        directory = Path(assets["dataset_root"]) / assets["plates"][plate]["pre"]
+        well = key.split("_")[1]
+        image_path = pre_image_path(directory, well)
+        raw = tifffile.imread(image_path)
+        display = prepare_pre_display_image(raw)
+        acquisition = next(Path(assets["dataset_root"]).parent.glob(
+            f"TS_MFD_PRE_{plate.upper()}_20260203__*/Images/Index.xml"))
+        root = ET.parse(acquisition).getroot()
+        scale_x = {float(n.text) * 1e6 for n in root.iter() if n.tag.endswith("}ImageResolutionX")}
+        scale_y = {float(n.text) * 1e6 for n in root.iter() if n.tag.endswith("}ImageResolutionY")}
+        if len(scale_x) != 1 or scale_x != scale_y:
+            raise ValueError(f"Ambiguous acquisition scale: {acquisition}")
+        image = Image.fromarray(display)
+        image.thumbnail((900, 1500), Image.Resampling.LANCZOS)
+        image.save(DATA_DIR / f"{key}_ctb.png")
+        metadata["representatives"][plate] = {
+            "device": well, "source": str(image_path), "acquisition_xml": str(acquisition),
+            "source_shape_yx": list(raw.shape), "pixel_size_um": scale_x.pop(),
+            "display": f"{key}_ctb.png",
+            "display_processing": manifest["pre_display_processing"],
+            "selection": manifest["representative_rule"],
+        }
+    metadata["count_analysis_directories"] = {p: str(d) for p, d in analysis_dirs.items()}
+    metadata["count_verification"] = "All 72 counts match the original per-device count CSVs; later ROI exports are not the count source."
+
+    widths = read_csv(WIDTH_DIR / "measurements.csv")
+    write_csv(DATA_DIR / "channel_widths.csv", widths)
+    for plate, sample in (("P1", 1), ("P2", 3), ("P3", 4)):
+        data = json.loads((WIDTH_DIR / f"raw_sample_{sample:02d}.json").read_text())
+        pixels = np.asarray(data["records"][0]["array_values"], dtype=np.uint16)
+        np.save(DATA_DIR / f"{plate}_width_crop.npy", pixels, allow_pickle=False)
+        metadata.setdefault("width_crops", {})[plate] = {"slices_yx": data["array_slices"]}
+    (DATA_DIR / "sources.json").write_text(json.dumps(metadata, indent=2) + "\n")
 
 
-def show_image(ax: plt.Axes, image: Image.Image, title: str | None = None) -> None:
-    ax.imshow(image)
-    ax.set_axis_off()
-    if title:
-        ax.set_title(title, fontsize=15, color=INK, fontweight="bold", pad=8)
+def count_data():
+    rows = read_csv(DATA_DIR / "ctb_device_counts.csv")
+    expected = {(f"p{p}", f"R{r:02d}C{c:02d}") for p in range(1, 4)
+                for r in range(2, 8) for c in range(2, 6)}
+    if len(rows) != 72 or {(r["plate"], r["device"]) for r in rows} != expected:
+        raise ValueError("Expected the 72 unique interior devices")
+    if any(r["included"] not in ("True", "False") for r in rows):
+        raise ValueError("Invalid inclusion flag")
+    return rows
 
 
-def main() -> int:
-    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    ct_b_group = load_authored_ctb_row()
+def count_summaries(rows):
+    result = []
+    for plate in ("p1", "p2", "p3"):
+        values = [float(r["ctb_positive_cells"]) for r in rows
+                  if r["plate"] == plate and r["included"] == "True"]
+        result.append({"plate": plate, "n": len(values), "mean": mean(values), "sd": stdev(values)})
+    return result
 
-    with Image.open(DYE_DAY0) as image:
-        dye_day0 = image.convert("RGB")
-    with Image.open(DYE_DAY3) as image:
-        dye_day3 = image.convert("RGB")
-    with Image.open(CTB_COUNT_PLOT) as image:
-        # Remove the exploratory ICC and pairwise annotations while preserving
-        # the original plate means, error bars, ticks, and plate labels.
-        ct_b_counts = image.convert("RGB").crop((70, 390, image.width - 10, image.height - 5))
 
-    fig = plt.figure(figsize=(10.0, 11.5), facecolor="white")
-    outer = fig.add_gridspec(
-        3,
-        1,
-        height_ratios=(1.25, 0.87, 1.15),
-        left=0.035,
-        right=0.99,
-        bottom=0.055,
-        top=0.96,
-        hspace=0.24,
-    )
+def scale_bar(ax, shape, pixel_size_um, length_um=500):
+    h, w = shape
+    x, y = w * .08, h * .94
+    ax.plot([x, x + length_um / pixel_size_um], [y, y], color="white", linewidth=2.5)
+    ax.text(x, y - h * .025, f"{length_um:g} µm", color="white", fontsize=9)
 
-    dye_grid = GridSpecFromSubplotSpec(2, 1, subplot_spec=outer[0], hspace=0.18)
-    ax_day0 = fig.add_subplot(dye_grid[0, 0])
-    ax_day3 = fig.add_subplot(dye_grid[1, 0])
-    show_image(ax_day0, dye_day0, "Hour 0")
-    show_image(ax_day3, dye_day3, "Hour 72")
-    panel_label(ax_day0, "A")
 
-    validation_grid = GridSpecFromSubplotSpec(1, 1, subplot_spec=outer[1])
-    ax_ct_b = fig.add_subplot(validation_grid[0, 0])
-    show_image(ax_ct_b, ct_b_group, "CTB-647 labeling at DIV11")
-    panel_label(ax_ct_b, "B")
-
-    ax_counts = fig.add_subplot(outer[2])
-    show_image(ax_counts, ct_b_counts, "Mean CTB-positive cell-body count per analyzed device")
-    panel_label(ax_counts, "C")
-    ax_counts.text(
-        0.5,
-        -0.055,
-        "Bars: plate mean; error bars: SD across analyzed interior devices\n"
-        "Neurons from one E18 rat embryo; three plates; 69 devices analyzed",
-        transform=ax_counts.transAxes,
-        ha="center",
-        va="top",
-        fontsize=11.5,
-        color=MUTED,
-    )
-    ax_counts.text(
-        -0.012,
-        0.48,
-        "CTB-positive cell-body count",
-        transform=ax_counts.transAxes,
-        ha="center",
-        va="center",
-        rotation=90,
-        fontsize=13,
-        color=INK,
-    )
-
-    output_pdf = OUTPUT_DIR / "draft_figure.pdf"
-    output_png = OUTPUT_DIR / "draft_figure.png"
-    fig.savefig(output_pdf, dpi=300, facecolor="white")
-    fig.savefig(output_png, dpi=300, facecolor="white")
+def render_widths(metadata):
+    rows = read_csv(DATA_DIR / "channel_widths.csv")
+    fig, axes = plt.subplots(1, 3, figsize=(7, 2.65))
+    for ax, plate in zip(axes, ("P1", "P2", "P3")):
+        pixels = np.load(DATA_DIR / f"{plate}_width_crop.npy", allow_pickle=False)
+        (y0, y1), (x0, x1) = metadata["width_crops"][plate]["slices_yx"]
+        ax.imshow(pixels, cmap="gray", extent=(x0-.5, x1-.5, y1-.5, y0-.5), interpolation="nearest")
+        selected = [r for r in rows if r["plate"] == plate]
+        for row in selected:
+            x, ya, yb = (float(row[k]) for k in ("x0_px", "y0_px", "y1_px"))
+            ax.plot([x, x], [ya, yb], color="#FFE500", marker="|", markersize=7, linewidth=1.5)
+            ax.text(x+6, (ya+yb)/2, f"{row['measurement_id']}: {float(row['width_um']):.1f} µm",
+                    color="#FFE500", fontsize=8, va="center", bbox=dict(facecolor="black", alpha=.65, pad=1))
+        x = float(selected[0]["x0_px"])
+        ax.set_xlim(x-25, x+100)
+        ax.set_ylim(290, 155)
+        ax.set_title(f"{plate} / R02C02", fontsize=10)
+        ax.set_axis_off()
+        bar = 20 / float(selected[0]["pixel_size_um"])
+        ax.plot([x-17, x-17+bar], [282, 282], color="white", linewidth=2)
+        ax.text(x-17, 276, "20 µm", color="white", fontsize=8)
+    fig.subplots_adjust(left=.01, right=.99, top=.88, bottom=.02, wspace=.08)
+    fig.savefig(OUTPUT_DIR / "channel_widths.png", dpi=300)
+    fig.savefig(OUTPUT_DIR / "channel_widths.pdf", dpi=300)
     plt.close(fig)
 
-    print(f"Wrote {output_pdf}")
-    print(f"Wrote {output_png}")
-    return 0
+
+def main():
+    parser = argparse.ArgumentParser(description=__doc__)
+    parser.add_argument("--import-saved-data", action="store_true")
+    args = parser.parse_args()
+    if args.import_saved_data:
+        import_saved_data()
+    rows = count_data()
+    metadata = json.loads((DATA_DIR / "sources.json").read_text())
+    OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+    plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10, "pdf.fonttype": 42})
+    fig = plt.figure(figsize=(7, 7.6), facecolor="white")
+    grid = fig.add_gridspec(4, 3, height_ratios=(1.5, 1.5, 1.9, 1.5),
+                           left=.09, right=.98, top=.97, bottom=.07, hspace=.12, wspace=.12)
+    for i, day in enumerate((0, 3)):
+        ax = fig.add_subplot(grid[i, :])
+        with Image.open(OUTPUT_DIR / f"dye_gradient_day{day}.png") as source:
+            image = source.convert("RGB")
+            ax.imshow(image)
+        ax.set_axis_off()
+        ax.set_ylim(image.height + 300, -.5)
+        ax.set_title(f"Hour {day * 24}", fontsize=10, loc="left", pad=3)
+        centres = metadata["tracer_scale"][f"day{day}_centres_xy"]
+        span = np.linalg.norm(np.asarray(centres[1]) - centres[0])
+        # Montage gutters are not physical distances; use one device's well pair.
+        bar = 5000 * span / metadata["tracer_scale"]["spacing_um"]
+        ax.plot([100, 100 + bar], [image.height + 190, image.height + 190], color="black", linewidth=2)
+        ax.text(600, image.height + 190, "~5 mm", color="black", fontsize=8, va="center")
+        if i == 0:
+            fig.text(.02, ax.get_position().y1 + .01, "A", weight="bold", fontsize=13)
+    for i, (plate, source) in enumerate(metadata["representatives"].items()):
+        ax = fig.add_subplot(grid[2, i])
+        shape = source["source_shape_yx"]
+        with Image.open(DATA_DIR / source["display"]) as image:
+            ax.imshow(image, cmap="gray", vmin=0, vmax=255,
+                      extent=(0, shape[1], shape[0], 0), interpolation="nearest")
+        ax.set_axis_off()
+        ax.set_title(f"Plate {i+1} / {source['device']}", fontsize=9, pad=4)
+        scale_bar(ax, shape, source["pixel_size_um"])
+        if i == 0:
+            fig.text(.02, ax.get_position().y1 + .01, "B", weight="bold", fontsize=13)
+    ax = fig.add_subplot(grid[3, :])
+    for i, (summary, color) in enumerate(zip(count_summaries(rows), COLORS)):
+        device_rows = sorted((r for r in rows if r["plate"] == summary["plate"]), key=lambda r: r["device"])
+        for j, row in enumerate(device_rows):
+            x = i + ((j * 7) % 24 - 11.5) / 60
+            excluded = row["included"] == "False"
+            ax.scatter(x, float(row["ctb_positive_cells"]), s=20,
+                       marker="x" if excluded else "o", color="#BB2828" if excluded else color,
+                       linewidths=1, alpha=.85, zorder=3)
+        ax.errorbar(i+.29, summary["mean"], yerr=summary["sd"], color="black",
+                    fmt="_", markersize=11, capsize=4, linewidth=1.3, zorder=4)
+    ax.set_xticks(range(3), [f"Plate {i+1}\nn = {s['n']}" for i, s in enumerate(count_summaries(rows))])
+    ax.set_ylabel("CTβ-positive cells", fontsize=10)
+    ax.set_xlim(-.5, 2.7)
+    ax.set_ylim(bottom=0)
+    ax.spines[["top", "right"]].set_visible(False)
+    ax.yaxis.grid(True, color="#E6E6E6", linewidth=.6)
+    fig.text(.02, ax.get_position().y1 + .01, "C", weight="bold", fontsize=13)
+    ax.text(.99, .98, "Dots: devices; black: mean ± SD\nRed crosses: excluded counting artifacts",
+            transform=ax.transAxes, ha="right", va="top", fontsize=8)
+    fig.savefig(OUTPUT_DIR / "draft_figure.pdf", dpi=300)
+    fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300)
+    plt.close(fig)
+    render_widths(metadata)
+    print(json.dumps(count_summaries(rows), indent=2))
 
 
 if __name__ == "__main__":
-    raise SystemExit(main())
+    main()

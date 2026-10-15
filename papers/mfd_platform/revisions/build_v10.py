@@ -4,9 +4,11 @@ from copy import deepcopy
 import json
 from pathlib import Path
 import subprocess
+import sys
 from zipfile import ZipFile
 
 from lxml import etree as E
+from PIL import Image
 
 ROOT = Path(__file__).resolve().parents[1]
 BASE = ROOT / "build/mfd_draft_v9_alyson_version.docx"
@@ -15,6 +17,8 @@ TRACKED = ROOT / "build/mfd_draft_v10_changes_only_tracked.docx"
 NOTES = Path(__file__).with_name("v10_notes.json")
 W = "http://schemas.openxmlformats.org/wordprocessingml/2006/main"
 NS = {"w": W}
+sys.path.insert(0, str(ROOT / "figures"))
+from generate_validation_figure import DATA_DIR, OUTPUT_DIR, count_data, count_summaries, read_csv
 
 
 def replace(paragraph, old, new):
@@ -156,9 +160,163 @@ def main():
          "OpenMFD to arrange compartmentalized device layouts into plate-format arrays",
          "The contribution is a method for making arrays from different compartment layouts; the neuronal plate is one application.")
     edit(95, [("Experimental data supporting the findings, including mold fabrication and casting outcomes, resin-insert measurements, neuronal cell counts, and source images used for quantitative analyses, are provided in the Supplementary Information or associated repository.",
-               "The Supplementary Information contains the resin-insert measurements and mold fabrication and casting outcomes. The per-device neuronal count table and source images used for quantitative analyses will be deposited with the submission.")],
-         "The per-device neuronal count table and source images used for quantitative analyses",
-         "The supplied supplement has pin heights and mold/cast totals. The individual neuronal counts and analysis images need their own data files for submission.")
+               "The Supplementary Information contains the resin-insert measurements, mold fabrication and casting outcomes, per-device neuronal counts and channel-width measurements. The count and width tables are also supplied as CSV files. The source images used for quantitative analyses will be deposited with the submission.")],
+         "per-device neuronal counts and channel-width measurements",
+         "Added the saved DMSO counts and existing brightfield width measurements to the supplement, with CSV copies.")
+
+    counts = count_data()
+    summaries = count_summaries(counts)
+    total = sum(row["n"] for row in summaries)
+    excluded = [row for row in counts if row["included"] == "False"]
+    n_excluded = len(excluded)
+    sizes = ", ".join(str(row["n"]) for row in summaries)
+    edit(48, [("Devices were excluded only when contamination or a technical failure prevented cell counting in the final image; high or low cell counts alone were not grounds for exclusion.",
+               "Devices flagged for cell-counting artifacts in the saved DMSO analysis were excluded from the plate summaries and retained as red crosses in Fig. 4C. High or low counts alone were not grounds for exclusion. Supplementary Table S7 lists every device count and identifies the exclusions.")])
+    edit(51, [("Figure 4C shows the mean number of CTβ-positive cell bodies per device for each plate, with the standard deviation across the analyzed interior devices.",
+               "Figure 4C shows individual device counts and each plate's mean and standard deviation after exclusion of the flagged counting artifacts.")])
+    edit(79, [("Of the 72 interior devices across the three plates, three were excluded because contamination or technical failures prevented reliable cell counting, leaving 69 devices for analysis.",
+               f"The saved DMSO-only analysis flagged {n_excluded} of the 72 interior devices for cell-counting artifacts, leaving {sizes} devices on Plates 1–3, respectively ({total} total; Supplementary Table S7).")],
+         f"leaving {sizes} devices on Plates 1–3",
+         "Used the saved DMSO analysis: five flagged counting artifacts leave 22, 21 and 24 devices. All 72 saved counts match the original per-device count CSVs. Later ROI exports use a different analysis and were not substituted for these counts.")
+    summary_text = "; ".join(f"Plate {i+1}, {s['mean']:.1f} ± {s['sd']:.1f}"
+                             for i, s in enumerate(summaries))
+    edit(80, [("The mean number of labeled cell bodies per device and the corresponding within-plate standard deviations are presented for each of the three plates in Fig. 4C.",
+               f"Counts per device were {summary_text} (mean ± SD; Fig. 4C).")])
+    edit(88, [("69 interior devices", f"{total} interior devices")])
+    edit(235, [(original_text[paragraphs[234]],
+                "The saved DMSO analysis flags five device counts as counting artifacts. Retain all values in the count table, but omit flagged values from the plate means and SDs. High or low counts alone are not exclusion criteria.")])
+    edit(237, [(original_text[paragraphs[236]],
+                f"The saved DMSO-only analysis retained {total} of 72 interior devices for the plate summaries: {sizes} on Plates 1–3. The flagged devices were "
+                + ", ".join(f"{r['plate'].upper()} {r['device']}" for r in excluded)
+                + ". Supplementary Table S7 retains all 72 values and marks these five exclusions.")])
+
+    width_method = ("Apparent channel widths were measured in original brightfield fields from device R02C02 on each of three plates, using three transverse rulers per device. "
+                    "Rulers joined the centres of opposing dark wall bands at the acquisition scale of 1.18675253 µm/pixel. "
+                    "Supplementary Table S8 records the nine measurements; Supplementary Fig. S3 shows their positions.")
+    edit(41, [("Microscopy was used to inspect the channels after coating and casting.",
+               "Microscopy was used to inspect the channels after coating and casting. " + width_method)])
+    edit(65, [("However, the dimensional accuracy of the cast microchannels relative to their nominal photolithographic dimensions has not yet been quantitatively established.",
+               "Nine brightfield ruler estimates from three devices spanned 9–11 pixels, equivalent to apparent widths of 10.7–13.1 µm (Supplementary Table S8; Supplementary Fig. S3).")],
+         "Nine brightfield ruler estimates from three devices",
+         "Added the existing nine brightfield measurements and their ruler overlays. These are distances between visible wall-band centres; channel depth was not measured.")
+    edit(89, [("but the dimensions of the finished microchannels have not been quantitatively characterized.",
+               "and the examined finished channels had apparent brightfield widths of 10.7–13.1 µm."),
+              ("Direct measurements of coated mold features and the resulting PDMS channels would establish dimensional fidelity and permit refinement of the scaling parameters.",
+               "The brightfield estimates depend on wall-band placement: shifting each endpoint by one pixel changes a span by up to 2.37 µm. Channel depth remains unmeasured.")])
+    edit(322, [("Microscopy confirmed open channels after coating and casting.",
+                "Microscopy confirmed open channels after coating and casting. Apparent brightfield widths are reported in Supplementary Table S8 and Fig. S3.")])
+
+    legend = ("Figure 4: Directional fluid movement and neuronal compatibility. "
+              "(A) Twenty-four devices at loading and after 72 h without volume adjustment. "
+              "Alexa Fluor 568-conjugated secondary antibody (red; 25 µL) was loaded into the left compartment and Alexa Fluor 488-conjugated secondary antibody (green; 50 µL) into the right, each at 1:1000 in PBS. Devices were incubated between images. "
+              "Bars: approximately 5 mm, estimated from the known 9 mm well-centre spacing within one device. "
+              "(B) Representative CTβ-647 images at DIV11, one device per plate. Bars: 500 µm, calibrated using acquisition metadata. Background subtraction and contrast normalization are for display. "
+              "(C) Individual CTβ-positive cell-body counts from three technical-replicate plates derived from one E18 rat embryo. "
+              f"Black marks: mean ± SD across {sizes} included devices on Plates 1–3 ({total} total). "
+              "Red crosses: five flagged counting artifacts, excluded from the summaries. Supplementary Table S7 gives all 72 counts.")
+    edit(106, [(original_text[paragraphs[105]], legend)],
+         "Individual CTβ-positive cell-body counts from three technical-replicate plates",
+         "Replaced the bar-only plot with individual DMSO device counts and calibrated CTβ views. Tracer bars are labelled approximate because their scale is estimated from the known well spacing, rather than recovered acquisition metadata.")
+
+    def paragraph(text, template):
+        result = E.Element("{" + W + "}p")
+        props = template.find("w:pPr", NS)
+        if props is not None:
+            result.append(deepcopy(props))
+        E.SubElement(E.SubElement(result, "{" + W + "}r"), "{" + W + "}t").text = text
+        return result
+
+    def data_table(rows):
+        table = E.Element("{" + W + "}tbl")
+        props = E.SubElement(table, "{" + W + "}tblPr")
+        E.SubElement(props, "{" + W + "}tblW", {"{" + W + "}w": "0", "{" + W + "}type": "auto"})
+        borders = E.SubElement(props, "{" + W + "}tblBorders")
+        for edge in ("top", "left", "bottom", "right", "insideH", "insideV"):
+            E.SubElement(borders, "{" + W + "}" + edge,
+                         {"{" + W + "}val": "single", "{" + W + "}sz": "4", "{" + W + "}color": "D0D0D0"})
+        grid = E.SubElement(table, "{" + W + "}tblGrid")
+        for _ in rows[0]:
+            E.SubElement(grid, "{" + W + "}gridCol", {"{" + W + "}w": str(8400 // len(rows[0]))})
+        for i, values in enumerate(rows):
+            tr = E.SubElement(table, "{" + W + "}tr")
+            if i == 0:
+                E.SubElement(E.SubElement(tr, "{" + W + "}trPr"), "{" + W + "}tblHeader")
+            for value in values:
+                cell = E.SubElement(tr, "{" + W + "}tc")
+                p = E.SubElement(cell, "{" + W + "}p")
+                pp = E.SubElement(p, "{" + W + "}pPr")
+                E.SubElement(pp, "{" + W + "}spacing", {"{" + W + "}after": "0"})
+                r = E.SubElement(p, "{" + W + "}r")
+                rp = E.SubElement(r, "{" + W + "}rPr")
+                E.SubElement(rp, "{" + W + "}sz", {"{" + W + "}val": "20"})
+                if i == 0:
+                    E.SubElement(rp, "{" + W + "}b")
+                E.SubElement(r, "{" + W + "}t").text = str(value)
+        return table
+
+    count_rows = [["Device", "Plate 1", "Plate 2", "Plate 3"]]
+    by_device = {(r["plate"], r["device"]): r for r in counts}
+    for device in sorted({r["device"] for r in counts}):
+        values = [by_device[(p, device)] for p in ("p1", "p2", "p3")]
+        count_rows.append([device] + [f"{float(r['ctb_positive_cells']):g}" + ("*" if r["included"] == "False" else "") for r in values])
+    count_rows.append(["Included n"] + [str(s["n"]) for s in summaries])
+    count_rows.append(["Mean ± SD"] + [f"{s['mean']:.1f} ± {s['sd']:.1f}" for s in summaries])
+    anchor = paragraphs[140]
+    counts_heading = paragraph("Supplementary Table S7. DMSO-only CTβ-positive cell-body counts", paragraphs[109])
+    E.SubElement(counts_heading.find("w:pPr", NS), "{" + W + "}pageBreakBefore")
+    anchor.addprevious(counts_heading)
+    anchor.addprevious(paragraph("Baseline counts from the February 2026 experiment. * marks the five counting-artifact exclusions; their values remain listed. Means and SDs use unflagged devices. All three plates came from one E18 rat embryo.", paragraphs[110]))
+    anchor.addprevious(data_table(count_rows))
+    width_rows = [["Ruler", "Plate / device", "Endpoints (x, y), pixels", "Pixels", "Width (µm)"]]
+    for row in read_csv(DATA_DIR / "channel_widths.csv"):
+        endpoints = f"({float(row['x0_px']):g}, {float(row['y0_px']):g})–({float(row['x1_px']):g}, {float(row['y1_px']):g})"
+        width_rows.append([row["measurement_id"], row["plate"] + " / " + row["device"], endpoints,
+                           f"{float(row['width_px']):g}", f"{float(row['width_um']):.1f}"])
+    widths_heading = paragraph("Supplementary Table S8. Apparent connecting-microchannel widths", paragraphs[109])
+    E.SubElement(widths_heading.find("w:pPr", NS), "{" + W + "}pageBreakBefore")
+    anchor.addprevious(widths_heading)
+    anchor.addprevious(paragraph("Three rulers per device in original field 1, brightfield channel 1. Widths span opposing dark wall-band centres at 1.18675253 µm/pixel from each acquisition's Index.xml. Moving both endpoints by one pixel changes the span by up to 2.37 µm; blur also affects boundary placement. No channel depth was measured.", paragraphs[110]))
+    anchor.addprevious(data_table(width_rows))
+
+    package = {entry.filename: data for entry, data in entries}
+    relationships = E.fromstring(package["word/_rels/document.xml.rels"])
+    relation_ns = "http://schemas.openxmlformats.org/package/2006/relationships"
+    drawing_ns = {"a": "http://schemas.openxmlformats.org/drawingml/2006/main",
+                  "wp": "http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing"}
+    embed = "{http://schemas.openxmlformats.org/officeDocument/2006/relationships}embed"
+
+    def set_picture(p, path, relationship_id=None):
+        blip = p.find(".//a:blip", drawing_ns)
+        if relationship_id is None:
+            relationship_id = blip.get(embed)
+            relation = next(r for r in relationships if r.get("Id") == relationship_id)
+            target = "word/" + relation.get("Target")
+        else:
+            target = "word/media/" + path.name
+            E.SubElement(relationships, "{" + relation_ns + "}Relationship",
+                         Id=relationship_id, Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/image",
+                         Target="media/" + path.name)
+            blip.set(embed, relationship_id)
+        package[target] = path.read_bytes()
+        with Image.open(path) as im:
+            width, height = im.size
+        cx = 5334000
+        cy = round(cx * height / width)
+        for node in p.findall(".//wp:extent", drawing_ns) + p.findall(".//a:xfrm/a:ext", drawing_ns):
+            node.set("cx", str(cx))
+            node.set("cy", str(cy))
+
+    set_picture(paragraphs[104], OUTPUT_DIR / "draft_figure.png")
+    for node in paragraphs[104].findall(".//wp:docPr", drawing_ns):
+        node.set("descr", legend)
+    width_picture = deepcopy(paragraphs[149])
+    for node in width_picture.findall(".//wp:docPr", drawing_ns):
+        node.set("id", "100")
+        node.set("descr", "Supplementary Figure S3. Original brightfield crops with channel-width rulers.")
+    set_picture(width_picture, OUTPUT_DIR / "channel_widths.png", "rIdChannelWidths")
+    anchor.addprevious(width_picture)
+    anchor.addprevious(paragraph("Supplementary Figure S3. Brightfield channel-width measurements. Yellow rulers M01–M09 join opposing dark wall-band centres in the three original field-1 crops listed in Table S8. Images are contrast-stretched for display; measurements use original pixel coordinates. White bars: 20 µm.", paragraphs[150]))
+    package["word/_rels/document.xml.rels"] = E.tostring(relationships, encoding="UTF-8", xml_declaration=True, standalone=True)
 
     edit(11, [
         ("3D-printed structures", "structures produced by three-dimensional (3D) printing"),
@@ -226,9 +384,12 @@ def main():
             raise ValueError(f"Comment anchor must occur once: {note['anchor']!r}")
 
     payload = E.tostring(document, encoding="UTF-8", xml_declaration=True, standalone=True)
+    package["word/document.xml"] = payload
     with ZipFile(CLEAN, "w") as archive:
         for entry, data in entries:
-            archive.writestr(entry, payload if entry.filename == "word/document.xml" else data)
+            archive.writestr(entry, package.pop(entry.filename))
+        for name, data in package.items():
+            archive.writestr(name, data)
     NOTES.write_text(json.dumps(notes, indent=2) + "\n")
     comparison = Path("/home/ts/code/projects/papers/paper_build/compare.py")
     subprocess.run(["/usr/bin/python3", str(comparison), str(BASE), str(CLEAN), str(TRACKED),

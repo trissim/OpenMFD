@@ -53,7 +53,19 @@
     "text": "The contribution is a method for making arrays from different compartment layouts; the neuronal plate is one application."
   },
   {
-    "anchor": "The per-device neuronal count table and source images used for quantitative analyses",
-    "text": "The supplied supplement has pin heights and mold/cast totals. The individual neuronal counts and analysis images need their own data files for submission."
+    "anchor": "per-device neuronal counts and channel-width measurements",
+    "text": "Added the saved DMSO counts and existing brightfield width measurements to the supplement, with CSV copies."
+  },
+  {
+    "anchor": "leaving 22, 21, 24 devices on Plates 1\u20133",
+    "text": "Used the saved DMSO analysis: five flagged counting artifacts leave 22, 21 and 24 devices. All 72 saved counts match the original per-device count CSVs. Later ROI exports use a different analysis and were not substituted for these counts."
+  },
+  {
+    "anchor": "Nine brightfield ruler estimates from three devices",
+    "text": "Added the existing nine brightfield measurements and their ruler overlays. These are distances between visible wall-band centres; channel depth was not measured."
+  },
+  {
+    "anchor": "Individual CT\u03b2-positive cell-body counts from three technical-replicate plates",
+    "text": "Replaced the bar-only plot with individual DMSO device counts and calibrated CT\u03b2 views. Tracer bars are labelled approximate because their scale is estimated from the known well spacing, rather than recovered acquisition metadata."
   }
 ]

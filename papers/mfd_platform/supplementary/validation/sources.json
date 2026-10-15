@@ -1,0 +1,115 @@
+{
+  "count_source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/figure_handoff/no_drug_reproducibility/data.csv",
+  "count_source_sha256": "d4b99f111212e4a7abdd5db26694eb7368ace0ff68181e1838a185f5cdd125a2",
+  "analysis_version": "OpenHCS 0.5.15",
+  "ctb_channel": 2,
+  "representatives": {
+    "p1": {
+      "device": "R03C04",
+      "source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P1_20260203__2026-02-03T19_23_43-Measurement 1_stitched_analysis_final/images/r03c04f001p001-ch2sk1fk1fl1.tiff",
+      "acquisition_xml": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/TS_MFD_PRE_P1_20260203__2026-02-03T19_23_43-Measurement 1/Images/Index.xml",
+      "source_shape_yx": [
+        3700,
+        2292
+      ],
+      "pixel_size_um": 1.1867525298988042,
+      "display": "p1_R03C04_ctb.png",
+      "display_processing": "White top-hat background subtraction (30 px radius, 4x reduced estimate) followed by 0.1-99.9 percentile normalization in panel B mosaics and panel G; display only",
+      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break"
+    },
+    "p2": {
+      "device": "R03C02",
+      "source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P2_20260203__2026-02-03T19_50_17-Measurement 1_stiched_analysis_final/images/r03c02f001p001-ch2sk1fk1fl1.tiff",
+      "acquisition_xml": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/TS_MFD_PRE_P2_20260203__2026-02-03T19_50_17-Measurement 1/Images/Index.xml",
+      "source_shape_yx": [
+        3700,
+        2292
+      ],
+      "pixel_size_um": 1.1867525298988042,
+      "display": "p2_R03C02_ctb.png",
+      "display_processing": "White top-hat background subtraction (30 px radius, 4x reduced estimate) followed by 0.1-99.9 percentile normalization in panel B mosaics and panel G; display only",
+      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break"
+    },
+    "p3": {
+      "device": "R04C03",
+      "source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P3_20260203__2026-02-03T20_12_32-Measurement 1_stitched_analysis_final/images/r04c03f001p001-ch2sk1fk1fl1.tiff",
+      "acquisition_xml": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/TS_MFD_PRE_P3_20260203__2026-02-03T20_12_32-Measurement 1/Images/Index.xml",
+      "source_shape_yx": [
+        3700,
+        2292
+      ],
+      "pixel_size_um": 1.1867525298988042,
+      "display": "p3_R04C03_ctb.png",
+      "display_processing": "White top-hat background subtraction (30 px radius, 4x reduced estimate) followed by 0.1-99.9 percentile normalization in panel B mosaics and panel G; display only",
+      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break"
+    }
+  },
+  "tracer_scale": {
+    "method": "Estimated from 9 mm well-centre spacing in the exported montage",
+    "day0_centres_xy": [
+      [
+        490,
+        260
+      ],
+      [
+        1130,
+        260
+      ]
+    ],
+    "day3_centres_xy": [
+      [
+        490,
+        260
+      ],
+      [
+        1130,
+        260
+      ]
+    ],
+    "spacing_um": 9000
+  },
+  "count_analysis_directories": {
+    "p1": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P1_20260203__2026-02-03T19_23_43-Measurement 1_stitched_analysis",
+    "p2": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P2_20260203__2026-02-03T19_50_17-Measurement 1_stiched_analysis",
+    "p3": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P3_20260203__2026-02-03T20_12_32-Measurement 1_stitched_analysis"
+  },
+  "count_verification": "All 72 counts match the original per-device count CSVs; later ROI exports are not the count source.",
+  "width_crops": {
+    "P1": {
+      "slices_yx": [
+        [
+          150,
+          406
+        ],
+        [
+          0,
+          220
+        ]
+      ]
+    },
+    "P2": {
+      "slices_yx": [
+        [
+          150,
+          350
+        ],
+        [
+          450,
+          710
+        ]
+      ]
+    },
+    "P3": {
+      "slices_yx": [
+        [
+          150,
+          350
+        ],
+        [
+          355,
+          615
+        ]
+      ]
+    }
+  }
+}
