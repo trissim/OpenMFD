@@ -159,6 +159,65 @@ def main():
                "The Supplementary Information contains the resin-insert measurements and mold fabrication and casting outcomes. The per-device neuronal count table and source images used for quantitative analyses will be deposited with the submission.")],
          "The per-device neuronal count table and source images used for quantitative analyses",
          "The supplied supplement has pin heights and mold/cast totals. The individual neuronal counts and analysis images need their own data files for submission.")
+
+    edit(11, [
+        ("3D-printed structures", "structures produced by three-dimensional (3D) printing"),
+        ("SU-8/SUEX-patterned wafers", "wafers patterned with SU-8 and SUEX photoresists"),
+    ])
+    edit(13, [
+        ("controlled axon-guidance gradients, localized neuron–glia interactions and more complex neuronal networks (PMIDs: 26000554; 22828584; 35466333)",
+         "controlled axon-guidance gradients (PMID: 26000554), localized neuron–glia interactions (PMID: 22828584) and modular neuronal culture models (PMID: 35466333)"),
+    ])
+    edit(14, [
+        ("modular microfluidic units that can be combined into customizable neuronal culture configurations, whereas fluid-walled chambers support human neuronal microcircuits and moderate-throughput axotomy assays (PMIDs: 35466333; 38841815)",
+         "modular microfluidic units that can be combined into customizable neuronal culture configurations (PMID: 35466333), whereas fluid-walled chambers support human neuronal microcircuits and moderate-throughput axotomy assays (PMID: 38841815)"),
+    ])
+    edit(25, [
+        ("two-dimensional DXF mask drawings for each layer and three-dimensional STL models",
+         "two-dimensional Drawing Exchange Format (DXF) mask drawings for each layer and three-dimensional stereolithography (STL) models"),
+    ])
+    edit(28, [("HMDS adhesion-promoter", "hexamethyldisilazane (HMDS) adhesion-promoter")])
+    edit(31, [("ultraviolet light", "ultraviolet (UV) light")])
+    edit(33, [("An EPDM rubber sheet", "An ethylene propylene diene monomer (EPDM) rubber sheet")])
+    edit(46, [
+        ("Harris et al.\u00a0(2007)", "Harris et al. (2007; PMID: 18989412)"),
+        ("Clément et al.\u00a0(2022)", "Clément et al. (2022; PMID: 35023760)"),
+    ])
+    edit(48, [
+        ("11 days in vitro (DIV11)", "11 days in vitro (DIV)"),
+        ("Alexa Fluor-conjugated cholera toxin subunit B (CTβ-647)",
+         "cholera toxin subunit B (CTβ) conjugated to Alexa Fluor 647 (CTβ-647)"),
+    ])
+    edit(50, [("XML format", "Extensible Markup Language (XML) format")])
+    edit(69, [("high-impact polystyrene (HIPS)", "HIPS")])
+    edit(77, [("11 days in vitro (DIV11)", "11 DIV")])
+    edit(78, [("fluorescently conjugated cholera toxin subunit B (CTβ-647)", "CTβ-647")])
+    edit(98, [
+        ("filament-extrusion (FDM)", "fused deposition modeling (FDM)"),
+        ("AEF is funded", "Alyson Fournier is funded"),
+    ])
+    edit(119, [
+        ("The comparison emphasizes the operations and equipment each strategy adds to conventional PDMS soft lithography.",
+         "The comparison emphasizes the operations and equipment each strategy adds to conventional PDMS soft lithography. Abbreviations: poly(methyl methacrylate) (PMMA); cyclic olefin copolymer (COC); computer numerical control (CNC); American National Standards Institute (ANSI); Society for Laboratory Automation and Screening (SLAS)."),
+    ])
+    edit(168, [("RTV silicone sealant", "room-temperature-vulcanizing silicone sealant")])
+    edit(169, [("Dendritic polyglycerol amine (dPGA; DendroTEK Biosciences)",
+                "dPGA (DendroTEK Biosciences)")])
+    edit(173, [("Alexa Fluor-conjugated cholera toxin subunit B (CTβ-647)", "CTβ-647")])
+    edit(208, [("phosphate-buffered saline (PBS)", "PBS")])
+    edit(218, [("Clément et al.\u00a0(2022)", "Clément et al. (2022; PMID: 35023760)")])
+    edit(223, [
+        ("11 days in vitro (DIV11)", "11 DIV"),
+        ("Harris et al.\u00a0(2007)", "Harris et al. (2007; PMID: 18989412)"),
+    ])
+
+    tables = document.findall("w:body/w:tbl", NS)
+    comparison_rows = tables[2].findall("w:tr", NS)
+    laser_approach = comparison_rows[2].findall("w:tc", NS)[0].find("w:p", NS)
+    replace(laser_approach, "CO2 laser micromachining", "Carbon dioxide (CO2) laser micromachining")
+    light_control = tables[7].findall("w:tr", NS)[1].findall("w:tc", NS)[0].find("w:p", NS)
+    replace(light_control, "Bottom light PWM", "Bottom light pulse-width modulation (PWM)")
+
     text = "\n".join("".join(p.xpath(".//w:t/text()", namespaces=NS))
                      for p in document.findall("w:body/w:p", NS))
     for note in notes:
