@@ -138,7 +138,9 @@ def main():
          "Restored V7's 17-fold comparison between the 1,275 micrometer chamber margin and 75 micrometer pin clearance, which explains how the layout accommodates positioning error without covering the channels.")
     edit(86, [("The combination of photolithography and resin printing also exploits the complementary capabilities of these fabrication technologies. Photolithography remains well suited to defining micrometer-scale structures, whereas resin printing provides an accessible means of producing larger three-dimensional features. Recent developments in printed molds and hybrid fabrication have expanded the range of structures that can be manufactured for biological microfluidic applications, although achievable resolution, PDMS curing compatibility, and surface treatment remain important considerations (PMIDs: 40190179; 40667579). ", ""),
               (" This distinction is potentially advantageous for applications requiring conventional PDMS surface treatments and established neuronal culture protocols, although the biological compatibility of each assembled device configuration must still be established experimentally.", "")])
-    edit(87, [(" Nevertheless, the present study did not directly quantify manufacturing time, labor requirements, or cost savings relative to established alternatives, and these potential advantages should be evaluated in future comparisons.", "")],
+    edit(87, [("The fabrication results demonstrate the feasibility of repeated production using the hybrid molds.",
+               "The hybrid molds supported repeated casting."),
+              (" Nevertheless, the present study did not directly quantify manufacturing time, labor requirements, or cost savings relative to established alternatives, and these potential advantages should be evaluated in future comparisons.", "")],
          "Nevertheless, the present study did not directly quantify manufacturing time, labor requirements, or cost savings relative to established alternatives, and these potential advantages should be evaluated in future comparisons.",
          "Removed the warning about time and cost comparisons because the paragraph describes eliminated operations without claiming numerical savings.")
     notes[-1]["source"] = "original"
@@ -208,6 +210,7 @@ def main():
                "These additional designs were not fabricated or biologically tested.")])
     edit(61, [(" A central requirement was the integration of micrometer-scale features with millimeter-scale structures while maintaining the integrity of the patterned wafer and enabling simultaneous positioning of the well-forming inserts.", "")])
     edit(62, [("Several fabrication challenges were identified and addressed during process development. ", "")])
+    edit(76, [("These observations demonstrate that the connecting microchannels permit tracer transport between compartments and that an initial difference in fluid volume can produce directional redistribution. ", "")])
     edit(80, [(" These measurements demonstrate the feasibility of collecting quantitative retrograde labeling data across multiple compartmentalized neuronal cultures using an automated imaging workflow.", "")])
     edit(89, [("Several design considerations remain important when adapting the platform to other experimental configurations. ", "")])
     edit(85, [("Importantly, the same array-transfer procedure", "The same array-transfer procedure")])
@@ -215,7 +218,7 @@ def main():
     for number, old, new in (
         (26, "nominal device, channel, pin, taper, and frame dimensions", "device, channel, pin, taper, and frame design dimensions"),
         (59, "nominal widths of 10 µm", "design widths of 10 µm"),
-        (85, "nominal lateral clearance", "designed lateral clearance"),
+        (85, "In the present design, the nominal lateral clearance was 75 µm per side", "The design provides 75 µm clearance per side"),
         (89, "nominal widths of 10 µm", "design widths of 10 µm"),
     ):
         edit(number, [(old, new)])
