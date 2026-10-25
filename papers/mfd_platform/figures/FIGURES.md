@@ -12,6 +12,14 @@ This file maps the current manuscript figures to source assets and generated out
 
 The previous workflow overview slide is no longer part of the main figure sequence. Keep `papers/mfd_platform/figures/final_drop/Fig1_workflow/` as an optional graphical-abstract or supplementary source if needed.
 
+## Shared authoring and print layout
+
+Figures 1, 2 and 5 are authored at 6.5 inches wide and placed at that width. `TextStyle` in `generate_openmfd_design_figure.py` owns 8.5 pt details and drawing; `HeadingText` supplies 10.5 pt headings. Coordinate, alignment and badge behavior are inherited rather than recovered from role enums and lookup tables. The parameter panel spans Figure 1's top row so its labels and values have room.
+
+`Photo.read()` owns file lifetime. `CroppedContrastPhoto` composes cropping followed by the existing 1% autocontrast; the assembled-device photo uses contrast without cropping. For all five source images, processed RGB pixel arrays match the preceding crop/contrast implementation exactly; figure placement and resampling change with the layout. PDF exports retain 600 dpi raster content; composite PNGs use 300 dpi. Shared panel export hides adjacent panels while cropping and does not delete unrelated files.
+
+`DxfPanel` and `InsertPanel` own Figure 5's drawing procedures. Labeled main panels compose these with `LabeledPanel`; clean subfigures use the same content procedures without labels. The unused alternative mesh reconstruction and frame-only rendering path have been removed. CAD files and biological count/validation assets are unchanged.
+
 ## Main Figures
 
 ### Figure 1. OpenMFD design-to-device overview
@@ -71,23 +79,15 @@ The previous workflow overview slide is no longer part of the main figure sequen
 
 ### Figure 5. Platform generalizability across published geometries
 
-- **Purpose:** Show that the same design-rule and hybrid-mold workflow can be applied beyond the validated compartmentalized neuron device.
+- **Purpose:** Show matching generated photomasks and insert arrays for myelination, axon-guidance and three-compartment layouts. These are design-generation examples.
 - **Generated source:** `papers/mfd_platform/figures/generate_generalizability_figure.py`
 - **Generated input assets:**
-- `designs/open_chamber/openmfd_legacy_ports/myelination/*_single_top.dxf`
-- `designs/open_chamber/openmfd_legacy_ports/myelination/*_single_bottom.dxf`
-- `designs/open_chamber/openmfd_legacy_ports/myelination/*_aligned.dxf`
-- `designs/open_chamber/openmfd_legacy_ports/myelination/*_single_insert.scad`
-- `designs/open_chamber/openmfd_legacy_ports/myelination/*_wells_insert.scad`
-- `designs/open_chamber/openmfd_legacy_ports/myelination/wall_*.scad`
-- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/*_single_top.dxf`
-- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/*_single_bottom.dxf`
-- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/*_aligned.dxf`
-- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/*_single_insert.scad`
-- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/*_wells_insert.scad`
-- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/wall_*.scad`
+- `designs/open_chamber/openmfd_legacy_ports/myelination/`
+- `designs/open_chamber/openmfd_legacy_ports/axon_guidance/`
+- `designs/open_chamber/openmfd_legacy_ports/three_compartment/`
+- Each directory supplies single-device, plate-layout and wafer-scale top/bottom DXFs plus the single-insert STL. The array preview repeats the retained single-insert mesh at the declared grid positions with the existing PDMS scale correction.
 - **Rendered asset:** `papers/mfd_platform/figures/rendered/generalizability.pdf`
-- **Status:** Current figure is generated from the same plotting/file-rendering infrastructure as Figure 1 and now uses the new legacy open-chamber DXF outputs plus generated insert/wall preview meshes directly.
+- **Status:** Generated from retained DXF/STL assets through the shared typography and panel owners. The main figure shows mask and insert outputs; it does not show frame renderings or fabricated additional devices.
 
 ## Supplementary Figures
 

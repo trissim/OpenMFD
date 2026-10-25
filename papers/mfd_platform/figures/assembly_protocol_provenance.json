@@ -39,5 +39,6 @@
     "faulthandler",
     "papers/mfd_platform/figures/generate_device_assembly_protocol.py"
   ],
-  "inspection": "Final-size layout uses10.5pt headings and8.5pt details; axes physical aspect and vertical camera fitting;9scene renders passed the24px alpha-content edge guard. This is not a dimensional-metrology validation."
+  "inspection": "Final-size layout uses10.5pt headings and8.5pt details; axes physical aspect and vertical camera fitting;9scene renders passed the24px alpha-content edge guard. This is not a dimensional-metrology validation.",
+  "subsequent_shared_source_review": "The design generator later changed during the Figures1/2/5 typography refactor. Its StlMesh, rotation_matrix and triangle_normals declarations consumed by assembly and biological callers were checked AST-identical to commit166c824. The original render-time source hash above is deliberately retained; the assembly image was not rendered again. The historical-source audit therefore reports this changed full file."
 }

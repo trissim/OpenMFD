@@ -3,11 +3,8 @@
 from __future__ import annotations
 
 import sys
-from io import BytesIO
 from dataclasses import dataclass
-from enum import Enum, auto
 from pathlib import Path
-from zipfile import ZipFile
 
 import ezdxf
 import matplotlib.colors as mcolors
@@ -15,7 +12,9 @@ import matplotlib.pyplot as plt
 import numpy as np
 from matplotlib.collections import LineCollection
 from matplotlib.collections import PolyCollection
-from matplotlib.patches import Circle, FancyArrowPatch, FancyBboxPatch, Rectangle
+from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Rectangle
+from matplotlib.text import Text
+from matplotlib.transforms import Transform
 from PIL import Image, ImageOps
 
 
@@ -27,8 +26,6 @@ DESIGN_DIR = ROOT / "designs" / "open_chamber" / "2_compartment_96_well_300um_su
 DESIGN_STEM = "2_compartment_96_well_300um_suex200_v27"
 FRAME_STL = ROOT / "plates" / "96_well_plate_reservoirs_print_hips_2" / "96_well_plate_reservoirs_print_hips_2.stl"
 ASSEMBLED_DEVICE_PHOTO = OUTPUT_DIR / "assembled_device_photo.png"
-WORKFLOW_ODP = FIGURE_DIR / "final_drop" / "Fig1_workflow" / "draft_figure.odp"
-WORKFLOW_ASSEMBLED_PHOTO = "Pictures/100000000000120000000D80C7A47E4B.jpg"
 STL_DISPLAY_Z_SCALE = 1.0
 
 sys.path.insert(0, str(ROOT))
@@ -51,49 +48,85 @@ COLORS = {
 }
 
 
-@dataclass(frozen=True)
 class TextStyle:
-    fontsize: float
-    color: str
-    ha: str = "center"
-    va: str = "center"
-    fontweight: str | None = None
-    linespacing: float | None = None
-    bbox: dict[str, object] | None = None
-    axes: bool = False
+    """Point-sized text drawn by its style, at the manuscript figure width."""
 
-    def kwargs(self, ax: plt.Axes) -> dict[str, object]:
-        kwargs: dict[str, object] = {
-            "fontsize": self.fontsize,
-            "color": self.color,
-            "ha": self.ha,
-            "va": self.va,
-        }
-        if self.fontweight is not None:
-            kwargs["fontweight"] = self.fontweight
-        if self.linespacing is not None:
-            kwargs["linespacing"] = self.linespacing
-        if self.bbox is not None:
-            kwargs["bbox"] = dict(self.bbox)
-        if self.axes:
-            kwargs["transform"] = ax.transAxes
-        return kwargs
+    fontsize = 8.5
+    color = COLORS["ink"]
+    ha = "center"
+    va = "center"
+    fontweight = "normal"
+    linespacing = 1.25
+    zorder = 3
+
+    @classmethod
+    def transform(cls, ax: plt.Axes) -> Transform:
+        return ax.transData
+
+    @classmethod
+    def background(cls) -> dict[str, object] | None:
+        return None
+
+    @classmethod
+    def draw(cls, ax: plt.Axes, x: float, y: float, label: str, *, rotation: float = 0.0) -> Text:
+        return ax.text(
+            x, y, label,
+            fontsize=cls.fontsize, color=cls.color,
+            ha=cls.ha, va=cls.va, fontweight=cls.fontweight,
+            linespacing=cls.linespacing, bbox=cls.background(),
+            transform=cls.transform(ax), rotation=rotation,
+            clip_on=False, zorder=cls.zorder,
+        )
 
 
-@dataclass(frozen=True)
-class PatchStyle:
-    facecolor: str
-    edgecolor: str
-    linewidth: float = 1.0
-    alpha: float = 1.0
+class AxesText(TextStyle):
+    @classmethod
+    def transform(cls, ax: plt.Axes) -> Transform:
+        return ax.transAxes
 
-    def kwargs(self) -> dict[str, object]:
-        return {
-            "facecolor": self.facecolor,
-            "edgecolor": self.edgecolor,
-            "linewidth": self.linewidth,
-            "alpha": self.alpha,
-        }
+
+class LeftText(TextStyle):
+    ha = "left"
+
+
+class RightText(TextStyle):
+    ha = "right"
+
+
+class MutedText(TextStyle):
+    color = COLORS["muted"]
+
+
+class LeftMutedText(MutedText, LeftText):
+    pass
+
+
+class HeadingText(TextStyle):
+    fontsize = 10.5
+    fontweight = "bold"
+
+
+class PresetTitle(HeadingText, LeftText):
+    pass
+
+
+class PanelTitle(PresetTitle, AxesText):
+    va = "top"
+
+
+class PanelBadge(PanelTitle):
+    color = "white"
+    zorder = 100
+
+    @classmethod
+    def background(cls) -> dict[str, object]:
+        return {"boxstyle": "round,pad=0.25", "facecolor": COLORS["ink"], "edgecolor": "none"}
+
+
+class BackedText(TextStyle):
+    @classmethod
+    def background(cls) -> dict[str, object]:
+        return {"boxstyle": "round,pad=0.10", "facecolor": "white", "edgecolor": "none", "alpha": 0.92}
 
 
 @dataclass(frozen=True)
@@ -271,16 +304,16 @@ class FigureOneLayout:
             "left": 0.035,
             "right": 0.985,
             "bottom": 0.035,
-            "top": 0.950,
+            "top": 0.985,
             "wspace": self.column_gap,
             "hspace": self.row_gap,
         }
 
 
 FIGURE_ONE_LAYOUT = FigureOneLayout(
-    figsize=(9.25, 12.2),
-    grid_widths=(1.0, 1.02),
-    grid_heights=(1.78, 1.70, 2.70, 3.00),
+    figsize=(6.5, 7.3),
+    grid_widths=(1.0, 1.0),
+    grid_heights=(2.4, 1.6, 1.3, 1.6),
     column_gap=0.025,
     row_gap=0.075,
     insets=FigureOneInsets(
@@ -298,138 +331,6 @@ def add_inset(ax: plt.Axes, box: AxisBox) -> plt.Axes:
     inset = ax.inset_axes(box.mpl())
     inset.set_zorder(0)
     return inset
-
-
-class TextRole(Enum):
-    PANEL_BADGE = auto()
-    PANEL_TITLE = auto()
-    PRESET_TITLE = auto()
-    MUTED_LEFT = auto()
-    TABLE_KEY = auto()
-    TABLE_VALUE = auto()
-    NOTE = auto()
-    OUTPUT_BOX = auto()
-    BOX_NOTE = auto()
-    CAPTION = auto()
-    CHANNEL_LABEL = auto()
-    TOP_LABEL = auto()
-    LOCK_LABEL = auto()
-    LEGEND = auto()
-    SECTION_TITLE = auto()
-    LOCK_VALUE = auto()
-    LOCK_CAPTION = auto()
-    SMALL_MUTED = auto()
-    SMALL_LIGHT = auto()
-    TAPER_LABEL = auto()
-    RULE_NOTE = auto()
-    PLATE_TITLE = auto()
-    PLATE_CAPTION = auto()
-    EXPORT_LABEL = auto()
-
-
-class PatchRole(Enum):
-    DEVICE_OUTLINE = auto()
-    CHAMBER = auto()
-    TOP_WELL = auto()
-    LOCK_OUTLINE = auto()
-    LOCK_HOLE = auto()
-    INSERT_PIN = auto()
-    INSERT_SIDE_PIN = auto()
-    WAFER_SLAB = auto()
-    WAFER_MASK = auto()
-    WAFER_FLAT = auto()
-    UNIT_CELL = auto()
-
-
-TEXT_STYLES = {
-    TextRole.PANEL_BADGE: TextStyle(
-        11.5,
-        "white",
-        ha="left",
-        va="top",
-        fontweight="bold",
-        bbox={"boxstyle": "round,pad=0.25", "facecolor": COLORS["ink"], "edgecolor": "none"},
-        axes=True,
-    ),
-    TextRole.PANEL_TITLE: TextStyle(10.8, COLORS["ink"], ha="left", va="top", fontweight="bold", axes=True),
-    TextRole.PRESET_TITLE: TextStyle(10.0, COLORS["ink"], ha="left", fontweight="bold"),
-    TextRole.MUTED_LEFT: TextStyle(8.5, COLORS["muted"], ha="left"),
-    TextRole.TABLE_KEY: TextStyle(7.7, COLORS["muted"], ha="left"),
-    TextRole.TABLE_VALUE: TextStyle(7.9, COLORS["ink"], ha="right"),
-    TextRole.NOTE: TextStyle(7.8, COLORS["ink"], ha="left", linespacing=1.25),
-    TextRole.OUTPUT_BOX: TextStyle(9.0, COLORS["ink"]),
-    TextRole.BOX_NOTE: TextStyle(8.8, COLORS["ink"]),
-    TextRole.CAPTION: TextStyle(9.0, COLORS["muted"]),
-    TextRole.CHANNEL_LABEL: TextStyle(
-        8.2,
-        COLORS["bottom"],
-        bbox={"facecolor": "white", "edgecolor": "none", "pad": 1.4},
-    ),
-    TextRole.TOP_LABEL: TextStyle(8.4, COLORS["top"]),
-    TextRole.LOCK_LABEL: TextStyle(8.4, COLORS["lock"]),
-    TextRole.LEGEND: TextStyle(8.2, COLORS["ink"], ha="left"),
-    TextRole.SECTION_TITLE: TextStyle(9.0, COLORS["ink"], fontweight="bold"),
-    TextRole.LOCK_VALUE: TextStyle(9.0, COLORS["ink"]),
-    TextRole.LOCK_CAPTION: TextStyle(8.6, COLORS["lock"]),
-    TextRole.SMALL_MUTED: TextStyle(8.2, COLORS["muted"]),
-    TextRole.SMALL_LIGHT: TextStyle(8.1, "white"),
-    TextRole.TAPER_LABEL: TextStyle(8.7, COLORS["ink"]),
-    TextRole.RULE_NOTE: TextStyle(8.5, COLORS["ink"], ha="left"),
-    TextRole.PLATE_TITLE: TextStyle(9.0, COLORS["ink"], fontweight="bold"),
-    TextRole.PLATE_CAPTION: TextStyle(8.5, COLORS["muted"]),
-    TextRole.EXPORT_LABEL: TextStyle(8.2, COLORS["muted"]),
-}
-
-
-PATCH_STYLES = {
-    PatchRole.DEVICE_OUTLINE: PatchStyle("white", COLORS["grid"], 1.4),
-    PatchRole.CHAMBER: PatchStyle("#caefe8", "none", 1.0, 0.85),
-    PatchRole.TOP_WELL: PatchStyle("#caefe8", COLORS["top"], 2.0),
-    PatchRole.LOCK_OUTLINE: PatchStyle("none", COLORS["lock"], 1.8),
-    PatchRole.LOCK_HOLE: PatchStyle("#f5f1ff", COLORS["lock"], 2.2),
-    PatchRole.INSERT_PIN: PatchStyle("#ffe2ae", COLORS["insert"], 2.0),
-    PatchRole.INSERT_SIDE_PIN: PatchStyle("#ffe2ae", COLORS["insert"], 1.5),
-    PatchRole.WAFER_SLAB: PatchStyle(COLORS["wafer"], "#bac5d2", 1.2),
-    PatchRole.WAFER_MASK: PatchStyle(COLORS["wafer"], "#b8c4d1", 1.4),
-    PatchRole.WAFER_FLAT: PatchStyle("white", "white"),
-    PatchRole.UNIT_CELL: PatchStyle("white", COLORS["grid"], 0.55),
-}
-
-
-def add_text(ax: plt.Axes, x: float, y: float, label: str, style: TextRole) -> None:
-    kwargs = TEXT_STYLES[style].kwargs(ax)
-    if style is TextRole.PANEL_BADGE:
-        kwargs["clip_on"] = False
-        kwargs["zorder"] = 100
-    ax.text(x, y, label, **kwargs)
-
-
-def add_rect(ax: plt.Axes, xy: tuple[float, float], width: float, height: float, style: PatchRole) -> None:
-    ax.add_patch(Rectangle(xy, width, height, **PATCH_STYLES[style].kwargs()))
-
-
-def add_circle(ax: plt.Axes, center: tuple[float, float], radius: float, style: PatchRole) -> None:
-    ax.add_patch(Circle(center, radius, **PATCH_STYLES[style].kwargs()))
-
-
-def add_colored_rect(
-    ax: plt.Axes,
-    xy: tuple[float, float],
-    width: float,
-    height: float,
-    color: str,
-    alpha: float = 1.0,
-) -> None:
-    ax.add_patch(Rectangle(xy, width, height, facecolor=color, edgecolor="none", alpha=alpha))
-
-
-def add_colored_circle(
-    ax: plt.Axes,
-    center: tuple[float, float],
-    radius: float,
-    color: str,
-) -> None:
-    ax.add_patch(Circle(center, radius, facecolor=color, edgecolor="none"))
 
 
 def line_segment(entity: object) -> tuple[tuple[float, float], tuple[float, float]]:
@@ -517,12 +418,6 @@ def setup_card_axis(ax: plt.Axes, width_units: float = 1.0) -> None:
     ax.set_ylim(0, 1)
     ax.set_aspect("equal", adjustable="box")
     ax.axis("off")
-
-
-def add_axis_text(ax: plt.Axes, x: float, y: float, label: str, style: TextRole) -> None:
-    kwargs = TEXT_STYLES[style].kwargs(ax)
-    kwargs["transform"] = ax.transAxes
-    ax.text(x, y, label, **kwargs)
 
 
 def sampled_triangles(mesh: StlMesh, max_faces: int) -> np.ndarray:
@@ -674,15 +569,6 @@ def draw_stl_mesh_raw_equal(ax: plt.Axes, spec: StlRenderSpec) -> None:
     draw_stl_polygons(ax, polygons, depth, normals, spec, zorder=2)
 
 
-def panel_label(ax: plt.Axes, label: str, title: str) -> None:
-    add_text(ax, 0.02, 0.96, label, TextRole.PANEL_BADGE)
-    add_text(ax, 0.11, 0.956, title, TextRole.PANEL_TITLE)
-
-
-def panel_badge(ax: plt.Axes, label: str) -> None:
-    add_text(ax, 0.02, 0.96, label, TextRole.PANEL_BADGE)
-
-
 def setup_axis(ax: plt.Axes) -> None:
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
@@ -731,11 +617,11 @@ def add_arrow(ax: plt.Axes, start: tuple[float, float], end: tuple[float, float]
 
 def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     setup_axis(ax)
-    panel_badge(ax, "A")
+    PanelBadge.draw(ax, 0.02, 0.96, "A")
 
     rounded_box(ax, (0.055, 0.11), 0.52, 0.75, "white", COLORS["grid"], linewidth=1.0)
-    add_text(ax, 0.08, 0.805, "OpenMFD preset", TextRole.PRESET_TITLE)
-    add_text(ax, 0.08, 0.735, "editable defaults", TextRole.MUTED_LEFT)
+    PresetTitle.draw(ax, 0.08, 0.805, "OpenMFD preset")
+    LeftMutedText.draw(ax, 0.08, 0.735, "editable defaults")
 
     channels = cfg.channels_config()
     rows, columns = cfg.grid_size
@@ -751,37 +637,31 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     ]
     y = 0.650
     for name, value in values:
-        add_text(ax, 0.085, y, name, TextRole.TABLE_KEY)
-        add_text(ax, 0.555, y, value, TextRole.TABLE_VALUE)
+        LeftMutedText.draw(ax, 0.085, y, name)
+        RightText.draw(ax, 0.555, y, value)
         ax.plot([0.08, 0.555], [y - 0.034, y - 0.034], color="#edf1f6", lw=0.8)
         y -= 0.064
 
-    add_text(
-        ax,
-        0.08,
-        0.155,
-        "Demonstrated-device defaults;\neditable, not fixed constants.",
-        TextRole.NOTE,
-    )
+    LeftText.draw(ax, 0.08, 0.155, "Demonstrated-device defaults;\neditable, not fixed constants.")
 
     outputs = [
-        ((0.68, 0.705), "matched\nphotomask DXFs", COLORS["bottom"]),
-        ((0.68, 0.550), "printed\ninsert STLs", COLORS["insert"]),
-        ((0.68, 0.395), "printed\nframe STL", COLORS["frame"]),
-        ((0.68, 0.240), "wafer-scale\nmask CAD", COLORS["top"]),
+        ((0.68, 0.740), "matched\nphotomask DXFs", COLORS["bottom"]),
+        ((0.68, 0.580), "printed\ninsert STLs", COLORS["insert"]),
+        ((0.68, 0.420), "printed\nframe STL", COLORS["frame"]),
+        ((0.68, 0.260), "wafer-scale\nmask CAD", COLORS["top"]),
     ]
     for (x, y_out), label, color in outputs:
-        rounded_box(ax, (x, y_out), 0.25, 0.105, "white", color, linewidth=1.6)
-        add_text(ax, x + 0.125, y_out + 0.053, label, TextRole.OUTPUT_BOX)
-        add_arrow(ax, (0.585, 0.49), (x, y_out + 0.053), color)
+        rounded_box(ax, (x, y_out), 0.25, 0.12, "white", color, linewidth=1.6)
+        TextStyle.draw(ax, x + 0.125, y_out + 0.060, label)
+        add_arrow(ax, (0.585, 0.49), (x, y_out + 0.060), color)
 
-    rounded_box(ax, (0.65, 0.10), 0.31, 0.12, "#fff8ea", "#f2c46d", linewidth=1.0)
-    add_text(ax, 0.805, 0.16, "same coordinates\nfor every output", TextRole.BOX_NOTE)
+    rounded_box(ax, (0.65, 0.055), 0.31, 0.14, "#fff8ea", "#f2c46d", linewidth=1.0)
+    TextStyle.draw(ax, 0.805, 0.125, "same coordinates\nfor every output")
 
 
 def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
     setup_axis(ax)
-    panel_badge(ax, "B")
+    PanelBadge.draw(ax, 0.02, 0.96, "B")
 
     bounds = Bounds.combine((dxf.single_top, dxf.single_bottom))
     pad_x = 0.55
@@ -801,7 +681,7 @@ def draw_insert_stls(
     _title: str = "Generated insert STLs",
 ) -> None:
     setup_axis(ax)
-    panel_badge(ax, label)
+    PanelBadge.draw(ax, 0.02, 0.96, label)
 
     single_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.insert_single)
     array_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.insert_array)
@@ -839,7 +719,7 @@ def draw_insert_stls(
 
 def draw_frame_cad(ax: plt.Axes, stl: StlSources) -> None:
     setup_axis(ax)
-    panel_badge(ax, "E")
+    PanelBadge.draw(ax, 0.02, 0.96, "E")
 
     card_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.frame_stl)
     draw_stl_mesh_raw_equal(
@@ -870,25 +750,42 @@ def crop_to_aspect(image: Image.Image, aspect: float) -> Image.Image:
     return image.crop((0, top, width, top + new_height))
 
 
-def read_assembled_device_photo() -> Image.Image:
-    if ASSEMBLED_DEVICE_PHOTO.exists():
-        image = Image.open(ASSEMBLED_DEVICE_PHOTO).convert("RGB")
-    elif WORKFLOW_ODP.exists():
-        with ZipFile(WORKFLOW_ODP) as archive:
-            image = Image.open(BytesIO(archive.read(WORKFLOW_ASSEMBLED_PHOTO))).convert("RGB")
-    else:
-        raise FileNotFoundError(
-            f"Missing assembled-device photo source: {ASSEMBLED_DEVICE_PHOTO} or {WORKFLOW_ODP}"
-        )
-    return ImageOps.autocontrast(image, cutoff=1)
+@dataclass(frozen=True)
+class Photo:
+    path: Path
+
+    def read(self) -> Image.Image:
+        with Image.open(self.path) as source:
+            return self.process(source.convert("RGB"))
+
+    def process(self, image: Image.Image) -> Image.Image:
+        return image
+
+
+class ContrastPhoto(Photo):
+    def process(self, image: Image.Image) -> Image.Image:
+        return ImageOps.autocontrast(super().process(image), cutoff=1)
+
+
+@dataclass(frozen=True)
+class CroppedPhoto(Photo):
+    aspect: float
+
+    def process(self, image: Image.Image) -> Image.Image:
+        return crop_to_aspect(super().process(image), self.aspect)
+
+
+@dataclass(frozen=True)
+class CroppedContrastPhoto(ContrastPhoto, CroppedPhoto):
+    """Keep the authoring policy: crop first, then 1% autocontrast."""
 
 
 def draw_assembled_device(ax: plt.Axes) -> None:
     setup_axis(ax)
-    panel_badge(ax, "F")
+    PanelBadge.draw(ax, 0.02, 0.96, "F")
 
     image_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.device_photo)
-    image = read_assembled_device_photo()
+    image = ContrastPhoto(ASSEMBLED_DEVICE_PHOTO).read()
     image_ax.imshow(image)
     image_ax.set_aspect("equal", adjustable="box")
     image_ax.axis("off")
@@ -905,7 +802,7 @@ def draw_assembled_device(ax: plt.Axes) -> None:
 
 def draw_plate_outputs(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
     setup_axis(ax)
-    panel_badge(ax, "C")
+    PanelBadge.draw(ax, 0.02, 0.96, "C")
 
     pad_x = dxf.aligned.bounds.width * 0.035
     pad_y = dxf.aligned.bounds.height * 0.035
@@ -916,18 +813,23 @@ def draw_plate_outputs(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfS
     draw_dxf_layer_raw(mask_ax, dxf.aligned, "#0f8ea5", 0.24, 0.92)
 
 
-def save_subfigure_images(fig: plt.Figure, axes: dict[str, plt.Axes]) -> None:
-    subfigure_dir = OUTPUT_DIR / "subfigures"
+def save_subfigure_images(fig: plt.Figure, axes: dict[str, plt.Axes], output_dir: Path) -> None:
+    """Export only declared panels; retain unrelated files and restore visibility."""
+    subfigure_dir = output_dir / "subfigures"
     subfigure_dir.mkdir(parents=True, exist_ok=True)
-    for path in subfigure_dir.glob("*.png"):
-        path.unlink()
-
     fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
-    for label, ax in axes.items():
-        bbox = ax.get_tightbbox(renderer).expanded(1.03, 1.05)
-        bbox_inches = bbox.transformed(fig.dpi_scale_trans.inverted())
-        fig.savefig(subfigure_dir / f"{label}.png", dpi=SUBFIGURE_DPI, bbox_inches=bbox_inches, pad_inches=0.02)
+    visibility = {ax: ax.get_visible() for ax in axes.values()}
+    try:
+        for label, ax in axes.items():
+            for panel in axes.values():
+                panel.set_visible(panel is ax and visibility[panel])
+            bbox = ax.get_tightbbox(renderer).expanded(1.03, 1.05)
+            bbox_inches = bbox.transformed(fig.dpi_scale_trans.inverted())
+            fig.savefig(subfigure_dir / f"{label}.png", dpi=SUBFIGURE_DPI, bbox_inches=bbox_inches, pad_inches=0.02)
+    finally:
+        for ax, visible in visibility.items():
+            ax.set_visible(visible)
 
 
 def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
@@ -943,9 +845,9 @@ def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
     )
     fig.patch.set_facecolor("white")
     axes = {
-        "A": fig.add_subplot(grid[0, 0]),
+        "A": fig.add_subplot(grid[0, :]),
         "B": fig.add_subplot(grid[1, 0]),
-        "C": fig.add_subplot(grid[0:2, 1]),
+        "C": fig.add_subplot(grid[1, 1]),
         "D": fig.add_subplot(grid[2, :]),
         "E": fig.add_subplot(grid[3, 0]),
         "F": fig.add_subplot(grid[3, 1]),
@@ -960,13 +862,6 @@ def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
     draw_frame_cad(axes["E"], stl)
     draw_assembled_device(axes["F"])
 
-    fig.suptitle(
-        "OpenMFD turns one parameterized design into masks, printed parts, and a packaged device",
-        fontsize=12.0,
-        fontweight="bold",
-        color=COLORS["ink"],
-        y=0.982,
-    )
     fig.subplots_adjust(**FIGURE_ONE_LAYOUT.subplot_adjust_kwargs())
     return fig, axes
 
@@ -974,9 +869,9 @@ def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
 def main() -> int:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     fig, axes = build_figure()
-    fig.savefig(OUTPUT_DIR / "draft_figure.pdf", bbox_inches="tight")
+    fig.savefig(OUTPUT_DIR / "draft_figure.pdf", dpi=SUBFIGURE_DPI, bbox_inches="tight")
     fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300, bbox_inches="tight")
-    save_subfigure_images(fig, axes)
+    save_subfigure_images(fig, axes, OUTPUT_DIR)
     plt.close(fig)
     return 0
 
