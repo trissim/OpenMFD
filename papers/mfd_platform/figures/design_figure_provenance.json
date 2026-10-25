@@ -1,12 +1,12 @@
 {
   "validation_scope": "Fresh Figures 1, 2 and 5 rendered on 2026-10-25 from retained CAD and photo inputs. Diagram/layout rendering only: no biological count/validation artwork, calibration, inclusion flags or scientific analysis regenerated.",
   "output_sha256": {
-    "rendered/openmfd_design.pdf": "13e2073bd9b0bba97683b2d886bf1db1078cab556b1fc5adaa46d7b0455f238a",
-    "rendered_docx/openmfd_design.png": "f99db31e2db4d9da8e2812cbb50b3440c72ce605057f3d3fe21f8c620467ba52",
-    "rendered/insert_bonding.pdf": "6cd49329a41945aa457bbf9a4a014f41d4763d2c3b906c8315c3e81d532cd850",
-    "rendered_docx/insert_bonding.png": "268fdd7ce7854a48fba872caa8651319b73d4e1df1593934ea5d7566e2e5dd92",
-    "rendered/generalizability.pdf": "698cccaa19f481b9f6a6d079602a393132efa90bfa18c2972c4b65f9e68732e7",
-    "rendered_docx/generalizability.png": "c275f01ac36d249b6c3c26ad6b55d5a02cf57cb373cd9edb99d2ca9f48c8c3ea"
+    "rendered/openmfd_design.pdf": "c80e4bf730d8c03ec6702e4fe485eaf83a3162fba115b79b31529644803c32d7",
+    "rendered_docx/openmfd_design.png": "65d0e9c778a31c6fef883fb75a8d828b10f0af937ff9afa6f6b18212d213c2fc",
+    "rendered/insert_bonding.pdf": "6a0572d51a4fb3fbd2dfacdc3b0930ffe905f4bdce394456e39711f697b5ef4b",
+    "rendered_docx/insert_bonding.png": "61f572c1879435703fa8f0357bfe8bba1ed496f951b5f1345c0169c6b44829e0",
+    "rendered/generalizability.pdf": "a663b775a158332e2a6a4242f35b140721892c3cf641125b8f456b27537a6982",
+    "rendered_docx/generalizability.png": "ecf0cf58d7535840c0559979022864eb2d8157efd191ad8594bb97ee1908373b"
   },
   "source_sha256": {
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_aligned.dxf": "cdb32c55a3fca993b322aec76a086b80c695952c3cc26d1b0b01b30e464f53aa",
@@ -92,9 +92,9 @@
     "figures/final_drop/Fig2_insert_bonding/real_suex.png": "c53d42661665b0d90e462c32f1c8fd8c8789dd8b69b8abd16fc7494c509ca3ce",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly.jpg": "080a75480b4271047076ae48e1170d39c79da6a212c59484c55a56a9748ab4a7",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
-    "figures/generate_bonding_fixture_figure.py": "fed0ee6a0819d07069118ccf0721795d1753c5d1beb0a6286b9c3cfe78ee8c33",
-    "figures/generate_generalizability_figure.py": "e35698527c935aec4cf91aa5e9a701b9a944c8a79e0ee1e0aaab4c295bd4cf16",
-    "figures/generate_openmfd_design_figure.py": "c2df57ad85658f2e8e708d03b0ef651869791548d3a6f8b18eba8f022ceef107",
+    "figures/generate_bonding_fixture_figure.py": "c5a18a04c1d750ca4a88835c28bb942909c4675fb07c4c30d830b741ae976c3a",
+    "figures/generate_generalizability_figure.py": "943140b98b96ffeaf29eb6fd9d34d94c574503f8113a6627d795bf838cd1b7e1",
+    "figures/generate_openmfd_design_figure.py": "cf87701bdb7cb8f7c9992eec28fc720cf2a8692840ea8d6963442f33a1eb42f3",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
   "source_scope": "Three generators, the OpenMFD package, retained DXF/STL assets in the four selected design folders, frame STL and five source photographs. This is an explicit asset-set fingerprint, not a complete dynamic import or minimal file-read trace.",
@@ -106,18 +106,19 @@
     "composite_png_dpi": 300
   },
   "versions": {
-    "matplotlib": "3.11.0",
-    "numpy": "2.5.1",
-    "Pillow": "12.3.0",
-    "ezdxf": "1.4.5",
+    "matplotlib": "3.10.9",
+    "numpy": "2.4.4",
+    "Pillow": "12.2.0",
+    "ezdxf": "1.4.3",
     "solidpython": "1.1.3"
   },
   "verification": {
     "comparison_commit": "166c8248d9f374f1f09a3a97ca73f3e8936f8131",
     "source_census": "NRA ModuleSyntaxIndex: same 56 MFD figure/biological/package modules; 86 classes before,98 after; zero parse omissions. Dynamic bindings and third-party internals are outside this syntax proof.",
-    "unchanged": "All five processed RGB photo arrays/source hashes match the preceding crop/contrast implementation exactly. Bonding configuration-derived cross-section geometry and all three layouts\u2019 DXF segments, insert meshes, grid values, PDMS scale and array-render values match. Figure placement and resampling intentionally change.",
+    "unchanged": "Prior refactor comparison at1c5f994: All five processed RGB photo arrays/source hashes match the preceding crop/contrast implementation exactly. Bonding configuration-derived cross-section geometry and all three layouts\u2019 DXF segments, insert meshes, grid values, PDMS scale and array-render values match. Figure placement and resampling intentionally change. Final label-only source comparison to1c5f994 permits only the specified label replacements and removal of an unused photo-title argument; all84other fingerprinted sources/assets match the prior receipt byte-for-byte. Runtime dependencies differ on desktop and are recorded above.",
     "shared_consumers": "StlMesh,rotation_matrix,triangle_normals used by assembly/biological callers are AST-identical to the comparison commit. Assembly output is retained from its separate receipt; it was not rendered again.",
-    "run": "All three complete generator CLIs passed, including affected subfigure exports. Final spacing-only main renders used the existing build_figure/savefig entrypoints for Figures1/5; bonding CLI was rerun against final shared source.",
-    "limits": "Not dimensional metrology, a fresh dependency installation or whole-paper visual acceptance. The retained biological validation figure is unchanged pending endpoint-inclusion confirmation."
-  }
+    "run": "All three complete generator CLIs passed on the desktop on2026-10-25 from832ec92, including affected subfigure exports. No biological generator was invoked. Selected render_figure calls published only Figures1/2/5; no global refresh/cleanup.",
+    "limits": "Not dimensional metrology, a fresh dependency installation or final whole-paper acceptance. Figure4 retained composite is unchanged and has an unresolved source/generator/inclusion discrepancy; it is not scientifically accepted."
+  },
+  "render_source_commit": "832ec9290e925614d51012e53664cd8c9a2508a7"
 }
