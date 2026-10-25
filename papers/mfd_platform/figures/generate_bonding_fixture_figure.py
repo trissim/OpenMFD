@@ -168,7 +168,7 @@ def draw_photo_panel(ax: plt.Axes, path: Path) -> None:
     ax.imshow(image, extent=photo_box, zorder=1)
 
 
-def draw_labeled_photo_panel(ax: plt.Axes, path: Path, label: str, title: str) -> None:
+def draw_labeled_photo_panel(ax: plt.Axes, path: Path, label: str) -> None:
     draw_photo_panel(ax, path)
     PanelBadge.draw(ax, 0.02, 0.96, label)
 
@@ -665,7 +665,7 @@ def draw_lock_view(
         detail_ax,
         p0,
         p1,
-        f"{pins.hole_dims[0]:.2f} mm SUEX lock",
+        f"{pins.hole_dims[0]:.2f} mm alignment hole",
         ((p0[0] + p1[0]) / 2, p0[1] + horizontal_label_gap),
         extension_points=((right_insert.lock_x[0], lock_y[1]), (right_insert.lock_x[1], lock_y[1])),
     )
@@ -701,12 +701,12 @@ def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
         "F": axes_grid[2, 1],
     }
 
-    draw_labeled_photo_panel(axes["A"], PHOTO_TRANSFER, "A", "Wafer and insert transfer plate")
+    draw_labeled_photo_panel(axes["A"], PHOTO_TRANSFER, "A")
     draw_lock_view(axes["B"], cfg, stl, dxf, "B", "Equal-scale XY detail of insert lock")
-    draw_labeled_photo_panel(axes["C"], PHOTO_CLAMPED, "C", "Clamped fixture for acetone wash")
+    draw_labeled_photo_panel(axes["C"], PHOTO_CLAMPED, "C")
     draw_side_stack(axes["D"], cfg, "D", "Bonding fixture cross-section")
-    draw_labeled_photo_panel(axes["E"], PHOTO_GLUED, "E", "Glued insert-wafer interface")
-    draw_labeled_photo_panel(axes["F"], PHOTO_REAL_SUEX, "F", "Real SUEX lock micrograph")
+    draw_labeled_photo_panel(axes["E"], PHOTO_GLUED, "E")
+    draw_labeled_photo_panel(axes["F"], PHOTO_REAL_SUEX, "F")
 
     return fig, axes
 

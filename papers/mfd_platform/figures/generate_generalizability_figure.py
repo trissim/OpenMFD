@@ -261,7 +261,7 @@ class InsertPanel(DesignPanel):
         draw_insert_array_preview(array_ax, design)
 
     def title(self, design: GeneralizabilityDesign) -> str:
-        return "Printed inserts"
+        return "Printable inserts"
 
 
 @dataclass(frozen=True)

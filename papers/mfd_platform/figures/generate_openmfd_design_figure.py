@@ -646,8 +646,8 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
 
     outputs = [
         ((0.68, 0.740), "matched\nphotomask DXFs", COLORS["bottom"]),
-        ((0.68, 0.580), "printed\ninsert STLs", COLORS["insert"]),
-        ((0.68, 0.420), "printed\nframe STL", COLORS["frame"]),
+        ((0.68, 0.580), "printable\ninsert STLs", COLORS["insert"]),
+        ((0.68, 0.420), "printable\nframe STL", COLORS["frame"]),
         ((0.68, 0.260), "wafer-scale\nmask CAD", COLORS["top"]),
     ]
     for (x, y_out), label, color in outputs:
