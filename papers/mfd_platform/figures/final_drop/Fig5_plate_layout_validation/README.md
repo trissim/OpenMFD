@@ -32,6 +32,16 @@ Regenerate the figures from retained inputs:
 /usr/bin/python3 papers/mfd_platform/figures/generate_validation_figure.py
 ```
 
-`--import-saved-data` imports the saved analysis and width records from their
-original locations. It verifies the saved count-table hash and all 72 original
-counts before refreshing the retained inputs.
+The original import and its 72-count verification are historical work from
+commit `f4f2111`; their source paths, hash, calibration and verification are
+retained in `../../../supplementary/validation/sources.json`. The completed
+one-shot importer and old V10 DOCX converter have been retired. The renderer now
+reads retained CSV/JSON once into typed measurement and image records. Inclusion
+classes own summary membership and point style; downstream plots do not inspect
+raw inclusion strings or dictionary keys.
+
+The published document Figure 4 still contains the older September composite.
+The October authored source described above has 67 included devices, while the
+author intends 69 for cell counts. Do not regenerate or publish this figure until
+the endpoint-specific exclusion reasons are reconciled. Structural decoder changes
+do not authorize changing a measurement, inclusion flag, calibration or artwork.
