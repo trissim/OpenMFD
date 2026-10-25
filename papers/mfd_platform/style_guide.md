@@ -4,7 +4,9 @@
 
 - Write as a biology-facing platform paper, not as an internal engineering report.
 - Lead with the experimental or fabrication consequence, then explain the implementation detail.
-- Keep OpenMFD as the coordination layer; keep the hybrid mold/no-punch plate-format workflow as the main story.
+- Explain OpenMFD through the matching files it generates; keep the reusable hybrid mold and cast-in-place wells as the main story.
+- Write positively from demonstrated results. State limits that change interpretation where they belong, rather than repeating defensive qualifications in the abstract, Results, Discussion, and conclusion.
+- Describe the final working process. Keep development failures only when they explain a necessary step or the evidence for a result.
 
 ## Anti-Pattern: Meta-Paper Framing
 
@@ -23,8 +25,8 @@ Prefer direct statements about what exists, what was done, what was measured, an
 
 Examples:
 
-- Instead of `The barrier is not conceptual but practical`, write `Although many useful device geometries have already been described, translating them into plate-format PDMS devices remains difficult in practice.`
-- Instead of `The central test of this approach is therefore not whether one plate-format device can be made once`, write `We demonstrate the full workflow with a compartmentalized neuronal culture device, spanning file generation, hybrid mold fabrication, repeated PDMS casting, plate-format handling, imaging, fluidic isolation, and long-term culture.`
+- Instead of `The barrier is not conceptual but practical`, write `Micrometer-scale channels and pipette-accessible wells call for fabrication methods that span both scales.`
+- Instead of `The central test of this approach is therefore not whether one plate-format device can be made once`, write `We demonstrate the full workflow with a compartmentalized neuronal culture device, spanning file generation, hybrid mold fabrication, repeated casting, plate-format handling, imaging, tracer redistribution, and neuronal culture in interior devices.`
 - Instead of `The purpose of this analysis was not to validate additional fabricated devices`, write `These examples are design-generation examples rather than fabricated devices.`
 - Instead of `The claim is therefore limited to design-generation compatibility`, write `Compatible published layouts can be translated into the mask, insert, and frame files required by the approach; layouts outside these constraints require redesign or new process development.`
 
@@ -35,9 +37,15 @@ Examples:
 - Use additional literature-derived layouts only to show that published geometries can be represented as OpenMFD-compatible fabrication file sets.
 - Do not imply that additional geometries were fabricated, cultured, or biologically validated unless data exist.
 
+## Supplementary information and data
+
+- Keep the final reproducible protocols, concise design comparisons, and useful figures in the typeset supplement.
+- Supply individual measurements and detailed printer or instrument profiles as supplementary data files. Preserve every value and unit, explain the file contents, and update all references when tables move.
+- A supplement is not a complete development log. Retain observations that support a process choice without retelling every failed attempt.
+
 ## Preferred Framing
 
 - `This workflow moves well formation into the reusable mold...`
-- `The demonstrated device validates one complete fabrication-to-culture run...`
+- `Each PDMS cast forms all 96 wells at once...`
 - `Published layouts that fit the stated constraints can be represented as OpenMFD-compatible mask, insert, and frame files...`
 - `Layouts outside those constraints require redesign or new process development...`

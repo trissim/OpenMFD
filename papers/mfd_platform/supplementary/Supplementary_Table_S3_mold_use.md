@@ -1,7 +1,7 @@
-# Supplementary Table S5. Hybrid-mold use and PDMS-cast outcomes
+# Supplementary Table S3. Hybrid-mold use and PDMS-cast outcomes
 
-This table summarizes mold use with the finalized protocol. Process-development
-observations are reported in the Results and Supplementary Notes S1-S2.
+Five hybrid molds were assembled with the final protocol. The table distinguishes
+molds, usable casts, and elapsed use; cast quality was assessed by inspection.
 
 | Stage or outcome | Observed count | Interpretation |
 |---|---:|---|

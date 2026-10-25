@@ -1,4 +1,4 @@
-# Supplementary Table S2. Multiscale microfluidic fabrication strategies
+# Supplementary Table S1. Multiscale microfluidic fabrication strategies
 
 Representative strategies for combining micrometer-scale features with millimeter-scale wells or other tall structures are summarized below. The comparison emphasizes the operations and equipment each strategy adds to conventional PDMS soft lithography.
 

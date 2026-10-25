@@ -39,22 +39,8 @@ devices. The safe maximum working volume for this plate is 50 µL per well.
 - PerkinElmer Opera Phenix Plus high-content imaging system with a 10×/0.30 NA
   objective.
 
-## Adhesive selection and substitution
-
-Use LOCTITE SI 5140 for the frame assembly described here. Adhesives were
-screened according to whether primary cortical-neuron cultures survived to the
-end of the experiment; only SI 5140 passed. Cell toxicity was not quantified.
-Test alternative adhesives for cell survival, joint strength, and leaks in
-the complete framed device.
-
-## Control without a frame or frame adhesive
-
-One PDMS device was bonded to glass without adding a HIPS frame or frame
-adhesive and was placed in a 14.5 cm-diameter polystyrene culture dish. This
-control removed both the frame and adhesive seal and changed the surrounding
-culture environment. Growth was assessed visually. The control does not
-identify the separate effects of the frame, adhesive seal, or dish; observations
-are reported in the main Results.
+The final frame assembly uses LOCTITE SI 5140. Assess alternative adhesives
+for cell survival, joint strength, and leaks in the complete framed device.
 
 ## A. Cast and demold the PDMS device
 
@@ -62,7 +48,8 @@ are reported in the main Results.
    mold.
 2. Mix Sylgard 184 at a 10:1 base:curing-agent ratio. Approximately 35 mL total
    mixture is sufficient for one wafer mold.
-3. Pour approximately 30 mL PDMS over the mold.
+3. Pour approximately 30 mL PDMS over the mold, stopping below the insert tops
+   to leave the wells open.
 4. Load the filled molds into the six-shelf metal wafer rack and place the rack
    in the cylindrical vacuum chamber. Degas until visible bubbles are removed
    (typically 10–30 min; approximately −15 inHg in this setup).
@@ -174,9 +161,6 @@ are reported in the main Results.
 5. Collect overlapping images and stitch them into one image per device. In this
    experiment, Plates 1 and 2 used 35 imaging positions per device (7 × 5 grid),
    and Plate 3 used 42 positions (7 × 6 grid), with approximately 10% overlap.
-   Plate 3's PDMS array was shifted slightly rightward during gluing, so a larger
-   area was imaged to capture more microchannel exits. The area covered by
-   35 imaging positions was sufficient for cell counting.
 6. Align each stitched brightfield image to the reference brightfield image and
    crop all plates to the same area for cell counting, regardless of whether
    images were collected at 35 or 42 positions. Imaging a larger area does not
@@ -187,20 +171,9 @@ are reported in the main Results.
 
 ## G. Analysis set and descriptive statistics
 
-- CTB-positive cells were counted before axotomy in the February 2026
-  three-plate DMSO-only experiment.
-- Analysis was restricted to the 24 interior devices per plate because culture
-  conditions differed at the plate perimeter. Images from 72 interior devices
-  across three plates were checked for contamination and technical failures.
-- Devices were excluded only when late-stage microbial contamination or an
-  observable technical failure in culture or imaging prevented cell counting.
-  Every usable count was included, whether high or low.
-- All neurons came from one embryo. The three separately assembled plates
-  and the devices within each plate are technical replicates, not samples from
-  different embryos.
-- In this experiment, 69 of the 72 interior devices had images suitable for
-  cell counting. Three devices had late-stage contamination or a technical
-  failure that prevented cell counting in the final image.
-- CTB-positive counts are summarized descriptively as the mean and standard
-  deviation across analyzed interior devices within each plate, representing
-  variation among devices containing neurons from the same embryo.
+CTB-positive cells were counted before axotomy in the February 2026
+three-plate DMSO-only experiment. Of the 72 interior devices, 69 had images
+suitable for counting; contamination or a technical failure prevented counting
+in three devices. All usable counts were included, regardless of value.
+Per-plate means and standard deviations describe variation among devices
+from the same neuronal preparation.

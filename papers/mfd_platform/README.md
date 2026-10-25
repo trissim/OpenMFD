@@ -11,6 +11,17 @@ supplement declaration is in [build_paper.py](build_paper.py); the combined
 review derives these same two declarations and parsed inputs. Missing sections
 fail rather than being silently omitted. The old paper.md path is only a pointer.
 
+## Supplementary text and data
+
+The reading copy contains three tables, two illustrated fabrication notes, and
+the two final protocols. Individual pin heights and the detailed resin-insert
+and HIPS printer profiles are separate CSV data files, listed in
+[supplementary/Supplementary_data.md](supplementary/Supplementary_data.md).
+The data index also links the frame-printing G-code and microscope XML file.
+Supply these linked files with the supplement when preparing submission files;
+the build records and retains them as supporting inputs rather than typesetting
+every measurement and setting.
+
 ## Build a reading copy
 
 Use a build-only environment, not the OpenMFD runtime environment. Install
