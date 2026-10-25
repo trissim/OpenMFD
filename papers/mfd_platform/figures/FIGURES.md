@@ -57,7 +57,9 @@ The previous workflow overview slide is no longer part of the main figure sequen
 - **Generated source:** `papers/mfd_platform/figures/generate_device_assembly_protocol.py`
 - **Primary source asset:** `papers/mfd_platform/figures/final_drop/Fig4_mold_casts_package/assembly_protocol_schematic.pdf`
 - **Supporting photo composite retained in source folder:** `papers/mfd_platform/figures/final_drop/Fig4_mold_casts_package/draft_figure.pdf`
-- **Rendered asset:** `papers/mfd_platform/figures/rendered/mold_casts_package.pdf`
+- **Rendered assets:** `papers/mfd_platform/figures/rendered/mold_casts_package.pdf` and `papers/mfd_platform/figures/rendered_docx/mold_casts_package.png`.
+- **Layout:** Author at 6.5 × 6.2 inches and place at 6.5 inches wide. Headings are 10.5 pt; process details and annotations are 8.5 pt. Both output formats use the declared 720 dpi for raster content.
+- **Implementation:** Each `Step` owns its scene and annotations. Shared mold views and loaded-rack geometry are inherited; the declared protocol sequence determines numbering and placement. The common Blender renderer fits the physical axes frame, not its normalized coordinate ratio.
 - **Status:** The generated schematic is the main figure. The earlier photo composite remains available as supporting fabrication documentation.
 
 ### Figure 4. Combined platform validation
@@ -89,13 +91,13 @@ The previous workflow overview slide is no longer part of the main figure sequen
 
 ## Supplementary Figures
 
-### Supplementary Figure S1. No-LP360 ridge artifact failure mode
+### Supplementary Figure S1. LP360 filtering reduces surface ridges
 
 - **Best current asset:** `papers/mfd_platform/figures/drafts/molds/nolp360filter.png`
 - **Target note:** `papers/mfd_platform/supplementary/Supplementary_Note_S1_LP360_filter.md`
 - **Rendered asset:** `papers/mfd_platform/figures/rendered/supp_fig_s1_no_lp360.pdf`
 
-### Supplementary Figure S2. SU-8 delamination without flood-exposed base layer
+### Supplementary Figure S2. SU-8 delamination before adding the pre-SUEX bake
 
 - **Best current assets:**
 - `papers/mfd_platform/figures/drafts/molds/delamination1.png`
