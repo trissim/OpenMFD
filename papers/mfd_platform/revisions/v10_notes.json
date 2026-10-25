@@ -1,23 +1,62 @@
 [
   {
+    "anchor": "By combining high-resolution photolithography with scalable three-dimensional molding, this method provides an accessible and reusable fabrication platform for medium-throughput microfluidic assays.",
+    "text": "The abstract already describes the fabrication method and its demonstrated applications; this closing sentence repeats that summary.",
+    "source": "original"
+  },
+  {
     "anchor": "enabling array-scale",
-    "text": "We aligned all inserts together, but did not measure positioning error. I changed 'precise alignment' to describe the operation we performed."
+    "text": "'Precise' implies measured positioning accuracy. All 96 inserts were aligned in one operation, but positioning error was not measured; 'array-scale' describes what was demonstrated."
+  },
+  {
+    "anchor": "Together, these developments have established compartmentalized microfluidics as a versatile approach for investigating neuronal connectivity and responses to spatially defined perturbations.",
+    "text": "The examples already establish the neuronal uses. Removing this general summary lets the Introduction move directly to the need for parallel assays.",
+    "source": "original"
   },
   {
     "anchor": "Compartmentalized neuronal cultures enable independent access",
-    "text": "Neuronal experiments motivate the need for fine channels; the fabrication method then addresses how to reproduce those layouts in plate-format arrays."
+    "text": "Starting with the neuronal need for fine channels preserves the biological motivation, then leads to the fabrication problem the platform solves across different compartment layouts."
+  },
+  {
+    "anchor": "These studies establish that parallelization and adaptable neuronal compartmentalization are feasible. Nevertheless, the fabrication workflow remains an important design consideration when laboratories need to reproduce, modify or manufacture custom arrays of devices.",
+    "text": "The next paragraph gives the specific fabrication problem, so this general transition is no longer needed.",
+    "source": "original"
+  },
+  {
+    "anchor": "Building on previous advances in multiscale molding and the elimination of manual reservoir punching, our approach introduces a customizable, parametric design strategy that enables the simultaneous alignment and assembly of large arrays of well-forming inserts onto reusable photolithographically patterned molds, facilitating reproducible, medium-throughput device fabrication.",
+    "text": "Stating our contribution before finishing the comparison with earlier methods interrupts that comparison. The final Introduction paragraph is the place to explain what OpenMFD adds.",
+    "source": "original"
   },
   {
     "anchor": "practical resolution of desktop resin printers",
-    "text": "Explained why the fine channels use photolithography while the larger wells use printed inserts. Restored V7's fabrication-method comparison in Table S2."
+    "text": "The scale mismatch explains why the method combines photolithography with printed inserts. Table S2 compares fabrication routes, keeping the focus on how these devices are made rather than their neuronal features alone."
   },
   {
     "anchor": "access to a shared cleanroom for reusable mold fabrication",
-    "text": "Restored V7's shared-cleanroom explanation and Table S2 citation: a lab can obtain a reusable mold from a facility, then cast plates on the bench."
+    "text": "Making a reusable mold at a shared facility separates the cleanroom requirement from repeat plate production on the bench. This explains how laboratories can use the method without owning cleanroom equipment."
   },
   {
     "anchor": "an example neuronal application",
-    "text": "The method adapts different compartment layouts into plate-format arrays. The neuronal plate demonstrates one layout; later plates need no repeated cleanroom processing."
+    "text": "The workflow generates arrays and fabrication files for different compartment layouts. Describing the neuronal plate as an example preserves that wider contribution instead of narrowing the method to one assay."
+  },
+  {
+    "anchor": "Supplementary Protocol S2 describes one-time hybrid mold fabrication; Supplementary Protocol S1 describes routine casting, assembly and assays.",
+    "text": "Separating the one-time mold protocol from routine casting makes clear which steps must be repeated to produce another plate."
+  },
+  {
+    "anchor": "These observations demonstrate compatibility of the fabricated devices with standard multichannel liquid handling and automated image acquisition, providing the basis for parallelized experimental measurements across multiple compartmentalized cultures.",
+    "text": "The pipetting and imaging results are already stated in the preceding two paragraphs.",
+    "source": "original"
+  },
+  {
+    "anchor": "Collectively, these experiments establish the compatibility of the microfluidic platform with primary cortical neuronal culture, compartment-specific axonal labeling, and automated quantitative imaging. Further experiments using independent neuronal preparations will be required to determine biological reproducibility across cultures.",
+    "text": "Culture, labeling and imaging compatibility are already reported, together with the single-preparation limit. Repeating that limit here adds no new result; the separate biological experiments are discussed with the hydrogel paper.",
+    "source": "original"
+  },
+  {
+    "anchor": "The hybrid fabrication strategy developed in this study provides a scalable approach for producing compartmentalized microfluidic culture devices by integrating photolithographically defined microfeatures with 3D-printed, millimeter-scale structures on reusable silicon-wafer molds. Building on previous advances in multiscale molding and the elimination of manual reservoir punching, our approach introduces a coordinated parametric design framework that enables the simultaneous alignment and attachment of large arrays of well-forming inserts to patterned wafers. This strategy addresses a practical limitation of conventional PDMS microfluidic fabrication, in which high-resolution microchannels can be reproduced by soft lithography, but the formation of individual culture wells frequently requires additional processing after casting. By incorporating all well-forming structures into a reusable mold, the method separates the specialized fabrication steps required to construct the mold from subsequent production of complete microfluidic devices. The resulting platform combines customizable microfluidic geometries with a standardized plate format suitable for medium-throughput biological experimentation.",
+    "text": "Ristola combines SU-8 features with printed well-forming inserts, making it the direct comparison for our alignment method. Starting there brings out the added step: aligning and bonding the whole array together. The deleted opening repeats the Introduction.",
+    "source": "original"
   },
   {
     "anchor": "Culture survival was assessed qualitatively",
@@ -25,11 +64,26 @@
   },
   {
     "anchor": "because it was faster for these experiments",
-    "text": "Restored V7's reason for choosing the Opera Phenix: it was faster for these experiments."
+    "text": "Both microscopes worked. Speed was the reason for selecting Opera Phenix for these experiments; retaining that reason explains the instrument choice."
+  },
+  {
+    "anchor": "Previous approaches have demonstrated the feasibility of combining micrometer- and millimeter-scale features using hybrid soft lithography, alternative molding strategies, and additive manufacturing (PMIDs: 20049640; 32832365). Particularly relevant to our approach, Ristola",
+    "text": "Ristola is the relevant comparison for insert alignment. The broader fabrication examples are already in the Introduction, so repeating them delays the comparison this paragraph needs to make.",
+    "source": "original"
   },
   {
     "anchor": "The chamber margin is 17 times the per-side pin clearance",
-    "text": "Restored V7's 17-fold comparison between the 1,275 micrometer chamber margin and 75 micrometer pin clearance, which explains how the layout accommodates positioning error without covering the channels."
+    "text": "The 1,275 \u00b5m chamber margin is 17 times the 75 \u00b5m pin clearance per side. This comparison explains how the layout accommodates positioning error without covering the channels."
+  },
+  {
+    "anchor": "The combination of photolithography and resin printing also exploits the complementary capabilities of these fabrication technologies. Photolithography remains well suited to defining micrometer-scale structures, whereas resin printing provides an accessible means of producing larger three-dimensional features. Recent developments in printed molds and hybrid fabrication have expanded the range of structures that can be manufactured for biological microfluidic applications, although achievable resolution, PDMS curing compatibility, and surface treatment remain important considerations (PMIDs: 40190179; 40667579).",
+    "text": "Repeating these fabrication-scale comparisons restarts the Introduction's background. This paragraph instead needs to explain why the resin stays in the mold rather than in the culture device.",
+    "source": "original"
+  },
+  {
+    "anchor": "This distinction is potentially advantageous for applications requiring conventional PDMS surface treatments and established neuronal culture protocols, although the biological compatibility of each assembled device configuration must still be established experimentally.",
+    "text": "Changing the compartment layout does not introduce new culture-contact materials. The qualification should concern what changes with the geometry or assay; the separate frame paragraph addresses the observed culture problem.",
+    "source": "original"
   },
   {
     "anchor": "Nevertheless, the present study did not directly quantify manufacturing time, labor requirements, or cost savings relative to established alternatives, and these potential advantages should be evaluated in future comparisons.",
@@ -37,27 +91,108 @@
     "source": "original"
   },
   {
-    "anchor": "Our approach extends existing compartmentalized device designs",
-    "text": "Replaced the statement about what the work does not introduce with its contribution: adapting device layouts into multiwell plate arrays with matching fabrication files."
+    "anchor": "Previous studies have demonstrated the value of parallelized and modular microfluidic systems for neuronal experimentation (PMIDs: 38150531; 35466333; 38841815).",
+    "text": "These studies compare neuronal-platform capabilities, which the Introduction already covers. Repeating them here distracts from what the fabrication workflow adds.",
+    "source": "original"
   },
   {
-    "anchor": "OpenMFD to arrange compartmentalized device layouts into plate-format arrays",
-    "text": "Kept the fabrication method as the contribution and the neuronal plate as its demonstrated application."
+    "anchor": "Our approach extends existing compartmentalized device designs",
+    "text": "The contribution is adapting existing compartment layouts for multiwell production. Stating that extension explains the method's value instead of listing neuronal capabilities that are not new."
+  },
+  {
+    "anchor": "These designs have not yet been fabricated, and changes in insert geometry, well spacing, or compartment arrangement will require validation of alignment, casting, demolding, fluid transport, and biological compatibility.",
+    "text": "Table S3 records the dimensions and clearances used here. The qualification can focus on changes beyond that geometry instead of implying that every layout change requires repeating the material-compatibility work.",
+    "source": "original"
   },
   {
     "anchor": "per-device neuronal counts and channel-width measurements",
-    "text": "Added the saved DMSO counts and existing brightfield width measurements to the supplement, with CSV copies."
+    "text": "The count and width results are now supplied, so readers can check the biological summaries and channel measurements without waiting for the planned repository deposit."
+  },
+  {
+    "anchor": "Devices were excluded only when contamination or a technical failure prevented cell counting in the final image; high or low cell counts alone were not grounds for exclusion.",
+    "text": "The saved exclusions are counting artifacts, not missing counts. Figure 4C and Table S7 retain their values while excluding them from the plate summaries.",
+    "source": "original"
+  },
+  {
+    "anchor": "Figure 4C shows individual device counts",
+    "text": "The plot now includes device-level dots, so the statistical description includes those observations alongside the plate summaries."
   },
   {
     "anchor": "leaving 22, 21, 24 devices on Plates 1\u20133",
-    "text": "Updated the analysis set from 69 to 67 using the five cell-count exclusions in the DMSO dataset. The per-plate counts are 22, 21 and 24; all 72 values remain in Table S7."
+    "text": "The saved dataset flags five counting artifacts, not three devices without counts. Applying those flags gives 67 included devices; retaining all 72 values allows the summaries to be checked."
+  },
+  {
+    "anchor": "reported in the hydrogel paper",
+    "text": "Chemical axotomy and drug-response experiments using these devices are already reported in the hydrogel paper. Pointing there separates the platform-compatibility example from that biological study, rather than presenting those assays as work still required."
+  },
+  {
+    "anchor": "Devices were excluded only when late-stage microbial contamination or an observable technical failure in culture or imaging prevented cell counting. Every usable count was included, whether high or low.",
+    "text": "The previous rule described contamination or an inability to count. The saved exclusions identify counting artifacts, so the protocol needs to state that actual basis for exclusion.",
+    "source": "original"
+  },
+  {
+    "anchor": "Inspect segmentation overlays for artifacts",
+    "text": "The saved DMSO flags identify counting artifacts. This rule ties exclusions to image review, rather than to the magnitude of a count."
+  },
+  {
+    "anchor": "In this experiment, 69 of the 72 interior devices had images suitable for cell counting. Three devices had late-stage contamination or a technical failure that prevented cell counting in the final image.",
+    "text": "The saved DMSO dataset excludes five counting artifacts, leaving 67 counts: 22, 21 and 24. The earlier description of three uncountable devices does not match that dataset.",
+    "source": "original"
+  },
+  {
+    "anchor": "Plate summaries used 67 of 72 interior device counts",
+    "text": "Lists the five flagged devices explicitly so the 67-device summary can be reproduced from the 72 saved counts."
+  },
+  {
+    "anchor": "Apparent channel widths were measured in original brightfield fields from device R02C02 on each of three plates, using three transverse rulers per device. Rulers joined the centres of opposing dark wall bands at the acquisition scale of 1.18675253 \u00b5m/pixel. Supplementary Table S8 records the nine measurements; Supplementary Fig. S3 shows their positions.",
+    "text": "ChatGPT requested measurements of finished channels. These nine brightfield estimates help compare the cast channels with the 10 \u00b5m design width; Table S8 and Figure S3 show the measurements."
   },
   {
     "anchor": "Nine brightfield ruler estimates from three devices",
-    "text": "Added the existing nine brightfield measurements and their ruler overlays. These are distances between visible wall-band centres; channel depth was not measured."
+    "text": "Finished-channel measurements were requested and are now available. The nine estimates address that request; defining the wall-band boundaries and noting the unmeasured depth prevents them being read as a complete measurement of channel geometry."
+  },
+  {
+    "anchor": "Direct measurements of coated mold features and the resulting PDMS channels would establish dimensional fidelity and permit refinement of the scaling parameters.",
+    "text": "The nine brightfield measurements are now supplied in Table S8 and Figure S3. This paragraph gives their optical limitations instead of proposing those measurements as future work.",
+    "source": "original"
+  },
+  {
+    "anchor": "These examples establish the capacity of the design framework to generate coordinated fabrication files for distinct experimental configurations, although the additional designs were not physically fabricated or biologically evaluated.",
+    "text": "The preceding text already describes the coordinated fabrication files. This sentence only needs to distinguish those generated designs from devices that were actually fabricated and tested.",
+    "source": "original"
+  },
+  {
+    "anchor": "A central requirement was the integration of micrometer-scale features with millimeter-scale structures while maintaining the integrity of the patterned wafer and enabling simultaneous positioning of the well-forming inserts.",
+    "text": "The Introduction explains the scale-integration problem. The next Results subsection shows the specific fabrication failures and solutions.",
+    "source": "original"
+  },
+  {
+    "anchor": "These measurements demonstrate the feasibility of collecting quantitative retrograde labeling data across multiple compartmentalized neuronal cultures using an automated imaging workflow.",
+    "text": "Figure 4C and the explicit plate means give the quantitative result; this sentence repeats the subsection's compatibility finding.",
+    "source": "original"
   },
   {
     "anchor": "Individual CT\u03b2-positive cell-body counts from three technical-replicate plates",
-    "text": "Replaced the bar-only plot with individual DMSO device counts and calibrated CT\u03b2 views. Tracer bars are labelled approximate because their scale is estimated from the known well spacing, rather than recovered acquisition metadata."
+    "text": "Device dots show variability that plate means hide. A stronger shared display window makes faint cell bodies visible beside their yellow counting outlines, without changing counts or segmentation. The scale-bar descriptions distinguish tracer estimates from acquisition-calibrated CT\u03b2 views."
+  },
+  {
+    "anchor": "Baseline counts from the February 2026 experiment.",
+    "text": "Provides every saved device count, including the flagged artifacts, so Figure 4C's means and sample sizes can be checked."
+  },
+  {
+    "anchor": "Three rulers per device in original field 1, brightfield channel 1.",
+    "text": "Provides the ruler endpoints and acquisition scale needed to check the nine channel-width estimates requested in the ChatGPT discussion."
+  },
+  {
+    "anchor": "Supplementary Figure S3. Brightfield channel-width measurements.",
+    "text": "Shows which visible wall bands were used for each width estimate, allowing boundary placement to be assessed."
+  },
+  {
+    "anchor": "Abbreviations: poly(methyl methacrylate) (PMMA)",
+    "text": "These abbreviations were undefined in the supplementary comparison. Expanding them lets readers follow the table without looking up its terminology."
+  },
+  {
+    "anchor": "Cell colour shows height relative to the mean",
+    "text": "Height variation prevented rigid clamping from seating the whole array uniformly. Showing its spatial pattern explains the need for compressible backing alongside the individual measurements."
   }
 ]

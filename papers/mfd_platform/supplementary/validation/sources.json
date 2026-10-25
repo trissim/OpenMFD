@@ -15,7 +15,10 @@
       "pixel_size_um": 1.1867525298988042,
       "display": "p1_R03C04_ctb.png",
       "display_processing": "White top-hat background subtraction (30 px radius, 4x reduced estimate) followed by 0.1-99.9 percentile normalization in panel B mosaics and panel G; display only",
-      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break"
+      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break",
+      "outlines": "p1_R03C04_outlines.json",
+      "outline_source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P1_20260203__2026-02-03T19_23_43-Measurement 1_stitched_analysis/images_results/r03c04f001p001-ch2sk1fk1fl1_segmentation_masks_step2_rois.roi.zip",
+      "outline_source_sha256": "fbd085acd7af87166744f1af6596da17e65b195493f3cc69c5b39725cb5e6bd9"
     },
     "p2": {
       "device": "R03C02",
@@ -28,7 +31,10 @@
       "pixel_size_um": 1.1867525298988042,
       "display": "p2_R03C02_ctb.png",
       "display_processing": "White top-hat background subtraction (30 px radius, 4x reduced estimate) followed by 0.1-99.9 percentile normalization in panel B mosaics and panel G; display only",
-      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break"
+      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break",
+      "outlines": "p2_R03C02_outlines.json",
+      "outline_source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P2_20260203__2026-02-03T19_50_17-Measurement 1_stiched_analysis/images_results/r03c02f001p001-ch2sk1fk1fl1_segmentation_masks_step2_rois.roi.zip",
+      "outline_source_sha256": "e68eb6d3c6be3b86793ac7e7894758bf2456a7a958a782b37a5bf2d389b322bb"
     },
     "p3": {
       "device": "R04C03",
@@ -41,7 +47,10 @@
       "pixel_size_um": 1.1867525298988042,
       "display": "p3_R04C03_ctb.png",
       "display_processing": "White top-hat background subtraction (30 px radius, 4x reduced estimate) followed by 0.1-99.9 percentile normalization in panel B mosaics and panel G; display only",
-      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break"
+      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break",
+      "outlines": "p3_R04C03_outlines.json",
+      "outline_source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P3_20260203__2026-02-03T20_12_32-Measurement 1_stitched_analysis/images_results/r04c03f001p001-ch2sk1fk1fl1_segmentation_masks_step2_rois.roi.zip",
+      "outline_source_sha256": "acbdce4fde0b5ef343e116ec84bd221617e352ae136ae25d80ab5434092ec526"
     }
   },
   "tracer_scale": {

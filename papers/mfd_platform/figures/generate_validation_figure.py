@@ -12,10 +12,12 @@ from pathlib import Path
 from statistics import mean, stdev
 import sys
 from xml.etree import ElementTree as ET
+from zipfile import ZipFile
 
 import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.collections import LineCollection
 import numpy as np
 from PIL import Image
 logging.getLogger("fontTools").setLevel(logging.WARNING)
@@ -126,6 +128,37 @@ def count_data():
     return rows
 
 
+def import_saved_overlays():
+    """Retain the segmentation outlines from the analysis supplying the counts."""
+    from roifile import ImagejRoi, ROI_TYPE
+
+    metadata_path = DATA_DIR / "sources.json"
+    metadata = json.loads(metadata_path.read_text())
+    for plate, source in metadata["representatives"].items():
+        filename = f"{source['device'].lower()}f001p001-ch2sk1fk1fl1_segmentation_masks_step2_rois.roi.zip"
+        archive_path = Path(metadata["count_analysis_directories"][plate]) / "images_results" / filename
+        outlines = []
+        with ZipFile(archive_path) as archive:
+            for member in archive.namelist():
+                if not member.endswith(".roi"):
+                    continue
+                roi = ImagejRoi.frombytes(archive.read(member))
+                coordinates = roi.coordinates()
+                if coordinates is None or len(coordinates) == 0:
+                    raise ValueError(f"Empty segmentation outline: {archive_path} / {member}")
+                if roi.roitype != ROI_TYPE.POLYLINE:
+                    coordinates = np.vstack((coordinates, coordinates[0]))
+                outlines.append(coordinates.tolist())
+        if not outlines:
+            raise ValueError(f"No segmentation outlines: {archive_path}")
+        destination = f"{plate}_{source['device']}_outlines.json"
+        (DATA_DIR / destination).write_text(json.dumps(outlines, separators=(",", ":")) + "\n")
+        source["outlines"] = destination
+        source["outline_source"] = str(archive_path)
+        source["outline_source_sha256"] = hashlib.sha256(archive_path.read_bytes()).hexdigest()
+    metadata_path.write_text(json.dumps(metadata, indent=2) + "\n")
+
+
 def count_summaries(rows):
     result = []
     for plate in ("p1", "p2", "p3"):
@@ -135,11 +168,11 @@ def count_summaries(rows):
     return result
 
 
-def scale_bar(ax, shape, pixel_size_um, length_um=500):
+def scale_bar(ax, shape, pixel_size_um, length_um=500, color="white", fontsize=9):
     h, w = shape
     x, y = w * .08, h * .94
-    ax.plot([x, x + length_um / pixel_size_um], [y, y], color="white", linewidth=2.5)
-    ax.text(x, y - h * .025, f"{length_um:g} µm", color="white", fontsize=9)
+    ax.plot([x, x + length_um / pixel_size_um], [y, y], color=color, linewidth=2.5)
+    ax.text(x, y - h * .025, f"{length_um:g} µm", color=color, fontsize=fontsize)
 
 
 def render_widths(metadata):
@@ -172,9 +205,12 @@ def render_widths(metadata):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--import-saved-data", action="store_true")
+    parser.add_argument("--import-overlays", action="store_true")
     args = parser.parse_args()
     if args.import_saved_data:
         import_saved_data()
+    if args.import_saved_data or args.import_overlays:
+        import_saved_overlays()
     rows = count_data()
     metadata = json.loads((DATA_DIR / "sources.json").read_text())
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
@@ -199,18 +235,32 @@ def main():
         if i == 0:
             fig.text(.02, ax.get_position().y1 + .01, "A", weight="bold", fontsize=13)
     for i, (plate, source) in enumerate(metadata["representatives"].items()):
-        ax = fig.add_subplot(grid[2, i])
+        pair = grid[2, i].subgridspec(1, 2, wspace=.06)
         shape = source["source_shape_yx"]
         with Image.open(DATA_DIR / source["display"]) as image:
-            ax.imshow(image, cmap="gray", vmin=0, vmax=255,
+            pixels = np.asarray(image)
+        outlines = json.loads((DATA_DIR / source["outlines"]).read_text())
+        axes = [fig.add_subplot(pair[0, j]) for j in range(2)]
+        for j, ax in enumerate(axes):
+            # Use the same display window for each plate and its outline view.
+            ax.imshow(pixels, cmap="gray_r", vmin=0, vmax=64,
                       extent=(0, shape[1], shape[0], 0), interpolation="nearest")
-        ax.set_axis_off()
-        ax.set_title(f"Plate {i+1} / {source['device']}", fontsize=9, pad=4)
-        scale_bar(ax, shape, source["pixel_size_um"])
+            if j:
+                ax.add_collection(LineCollection(outlines, colors="#FFD400", linewidths=.35),
+                                  autolim=False)
+            ax.set_xlim(0, shape[1])
+            ax.set_ylim(shape[0], 0)
+            ax.set_axis_off()
+            ax.set_title("CTβ" if j == 0 else "Outlines", fontsize=7, pad=3)
+            scale_bar(ax, shape, source["pixel_size_um"], color="black", fontsize=6)
+        left, right = (ax.get_position() for ax in axes)
+        fig.text((left.x0 + right.x1) / 2, left.y1 + .025,
+                 f"Plate {i+1} / {source['device']}", ha="center", fontsize=8)
         if i == 0:
-            fig.text(.02, ax.get_position().y1 + .01, "B", weight="bold", fontsize=13)
+            fig.text(.02, left.y1 + .025, "B", weight="bold", fontsize=13)
     ax = fig.add_subplot(grid[3, :])
     for i, (summary, color) in enumerate(zip(count_summaries(rows), COLORS)):
+        ax.bar(i, summary["mean"], width=.66, color=color, alpha=.2, zorder=1)
         device_rows = sorted((r for r in rows if r["plate"] == summary["plate"]), key=lambda r: r["device"])
         for j, row in enumerate(device_rows):
             x = i + ((j * 7) % 24 - 11.5) / 60
@@ -218,7 +268,7 @@ def main():
             ax.scatter(x, float(row["ctb_positive_cells"]), s=20,
                        marker="x" if excluded else "o", color="#BB2828" if excluded else color,
                        linewidths=1, alpha=.85, zorder=3)
-        ax.errorbar(i+.29, summary["mean"], yerr=summary["sd"], color="black",
+        ax.errorbar(i, summary["mean"], yerr=summary["sd"], color="black",
                     fmt="_", markersize=11, capsize=4, linewidth=1.3, zorder=4)
     ax.set_xticks(range(3), [f"Plate {i+1}\nn = {s['n']}" for i, s in enumerate(count_summaries(rows))])
     ax.set_ylabel("CTβ-positive cells", fontsize=10)
@@ -227,7 +277,7 @@ def main():
     ax.spines[["top", "right"]].set_visible(False)
     ax.yaxis.grid(True, color="#E6E6E6", linewidth=.6)
     fig.text(.02, ax.get_position().y1 + .01, "C", weight="bold", fontsize=13)
-    ax.text(.99, .98, "Dots: devices; black: mean ± SD\nRed crosses: excluded counting artifacts",
+    ax.text(.99, .98, "Bars: mean; dots: devices; whiskers: SD\nRed crosses: excluded counting artifacts",
             transform=ax.transAxes, ha="right", va="top", fontsize=8)
     fig.savefig(OUTPUT_DIR / "draft_figure.pdf", dpi=300)
     fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300)
