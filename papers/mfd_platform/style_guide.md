@@ -4,6 +4,7 @@
 
 - Write as a biology-facing platform paper, not as an internal engineering report.
 - Lead with the experimental or fabrication consequence, then explain the implementation detail.
+- Keep explaining why: connect each result to the practical problem it addresses, the reason for the observation, and what it enables or changes. Make that connection understandable without specialist knowledge where possible; do not replace an explanation with a verdict or a list of steps.
 - Explain OpenMFD through the matching files it generates; keep the reusable hybrid mold and cast-in-place wells as the main story.
 - Write positively from demonstrated results. State limits that change interpretation where they belong, rather than repeating defensive qualifications in the abstract, Results, Discussion, and conclusion.
 - Describe the final working process. Keep development failures only when they explain a necessary step or the evidence for a result.
