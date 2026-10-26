@@ -40,7 +40,7 @@ devices. Use up to 50 µL per well in this plate.
   objective.
 
 The final frame assembly uses LOCTITE SI 5140. Assess alternative adhesives
-for cell survival, joint strength, and leaks in the complete framed device.
+for cell survival and joint strength in the complete framed device.
 
 ## A. Cast and demold the PDMS device
 
@@ -83,8 +83,8 @@ for cell survival, joint strength, and leaks in the complete framed device.
    margin around the PDMS. Apply gentle pressure from the center outward.
 8. Heat the bonded assembly at 100°C for at least 1 min while applying
    uniform pressure.
-9. Autoclave the bonded PDMS-on-glass assembly in a sterilization pouch at
-   121°C for 15 min.
+9. Check that the PDMS and glass are sealed, then autoclave the bonded
+   assembly in a sterilization pouch at 121°C for 15 min.
 
 ## C. Assemble the framed plate
 
@@ -122,8 +122,6 @@ assembled device for aqueous coating and culture (C6).
    imaging, with green and red channels suited to the two fluorophores.
 8. Compare green fluorescence in the initially lower-volume left compartment
    and red fluorescence in the right compartment between Hour 0 and 72 h.
-   The readout is qualitative tracer redistribution after one unequal-volume
-   loading.
 
 The two images do not measure flow rate or establish how long the initial volume
 difference persisted.
@@ -156,10 +154,10 @@ difference persisted.
 
 ## F. Perform CTB retrograde axon tracing and imaging
 
-CTB retrograde tracing tests whether neurons can take up a tracer through axons
-in the distal compartment and carry it back to their cell bodies. The tracer is
-applied distally, and labeled cell bodies are counted in the soma compartment
-24 h later.
+To check whether cultured neurons have extended axons into the distal
+compartment, apply CTB there and image labeled cell bodies in the soma
+compartment 24 h later. Axons take up CTB in the distal compartment and
+transport it back to their cell bodies.
 
 1. At DIV10, add CTB-647 to the 25 µL distal compartment at a final
    concentration of 1 µg/mL.
