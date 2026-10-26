@@ -134,6 +134,8 @@ The Supplementary Information provides detailed mold-fabrication, plate-assembly
 ## Acknowledgements
 We acknowledge the Early Drug Discovery Unit at The Neuro, McGill University, for access to high-content microscopes; the McGill Makerspace for access to filament-extrusion (FDM) 3D printers used to develop the device frame; and the McGill Nanotools Microfab facility for access to microfabrication equipment and parylene coating, and for technical collaboration during process development.
 
+Alyson Fournier is funded by grants from the Canadian Institutes of Health Research (CIHR), MS Canada and Mend the Gap.
+
 ## References
 - Harris, J., Lee, H., Tu, C. T., Cribbs, D., Cotman, C., Jeon, N. L. *Preparing E18 cortical rat neurons for compartmentalization in a microfluidic device.* J. Vis. Exp. (8), 305 (2007). https://doi.org/10.3791/305
 - Clément, J.-P., et al. *Dendritic Polyglycerol Amine: An Enhanced Substrate to Support Long-Term Neural Cell Culture.* ASN Neuro 14, 17590914211073276 (2022). https://doi.org/10.1177/17590914211073276
