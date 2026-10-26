@@ -1,8 +1,8 @@
 {
   "validation_scope": "Figure1 full-width A and letter-only B-G; three output callouts and faint category tints. Figure5 headings on white with uniformly shaded image bands; all four image cards derive vertical bounds from LabeledPanel.image_band. Final renderer measured equal image centers in each of the three rows. Standalone assets and underlying CAD geometry unchanged.",
   "output_sha256": {
-    "rendered/openmfd_design.pdf": "8e55e9168913b2639219d2d4a7db6e71de4e03916f56332f4e874d6b70e20abf",
-    "rendered_docx/openmfd_design.png": "df6c1489425eaf4c6248fd0a1c6e6edfed66736da4905cf5b52abe646331966b",
+    "rendered/openmfd_design.pdf": "b18e8a06f793dbb7644593dff1700a5ec845ab94b7967f9292248f520a1ae9ff",
+    "rendered_docx/openmfd_design.png": "23379c3214446b1b4a8754d9998ce7ead226126cc9da17438a3460d0eb80004e",
     "rendered/insert_bonding.pdf": "c20556de2549c47f0f7b41dbe2bc2bc58f79d857477672ba248a88805a18adf7",
     "rendered_docx/insert_bonding.png": "d43b1cba7f34c76fc5817a0e5c3ebae63b961f49f4f58a6b956db83762493e66",
     "rendered/generalizability.pdf": "60f9ae71bb025e2f81a882222aa94b4d9de8b9d944f9553e1d7711d1c6e8aee0",
@@ -94,7 +94,7 @@
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
     "figures/generate_bonding_fixture_figure.py": "c5a18a04c1d750ca4a88835c28bb942909c4675fb07c4c30d830b741ae976c3a",
     "figures/generate_generalizability_figure.py": "700e63c1fd5ee010d2341b9d13f057e65dfc365d41306b05cef29a0db5b62f0d",
-    "figures/generate_openmfd_design_figure.py": "673ad79356296bfd891e06c31464eb391b52de05e5599a5a5471e5b0bb8c8a65",
+    "figures/generate_openmfd_design_figure.py": "ad3c7750f2c133a36155c98cb3f20a219319d4f57a7aa48fd5644550517b5971",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
   "source_scope": "Three generators, the OpenMFD package, retained DXF/STL assets in the four selected design folders, frame STL and five source photographs. This is an explicit asset-set fingerprint, not a complete dynamic import or minimal file-read trace.",
@@ -120,7 +120,8 @@
     "unchanged": "Scientific photographs, STL geometry and validation data are unchanged. Four bottom/aligned mask pairs were regenerated from their existing geometry after deleting only the stale recipe annotation.",
     "shared_consumers": "Figure 1 panel D has two declared axes occupying separate cells; its subfigure exporter accepts the declared axis group. Figure 5 header centers derive from the existing inset bounds; repeated per-row captions and differing background colors were deleted.",
     "run": "Figure5 composite rendered and measured shared row centers with existing dependencies. Figure1 retained from its successful scalar-Axes export. Exact manuscript build and final placed-page inspection follow.",
-    "limits": "Artwork/layout and declared-input checks only, not scientific analysis or fresh dimensional metrology. A placed-page reading build is still required."
+    "limits": "Artwork/layout and declared-input checks only, not scientific analysis or fresh dimensional metrology. A placed-page reading build is still required.",
+    "corner_labels": "InsetBadge composes existing PanelBadge and BackedText so corner letters remain legible where the dark render cards approach them. Figure1 scalar-Axes subfigure export completed for A-G."
   },
-  "render_source_commit": "6310b0a0153e1ebff31f730d8820ee4113967929"
+  "render_source_commit": "2d600c7e73474af771ea5d6736e859f3677fdb6d"
 }
