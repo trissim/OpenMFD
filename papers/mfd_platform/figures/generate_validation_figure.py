@@ -268,9 +268,9 @@ class CtbView:
             ax.text(x, y - self.shape.height * .025, "500 µm", color="black", fontsize=7)
         contours = tuple(tuple((point.x, point.y) for point in contour) for contour in self.outlines)
         outline_ax.add_collection(PolyCollection(
-            contours, facecolors="#FFD400", edgecolors="none", alpha=.9), autolim=False)
+            contours, facecolors="#FF5A1F", edgecolors="none", alpha=.9), autolim=False)
         outline_ax.add_collection(LineCollection(
-            contours, colors="#B36B00", linewidths=.5), autolim=False)
+            contours, colors="#AD2E00", linewidths=.5), autolim=False)
         image_ax.set_anchor("E")
         outline_ax.set_anchor("W")
         image_ax.set_title("CTB", fontsize=8, pad=3)
