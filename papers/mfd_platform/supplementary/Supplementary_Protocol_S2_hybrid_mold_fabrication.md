@@ -9,6 +9,9 @@ Follow the manufacturers' instructions except for the modifications below.
 
 ## Required design files
 
+OpenMFD source and design-generation instructions are available at
+`https://github.com/trissim/OpenMFD`.
+
 - OpenMFD-generated channel-layer photomask.
 - OpenMFD-generated SUEX well-layer and insert-alignment photomask.
 - OpenMFD-generated resin insert STL array.
