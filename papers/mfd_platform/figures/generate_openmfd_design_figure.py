@@ -115,12 +115,7 @@ class PanelTitle(PresetTitle, AxesText):
 
 
 class PanelBadge(PanelTitle):
-    color = "white"
     zorder = 100
-
-    @classmethod
-    def background(cls) -> dict[str, object]:
-        return {"boxstyle": "round,pad=0.25", "facecolor": COLORS["ink"], "edgecolor": "none"}
 
 
 class BackedText(TextStyle):
