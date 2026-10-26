@@ -138,6 +138,18 @@ class ParameterValue(ParameterText, RightText):
     pass
 
 
+class CompactParameterText(ParameterText):
+    fontsize = 6.4
+
+
+class CompactParameterLabel(CompactParameterText, LeftText):
+    pass
+
+
+class CompactParameterValue(CompactParameterText, RightText):
+    pass
+
+
 class PanelTitle(PresetTitle, AxesText):
     va = "bottom"
 
@@ -650,9 +662,9 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
 
     input_left = 0.045
     input_width = 0.91
-    rounded_box(ax, (input_left, 0.39), input_width, 0.53, "white", COLORS["grid"], linewidth=1.0)
+    rounded_box(ax, (input_left, 0.35), input_width, 0.57, "white", COLORS["grid"], linewidth=1.0)
     ParameterTitle.draw(ax, input_left + 0.035, 0.865, "Inputs to OpenMFD")
-    ParameterLabel.draw(ax, input_left + 0.035, 0.795, "Neuronal plate layout")
+    CompactParameterLabel.draw(ax, input_left + 0.035, 0.800, "Neuronal plate layout")
 
     channels = cfg.channels_config()
     rows, columns = cfg.grid_size
@@ -668,12 +680,12 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     ]
     label_x = input_left + 0.04
     value_x = input_left + input_width - 0.035
-    y = 0.725
+    y = 0.735
     for name, value in values:
-        ParameterLabel.draw(ax, label_x, y, name)
-        ParameterValue.draw(ax, value_x, y, value)
-        ax.plot([label_x, value_x], [y - 0.027, y - 0.027], color="#edf1f6", lw=0.8)
-        y -= 0.047
+        CompactParameterLabel.draw(ax, label_x, y, name)
+        CompactParameterValue.draw(ax, value_x, y, value)
+        ax.plot([label_x, value_x], [y - 0.026, y - 0.026], color="#edf1f6", lw=0.8)
+        y -= 0.052
 
     output_left = 0.045
     output_width = 0.91
@@ -686,16 +698,17 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     )
     for index, (label, color) in enumerate(outputs):
         x = output_left + index * (box_width + output_gap)
-        rounded_box(ax, (x, 0.045), box_width, 0.15, "white", color, linewidth=1.4)
-        ParameterText.draw(ax, x + box_width / 2, 0.12, label)
-        add_arrow(ax, (input_left + input_width / 2, 0.39), (x + box_width / 2, 0.195), color)
+        rounded_box(ax, (x, 0.035), box_width, 0.135, "white", color, linewidth=1.4)
+        CompactParameterText.draw(ax, x + box_width / 2, 0.1025, label)
 
-    callout_width = output_width * 0.66
+    callout_width = output_width * 0.88
     callout_left = output_left + (output_width - callout_width) / 2
-    rounded_box(ax, (callout_left, 0.235), callout_width, 0.10,
+    rounded_box(ax, (callout_left, 0.205), callout_width, 0.105,
                 "#fff8ea", "#f2c46d", linewidth=1.0)
-    ParameterText.draw(ax, output_left + output_width / 2, 0.285,
-                       "Matched masks + printed parts")
+    CompactParameterText.draw(ax, output_left + output_width / 2, 0.2575,
+                              "Matched masks + printed parts")
+    add_arrow(ax, (input_left + input_width / 2, 0.35),
+              (output_left + output_width / 2, 0.31), COLORS["frame"])
 
 
 def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
