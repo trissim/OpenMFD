@@ -267,6 +267,7 @@ class InsertPanel(DesignPanel):
 @dataclass(frozen=True)
 class LabeledPanel(DesignPanel):
     label: str
+    caption_y = 0.085
 
     def decorate(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
         PanelBadge.draw(ax, 0.02, 0.96, self.label)
@@ -278,21 +279,21 @@ class LabeledPanel(DesignPanel):
 
 
 class LabeledDxfPanel(LabeledPanel, DxfPanel):
-    single_box = AxisBox(0.03, 0.16, 0.40, 0.68)
-    aligned_box = AxisBox(0.46, 0.16, 0.51, 0.68)
+    single_box = AxisBox(0.03, 0.16, 0.40, 0.74)
+    aligned_box = AxisBox(0.46, 0.16, 0.51, 0.74)
 
     def captions(self, ax: plt.Axes) -> None:
-        MutedText.draw(ax, 0.22, 0.085, "Single unit")
-        MutedText.draw(ax, 0.72, 0.085, "Wafer-scale mask")
+        MutedText.draw(ax, self.single_box.center_x, self.caption_y, "Single unit")
+        MutedText.draw(ax, self.aligned_box.center_x, self.caption_y, "Wafer-scale mask")
 
 
 class LabeledInsertPanel(LabeledPanel, InsertPanel):
-    single_box = AxisBox(0.035, 0.23, 0.430, 0.63)
-    array_box = AxisBox(0.535, 0.23, 0.430, 0.63)
+    single_box = AxisBox(0.035, 0.18, 0.430, 0.72)
+    array_box = AxisBox(0.535, 0.18, 0.430, 0.72)
 
     def captions(self, ax: plt.Axes) -> None:
-        MutedText.draw(ax, 0.25, 0.14, "Single insert")
-        MutedText.draw(ax, 0.75, 0.14, "Array insert")
+        MutedText.draw(ax, self.single_box.center_x, self.caption_y, "Single insert")
+        MutedText.draw(ax, self.array_box.center_x, self.caption_y, "Array insert")
 
 
 def draw_single_unit_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
@@ -410,7 +411,7 @@ def export_individual_subfigures(designs: tuple[GeneralizabilityDesign, ...]) ->
 def build_figure() -> plt.Figure:
     myelination, axon_guidance, three_compartment = make_designs()
 
-    fig = plt.figure(figsize=(6.5, 6.5))
+    fig = plt.figure(figsize=(6.5, 6.0))
     fig.patch.set_facecolor("white")
     grid = fig.add_gridspec(
         3,

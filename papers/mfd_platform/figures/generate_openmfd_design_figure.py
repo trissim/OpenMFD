@@ -265,6 +265,10 @@ class AxisBox:
     width: float
     height: float
 
+    @property
+    def center_x(self) -> float:
+        return self.left + self.width / 2
+
     def mpl(self) -> list[float]:
         return [self.left, self.bottom, self.width, self.height]
 
