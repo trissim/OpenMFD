@@ -138,9 +138,9 @@ with their pins seated in the alignment holes.
 ## E. Parylene coat the hybrid mold
 
 1. Coat the bonded hybrid mold with 1 µm parylene C.
-2. This work used a Specialty Coating Systems SCS 200 coater at the McGill
-   Nanotools Microfab facility. Use a local parylene coater or send the completed
-   hybrid mold to an external university core or commercial coating service.
+2. This work used a Specialty Coating Systems SCS 200 coater. Use a local
+   parylene coater or send the completed hybrid mold to an external university
+   core or commercial coating service.
 3. After coating, store and handle the mold as a reusable wafer-scale mold for
    PDMS casting.
 

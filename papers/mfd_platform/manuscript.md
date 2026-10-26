@@ -57,7 +57,7 @@ Micrometer measurements of all 96 pins in one printed array guided the choice of
 Plate-format compatibility was checked by filling eight wells in parallel with a multichannel pipette and collecting images on Opera Phenix Plus and ImageXpress Micro Confocal microscopes without custom handling or instrument modification.
 
 ### Fluorescence imaging
-Tracer and CTB images were acquired in widefield mode on a PerkinElmer Opera Phenix Plus at the Early Drug Discovery Unit (EDDU), The Neuro, McGill University, using a 10×/0.30 NA objective, 2 × 2 camera binning and 100 ms fluorescence exposures. The tracer check used red and green channels suited to its fluorophores. CTB imaging used laser autofocus with 640 nm excitation and 706 nm emission; accompanying brightfield images used a 10 ms exposure. The effective pixel size was 1.187 µm.
+Tracer and CTB images were acquired in widefield mode on a PerkinElmer Opera Phenix Plus using a 10×/0.30 NA objective, 2 × 2 camera binning and 100 ms fluorescence exposures. The tracer check used red and green channels suited to its fluorophores. CTB imaging used laser autofocus with 640 nm excitation and 706 nm emission; accompanying brightfield images used a 10 ms exposure. The effective pixel size was 1.187 µm.
 
 ### Pre-culture seal and tracer-movement check
 Before neuronal culture, we used fluorescent tracers to check the assembled-device seal and observe movement between its connected compartments under an imposed volume difference. In each of 24 two-compartment devices, Alexa Fluor 568-conjugated secondary antibody diluted 1:1000 in phosphate-buffered saline (PBS) was loaded at 25 µL into the left compartment, and Alexa Fluor 488-conjugated secondary antibody diluted 1:1000 in PBS was loaded at 50 µL into the right compartment. We imaged the devices immediately after loading and after 72 h in a cell-culture incubator without replenishment or volume adjustment. Tracer movement was assessed visually by comparing green fluorescence appearing in the initially lower-volume compartment with red fluorescence appearing in the opposite compartment. Flow rate and the duration of the pressure difference were not measured.
@@ -157,7 +157,7 @@ Supplementary Protocol S1 describes device casting, assembly and culture; Protoc
 Images used to assemble the dye and CTB panels, the saved CTB outlines and the Figure 4 drawing script are included in the source repository. The per-device CTB counts are supplied in Supplementary Data S5. The cell counts are from neurons isolated from one embryo and cultured across three plates.
 
 ## Acknowledgements
-We acknowledge the McGill Makerspace for access to filament-extrusion (FDM) 3D printers used to develop the device frame. We also acknowledge the McGill Nanotools Microfab facility for access to microfabrication equipment and parylene coating, and for technical collaboration during process development.
+We acknowledge the Early Drug Discovery Unit at The Neuro, McGill University, for access to high-content microscopes; the McGill Makerspace for access to filament-extrusion (FDM) 3D printers used to develop the device frame; and the McGill Nanotools Microfab facility for access to microfabrication equipment and parylene coating, and for technical collaboration during process development.
 
 ## References
 - Harris, J., Lee, H., Tu, C. T., Cribbs, D., Cotman, C., Jeon, N. L. *Preparing E18 cortical rat neurons for compartmentalization in a microfluidic device.* J. Vis. Exp. (8), 305 (2007). https://doi.org/10.3791/305
