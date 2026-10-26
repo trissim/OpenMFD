@@ -1,12 +1,12 @@
 {
-  "validation_scope": "Figure1 corrected column alignment: B/E are the single mask/insert, C/F are the wafer mask/insert array, and D/G are the frame/plate photograph. The existing axes move with their category backgrounds; A output references, badges, manuscript caption and text references match. Original geometry, dimensions, photographs and other figure assets are unchanged.",
+  "validation_scope": "Figure3B dimensions shortened to hole and pin; Figure2 has one shared column-header row, no repeated footers and more space between assay rows. Geometry and original images are unchanged.",
   "output_sha256": {
     "rendered/openmfd_design.pdf": "c3a4f0e0c9f690c664a381db3e852100172e41d28acae7e9bb2477f5c415e1b6",
     "rendered_docx/openmfd_design.png": "4791cf190333d75c83ea04b758cf0bd2b179e62f5c864ba83c52ec70cd927296",
-    "rendered/insert_bonding.pdf": "9245787349f1c44f7dfdece4d1739c85d71a5e27cdc41c39b9e276bd93d4abdc",
-    "rendered_docx/insert_bonding.png": "756963637921c39d400dde8470a961f039ae906722140a96d0781519d917d9dd",
-    "rendered/generalizability.pdf": "6aa3bd593a0eb198985594302f662264563889e57ea5204632410906a12b4470",
-    "rendered_docx/generalizability.png": "3a4198006849b83f845d342b2019e66cbeb8a3668b7398b2c800d5037b9a891d"
+    "rendered/insert_bonding.pdf": "f007d69f2165df20a41166e8a260ceafa08cfa20dc432e465b4764e10bd59b09",
+    "rendered_docx/insert_bonding.png": "4dfb2f5a0ec63a7f06ff89f780cdbdb5aa9d46adf49ad32b4f2a0412d95ade2c",
+    "rendered/generalizability.pdf": "20e4e20bbd36b02a80b2e09af6830218c4636aa16bfd1e4e44cca2a4947e23c5",
+    "rendered_docx/generalizability.png": "14faa64f4a8aa2c42ba2c2edd0c48ac26d7acd38a7bdecb2d7cf7b815af3302b"
   },
   "source_sha256": {
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_aligned.dxf": "c48e557b2b5bfb84aac45707afe364c6dca94aba941087d78baa6adf0132d777",
@@ -92,8 +92,8 @@
     "figures/final_drop/Fig2_insert_bonding/real_suex.png": "c53d42661665b0d90e462c32f1c8fd8c8789dd8b69b8abd16fc7494c509ca3ce",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly.jpg": "080a75480b4271047076ae48e1170d39c79da6a212c59484c55a56a9748ab4a7",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
-    "figures/generate_bonding_fixture_figure.py": "db4f0f107969d9497aca12e5f43a2f296ba636370f75b38e8389e6994ebeddac",
-    "figures/generate_generalizability_figure.py": "bddcb1e2c19d30f62407efde7dfeb28cdcfd2554257425a95f362c85331b65ad",
+    "figures/generate_bonding_fixture_figure.py": "40ab3fa5b2f39da15e719d9e24eddef961fe42740dbe1866302450e46034c7b2",
+    "figures/generate_generalizability_figure.py": "54a628721dcaff000e631fd6da436b1efc963c753ede75af3eb74d3cb45daa6d",
     "figures/generate_openmfd_design_figure.py": "651b8ab90f887f39eefbd655468e5e3fd227656b92a1a7e99b87385ce0fe7539",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
