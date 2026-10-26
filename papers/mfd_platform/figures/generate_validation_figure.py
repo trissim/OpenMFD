@@ -448,7 +448,7 @@ def main() -> None:
 
     ax = fig.add_subplot(grid[2, 2])
     counts.draw(ax)
-    ax.set_ylabel("CTB-positive cells", fontsize=9)
+    ax.set_title("CTB-positive cells", fontsize=8, pad=4)
     ax.tick_params(axis="x", labelsize=8)
     ax.set_xlim(-.5, 2.5)
     ax.set_ylim(bottom=0)
