@@ -366,17 +366,25 @@ class ValidationSources:
         plt.close(fig)
 
 
-def label_panel(fig: plt.Figure, ax: Axes, label: str) -> None:
-    """Place a panel label by one physical gap from its owned axes."""
+def label_panel(fig: plt.Figure, ax: Axes, label: str, *, above: bool = False) -> None:
+    """Place a panel label beside its axes without colliding with tick labels."""
     bounds = ax.get_position()
+    if above:
+        x = bounds.x0
+        y = bounds.y1 + PANEL_LABEL_GAP_INCHES / fig.get_figheight()
+        horizontal_alignment, vertical_alignment = "left", "bottom"
+    else:
+        x = bounds.x0 - PANEL_LABEL_GAP_INCHES / fig.get_figwidth()
+        y = bounds.y1
+        horizontal_alignment, vertical_alignment = "right", "top"
     fig.text(
-        bounds.x0 - PANEL_LABEL_GAP_INCHES / fig.get_figwidth(),
-        bounds.y1,
+        x,
+        y,
         label,
         weight="bold",
         fontsize=13,
-        ha="right",
-        va="top",
+        ha=horizontal_alignment,
+        va=vertical_alignment,
     )
 
 
@@ -437,7 +445,7 @@ def main() -> None:
     ax.spines[["top", "right"]].set_visible(False)
     ax.set_axisbelow(True)
     ax.yaxis.grid(True, color="#E6E6E6", linewidth=.6)
-    label_panel(fig, ax, "C")
+    label_panel(fig, ax, "C", above=True)
     fig.savefig(OUTPUT_DIR / "draft_figure.pdf", dpi=300)
     fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300)
     plt.close(fig)
