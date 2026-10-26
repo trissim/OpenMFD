@@ -26,7 +26,8 @@ in this figure.
 Supplementary Figure S3. The widths are visible wall-band-centre distances,
 10.7-13.1 um, not channel-depth measurements.
 
-Regenerate the figures from retained inputs:
+Historical authoring entry point, to use only after the scientific source and
+inclusion decisions are resolved:
 
 ```sh
 /usr/bin/python3 papers/mfd_platform/figures/generate_validation_figure.py
@@ -42,6 +43,13 @@ raw inclusion strings or dictionary keys.
 
 The published document Figure 4 still contains the older September composite.
 The October authored source described above has 67 included devices, while the
-author intends 69 for cell counts. Do not regenerate or publish this figure until
-the endpoint-specific exclusion reasons are reconciled. Structural decoder changes
-do not authorize changing a measurement, inclusion flag, calibration or artwork.
+author intends 69 for cell counts. The published bars rank P3 > P1 > P2; the
+retained pre-count summaries rank P2 > P3 > P1 under either saved inclusion set.
+Thus inclusion alone cannot explain the mismatch. The `_analysis_final` exports
+also contain different measurements and cannot substitute by directory name.
+Do not regenerate or publish this figure until the measurement source and
+endpoint-specific exclusion reasons are reconciled. Its publication declaration
+uses the existing retained-pair type: bulk publication verifies the frozen PDF
+and PNG without running this generator or copying its authored outputs.
+Structural decoder changes do not authorize changing a measurement, inclusion
+flag, calibration or artwork.

@@ -5,7 +5,8 @@ The manuscript uses the PDFs in this directory and the matching PNGs in
 regenerate scientific figures.
 
 `FigureRenderSpec` in `../render_figures.py` owns each published PDF/PNG pair.
-Retained supplement pairs are verified in place. `GeneratedFigure` additionally
+The frozen validation figure and retained supplement pairs are verified in place.
+`GeneratedFigure` additionally
 owns its source basename, producer script and copying the authored pair. Shared
 `publish()` requires both formats before writing either. The manuscript sequence
 supplies the order; there is no separate generator roster.
@@ -29,7 +30,10 @@ spec.publish()
 Update the figure's existing provenance receipt with the actual output/source
 hashes and runtime versions, then rebuild and inspect the reading copies.
 
-The full `python papers/mfd_platform/figures/render_figures.py` command runs all
-five declared producers, including biological validation. Do not use it while
-Figure4's source/inclusion decision remains unresolved. Automatic
+The full `python papers/mfd_platform/figures/render_figures.py` command runs the
+four declared design/casting producers. Figure4 has no automatic producer: its
+existing PDF/PNG pair is verified without regeneration or copying. This preserves
+the frozen September composite; it does not accept its scientific content. The
+October authored source, its measurement source and the intended69-device set
+still need reconciliation before replacing that pair. Automatic
 `build_paper.py --refresh-figures` remains deliberately unavailable.

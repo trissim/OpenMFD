@@ -92,10 +92,8 @@ FIGURE_SPECS = (
         source_stem="assembly_protocol_schematic",
         script=ROOT / "generate_device_assembly_protocol.py",
     ),
-    GeneratedFigure(
-        "validation.pdf", folder_name="Fig5_plate_layout_validation",
-        script=ROOT / "generate_validation_figure.py",
-    ),
+    # Scientific source/inclusion remains unresolved; preserve the published pair.
+    FigureRenderSpec("validation.pdf"),
     GeneratedFigure(
         "generalizability.pdf", folder_name="Fig6_generalizability",
         script=ROOT / "generate_generalizability_figure.py",
