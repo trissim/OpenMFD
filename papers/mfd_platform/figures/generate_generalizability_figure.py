@@ -50,6 +50,9 @@ SINGLE_INSERT_AZIMUTH = 0.0
 ARRAY_INSERT_AZIMUTH = 0.0
 ARRAY_INSERT_ELEVATION = 28.0
 ROW_BACKGROUNDS = ("#F3F7FB", "#FBF6EE", "#F2F8F5")
+BASE_ROW_GAP = 0.11
+ROW_GAP_SCALE = 1.20
+ROW_PADDING_INCHES = 0.06
 
 
 @dataclass(frozen=True)
@@ -254,6 +257,7 @@ class DxfPanel(DesignPanel):
 
 
 class InsertPanel(DesignPanel):
+    TITLE = "Insert models"
     single_box = AxisBox(0.025, 0.06, 0.43, 0.88)
     array_box = AxisBox(0.50, 0.06, 0.475, 0.88)
 
@@ -264,7 +268,7 @@ class InsertPanel(DesignPanel):
         draw_insert_array_preview(array_ax, design)
 
     def title(self, design: GeneralizabilityDesign) -> str:
-        return "Insert models"
+        return self.TITLE
 
 
 @dataclass(frozen=True)
@@ -302,6 +306,14 @@ class LabeledInsertPanel(LabeledPanel, InsertPanel):
     def captions(self, ax: plt.Axes) -> None:
         super().captions(ax)
         LargeText.draw(ax, self.array_box.center_x, self.caption_y, "Arrayed inserts")
+
+
+class UntitledLabeledInsertPanel(LabeledInsertPanel):
+    """Rows below the column heading retain only their panel identity."""
+
+    def decorate(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+        PanelBadge.draw(ax, 0.02, 0.96, self.label)
+        self.captions(ax)
 
 
 def draw_single_unit_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
@@ -419,7 +431,7 @@ def export_individual_subfigures(designs: tuple[GeneralizabilityDesign, ...]) ->
 def build_figure() -> plt.Figure:
     myelination, axon_guidance, three_compartment = make_designs()
 
-    fig = plt.figure(figsize=(6.5, 5.2))
+    fig = plt.figure(figsize=(6.5, 5.35))
     fig.patch.set_facecolor("white")
     grid = fig.add_gridspec(
         3,
@@ -431,21 +443,39 @@ def build_figure() -> plt.Figure:
         bottom=0.03,
         top=0.98,
         wspace=0.08,
-        hspace=0.11,
+        hspace=BASE_ROW_GAP * ROW_GAP_SCALE,
     )
 
     layout = (
-        ("A", "B", myelination),
-        ("C", "D", axon_guidance),
-        ("E", "F", three_compartment),
+        ("A", "B", myelination, LabeledInsertPanel),
+        ("C", "D", axon_guidance, UntitledLabeledInsertPanel),
+        ("E", "F", three_compartment, UntitledLabeledInsertPanel),
     )
-    for row, (dxf_label, insert_label, design) in enumerate(layout):
+    row_axes: list[tuple[plt.Axes, plt.Axes]] = []
+    for row, (dxf_label, insert_label, design, insert_panel) in enumerate(layout):
         dxf_ax = fig.add_subplot(grid[row, 0])
         insert_ax = fig.add_subplot(grid[row, 1])
         dxf_ax.set_facecolor(ROW_BACKGROUNDS[row])
         insert_ax.set_facecolor(ROW_BACKGROUNDS[row])
         LabeledDxfPanel(dxf_label)(dxf_ax, design)
-        LabeledInsertPanel(insert_label)(insert_ax, design)
+        insert_panel(insert_label)(insert_ax, design)
+        row_axes.append((dxf_ax, insert_ax))
+
+    pad_x = ROW_PADDING_INCHES / fig.get_figwidth()
+    pad_y = ROW_PADDING_INCHES / fig.get_figheight()
+    for color, (left_ax, right_ax) in zip(ROW_BACKGROUNDS, row_axes, strict=True):
+        left = left_ax.get_position()
+        right = right_ax.get_position()
+        fig.add_artist(Rectangle(
+            (left.x0 - pad_x, left.y0 - pad_y),
+            right.x1 - left.x0 + 2 * pad_x,
+            max(left.y1, right.y1) - min(left.y0, right.y0) + 2 * pad_y,
+            transform=fig.transFigure,
+            facecolor=color,
+            edgecolor="none",
+            clip_on=False,
+            zorder=-10,
+        ))
 
     return fig
 

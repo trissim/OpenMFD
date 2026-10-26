@@ -314,10 +314,11 @@ class FigureOneInsets:
 @dataclass(frozen=True)
 class FigureOneLayout:
     figsize: tuple[float, float]
-    grid_widths: tuple[float, float]
-    grid_heights: tuple[float, float, float, float]
+    grid_widths: tuple[float, ...]
+    grid_heights: tuple[float, ...]
     column_gap: float
     row_gap: float
+    cell_padding_inches: float
     insets: FigureOneInsets
 
     def gridspec_kwargs(self) -> dict[str, tuple[float, ...]]:
@@ -338,18 +339,19 @@ class FigureOneLayout:
 
 
 FIGURE_ONE_LAYOUT = FigureOneLayout(
-    figsize=(6.5, 5.8),
-    grid_widths=(1.0, 1.0),
-    grid_heights=(1.85, 1.35, 1.45, 1.65),
-    column_gap=0.025,
-    row_gap=0.035,
+    figsize=(6.5, 4.35),
+    grid_widths=(1.0, 1.0, 1.0),
+    grid_heights=(1.0, 1.0),
+    column_gap=0.08,
+    row_gap=0.10,
+    cell_padding_inches=0.04,
     insets=FigureOneInsets(
-        unit_dxf=AxisBox(0.025, 0.035, 0.950, 0.860),
-        wafer_mask=AxisBox(0.020, 0.015, 0.960, 0.950),
-        insert_single=AxisBox(0.035, 0.015, 0.455, 0.950),
-        insert_array=AxisBox(0.510, 0.015, 0.455, 0.950),
-        frame_stl=AxisBox(0.010, 0.015, 0.980, 0.950),
-        device_photo=AxisBox(0.015, 0.015, 0.970, 0.950),
+        unit_dxf=AxisBox(0.035, 0.040, 0.930, 0.850),
+        wafer_mask=AxisBox(0.055, 0.025, 0.890, 0.900),
+        insert_single=AxisBox(0.025, 0.035, 0.455, 0.880),
+        insert_array=AxisBox(0.520, 0.035, 0.455, 0.880),
+        frame_stl=AxisBox(0.035, 0.025, 0.930, 0.900),
+        device_photo=AxisBox(0.035, 0.025, 0.930, 0.900),
     ),
 )
 
@@ -646,9 +648,11 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     setup_axis(ax)
     PanelBadge.draw(ax, 0.02, 0.96, "A")
 
-    rounded_box(ax, (0.055, 0.11), 0.52, 0.75, "white", COLORS["grid"], linewidth=1.0)
-    ParameterTitle.draw(ax, 0.08, 0.82, "Inputs to OpenMFD")
-    ParameterLabel.draw(ax, 0.08, 0.74, "Neuronal plate layout")
+    input_left = 0.045
+    input_width = 0.91
+    rounded_box(ax, (input_left, 0.39), input_width, 0.53, "white", COLORS["grid"], linewidth=1.0)
+    ParameterTitle.draw(ax, input_left + 0.035, 0.865, "Inputs to OpenMFD")
+    ParameterLabel.draw(ax, input_left + 0.035, 0.795, "Neuronal plate layout")
 
     channels = cfg.channels_config()
     rows, columns = cfg.grid_size
@@ -660,27 +664,38 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
         ("Microchannels", f"{channels.num_channels} at {channels.width * 1000:.0f} µm"),
         ("Pin / hole", f"{cfg.insert_pin_dims[0]:.2f} / {cfg.insert_hole_dims[0]:.2f} mm"),
         ("Sidewall taper", f"{cfg.outer_taper_degrees:.0f}°; {cfg.insert_height:.1f} mm tall"),
-        ("PDMS shrinkage scale", f"×{cfg.pdms_config().scale_factor():.4f} at {cfg.cure_temp}°C"),
+        ("PDMS shrinkage", f"×{cfg.pdms_config().scale_factor():.4f} at {cfg.cure_temp}°C"),
     ]
-    y = 0.650
+    label_x = input_left + 0.04
+    value_x = input_left + input_width - 0.035
+    y = 0.725
     for name, value in values:
-        ParameterLabel.draw(ax, 0.085, y, name)
-        ParameterValue.draw(ax, 0.555, y, value)
-        ax.plot([0.08, 0.555], [y - 0.034, y - 0.034], color="#edf1f6", lw=0.8)
-        y -= 0.064
+        ParameterLabel.draw(ax, label_x, y, name)
+        ParameterValue.draw(ax, value_x, y, value)
+        ax.plot([label_x, value_x], [y - 0.027, y - 0.027], color="#edf1f6", lw=0.8)
+        y -= 0.047
 
-    outputs = [
-        ((0.68, 0.700), "Photomasks: DXF (B, C)", COLORS["bottom"]),
-        ((0.68, 0.475), "Well inserts: STL (D)", COLORS["insert"]),
-        ((0.68, 0.250), "Plate frame: STL (E)", COLORS["frame"]),
-    ]
-    for (x, y_out), label, color in outputs:
-        rounded_box(ax, (x, y_out), 0.25, 0.12, "white", color, linewidth=1.6)
-        LargeText.draw(ax, x + 0.125, y_out + 0.060, label)
-        add_arrow(ax, (0.585, 0.49), (x, y_out + 0.060), color)
+    output_left = 0.045
+    output_width = 0.91
+    output_gap = 0.025
+    box_width = (output_width - 2 * output_gap) / 3
+    outputs = (
+        ("Masks\nDXF (B, C)", COLORS["bottom"]),
+        ("Inserts\nSTL (D)", COLORS["insert"]),
+        ("Frame\nSTL (E)", COLORS["frame"]),
+    )
+    for index, (label, color) in enumerate(outputs):
+        x = output_left + index * (box_width + output_gap)
+        rounded_box(ax, (x, 0.045), box_width, 0.15, "white", color, linewidth=1.4)
+        ParameterText.draw(ax, x + box_width / 2, 0.12, label)
+        add_arrow(ax, (input_left + input_width / 2, 0.39), (x + box_width / 2, 0.195), color)
 
-    rounded_box(ax, (0.65, 0.055), 0.31, 0.14, "#fff8ea", "#f2c46d", linewidth=1.0)
-    ParameterText.draw(ax, 0.805, 0.125, "Matched masks + printed parts")
+    callout_width = output_width * 0.66
+    callout_left = output_left + (output_width - callout_width) / 2
+    rounded_box(ax, (callout_left, 0.235), callout_width, 0.10,
+                "#fff8ea", "#f2c46d", linewidth=1.0)
+    ParameterText.draw(ax, output_left + output_width / 2, 0.285,
+                       "Matched masks + printed parts")
 
 
 def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
@@ -863,21 +878,39 @@ def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
 
     fig = plt.figure(figsize=FIGURE_ONE_LAYOUT.figsize)
     grid = fig.add_gridspec(
-        4,
         2,
+        3,
         **FIGURE_ONE_LAYOUT.gridspec_kwargs(),
     )
     fig.patch.set_facecolor("white")
     axes = {
-        "A": fig.add_subplot(grid[0, :]),
-        "B": fig.add_subplot(grid[1, 0]),
-        "C": fig.add_subplot(grid[1, 1]),
-        "D": fig.add_subplot(grid[2, :]),
-        "E": fig.add_subplot(grid[3, 0]),
-        "F": fig.add_subplot(grid[3, 1]),
+        "A": fig.add_subplot(grid[0, 0]),
+        "B": fig.add_subplot(grid[0, 1]),
+        "C": fig.add_subplot(grid[0, 2]),
+        "D": fig.add_subplot(grid[1, 0]),
+        "E": fig.add_subplot(grid[1, 1]),
+        "F": fig.add_subplot(grid[1, 2]),
     }
     for ax in axes.values():
-        ax.set_facecolor(COLORS["paper"])
+        ax.set_facecolor("none")
+
+    fig.subplots_adjust(**FIGURE_ONE_LAYOUT.subplot_adjust_kwargs())
+    pad_x = FIGURE_ONE_LAYOUT.cell_padding_inches / fig.get_figwidth()
+    pad_y = FIGURE_ONE_LAYOUT.cell_padding_inches / fig.get_figheight()
+    for ax in axes.values():
+        bounds = ax.get_position()
+        fig.add_artist(FancyBboxPatch(
+            (bounds.x0 - pad_x, bounds.y0 - pad_y),
+            bounds.width + 2 * pad_x,
+            bounds.height + 2 * pad_y,
+            transform=fig.transFigure,
+            boxstyle="round,pad=0.002,rounding_size=0.008",
+            facecolor=COLORS["paper"],
+            edgecolor=COLORS["grid"],
+            linewidth=0.8,
+            clip_on=False,
+            zorder=-10,
+        ))
 
     draw_parameter_panel(axes["A"], cfg)
     draw_unit_geometry(axes["B"], cfg, dxf)
@@ -886,7 +919,6 @@ def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
     draw_frame_cad(axes["E"], stl)
     draw_assembled_device(axes["F"])
 
-    fig.subplots_adjust(**FIGURE_ONE_LAYOUT.subplot_adjust_kwargs())
     return fig, axes
 
 

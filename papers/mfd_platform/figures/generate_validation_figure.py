@@ -32,6 +32,7 @@ ROOT = FIGURE_DIR.parent
 OUTPUT_DIR = FIGURE_DIR / "final_drop/Fig5_plate_layout_validation"
 DATA_DIR = ROOT / "supplementary/validation"
 COLORS = ("#0072B2", "#D17800", "#00856A")
+PANEL_LABEL_GAP_INCHES = 0.08
 WireObject = Mapping[str, object]
 
 
@@ -356,6 +357,20 @@ class ValidationSources:
         plt.close(fig)
 
 
+def label_panel(fig: plt.Figure, ax: Axes, label: str) -> None:
+    """Place a panel label by one physical gap from its owned axes."""
+    bounds = ax.get_position()
+    fig.text(
+        bounds.x0 - PANEL_LABEL_GAP_INCHES / fig.get_figwidth(),
+        bounds.y1 + PANEL_LABEL_GAP_INCHES / fig.get_figheight(),
+        label,
+        weight="bold",
+        fontsize=13,
+        ha="right",
+        va="bottom",
+    )
+
+
 def main() -> None:
     argparse.ArgumentParser(description=__doc__).parse_args()
     counts = CountDataset.read(DATA_DIR / "ctb_device_counts.csv")
@@ -363,33 +378,42 @@ def main() -> None:
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10, "pdf.fonttype": 42})
     fig = plt.figure(figsize=(7, 5.8), facecolor="white")
-    grid = fig.add_gridspec(3, 3, height_ratios=(1.4, 1.4, 2.2),
-                           left=.09, right=.98, top=.97, bottom=.08, hspace=.14, wspace=.18)
+    grid = fig.add_gridspec(
+        3,
+        3,
+        height_ratios=(1.4, 1.4, 2.2),
+        width_ratios=(1.25, 1.25, 0.72),
+        left=.055,
+        right=.98,
+        top=.97,
+        bottom=.08,
+        hspace=.14,
+        wspace=.16,
+    )
     for i, frame in enumerate(metadata.tracer.frames):
         ax = fig.add_subplot(grid[i, :])
         metadata.tracer.draw(ax, frame)
         if i == 0:
-            fig.text(.02, ax.get_position().y1 + .01, "A", weight="bold", fontsize=13)
+            label_panel(fig, ax, "A")
 
     # One large image pair shows the saved segmentation clearly; the count panel
     # beside it carries all three plates and every retained device observation.
     view = min(metadata.views, key=lambda candidate: candidate.plate)
-    pair = grid[2, :2].subgridspec(1, 2, wspace=.06)
+    pair = grid[2, :2].subgridspec(1, 2, wspace=.02)
     image_ax = fig.add_subplot(pair[0, 0])
     outline_ax = fig.add_subplot(pair[0, 1])
     view.draw(image_ax, outline_ax)
-    fig.text(.02, image_ax.get_position().y1 + .025, "B", weight="bold", fontsize=13)
+    label_panel(fig, image_ax, "B")
 
     ax = fig.add_subplot(grid[2, 2])
     counts.draw(ax)
-    ax.set_ylabel("CTB-positive cells", fontsize=10)
+    ax.set_ylabel("CTB-positive cells", fontsize=9)
     ax.set_xlim(-.5, 2.5)
     ax.set_ylim(bottom=0)
     ax.spines[["top", "right"]].set_visible(False)
     ax.set_axisbelow(True)
     ax.yaxis.grid(True, color="#E6E6E6", linewidth=.6)
-    fig.text(ax.get_position().x0 - .035, ax.get_position().y1 + .025,
-             "C", weight="bold", fontsize=13)
+    label_panel(fig, ax, "C")
     fig.savefig(OUTPUT_DIR / "draft_figure.pdf", dpi=300)
     fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300)
     plt.close(fig)
