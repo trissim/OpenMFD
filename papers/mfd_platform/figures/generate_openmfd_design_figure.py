@@ -3,7 +3,7 @@
 from __future__ import annotations
 
 import sys
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 
 import ezdxf
@@ -153,8 +153,20 @@ class BackedText(TextStyle):
         return {"boxstyle": "round,pad=0.10", "facecolor": "white", "edgecolor": "none", "alpha": 0.92}
 
 
-class InsetBadge(PanelBadge, BackedText):
+class InsetBadge(PanelBadge):
     va = "top"
+    left = 0.02
+    top = 0.96
+    clearance_inches = 0.035
+
+    @classmethod
+    def label(cls, ax: plt.Axes, text: str) -> Text:
+        return cls.draw(ax, cls.left, cls.top, text)
+
+    @classmethod
+    def content_top(cls, ax: plt.Axes) -> float:
+        height_inches = ax.get_position().height * ax.figure.get_figheight()
+        return cls.top - (cls.fontsize / 72 + cls.clearance_inches) / height_inches
 
 
 @dataclass(frozen=True)
@@ -215,14 +227,16 @@ class DxfDrawing:
 class DxfSources:
     single_top: DxfDrawing
     single_bottom: DxfDrawing
-    aligned: DxfDrawing
+    wafer_top: DxfDrawing
+    wafer_bottom: DxfDrawing
 
     @classmethod
     def from_generated_design(cls) -> "DxfSources":
         return cls(
             single_top=DxfDrawing.from_file(DESIGN_DIR / f"{DESIGN_STEM}_single_top.dxf"),
             single_bottom=DxfDrawing.from_file(DESIGN_DIR / f"{DESIGN_STEM}_single_bottom.dxf"),
-            aligned=DxfDrawing.from_file(DESIGN_DIR / f"{DESIGN_STEM}_aligned.dxf"),
+            wafer_top=DxfDrawing.from_file(DESIGN_DIR / f"{DESIGN_STEM}_top.dxf"),
+            wafer_bottom=DxfDrawing.from_file(DESIGN_DIR / f"{DESIGN_STEM}_bottom.dxf"),
         )
 
 
@@ -325,6 +339,10 @@ class FigureOneLayout:
     row_gap: float
     cell_padding_inches: float
     insets: FigureOneInsets
+
+    def image_inset(self, ax: plt.Axes, box: AxisBox) -> plt.Axes:
+        height = min(box.height, InsetBadge.content_top(ax) - box.bottom)
+        return add_inset(ax, replace(box, height=height))
 
     def gridspec_kwargs(self) -> dict[str, tuple[float, ...]]:
         return {
@@ -655,7 +673,7 @@ def add_arrow(ax: plt.Axes, start: tuple[float, float], end: tuple[float, float]
 
 def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     setup_axis(ax)
-    InsetBadge.draw(ax, 0.02, 0.96, "A")
+    InsetBadge.label(ax, "A")
 
     input_left, input_width = 0.055, 0.52
     rounded_box(ax, (input_left, 0.11), input_width, 0.75,
@@ -702,12 +720,12 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
 
 def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
     setup_axis(ax)
-    InsetBadge.draw(ax, 0.02, 0.96, "B")
+    InsetBadge.label(ax, "B")
 
     bounds = Bounds.combine((dxf.single_top, dxf.single_bottom))
     pad_x = 0.55
     pad_y = 0.45
-    drawing_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.unit_dxf)
+    drawing_ax = FIGURE_ONE_LAYOUT.image_inset(ax, FIGURE_ONE_LAYOUT.insets.unit_dxf)
     setup_raw_dxf_axis(drawing_ax, bounds, pad_x, pad_y)
     add_bounds_background(drawing_ax, bounds, pad_x, pad_y)
     draw_dxf_layer_raw(drawing_ax, dxf.single_bottom, COLORS["bottom"], 0.10, 0.55)
@@ -722,8 +740,8 @@ def draw_insert_view(
     label: str,
 ) -> None:
     setup_axis(ax)
-    InsetBadge.draw(ax, 0.02, 0.96, label)
-    draw_stl_mesh_raw_equal(add_inset(ax, inset), spec)
+    InsetBadge.label(ax, label)
+    draw_stl_mesh_raw_equal(FIGURE_ONE_LAYOUT.image_inset(ax, inset), spec)
 
 
 def draw_single_insert(ax: plt.Axes, stl: StlSources) -> None:
@@ -768,9 +786,9 @@ def draw_insert_array(ax: plt.Axes, stl: StlSources) -> None:
 
 def draw_frame_cad(ax: plt.Axes, stl: StlSources) -> None:
     setup_axis(ax)
-    InsetBadge.draw(ax, 0.02, 0.96, "F")
+    InsetBadge.label(ax, "F")
 
-    card_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.frame_stl)
+    card_ax = FIGURE_ONE_LAYOUT.image_inset(ax, FIGURE_ONE_LAYOUT.insets.frame_stl)
     draw_stl_mesh_raw_equal(
         card_ax,
         StlRenderSpec(
@@ -831,9 +849,9 @@ class CroppedContrastPhoto(ContrastPhoto, CroppedPhoto):
 
 def draw_assembled_device(ax: plt.Axes) -> None:
     setup_axis(ax)
-    InsetBadge.draw(ax, 0.02, 0.96, "G")
+    InsetBadge.label(ax, "G")
 
-    image_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.device_photo)
+    image_ax = FIGURE_ONE_LAYOUT.image_inset(ax, FIGURE_ONE_LAYOUT.insets.device_photo)
     image = ContrastPhoto(ASSEMBLED_DEVICE_PHOTO).read()
     image_ax.imshow(image)
     image_ax.set_aspect("equal", adjustable="box")
@@ -851,15 +869,15 @@ def draw_assembled_device(ax: plt.Axes) -> None:
 
 def draw_plate_outputs(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
     setup_axis(ax)
-    InsetBadge.draw(ax, 0.02, 0.96, "C")
-
-    pad_x = dxf.aligned.bounds.width * 0.035
-    pad_y = dxf.aligned.bounds.height * 0.035
-    mask_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.wafer_mask)
-    setup_raw_dxf_axis(mask_ax, dxf.aligned.bounds, pad_x, pad_y)
-    add_bounds_background(mask_ax, dxf.aligned.bounds, pad_x, pad_y)
-    draw_dxf_layer_raw(mask_ax, dxf.aligned, "#bfe7ee", 0.48, 0.42)
-    draw_dxf_layer_raw(mask_ax, dxf.aligned, "#0f8ea5", 0.24, 0.92)
+    InsetBadge.label(ax, "C")
+    bounds = Bounds.combine((dxf.wafer_top, dxf.wafer_bottom))
+    pad_x = bounds.width * 0.035
+    pad_y = bounds.height * 0.035
+    mask_ax = FIGURE_ONE_LAYOUT.image_inset(ax, FIGURE_ONE_LAYOUT.insets.wafer_mask)
+    setup_raw_dxf_axis(mask_ax, bounds, pad_x, pad_y)
+    add_bounds_background(mask_ax, bounds, pad_x, pad_y)
+    draw_dxf_layer_raw(mask_ax, dxf.wafer_bottom, COLORS["bottom"], 0.16, 0.58)
+    draw_dxf_layer_raw(mask_ax, dxf.wafer_top, COLORS["top"], 0.34, 0.92)
 
 
 def save_subfigure_images(
@@ -921,11 +939,12 @@ def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
     fig.subplots_adjust(**FIGURE_ONE_LAYOUT.subplot_adjust_kwargs())
     pad_x = FIGURE_ONE_LAYOUT.cell_padding_inches / fig.get_figwidth()
     pad_y = FIGURE_ONE_LAYOUT.cell_padding_inches / fig.get_figheight()
+    printed_panel_opacity = 0.18
     background_groups = (
         (PANEL_BACKGROUND, 1.0, (a_ax, f_ax)),
         (COLORS["bottom"], 0.07, (b_ax, c_ax)),
-        (COLORS["insert"], 0.07, (d_single_ax, d_array_ax)),
-        (COLORS["frame"], 0.07, (e_ax,)),
+        (COLORS["insert"], printed_panel_opacity, (d_single_ax, d_array_ax)),
+        (COLORS["frame"], printed_panel_opacity, (e_ax,)),
     )
     for color, opacity, members in background_groups:
         for ax in members:

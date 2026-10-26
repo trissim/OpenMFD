@@ -21,7 +21,8 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
-from matplotlib.collections import LineCollection
+from matplotlib.collections import LineCollection, PolyCollection
+from matplotlib.transforms import Bbox
 from metaclass_registry import AutoRegisterMeta
 import numpy as np
 from PIL import Image
@@ -185,6 +186,22 @@ class CountDataset:
             plate.draw(ax, i, color)
         ax.set_xticks(range(len(self.plates)), [plate.label for plate in self.plates])
 
+    def fit_to_slot(self, ax: Axes) -> None:
+        """Keep the whole count plot, including labels, inside its grid allocation."""
+        fig = ax.figure
+        fig.canvas.draw()
+        slot = ax.get_subplotspec().get_position(fig)
+        plot = ax.get_position()
+        content = ax.get_tightbbox(fig.canvas.get_renderer()).transformed(fig.transFigure.inverted())
+        left = plot.x0 - content.x0
+        bottom = plot.y0 - content.y0
+        right = content.x1 - plot.x1
+        top = content.y1 - plot.y1
+        ax.set_position(Bbox.from_extents(
+            slot.x0 + left, slot.y0 + bottom,
+            slot.x1 - right, slot.y1 - top,
+        ))
+
 
 @dataclass(frozen=True)
 class WidthMeasurement(CsvRecord):
@@ -249,9 +266,11 @@ class CtbView:
             x, y = self.shape.width * .08, self.shape.height * .94
             ax.plot([x, x + 500 / self.pixel_size_um], [y, y], color="black", linewidth=2)
             ax.text(x, y - self.shape.height * .025, "500 µm", color="black", fontsize=7)
+        contours = tuple(tuple((point.x, point.y) for point in contour) for contour in self.outlines)
+        outline_ax.add_collection(PolyCollection(
+            contours, facecolors="#D17800", edgecolors="none", alpha=.35), autolim=False)
         outline_ax.add_collection(LineCollection(
-            tuple(tuple((point.x, point.y) for point in contour) for contour in self.outlines),
-            colors="#D17800", linewidths=.4), autolim=False)
+            contours, colors="#D17800", linewidths=.4), autolim=False)
         image_ax.set_anchor("E")
         outline_ax.set_anchor("W")
         image_ax.set_title("CTB", fontsize=8, pad=3)
@@ -456,6 +475,7 @@ def main() -> None:
     ax.set_axisbelow(True)
     ax.yaxis.grid(True, color="#E6E6E6", linewidth=.6)
     label_panel(fig, ax, "C", above=True)
+    counts.fit_to_slot(ax)
     fig.savefig(OUTPUT_DIR / "draft_figure.pdf", dpi=300, bbox_inches="tight", pad_inches=.025)
     fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300, bbox_inches="tight", pad_inches=.025)
     plt.close(fig)

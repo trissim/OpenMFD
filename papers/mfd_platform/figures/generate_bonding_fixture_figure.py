@@ -546,11 +546,18 @@ def draw_lock_view(
     skirt_inner_hull = insert_projection_hull(stl, cfg, right_side=True, z_range=skirt_inner_z)
     hull_min = hull.min(axis=0)
     hull_max = hull.max(axis=0)
+    outer_dimension_gap = 0.40
+    inner_dimension_clearance = 0.16
+    horizontal_label_gap = 0.20
+    vertical_label_gap = 0.23
+    dimension_label_padding = 0.20
+    insert_arrow_x = min(hull_min[0], platform_x[0]) - outer_dimension_gap
+    insert_arrow_y = min(hull_min[1], platform_y[0]) - outer_dimension_gap
     pad = 0.65
     crop = (
-        hull_min[0] - 1.00,
+        min(hull_min[0] - 1.00, insert_arrow_x - vertical_label_gap - dimension_label_padding),
         max(hull_max[0] + pad, platform_x[1] + 0.78),
-        hull_min[1] - pad,
+        min(hull_min[1] - pad, insert_arrow_y - horizontal_label_gap - dimension_label_padding),
         max(hull_max[1] + pad, platform_y[1] + 0.82),
     )
     schematic_left = hull_min[0] - 0.55
@@ -604,12 +611,6 @@ def draw_lock_view(
     platform_outline = np.asarray(top_segments).reshape(-1, 2)
     detail_ax.add_collection(LineCollection(top_segments, colors=SUEX_BOX.edge, linewidths=1.05, alpha=0.96, zorder=7))
 
-    outer_dimension_gap = 0.40
-    inner_dimension_clearance = 0.16
-    horizontal_label_gap = 0.20
-    vertical_label_gap = 0.23
-
-    insert_arrow_y = hull_min[1] - outer_dimension_gap
     p_insert_0 = (hull_min[0], insert_arrow_y)
     p_insert_1 = (hull_max[0], insert_arrow_y)
     dimension_arrow(
@@ -620,7 +621,6 @@ def draw_lock_view(
         ((p_insert_0[0] + p_insert_1[0]) / 2, p_insert_0[1] - horizontal_label_gap),
         extension_points=dimension_extension_points(hull, p_insert_0, p_insert_1),
     )
-    insert_arrow_x = hull_min[0] - outer_dimension_gap
     p_insert_2 = (insert_arrow_x, hull_min[1])
     p_insert_3 = (insert_arrow_x, hull_max[1])
     dimension_arrow(
