@@ -436,21 +436,29 @@ def build_figure() -> plt.Figure:
     for row, (dxf_label, insert_label, design) in enumerate(layout):
         dxf_ax = fig.add_subplot(grid[row, 0])
         insert_ax = fig.add_subplot(grid[row, 1])
-        dxf_ax.set_facecolor(ROW_BACKGROUNDS[row])
-        insert_ax.set_facecolor(ROW_BACKGROUNDS[row])
+        dxf_ax.set_facecolor("none")
+        insert_ax.set_facecolor("none")
         LabeledDxfPanel(dxf_label)(dxf_ax, design)
         LabeledInsertPanel(insert_label)(insert_ax, design)
         row_axes.append((dxf_ax, insert_ax))
 
     pad_x = ROW_PADDING_INCHES / fig.get_figwidth()
     pad_y = ROW_PADDING_INCHES / fig.get_figheight()
+    image_boxes = (
+        LabeledDxfPanel.single_box, LabeledDxfPanel.aligned_box,
+        LabeledInsertPanel.single_box, LabeledInsertPanel.array_box,
+    )
+    image_top = max(box.bottom + box.height for box in image_boxes)
+    image_bottom = min(box.bottom for box in image_boxes)
     for color, (left_ax, right_ax) in zip(ROW_BACKGROUNDS, row_axes, strict=True):
         left = left_ax.get_position()
         right = right_ax.get_position()
+        band_bottom = left.y0 + image_bottom * left.height - pad_y
+        band_top = left.y0 + image_top * left.height
         fig.add_artist(Rectangle(
-            (left.x0 - pad_x, left.y0 - pad_y),
+            (left.x0 - pad_x, band_bottom),
             right.x1 - left.x0 + 2 * pad_x,
-            max(left.y1, right.y1) - min(left.y0, right.y0) + 2 * pad_y,
+            band_top - band_bottom,
             transform=fig.transFigure,
             facecolor=color,
             edgecolor="none",
@@ -464,16 +472,6 @@ def build_figure() -> plt.Figure:
     header_bottom = max(left.y1, right.y1) + HEADER_PADDING_INCHES / fig.get_figheight()
     header_top = 0.985
     header_y = (header_bottom + header_top) / 2
-    fig.add_artist(Rectangle(
-        (left.x0 - pad_x, header_bottom),
-        right.x1 - left.x0 + 2 * pad_x,
-        header_top - header_bottom,
-        transform=fig.transFigure,
-        facecolor=ROW_BACKGROUND,
-        edgecolor="none",
-        clip_on=False,
-        zorder=-10,
-    ))
     header_positions = (
         left.x0 + LabeledDxfPanel.single_box.center_x * left.width,
         left.x0 + LabeledDxfPanel.aligned_box.center_x * left.width,
