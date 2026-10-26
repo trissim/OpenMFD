@@ -7,9 +7,10 @@ from paper_build.artifacts import InputObservations
 from paper_build.cli import main
 from paper_build.declarations import DocumentDefinition, DocumentRole, PaperDefinition, Preparation
 from paper_build.evidence import ReceiptCoverage
-from paper_build.word import CaptionedFiguresLayout, EndTextFiguresLayout
+from paper_build.word import CaptionedFiguresLayout, EndTextFiguresLayout, TableStyle
 
 ROOT = Path(__file__).resolve().parent
+TABLE_STYLE = TableStyle(font_size_half_points='18')
 
 
 @dataclass(frozen=True)
@@ -45,7 +46,7 @@ SUPPLEMENT = DocumentDefinition(
         Path('supplementary/Supplementary_Protocol_S1_device_assembly_culture_and_CTB.md'),
         Path('supplementary/Supplementary_Protocol_S2_hybrid_mold_fabrication.md'),
     ),
-    layout=CaptionedFiguresLayout(), markdown_format='markdown', citeproc=False,
+    layout=CaptionedFiguresLayout(table_style=TABLE_STYLE), markdown_format='markdown', citeproc=False,
     section_heading='Supplementary Information',
 )
 
@@ -53,7 +54,8 @@ PAPER = PaperDefinition(
     identity='openmfd-platform', root=ROOT, declaration=Path(__file__).resolve(),
     output_prefix='openmfd',
     documents=(DocumentDefinition(DocumentRole.MANUSCRIPT, (Path('manuscript.md'),),
-                                  layout=EndTextFiguresLayout(boundary_heading=SUPPLEMENT.section_heading,
+                                  layout=EndTextFiguresLayout(table_style=TABLE_STYLE,
+                                                              boundary_heading=SUPPLEMENT.section_heading,
                                                               fill_text_width=True),
                                   markdown_format='markdown', citeproc=False), SUPPLEMENT),
     preparation=MfdRetainedFigures(), combined_review=True,

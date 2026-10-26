@@ -115,6 +115,7 @@ Both the Opera Phenix Plus and ImageXpress Micro Confocal focused and collected 
 
 ### Directional tracer redistribution and neuronal retrograde labeling
 Unequal reservoir volumes provide a passive way to bias movement between compartments. Images of 24 two-compartment devices acquired immediately after loading and at 72 h showed green tracer redistribution toward the initially lower-volume left compartment, with little visible red signal in the opposite direction (Figure 4A). This redistribution is consistent with the initial volume difference driving tracer movement; the two imaging time points do not establish how long that difference persisted.
+
 CTB retrograde tracing tests whether neurons can take up a tracer through axons in the distal compartment and carry it back to their cell bodies. Primary cortical neurons isolated from one E18 rat embryo were distributed across three assembled plates and cultured to DIV11. CTB-647 added to the distal compartment on DIV10 labeled neuronal cell bodies in the soma compartment (Figure 4B), consistent with uptake by axons extending into the distal well and transport back toward their cell bodies.
 
 Biological analysis used the 24 interior devices per plate because culture performance was poorer at the plate edges, giving 72 devices across three plates. Three devices were excluded because contamination or a technical failure prevented cell counting in their final images, leaving 69 analyzed devices. Figure 4C shows the mean CTB-positive cell-body count per device and the standard deviation within each plate.
