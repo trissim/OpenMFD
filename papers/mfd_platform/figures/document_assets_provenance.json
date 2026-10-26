@@ -50,5 +50,6 @@
     "image_evidence": "Original template-match CSVs plus saved fixed-crop declaration; three original stitched images cropped without rerunning registration. Original ROI overlays visually align. Native calibration checked against acquisition XML for each plate. sources.json carries raw-source/archive/XML hashes and crop coordinates.",
     "preserved": "Counts, inclusion flags, source images, saved outlines, width outputs and supplementary S1/S2 outputs remain unchanged. Only Figure 4 layout and its selected displayed example changed.",
     "limits": "Exact historical software/run configuration, positivity/manual-correction provenance and ethics remain open. Display reconstruction does not establish the historical run. Placed-page and portable reading checks are still required."
-  }
+  },
+  "source_update": "Figure1/2/5 user-requested background and spacing batch published; Figure4 artwork retained from aafbf9f with compact bounded C and filled saved contours. Fluorescent-antibody solution terminology is corrected in prose, with biological tracer/tracing reserved for CTB."
 }

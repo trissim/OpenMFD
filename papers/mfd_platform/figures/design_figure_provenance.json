@@ -1,12 +1,12 @@
 {
-  "validation_scope": "Figure1 reads the retained separate wafer top/bottom DXFs for C, preserving outlines and recipe annotation. Its unbacked inset labels own a physical header clearance, which all six image cells derive; no white patches cover image or panel colors. D/E and F retain stronger category tints. Figure2 left/bottom dimension arrows clear both insert hull and platform, with crop margins derived from moved label positions. Original photographs and generated CAD geometry unchanged. Figure5 retained from its measured shared-band render.",
+  "validation_scope": "Figure1 A/G are on white, B-F retain category tints; the input block derives vertical placement from box height and row count, with text lowered relative to row rules. C retains separate wafer layers and curing annotation. Figure2B blue backdrop covers its full admitted crop including the4.40mm label, without changing dimension geometry. Figure5 has no row bands, uniform cards, DXF border patches or mesh backdrops: the existing STL render specification owns background drawing with an unbacked subtype for Figure5. Single and array mesh paths call that same owner; Figure1 retains its default dark mesh backdrop. Physical row gaps increase15percent with image dimensions retained by derived canvas height. All original evidence and design dimensions unchanged.",
   "output_sha256": {
-    "rendered/openmfd_design.pdf": "18b60d7c1585dd093d245c2d6036f87e6154a2b1c033b56023d7240f3b0c2587",
-    "rendered_docx/openmfd_design.png": "63a47e249b93e679de887a6d8b789c78d38cf5a7046a1a0a03b3d38d6d01f010",
-    "rendered/insert_bonding.pdf": "838862acacc935de183d80a3d69667984d2cea30f7c77485c112538cb545a8b1",
-    "rendered_docx/insert_bonding.png": "e4d0b178db4558820a816770e0b8d5a30ad3058d298af2ca4babfdf6a4120cb0",
-    "rendered/generalizability.pdf": "60f9ae71bb025e2f81a882222aa94b4d9de8b9d944f9553e1d7711d1c6e8aee0",
-    "rendered_docx/generalizability.png": "0f0bcfd2b6e2f0fe4536c8e9ea35a131e5463c3060aa54dc9a3022ef8894078a"
+    "rendered/openmfd_design.pdf": "f09393be558f2aab9045b9adf79554e45038df451643ff5b4a6383ad468aef14",
+    "rendered_docx/openmfd_design.png": "76e61b13920a4a2ac433ebe8375b3bb11294db0a9a2d2e79af4613e6dda39450",
+    "rendered/insert_bonding.pdf": "56777b83bd9a2bf775b24b74587ab5d949dd335859a8a5adaf6fbc3aebc15145",
+    "rendered_docx/insert_bonding.png": "8c3c02e43d0168cc9f5385f2e07a8467c6b8d185ce8b1b746075ebd7938aca66",
+    "rendered/generalizability.pdf": "6aa3bd593a0eb198985594302f662264563889e57ea5204632410906a12b4470",
+    "rendered_docx/generalizability.png": "3a4198006849b83f845d342b2019e66cbeb8a3668b7398b2c800d5037b9a891d"
   },
   "source_sha256": {
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_aligned.dxf": "c48e557b2b5bfb84aac45707afe364c6dca94aba941087d78baa6adf0132d777",
@@ -92,9 +92,9 @@
     "figures/final_drop/Fig2_insert_bonding/real_suex.png": "c53d42661665b0d90e462c32f1c8fd8c8789dd8b69b8abd16fc7494c509ca3ce",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly.jpg": "080a75480b4271047076ae48e1170d39c79da6a212c59484c55a56a9748ab4a7",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
-    "figures/generate_bonding_fixture_figure.py": "1790b304e770f998f1e2ef219050896669b03379cfbfe0a8175cf4aaa3d7d2c5",
-    "figures/generate_generalizability_figure.py": "700e63c1fd5ee010d2341b9d13f057e65dfc365d41306b05cef29a0db5b62f0d",
-    "figures/generate_openmfd_design_figure.py": "f028d6571c750cd2ee795f923af370b67cb439f5cfad1d45ecd6607e9972104b",
+    "figures/generate_bonding_fixture_figure.py": "4f3c90dc64ac03713da01ac06e09e8e639e78b156a11515ac306b6df8dd6bc19",
+    "figures/generate_generalizability_figure.py": "bddcb1e2c19d30f62407efde7dfeb28cdcfd2554257425a95f362c85331b65ad",
+    "figures/generate_openmfd_design_figure.py": "bf6858617edeaf38e9815b8e44810123701ff1aca9d9639d3c95eae193e5f0be",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
   "source_scope": "Three generators, the OpenMFD package, retained DXF/STL assets in the four selected design folders, frame STL and five source photographs. This is an explicit asset-set fingerprint, not a complete dynamic import or minimal file-read trace.",
@@ -119,9 +119,9 @@
     "source_census": "NRA source census:192 modules parsed, existing mf_device.py:783 omission. Syntax/lexical scope only.",
     "unchanged": "Scientific photographs, STL geometry and validation data are unchanged. Four bottom/aligned mask pairs were regenerated from their existing geometry after deleting only the stale recipe annotation.",
     "shared_consumers": "Figure 1 panel D has two declared axes occupying separate cells; its subfigure exporter accepts the declared axis group. Figure 5 header centers derive from the existing inset bounds; repeated per-row captions and differing background colors were deleted.",
-    "run": "Real Figure1 and Figure2 authoring/export entrypoints completed, including A-G and A-F scalar-Axes subfigure exports. Final placed-page check follows.",
+    "run": "Real Figure1/2/5 authoring and all their standalone subfigure exports completed. Final placed-page inspection follows.",
     "limits": "Artwork/layout and declared-input checks only, not scientific analysis or fresh dimensional metrology. A placed-page reading build is still required.",
-    "corner_labels": "InsetBadge owns label position and point-sized clearance; FigureOneLayout.image_inset reserves that clear space instead of painting a white badge backing."
+    "corner_labels": "Bare labels retain physical image-header clearance; A parameter block centered within its white input box, rows lowered relative to separator rules."
   },
-  "render_source_commit": "7dee6940006b995e79165a9e59b0664f8da04b5f"
+  "render_source_commit": "603333f57b201dfd1e372aa726b2e403aea61d2f"
 }
