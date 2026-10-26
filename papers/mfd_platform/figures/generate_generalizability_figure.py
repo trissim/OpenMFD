@@ -274,8 +274,13 @@ class LabeledPanel(DesignPanel):
         PanelTitle.draw(ax, 0.11, 0.956, self.title(design))
         self.captions(ax)
 
+    @property
+    @abstractmethod
+    def single_box(self) -> AxisBox:
+        raise NotImplementedError
+
     def captions(self, ax: plt.Axes) -> None:
-        pass
+        MutedText.draw(ax, self.single_box.center_x, self.caption_y, "Single unit")
 
 
 class LabeledDxfPanel(LabeledPanel, DxfPanel):
@@ -283,7 +288,7 @@ class LabeledDxfPanel(LabeledPanel, DxfPanel):
     aligned_box = AxisBox(0.46, 0.16, 0.51, 0.74)
 
     def captions(self, ax: plt.Axes) -> None:
-        MutedText.draw(ax, self.single_box.center_x, self.caption_y, "Single unit")
+        super().captions(ax)
         MutedText.draw(ax, self.aligned_box.center_x, self.caption_y, "Wafer-scale mask")
 
 
@@ -292,8 +297,8 @@ class LabeledInsertPanel(LabeledPanel, InsertPanel):
     array_box = AxisBox(0.535, 0.18, 0.430, 0.72)
 
     def captions(self, ax: plt.Axes) -> None:
-        MutedText.draw(ax, self.single_box.center_x, self.caption_y, "Single insert")
-        MutedText.draw(ax, self.array_box.center_x, self.caption_y, "Array insert")
+        super().captions(ax)
+        MutedText.draw(ax, self.array_box.center_x, self.caption_y, "Arrayed inserts")
 
 
 def draw_single_unit_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
