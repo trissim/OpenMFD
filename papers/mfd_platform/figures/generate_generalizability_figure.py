@@ -5,7 +5,7 @@ from __future__ import annotations
 import math
 import sys
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Callable
 
@@ -221,8 +221,22 @@ class DesignPanel(ABC):
         setup_axis(ax)
         ax.add_patch(Rectangle((0, 0), 1, 1, transform=ax.transAxes,
                                facecolor=ax.get_facecolor(), edgecolor="none", zorder=-100))
+        self.draw_background(ax)
         self.draw_content(ax, design)
         self.decorate(ax, design)
+
+    def draw_background(self, ax: plt.Axes) -> None:
+        pass
+
+    @classmethod
+    @abstractmethod
+    def image_boxes(cls) -> tuple[AxisBox, AxisBox]:
+        raise NotImplementedError
+
+    @property
+    @abstractmethod
+    def card_color(self) -> str:
+        raise NotImplementedError
 
     @abstractmethod
     def draw_content(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
@@ -237,8 +251,13 @@ class DesignPanel(ABC):
 
 class DxfPanel(DesignPanel):
     COLUMN_TITLES = ("Single-unit mask", "Wafer-scale mask")
+    card_color = "white"
     single_box = AxisBox(0.025, 0.05, 0.43, 0.90)
     aligned_box = AxisBox(0.50, 0.03, 0.475, 0.94)
+
+    @classmethod
+    def image_boxes(cls) -> tuple[AxisBox, AxisBox]:
+        return cls.single_box, cls.aligned_box
 
     def draw_content(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
         single_ax = add_inset(ax, self.single_box)
@@ -261,8 +280,13 @@ class DxfPanel(DesignPanel):
 
 class InsertPanel(DesignPanel):
     COLUMN_TITLES = ("Single-unit insert", "Arrayed inserts")
+    card_color = COLORS["dark_card"]
     single_box = AxisBox(0.025, 0.06, 0.43, 0.88)
     array_box = AxisBox(0.50, 0.06, 0.475, 0.88)
+
+    @classmethod
+    def image_boxes(cls) -> tuple[AxisBox, AxisBox]:
+        return cls.single_box, cls.array_box
 
     def draw_content(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
         single_ax = add_inset(ax, self.single_box)
@@ -274,6 +298,15 @@ class InsertPanel(DesignPanel):
 @dataclass(frozen=True)
 class LabeledPanel(DesignPanel):
     label: str
+    image_band = AxisBox(0.0, 0.03, 1.0, 0.90)
+
+    def draw_background(self, ax: plt.Axes) -> None:
+        for box in self.image_boxes():
+            ax.add_patch(Rectangle(
+                (box.left, box.bottom), box.width, box.height,
+                transform=ax.transAxes, facecolor=self.card_color,
+                edgecolor=COLORS["grid"], linewidth=0.9, zorder=-1,
+            ))
 
     def decorate(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
         PanelBadge.draw(ax, 0.02, 0.96, self.label)
@@ -286,13 +319,13 @@ class LabeledPanel(DesignPanel):
 
 
 class LabeledDxfPanel(LabeledPanel, DxfPanel):
-    single_box = AxisBox(0.03, 0.03, 0.40, 0.90)
-    aligned_box = AxisBox(0.46, 0.03, 0.51, 0.90)
+    single_box = replace(LabeledPanel.image_band, left=0.03, width=0.40)
+    aligned_box = replace(LabeledPanel.image_band, left=0.46, width=0.51)
 
 
 class LabeledInsertPanel(LabeledPanel, InsertPanel):
-    single_box = AxisBox(0.035, 0.03, 0.430, 0.90)
-    array_box = AxisBox(0.535, 0.03, 0.430, 0.90)
+    single_box = replace(LabeledPanel.image_band, left=0.035, width=0.430)
+    array_box = replace(LabeledPanel.image_band, left=0.535, width=0.430)
 
     def decorate(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
         PanelBadge.draw(ax, 0.02, 0.96, self.label)
@@ -445,10 +478,7 @@ def build_figure() -> plt.Figure:
 
     pad_x = ROW_PADDING_INCHES / fig.get_figwidth()
     pad_y = ROW_PADDING_INCHES / fig.get_figheight()
-    image_boxes = (
-        LabeledDxfPanel.single_box, LabeledDxfPanel.aligned_box,
-        LabeledInsertPanel.single_box, LabeledInsertPanel.array_box,
-    )
+    image_boxes = LabeledDxfPanel.image_boxes() + LabeledInsertPanel.image_boxes()
     image_top = max(box.bottom + box.height for box in image_boxes)
     image_bottom = min(box.bottom for box in image_boxes)
     for color, (left_ax, right_ax) in zip(ROW_BACKGROUNDS, row_axes, strict=True):
