@@ -448,8 +448,8 @@ def main() -> None:
     ax.set_axisbelow(True)
     ax.yaxis.grid(True, color="#E6E6E6", linewidth=.6)
     label_panel(fig, ax, "C", above=True)
-    fig.savefig(OUTPUT_DIR / "draft_figure.pdf", dpi=300)
-    fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300)
+    fig.savefig(OUTPUT_DIR / "draft_figure.pdf", dpi=300, bbox_inches="tight", pad_inches=.025)
+    fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300, bbox_inches="tight", pad_inches=.025)
     plt.close(fig)
     print(json.dumps([asdict(plate.summary) for plate in counts.plates], indent=2))
 
