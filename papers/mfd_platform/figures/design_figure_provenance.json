@@ -1,10 +1,10 @@
 {
   "validation_scope": "Figure1 A/G are on white, B-F retain category tints; the input block derives vertical placement from box height and row count, with text lowered relative to row rules. C retains separate wafer layers and curing annotation. Figure2B blue backdrop covers its full admitted crop including the4.40mm label, without changing dimension geometry. Figure5 has no row bands, uniform cards, DXF border patches or mesh backdrops: the existing STL render specification owns background drawing with an unbacked subtype for Figure5. Single and array mesh paths call that same owner; Figure1 retains its default dark mesh backdrop. Physical row gaps increase15percent with image dimensions retained by derived canvas height. All original evidence and design dimensions unchanged.",
   "output_sha256": {
-    "rendered/openmfd_design.pdf": "f09393be558f2aab9045b9adf79554e45038df451643ff5b4a6383ad468aef14",
-    "rendered_docx/openmfd_design.png": "76e61b13920a4a2ac433ebe8375b3bb11294db0a9a2d2e79af4613e6dda39450",
-    "rendered/insert_bonding.pdf": "7fdae817f9f96dda6f1eb460c5838e98de7856b07cf8a1f7d3a4c41b28f1ad30",
-    "rendered_docx/insert_bonding.png": "b93de7937f5aef63360884874f7676db8c7a311e9d1731edf2a77cf90cc34f77",
+    "rendered/openmfd_design.pdf": "826337cda6ff8d4388438df90f4afcf2d85772f5719c1bf907abf2f692f4251b",
+    "rendered_docx/openmfd_design.png": "0dc3cc7b6fcbd6740b128ee053c93b36c8e5cbbeb0396576be0c67dcc1954a87",
+    "rendered/insert_bonding.pdf": "9245787349f1c44f7dfdece4d1739c85d71a5e27cdc41c39b9e276bd93d4abdc",
+    "rendered_docx/insert_bonding.png": "756963637921c39d400dde8470a961f039ae906722140a96d0781519d917d9dd",
     "rendered/generalizability.pdf": "6aa3bd593a0eb198985594302f662264563889e57ea5204632410906a12b4470",
     "rendered_docx/generalizability.png": "3a4198006849b83f845d342b2019e66cbeb8a3668b7398b2c800d5037b9a891d"
   },
@@ -92,9 +92,9 @@
     "figures/final_drop/Fig2_insert_bonding/real_suex.png": "c53d42661665b0d90e462c32f1c8fd8c8789dd8b69b8abd16fc7494c509ca3ce",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly.jpg": "080a75480b4271047076ae48e1170d39c79da6a212c59484c55a56a9748ab4a7",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
-    "figures/generate_bonding_fixture_figure.py": "77d1c1d6742e5e85f6bed21cf9b100863c34cca6d21c05f42d16f0f82e695e49",
+    "figures/generate_bonding_fixture_figure.py": "db4f0f107969d9497aca12e5f43a2f296ba636370f75b38e8389e6994ebeddac",
     "figures/generate_generalizability_figure.py": "bddcb1e2c19d30f62407efde7dfeb28cdcfd2554257425a95f362c85331b65ad",
-    "figures/generate_openmfd_design_figure.py": "bf6858617edeaf38e9815b8e44810123701ff1aca9d9639d3c95eae193e5f0be",
+    "figures/generate_openmfd_design_figure.py": "2c8994c34da7f59cc8470a8e99ce86fc4757727ea2383695e56c805a0d8f5035",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
   "source_scope": "Three generators, the OpenMFD package, retained DXF/STL assets in the four selected design folders, frame STL and five source photographs. This is an explicit asset-set fingerprint, not a complete dynamic import or minimal file-read trace.",
@@ -119,10 +119,10 @@
     "source_census": "NRA source census:192 modules parsed, existing mf_device.py:783 omission. Syntax/lexical scope only.",
     "unchanged": "Scientific photographs, STL geometry and validation data are unchanged. Four bottom/aligned mask pairs were regenerated from their existing geometry after deleting only the stale recipe annotation.",
     "shared_consumers": "Figure 1 panel D has two declared axes occupying separate cells; its subfigure exporter accepts the declared axis group. Figure 5 header centers derive from the existing inset bounds; repeated per-row captions and differing background colors were deleted.",
-    "run": "Real Figure1/2/5 authoring and all their standalone subfigure exports completed. Final placed-page inspection follows.",
+    "run": "Figure1/2 authoring and standalone exports rerun for larger1C/D and grid-aligned2A/C/F badges; Figure5 retained from7b5a9b0. Combined review uses authored image widths rather than globally enlarging supplement images. Actual combined-PDF caption/table placement must be checked.",
     "limits": "Artwork/layout and declared-input checks only, not scientific analysis or fresh dimensional metrology. A placed-page reading build is still required.",
     "corner_labels": "Bare labels retain physical image-header clearance; A parameter block centered within its white input box, rows lowered relative to separator rules.",
     "dimension_label": "Figure2B4.40mm uses the same unbacked dimension style as its siblings, on the extended blue backdrop."
   },
-  "render_source_commit": "603333f57b201dfd1e372aa726b2e403aea61d2f"
+  "render_source_commit": "b9c89f3801259d0438363f73f8be1f1900375538"
 }
