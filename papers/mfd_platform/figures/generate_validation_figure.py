@@ -333,7 +333,7 @@ class TracerScale:
         # Montage gutters are not physical distances; use one device's well pair.
         bar = 5000 * span / self.spacing_um
         ax.plot([100, 100 + bar], [image.height + 190, image.height + 190], color="black", linewidth=2)
-        ax.text(600, image.height + 190, "~5 mm", color="black", fontsize=8, va="center")
+        ax.text(600, image.height + 190, "5 mm", color="black", fontsize=8, va="center")
 
 
 @dataclass(frozen=True)
