@@ -108,6 +108,16 @@ assembled device for aqueous coating and culture (C6).
    surface and make it hydrophilic. Begin aqueous coating within 15 min of
    plasma treatment.
 
+## Shared fluorescence-imaging settings
+
+Acquire the tracer images in Section D and CTB images in Section F in widefield
+mode on a PerkinElmer Opera Phenix Plus using a 10×/0.30 NA objective, 2 × 2
+camera binning, and 100 ms fluorescence exposures. Use red and green channels
+suited to the paired tracers in Section D. For CTB imaging, use the built-in laser
+autofocus, 640 nm excitation and 706 nm emission; acquire accompanying
+brightfield images with a 10 ms exposure. The effective pixel size is 1.187 µm.
+Keep exposure and optical settings constant within each assay.
+
 ## D. Compare tracer redistribution between compartments
 
 1. Reserve 24 assembled two-compartment devices for the directional fluid movement
@@ -116,13 +126,11 @@ assembled device for aqueous coating and culture (C6).
    each at a 1:1000 dilution in phosphate-buffered saline (PBS).
 3. Add 25 µL Alexa Fluor 568 solution to the left compartment of each device.
 4. Add 50 µL Alexa Fluor 488 solution to the right compartment.
-5. Image the complete device set immediately after loading (Hour 0).
+5. Image the complete device set immediately after loading (Hour 0) using the
+   shared fluorescence-imaging settings above.
 6. Keep the devices in a cell-culture incubator for 72 h without replenishing
    either compartment or adjusting the volumes, then image the same devices.
-7. Acquire images in widefield mode using the same 10×/0.30 NA objective,
-   2 × 2 camera binning, and 100 ms fluorescence exposure used for the CTB
-   imaging, with green and red channels suited to the two fluorophores.
-8. Compare green fluorescence in the initially lower-volume left compartment
+7. Compare green fluorescence in the initially lower-volume left compartment
    and red fluorescence in the right compartment between Hour 0 and 72 h.
 
 The two images do not measure flow rate or establish how long the initial volume
@@ -166,12 +174,8 @@ transport it back to their cell bodies.
 2. After adding CTB, keep 50 µL in the soma compartment and 25 µL in the
    distal compartment.
 3. Incubate for 24 h.
-4. At DIV11, collect images in widefield mode on a PerkinElmer Opera
-   Phenix Plus using a 10×/0.30 NA objective, 2 × 2 camera binning, and the
-   built-in laser autofocus. Acquire brightfield images with a 10 ms exposure
-   and Alexa 647 fluorescence with 640 nm excitation, 706 nm emission, and a
-   100 ms exposure. The effective pixel size is 1.187 µm. Use the same
-   exposure and optical settings for all plates.
+4. At DIV11, collect brightfield and Alexa 647 images using the shared
+   fluorescence-imaging settings above.
 5. Collect overlapping images and stitch them into one image per device. In this
    experiment, Plates 1 and 2 used 35 imaging positions per device (7 × 5 grid),
    and Plate 3 used 42 positions (7 × 6 grid), with approximately 10% overlap.
