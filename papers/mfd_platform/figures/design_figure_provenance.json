@@ -1,8 +1,8 @@
 {
-  "validation_scope": "Figure1 panel permutation: D is the insert array, E the frame and F the single insert. The existing axes move with their category backgrounds; A output references, badges, manuscript caption and text references match. Original geometry, dimensions, photographs and other figure assets are unchanged.",
+  "validation_scope": "Figure1 corrected column alignment: B/E are the single mask/insert, C/F are the wafer mask/insert array, and D/G are the frame/plate photograph. The existing axes move with their category backgrounds; A output references, badges, manuscript caption and text references match. Original geometry, dimensions, photographs and other figure assets are unchanged.",
   "output_sha256": {
-    "rendered/openmfd_design.pdf": "9869db3200acb70edeca8b3233a458693c6ecd8fce28aba8b8dc93b839ad22a0",
-    "rendered_docx/openmfd_design.png": "63ffa5c7c896bd0b2fc1dc2b6c9b56cd744e646dd67975b754a6fa00e2e85543",
+    "rendered/openmfd_design.pdf": "c3a4f0e0c9f690c664a381db3e852100172e41d28acae7e9bb2477f5c415e1b6",
+    "rendered_docx/openmfd_design.png": "4791cf190333d75c83ea04b758cf0bd2b179e62f5c864ba83c52ec70cd927296",
     "rendered/insert_bonding.pdf": "9245787349f1c44f7dfdece4d1739c85d71a5e27cdc41c39b9e276bd93d4abdc",
     "rendered_docx/insert_bonding.png": "756963637921c39d400dde8470a961f039ae906722140a96d0781519d917d9dd",
     "rendered/generalizability.pdf": "6aa3bd593a0eb198985594302f662264563889e57ea5204632410906a12b4470",
@@ -94,7 +94,7 @@
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
     "figures/generate_bonding_fixture_figure.py": "db4f0f107969d9497aca12e5f43a2f296ba636370f75b38e8389e6994ebeddac",
     "figures/generate_generalizability_figure.py": "bddcb1e2c19d30f62407efde7dfeb28cdcfd2554257425a95f362c85331b65ad",
-    "figures/generate_openmfd_design_figure.py": "be3d5f30260c200351a85580c2d269518a465c8bf8f2aaa1848c5315607b5e4c",
+    "figures/generate_openmfd_design_figure.py": "651b8ab90f887f39eefbd655468e5e3fd227656b92a1a7e99b87385ce0fe7539",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
   "source_scope": "Three generators, the OpenMFD package, retained DXF/STL assets in the four selected design folders, frame STL and five source photographs. This is an explicit asset-set fingerprint, not a complete dynamic import or minimal file-read trace.",
