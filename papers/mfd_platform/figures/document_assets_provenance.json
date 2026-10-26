@@ -1,11 +1,54 @@
 {
-  "validation_scope": "Retained document assets captured before manuscript cutover; no scientific rerun or fresh rendering proof.",
+  "validation_scope": "Figure4 redrawn through current typed image/count owners from original stitched display crops, original saved ROI outlines and unchanged72-count CSV with the author-confirmed67-device selection. Actual final PNG inspected: paired black-on-white views,500\u00b5m bars, mean bars behind device dots, SD whiskers and n22/21/24. No segmentation/counting rerun. Supplementary FiguresS1/S2 remain byte-identical retained assets, not freshly rendered.",
   "output_sha256": {
     "rendered/supp_fig_s1_no_lp360.pdf": "7586c435edd4377245a27b2f3987965753ca621ad08cf8990f835743184f3b68",
     "rendered_docx/supp_fig_s1_no_lp360.png": "b4aef8aa6ccb7357e6a814d5c9d18ea28d842e0c22e109d3d552f5f97807202f",
     "rendered/supp_fig_s2_delamination.pdf": "1b3d51eb42efda4812b4deb51522942edeb6df4b75cab06f96cc9b6b12a42f69",
     "rendered_docx/supp_fig_s2_delamination.png": "6a0604755566d1c651db955df795139cb92a47c95d7478282269281856442551",
-    "rendered/validation.pdf": "a767c4f3114fc43e8ca989a01286042f64e62e031fc34896aac9c034f8c91e86",
-    "rendered_docx/validation.png": "6fd5ee6a93f0238d9ad6aa834de2d024bd3f432cb6dd6863f62f37ed03eb0ed1"
+    "rendered/validation.pdf": "1fd915a8d102c5f122190ba85101d0b19368645b1ad5c68a2b296e3cd20427c5",
+    "rendered_docx/validation.png": "d6e3903fef9399375356fe26985d20f01f87fc3b3db6234003bfaf578d5b2c14"
+  },
+  "source_sha256": {
+    "figures/generate_validation_figure.py": "da761985464bd92e1bdd12c90a847cfece036eecde992561467526a3a3abb093",
+    "figures/render_figures.py": "3d310b35cd13fc432612565587cb50ac5591682d38ee779bce22b5f3fbc29dcb",
+    "supplementary/validation/sources.json": "048e18cabdd1564baedab1a974eb903913fd6f861895a2caa4e21a6f4a1ea5b8",
+    "supplementary/validation/ctb_device_counts.csv": "261097e6ac195563a0c93688645437b1e7fcb0f9b3015bd84e0342d65a688ce3",
+    "supplementary/validation/p1_R03C04_ctb.png": "6dfaf2f4d11dd1195b427526a5b2a292686d6afc03f572d276300372fed54acd",
+    "supplementary/validation/p2_R03C02_ctb.png": "cdbc49c6cd56b69dfb70dd7757cb4de81de1da7f1ba548f2158e348c8c75c68b",
+    "supplementary/validation/p3_R04C03_ctb.png": "74da6716350f0c3006c0ce65b6132e4737ef73774174fd86f7d29619826651ec",
+    "supplementary/validation/p1_R03C04_outlines.json": "b3bb2593d94b55adaf98156b8176cc92c13f4a4484bc64f1925baeee63052838",
+    "supplementary/validation/p2_R03C02_outlines.json": "665739f016b30760b22ea63ffbc7452ec3d3f0dd08f6ac83c27bf07c21ed834c",
+    "supplementary/validation/p3_R04C03_outlines.json": "7d0c8f2e12fed7fa0718f8c4891dbfc5d462baa58a8e248047e81db0afb39a34",
+    "figures/final_drop/Fig5_plate_layout_validation/dye_gradient_day0.png": "da64f2eb0d8da7aa84f1a7cae4ad1dabf505f3453cb9ba45139b50801ba2f286",
+    "figures/final_drop/Fig5_plate_layout_validation/dye_gradient_day3.png": "f0b93f6fe2862570c052cda9406a35f128edbd0852b7f11e70856c85514829b4"
+  },
+  "render_source_commit": "73c940b3c52cd3364a4ac6126d9128d5fec7253a",
+  "command": [
+    "nice",
+    "-n",
+    "15",
+    "timeout",
+    "-s",
+    "INT",
+    "120",
+    ".venv/bin/python",
+    "-u",
+    "-X",
+    "faulthandler",
+    "papers/mfd_platform/figures/generate_validation_figure.py"
+  ],
+  "runtime": {
+    "python": "3.14.7",
+    "matplotlib": "3.10.9",
+    "numpy": "2.4.4",
+    "pillow": "12.2.0",
+    "metaclass-registry": "0.2.1"
+  },
+  "verification": {
+    "source_evidence": "NRA before/after:192 parsed modules,194 classes; existing mf_device.py:783 syntax omission. Syntax/import/lexical consumers only, not dynamic binding proof. CtbView decodes outlines once and owns image/outline calibration; PlateCounts uses the existing inclusion-family summary. Default Figure4 CLI no longer rewrites the width figure.",
+    "author_decision": "Original October15 session lines13665/13674 identify analysis artifacts in five devices;13694/13784 approve extraP1 exclusions for cell counts only. All72 PRE values and both flag histories preserved.",
+    "image_evidence": "Original template-match CSVs plus saved fixed-crop declaration; three original stitched images cropped without rerunning registration. Original ROI overlays visually align. Native calibration checked against acquisition XML for each plate. sources.json carries raw-source/archive/XML hashes and crop coordinates.",
+    "preserved": "All four prior Figure4 source/published hashes verified in pushed3cc8034 history; protected V10,counts,widths and pin measurements unchanged. Width PDF/PNG unchanged. SupplementS1/S2 outputs validated against prior receipt.",
+    "limits": "Exact historical software/run configuration, positivity/manual-correction provenance and ethics remain open. Display reconstruction does not establish the historical run. Placed-page and final portable reading checks still required."
   }
 }
