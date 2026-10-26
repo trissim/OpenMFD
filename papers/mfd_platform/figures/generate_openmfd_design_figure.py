@@ -928,15 +928,13 @@ def build_figure() -> tuple[plt.Figure, dict[str, tuple[plt.Axes, ...]]]:
     pad_y = FIGURE_ONE_LAYOUT.cell_padding_inches / fig.get_figheight()
     for ax in all_axes:
         bounds = ax.get_position()
-        fig.add_artist(FancyBboxPatch(
+        fig.add_artist(Rectangle(
             (bounds.x0 - pad_x, bounds.y0 - pad_y),
             bounds.width + 2 * pad_x,
             bounds.height + 2 * pad_y,
             transform=fig.transFigure,
-            boxstyle="round,pad=0.002,rounding_size=0.008",
             facecolor=COLORS["paper"],
-            edgecolor=COLORS["grid"],
-            linewidth=0.8,
+            edgecolor="none",
             clip_on=False,
             zorder=-10,
         ))
