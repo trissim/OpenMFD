@@ -13,11 +13,14 @@ fail rather than being silently omitted. The old paper.md path is only a pointer
 
 ## Supplementary text and data
 
-The reading copy contains three tables, two illustrated fabrication notes, and
-the two final protocols. Individual pin heights and the detailed resin-insert
-and HIPS printer profiles are separate CSV data files, listed in
+The supplement declaration includes three tables, two illustrated fabrication
+notes, the apparent-channel-width note, and the two final protocols. Individual
+pin heights, printer profiles, apparent widths and retained per-device counts
+are separate data files, listed in
 [supplementary/Supplementary_data.md](supplementary/Supplementary_data.md).
-The data index also links the frame-printing G-code and microscope XML file.
+The data index also links the width-image crops and native crop bounds, both
+saved count-flag sets, the frame-printing G-code and microscope XML file. The
+count source and final inclusion decisions for Figure 4 remain unresolved.
 Supply these linked files with the supplement when preparing submission files;
 the build records and retains them as supporting inputs rather than typesetting
 every measurement and setting.
@@ -64,8 +67,8 @@ fallback to a different engine.
 
 Canonical figure references remain stable PDFs in figures/rendered. The local
 preparation owner projects them to existing rendered_docx PNGs for Word; missing
-projections fail, without launching a renderer. The small retained-asset receipt
-checks all14 current PDF/PNG assets. This is reused presentation evidence, not
+projections fail, without launching a renderer. The figure receipts check the declared PDF/PNG pairs. The apparent-width pair
+is published from its existing authored files without invoking the CTB renderer. This is reused presentation evidence, not
 fresh biological analysis or proof of regenerated figure sources.
 
 Existing scientific/authoring workflows remain in figures/ and are separate

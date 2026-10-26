@@ -6,8 +6,10 @@ regenerate scientific figures.
 
 `FigureRenderSpec` in `../render_figures.py` owns each published PDF/PNG pair.
 The frozen validation figure and retained supplement pairs are verified in place.
-`GeneratedFigure` additionally
-owns its source basename, producer script and copying the authored pair. Shared
+`AuthoredFigure` owns the source basename and copying an existing authored pair.
+`GeneratedFigure` inherits that behavior and additionally owns a producer script.
+The apparent-width figure uses `AuthoredFigure`: publication never runs the
+validation renderer. Shared
 `publish()` requires both formats before writing either. The manuscript sequence
 supplies the order; there is no separate generator roster.
 

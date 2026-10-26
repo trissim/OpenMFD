@@ -50,9 +50,9 @@ class FigureRenderSpec:
 
 
 @dataclass(frozen=True, kw_only=True)
-class GeneratedFigure(FigureRenderSpec):
+class AuthoredFigure(FigureRenderSpec):
+    """Publish an existing authored pair without implying a producer is safe."""
     folder_name: str
-    script: Path
     source_stem: str = "draft_figure"
 
     @property
@@ -67,14 +67,19 @@ class GeneratedFigure(FigureRenderSpec):
     def source_png(self) -> Path:
         return self.source_base.with_suffix(".png")
 
-    def generate_source(self) -> None:
-        subprocess.run([sys.executable, str(self.script)], check=True)
-
     def write_outputs(self) -> None:
         RENDERED.mkdir(parents=True, exist_ok=True)
         RENDERED_DOCX.mkdir(parents=True, exist_ok=True)
         shutil.copy2(self.source_pdf, self.published_pdf)
         shutil.copy2(self.source_png, self.published_png)
+
+
+@dataclass(frozen=True, kw_only=True)
+class GeneratedFigure(AuthoredFigure):
+    script: Path
+
+    def generate_source(self) -> None:
+        subprocess.run([sys.executable, str(self.script)], check=True)
 
 
 # Authored manuscript order, not type discovery. Producers belong to their figures.
@@ -100,6 +105,10 @@ FIGURE_SPECS = (
     ),
     FigureRenderSpec("supp_fig_s1_no_lp360.pdf"),
     FigureRenderSpec("supp_fig_s2_delamination.pdf"),
+    AuthoredFigure(
+        "channel_widths.pdf", folder_name="Fig5_plate_layout_validation",
+        source_stem="channel_widths",
+    ),
 )
 
 

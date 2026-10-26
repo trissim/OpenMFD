@@ -42,6 +42,7 @@ SUPPLEMENT = DocumentDefinition(
         Path('supplementary/Supplementary_Table_S3_mold_use.md'),
         Path('supplementary/Supplementary_Note_S1_LP360_filter.md'),
         Path('supplementary/Supplementary_Note_S2_base_layer_adhesion.md'),
+        Path('supplementary/Supplementary_Note_S3_apparent_channel_widths.md'),
         Path('supplementary/Supplementary_Protocol_S1_device_assembly_culture_and_CTB.md'),
         Path('supplementary/Supplementary_Protocol_S2_hybrid_mold_fabrication.md'),
     ),

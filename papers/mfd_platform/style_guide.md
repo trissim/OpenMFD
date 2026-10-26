@@ -9,6 +9,13 @@
 - Write positively from demonstrated results. State limits that change interpretation where they belong, rather than repeating defensive qualifications in the abstract, Results, Discussion, and conclusion.
 - Describe the final working process. Keep development failures only when they explain a necessary step or the evidence for a result.
 
+## Paragraph and sentence flow
+
+- Read the first sentence of every paragraph in order. Those sentences alone should carry the paper's argument, with each paragraph developing the expectation its opening creates.
+- Put familiar information before new information. Explain a new term when it appears, keep pronoun references local, and avoid making the reader retain unexplained objects across clauses or paragraphs.
+- In Methods, frequently state the concrete purpose before the action: `To keep the wells open, we poured PDMS below the insert tops.` Name the manipulation and its consequence rather than presenting an unexplained recipe.
+- Reference every figure panel meaningfully in the body, not only in its caption. A range is appropriate when the sentence explains the contents represented by every panel in that range; a blanket panel list is not an explanation.
+
 ## Anti-Pattern: Meta-Paper Framing
 
 Avoid sentences that describe the paper's logic, the authors' reasoning, or the scope of a claim instead of describing the work itself. These phrases often sound self-referential and make the prose feel dry.
@@ -42,6 +49,7 @@ Examples:
 
 - Keep the final reproducible protocols, concise design comparisons, and useful figures in the typeset supplement.
 - Supply individual measurements and detailed printer or instrument profiles as supplementary data files. Preserve every value and unit, explain the file contents, and update all references when tables move.
+- Give each supplementary reference a reason at that exact location. Explain the relevant purpose or observation first, then say what the protocol, table, figure or data file supplies. Do not interrupt a sentence with a label, send readers to unrelated material, or use cross-references as substitutes for an explanation.
 - A supplement is not a complete development log. Retain observations that support a process choice without retelling every failed attempt.
 
 ## Preferred Framing
