@@ -134,9 +134,6 @@ Keep exposure and optical settings constant within each assay.
 7. Compare green fluorescence in the initially lower-volume left compartment
    and red fluorescence in the right compartment between Hour 0 and 72 h.
 
-The two images do not measure flow rate or establish how long the initial volume
-difference persisted.
-
 ## E. Coat and seed primary cortical neurons
 
 <!-- Author confirmation required before submission: identify the tissue-procurement/animal-use committee, applicable guidelines and approval identifier, or the applicable source/exemption. The cited isolation method does not establish approval for this experiment. -->
