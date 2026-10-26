@@ -18,6 +18,7 @@ devices. Use up to 50 µL per well in this plate.
 
 - Completed parylene-coated hybrid mold (Supplementary Protocol S2).
 - Sylgard 184 PDMS base and curing agent.
+- 60 mL syringe for dispensing PDMS into the wafer mold.
 - Vacuum desiccator and 100°C oven.
 - Industrial paper guillotine and clean razor blades.
 - Coverslip glass, 110 × 74 × 0.17 mm.
@@ -48,8 +49,9 @@ for cell survival and joint strength in the complete framed device.
    mold.
 2. Mix Sylgard 184 at a 10:1 base:curing-agent ratio. Approximately 35 mL total
    mixture is sufficient for one wafer mold.
-3. Pour approximately 30 mL PDMS over the mold, stopping below the insert tops
-   to leave the wells open.
+3. Transfer approximately 30 mL of the mixed PDMS into a 60 mL syringe, then
+   dispense it over the mold, stopping below the insert tops to leave the wells
+   open.
 4. Load the filled molds into the six-shelf metal wafer rack and place the rack
    in the cylindrical vacuum chamber. Degas until visible bubbles are removed
    (typically 10–30 min; approximately −15 inHg in this setup).
