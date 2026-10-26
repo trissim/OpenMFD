@@ -1,15 +1,15 @@
 {
-  "validation_scope": "Figure4 image-row heights derive from source pixel aspect and admitted width, aligning B with A and filling the space beside the smaller C. CTB and Count labels share the unchanged calibrated crop and saved segmentation. Hour72 uses a disclosed shared linear RGB gain of1.2 for display only; raw tracer files unchanged. All72 counts and the approved67 cohort unchanged; no analysis rerun.",
+  "validation_scope": "Figure4 fills admitted image width using source aspect, aligns A/B, and places the narrower chart heading above C rather than over B. CTB and Count labels retain identical calibrated crop, saved outlines and unchanged67-of72 cohort. Hour72 shared linear RGB display gain1.2 is disclosed; source images unchanged.",
   "output_sha256": {
     "rendered/supp_fig_s1_no_lp360.pdf": "7586c435edd4377245a27b2f3987965753ca621ad08cf8990f835743184f3b68",
     "rendered_docx/supp_fig_s1_no_lp360.png": "b4aef8aa6ccb7357e6a814d5c9d18ea28d842e0c22e109d3d552f5f97807202f",
     "rendered/supp_fig_s2_delamination.pdf": "1b3d51eb42efda4812b4deb51522942edeb6df4b75cab06f96cc9b6b12a42f69",
     "rendered_docx/supp_fig_s2_delamination.png": "6a0604755566d1c651db955df795139cb92a47c95d7478282269281856442551",
-    "rendered/validation.pdf": "c2952397c0c0f67c7015b42bb881332d3869fe2583b089b2501adf95a652f107",
-    "rendered_docx/validation.png": "8713d1c820e568fd6ad124356959c32eaac3e0727ec1010d6c8422d2c05120ae"
+    "rendered/validation.pdf": "a962f969c0898c2a4ae7708ca2aed2df74e1d192591d2ba4ac8f2c428d2d4ced",
+    "rendered_docx/validation.png": "24c26e41e0b18cc8ed33f83b4b450d9205e7984bd8d0ab452ffc68590e613c9e"
   },
   "source_sha256": {
-    "figures/generate_validation_figure.py": "c6309b1dfe28acfad31e5a028f2c489cddec72a8cf5455943e10924321e169d1",
+    "figures/generate_validation_figure.py": "9570a1a659704ce24b9b0a379a90fc76cb126a5d2997ae006a592ea340869e5e",
     "figures/render_figures.py": "3d310b35cd13fc432612565587cb50ac5591682d38ee779bce22b5f3fbc29dcb",
     "supplementary/validation/sources.json": "048e18cabdd1564baedab1a974eb903913fd6f861895a2caa4e21a6f4a1ea5b8",
     "supplementary/validation/ctb_device_counts.csv": "261097e6ac195563a0c93688645437b1e7fcb0f9b3015bd84e0342d65a688ce3",
@@ -22,7 +22,7 @@
     "figures/final_drop/Fig5_plate_layout_validation/dye_gradient_day0.png": "da64f2eb0d8da7aa84f1a7cae4ad1dabf505f3453cb9ba45139b50801ba2f286",
     "figures/final_drop/Fig5_plate_layout_validation/dye_gradient_day3.png": "f0b93f6fe2862570c052cda9406a35f128edbd0852b7f11e70856c85514829b4"
   },
-  "render_source_commit": "6310b0a0153e1ebff31f730d8820ee4113967929",
+  "render_source_commit": "9cdc8076f74a9944242e9d3ce095673aefb313a1",
   "command": [
     "nice",
     "-n",

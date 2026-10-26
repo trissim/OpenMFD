@@ -1,12 +1,12 @@
 {
-  "validation_scope": "Figure1 full-width A over six lettered cells B-G, borderless pale backgrounds linked to output colors. Three standard callouts only. Figure5 four column headers once on white, row titles on white and uniformly shaded image rows. Source photographs and CAD geometry unchanged.",
+  "validation_scope": "Figure1 full-width A and letter-only B-G; three output callouts and faint category tints. Figure5 headings on white with uniformly shaded image bands; all four image cards derive vertical bounds from LabeledPanel.image_band. Final renderer measured equal image centers in each of the three rows. Standalone assets and underlying CAD geometry unchanged.",
   "output_sha256": {
     "rendered/openmfd_design.pdf": "8e55e9168913b2639219d2d4a7db6e71de4e03916f56332f4e874d6b70e20abf",
     "rendered_docx/openmfd_design.png": "df6c1489425eaf4c6248fd0a1c6e6edfed66736da4905cf5b52abe646331966b",
     "rendered/insert_bonding.pdf": "c20556de2549c47f0f7b41dbe2bc2bc58f79d857477672ba248a88805a18adf7",
     "rendered_docx/insert_bonding.png": "d43b1cba7f34c76fc5817a0e5c3ebae63b961f49f4f58a6b956db83762493e66",
-    "rendered/generalizability.pdf": "5368957cdc0039220a0ab8367a7448a80d1661ef6185b04a28ab2b6c8f776576",
-    "rendered_docx/generalizability.png": "c055426c680d334a9c19f3211298211dd28266f16617012791faabd1a0f2ff7c"
+    "rendered/generalizability.pdf": "60f9ae71bb025e2f81a882222aa94b4d9de8b9d944f9553e1d7711d1c6e8aee0",
+    "rendered_docx/generalizability.png": "0f0bcfd2b6e2f0fe4536c8e9ea35a131e5463c3060aa54dc9a3022ef8894078a"
   },
   "source_sha256": {
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_aligned.dxf": "c48e557b2b5bfb84aac45707afe364c6dca94aba941087d78baa6adf0132d777",
@@ -93,7 +93,7 @@
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly.jpg": "080a75480b4271047076ae48e1170d39c79da6a212c59484c55a56a9748ab4a7",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
     "figures/generate_bonding_fixture_figure.py": "c5a18a04c1d750ca4a88835c28bb942909c4675fb07c4c30d830b741ae976c3a",
-    "figures/generate_generalizability_figure.py": "f27ac72e26c85e940262fe91a0c809246748f9c0d7cab5d753975a22bf487b67",
+    "figures/generate_generalizability_figure.py": "700e63c1fd5ee010d2341b9d13f057e65dfc365d41306b05cef29a0db5b62f0d",
     "figures/generate_openmfd_design_figure.py": "673ad79356296bfd891e06c31464eb391b52de05e5599a5a5471e5b0bb8c8a65",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
@@ -119,7 +119,7 @@
     "source_census": "NRA source census:192 modules parsed, existing mf_device.py:783 omission. Syntax/lexical scope only.",
     "unchanged": "Scientific photographs, STL geometry and validation data are unchanged. Four bottom/aligned mask pairs were regenerated from their existing geometry after deleting only the stale recipe annotation.",
     "shared_consumers": "Figure 1 panel D has two declared axes occupying separate cells; its subfigure exporter accepts the declared axis group. Figure 5 header centers derive from the existing inset bounds; repeated per-row captions and differing background colors were deleted.",
-    "run": "Figure1 CLI and Figure5 composite render completed with existing dependencies. Exact build and final placed-page inspection follow.",
+    "run": "Figure5 composite rendered and measured shared row centers with existing dependencies. Figure1 retained from its successful scalar-Axes export. Exact manuscript build and final placed-page inspection follow.",
     "limits": "Artwork/layout and declared-input checks only, not scientific analysis or fresh dimensional metrology. A placed-page reading build is still required."
   },
   "render_source_commit": "6310b0a0153e1ebff31f730d8820ee4113967929"
