@@ -1,12 +1,12 @@
 {
-  "validation_scope": "Fresh Figures 1, 2 and 5 rendered on 2026-10-25 from retained CAD and photo inputs. Diagram/layout rendering only: no biological count/validation artwork, calibration, inclusion flags or scientific analysis regenerated.",
+  "validation_scope": "Plain panel letters, clear headers and compact Figure5 rendered from retained CAD/photos at 10c6d2ad46c98f7825164a1881b1f18d1f0a445e. No scientific analysis or validation artwork regenerated.",
   "output_sha256": {
-    "rendered/openmfd_design.pdf": "c80e4bf730d8c03ec6702e4fe485eaf83a3162fba115b79b31529644803c32d7",
-    "rendered_docx/openmfd_design.png": "65d0e9c778a31c6fef883fb75a8d828b10f0af937ff9afa6f6b18212d213c2fc",
-    "rendered/insert_bonding.pdf": "6a0572d51a4fb3fbd2dfacdc3b0930ffe905f4bdce394456e39711f697b5ef4b",
-    "rendered_docx/insert_bonding.png": "61f572c1879435703fa8f0357bfe8bba1ed496f951b5f1345c0169c6b44829e0",
-    "rendered/generalizability.pdf": "a663b775a158332e2a6a4242f35b140721892c3cf641125b8f456b27537a6982",
-    "rendered_docx/generalizability.png": "ecf0cf58d7535840c0559979022864eb2d8157efd191ad8594bb97ee1908373b"
+    "rendered/openmfd_design.pdf": "50faaaf266c84a61be9cc089db04fffc5a4ead128c7a99adae161eef61750bf8",
+    "rendered_docx/openmfd_design.png": "b2efe28554c25ee1843520064c4ba8128b35aa57d3ead4acc7853e8e26f2e0e2",
+    "rendered/insert_bonding.pdf": "c20556de2549c47f0f7b41dbe2bc2bc58f79d857477672ba248a88805a18adf7",
+    "rendered_docx/insert_bonding.png": "d43b1cba7f34c76fc5817a0e5c3ebae63b961f49f4f58a6b956db83762493e66",
+    "rendered/generalizability.pdf": "30b1eb1afa2dc65c1879cd14875f8912ff1dd7fed7f6a9e34bb1978092708d1b",
+    "rendered_docx/generalizability.png": "a27fe6d4b04b457aad50a99f215dde163600b7ac867e97d6d6b1ddfb0ce4049e"
   },
   "source_sha256": {
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_aligned.dxf": "cdb32c55a3fca993b322aec76a086b80c695952c3cc26d1b0b01b30e464f53aa",
@@ -93,8 +93,8 @@
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly.jpg": "080a75480b4271047076ae48e1170d39c79da6a212c59484c55a56a9748ab4a7",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
     "figures/generate_bonding_fixture_figure.py": "c5a18a04c1d750ca4a88835c28bb942909c4675fb07c4c30d830b741ae976c3a",
-    "figures/generate_generalizability_figure.py": "943140b98b96ffeaf29eb6fd9d34d94c574503f8113a6627d795bf838cd1b7e1",
-    "figures/generate_openmfd_design_figure.py": "cf87701bdb7cb8f7c9992eec28fc720cf2a8692840ea8d6963442f33a1eb42f3",
+    "figures/generate_generalizability_figure.py": "50fa008f9e19cc876936c2a7b369f966e2168a4402273f601be944b51dd1c917",
+    "figures/generate_openmfd_design_figure.py": "f887cfd9d1d6c42bc3250e10561d27c6addf84d6849b2270b5f825e2201645df",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
   "source_scope": "Three generators, the OpenMFD package, retained DXF/STL assets in the four selected design folders, frame STL and five source photographs. This is an explicit asset-set fingerprint, not a complete dynamic import or minimal file-read trace.",
@@ -113,12 +113,12 @@
     "solidpython": "1.1.3"
   },
   "verification": {
-    "comparison_commit": "166c8248d9f374f1f09a3a97ca73f3e8936f8131",
-    "source_census": "NRA ModuleSyntaxIndex: same 56 MFD figure/biological/package modules; 86 classes before,98 after; zero parse omissions. Dynamic bindings and third-party internals are outside this syntax proof.",
-    "unchanged": "Prior refactor comparison at1c5f994: All five processed RGB photo arrays/source hashes match the preceding crop/contrast implementation exactly. Bonding configuration-derived cross-section geometry and all three layouts\u2019 DXF segments, insert meshes, grid values, PDMS scale and array-render values match. Figure placement and resampling intentionally change. Final label-only source comparison to1c5f994 permits only the specified label replacements and removal of an unused photo-title argument; all84other fingerprinted sources/assets match the prior receipt byte-for-byte. Runtime dependencies differ on desktop and are recorded above.",
-    "shared_consumers": "StlMesh,rotation_matrix,triangle_normals used by assembly/biological callers are AST-identical to the comparison commit. Assembly output is retained from its separate receipt; it was not rendered again.",
-    "run": "All three complete generator CLIs passed on the desktop on2026-10-25 from832ec92, including affected subfigure exports. No biological generator was invoked. Selected render_figure calls published only Figures1/2/5; no global refresh/cleanup.",
-    "limits": "Not dimensional metrology, a fresh dependency installation or final whole-paper acceptance. Figure4 retained composite is unchanged and has an unresolved source/generator/inclusion discrepancy; it is not scientifically accepted."
+    "comparison_commit": "832ec9290e925614d51012e53664cd8c9a2508a7",
+    "source_census": "NRA ModuleSyntaxIndex:192 parsed modules/190 classes; existing mf_device.py:783 syntax omission. Syntax/lexical evidence, not dynamic binding proof.",
+    "unchanged": "85 of 87 fingerprinted inputs are byte-identical to the preceding receipt. Only the two named generators changed. AST checks retain all other drawing/geometry code outside PanelBadge, PanelTitle, AxisBox.center_x, labeled caption/layout declarations and the Figure5 canvas height. Scientific data, source photos, CAD and geometry configurations were not altered.",
+    "shared_consumers": "Existing STL mesh, rotation/normal and photo-processing implementations are unchanged. Casting artwork retains its separate receipt and was not rendered again.",
+    "run": "Actual complete Figures1/2/5 generator CLIs passed on the existing desktop environment at 10c6d2ad46c98f7825164a1881b1f18d1f0a445e, including affected subfigure exports. Corrected header PNGs were inspected; the compact Figure5 PNG was inspected before publication. Existing spec.publish() publishes only these three pairs. No validation generator, biological analysis or bulk refresh/cleanup was invoked.",
+    "limits": "Layout/label rendering, not dimensional metrology, fresh dependency installation or whole-paper acceptance. Figure4 and its unresolved measurement-source/inclusion discrepancy remain unchanged. The placed manuscript pages still require a new reading build."
   },
-  "render_source_commit": "832ec9290e925614d51012e53664cd8c9a2508a7"
+  "render_source_commit": "10c6d2ad46c98f7825164a1881b1f18d1f0a445e"
 }
