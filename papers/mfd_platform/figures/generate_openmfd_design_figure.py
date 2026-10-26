@@ -14,7 +14,7 @@ from matplotlib.collections import LineCollection
 from matplotlib.collections import PolyCollection
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Rectangle
 from matplotlib.text import Text
-from matplotlib.transforms import Bbox, Transform
+from matplotlib.transforms import Transform
 from PIL import Image, ImageOps
 
 
@@ -864,21 +864,20 @@ def draw_plate_outputs(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfS
 
 def save_subfigure_images(
     fig: plt.Figure,
-    panels: dict[str, tuple[plt.Axes, ...]],
+    panels: dict[str, plt.Axes],
     output_dir: Path,
 ) -> None:
-    """Export declared panels, including panels composed from several axes."""
+    """Export declared panel axes and restore their visibility afterward."""
     subfigure_dir = output_dir / "subfigures"
     subfigure_dir.mkdir(parents=True, exist_ok=True)
     fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
-    all_axes = tuple(ax for members in panels.values() for ax in members)
-    visibility = {ax: ax.get_visible() for ax in all_axes}
+    visibility = {ax: ax.get_visible() for ax in panels.values()}
     try:
-        for label, members in panels.items():
-            for panel in all_axes:
-                panel.set_visible(panel in members and visibility[panel])
-            bbox = Bbox.union([ax.get_tightbbox(renderer) for ax in members]).expanded(1.03, 1.05)
+        for label, ax in panels.items():
+            for panel in panels.values():
+                panel.set_visible(panel is ax and visibility[panel])
+            bbox = ax.get_tightbbox(renderer).expanded(1.03, 1.05)
             bbox_inches = bbox.transformed(fig.dpi_scale_trans.inverted())
             fig.savefig(subfigure_dir / f"{label}.png", dpi=SUBFIGURE_DPI,
                         bbox_inches=bbox_inches, pad_inches=0.02)
@@ -887,7 +886,7 @@ def save_subfigure_images(
             ax.set_visible(visible)
 
 
-def build_figure() -> tuple[plt.Figure, dict[str, tuple[plt.Axes, ...]]]:
+def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
     cfg = TwoCompartmentDeviceConfig()
     dxf = DxfSources.from_generated_design()
     stl = StlSources.from_generated_design()
@@ -908,13 +907,13 @@ def build_figure() -> tuple[plt.Figure, dict[str, tuple[plt.Axes, ...]]]:
     f_ax = fig.add_subplot(grid[2, 2])
     all_axes = (a_ax, b_ax, c_ax, d_single_ax, d_array_ax, e_ax, f_ax)
     panels = {
-        "A": (a_ax,),
-        "B": (b_ax,),
-        "C": (c_ax,),
-        "D": (d_single_ax,),
-        "E": (d_array_ax,),
-        "F": (e_ax,),
-        "G": (f_ax,),
+        "A": a_ax,
+        "B": b_ax,
+        "C": c_ax,
+        "D": d_single_ax,
+        "E": d_array_ax,
+        "F": e_ax,
+        "G": f_ax,
     }
     for ax in all_axes:
         ax.set_facecolor("none")

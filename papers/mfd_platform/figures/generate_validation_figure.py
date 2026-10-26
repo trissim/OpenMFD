@@ -34,14 +34,16 @@ DATA_DIR = ROOT / "supplementary/validation"
 COLORS = ("#0072B2", "#D17800", "#00856A")
 PANEL_LABEL_GAP_INCHES = 0.08
 TRACER_SCALE_MARGIN_PX = 420
-FIGURE_SIZE = (7.0, 7.6)
+FIGURE_WIDTH_INCHES = 7.0
 FIGURE_LEFT = 0.045
 FIGURE_RIGHT = 0.99
 FIGURE_TOP = 0.97
 FIGURE_BOTTOM = 0.035
 FIGURE_ROW_GAP = 0.06
-COUNT_PANEL_FRACTION = 0.25
+COUNT_PANEL_FRACTION = 0.23
 IMAGE_PANEL_FRACTION = (1.0 - COUNT_PANEL_FRACTION) / 2.0
+COLUMN_GAP = 0.14
+IMAGE_PAIR_GAP = 0.02
 WireObject = Mapping[str, object]
 
 
@@ -253,11 +255,7 @@ class CtbView:
         image_ax.set_anchor("E")
         outline_ax.set_anchor("W")
         image_ax.set_title("CTB", fontsize=8, pad=3)
-        outline_ax.set_title("Outlines", fontsize=8, pad=3)
-        left = image_ax.get_position()
-        right = outline_ax.get_position()
-        image_ax.figure.text((left.x0 + right.x1) / 2, left.y1 + .025,
-                             f"{self.plate.label} / {self.device}", ha="center", fontsize=8)
+        outline_ax.set_title("Count labels", fontsize=8, pad=3)
 
 
 @dataclass(frozen=True)
@@ -276,11 +274,20 @@ class TracerFrame:
     day: int
     first_centre: Point
     second_centre: Point
+    display_gain: ClassVar[float] = 1.0
+
+    def display(self, image: Image.Image) -> Image.Image:
+        """Apply one linear display gain to every channel, preserving raw sources."""
+        return image.point(lambda value: min(255, round(value * self.display_gain)))
 
     @classmethod
     def decode(cls, day: int, values: Sequence[Sequence[float]]) -> Self:
         first, second = values
         return cls(day, Point.decode(first), Point.decode(second))
+
+
+class BrightenedTracerFrame(TracerFrame):
+    display_gain = 1.2
 
 
 @dataclass(frozen=True)
@@ -292,12 +299,12 @@ class TracerScale:
     def decode(cls, wire: WireObject) -> Self:
         return cls(float(cast(float, wire["spacing_um"])), (
             TracerFrame.decode(0, cast(Sequence[Sequence[float]], wire["day0_centres_xy"])),
-            TracerFrame.decode(3, cast(Sequence[Sequence[float]], wire["day3_centres_xy"])),
+            BrightenedTracerFrame.decode(3, cast(Sequence[Sequence[float]], wire["day3_centres_xy"])),
         ))
 
     def draw(self, ax: Axes, frame: TracerFrame) -> None:
         with Image.open(OUTPUT_DIR / f"dye_gradient_day{frame.day}.png") as source:
-            image = source.convert("RGB")
+            image = frame.display(source.convert("RGB"))
             ax.imshow(image)
         ax.set_axis_off()
         ax.set_ylim(image.height + TRACER_SCALE_MARGIN_PX, -.5)
@@ -390,17 +397,16 @@ def label_panel(fig: plt.Figure, ax: Axes, label: str, *, above: bool = False) -
     )
 
 
-def figure_row_heights(tracer: TracerScale) -> tuple[float, float, float]:
-    """Size tracer rows from their pixels so their image fills the text width."""
+def figure_row_heights(tracer: TracerScale, view: CtbView) -> tuple[float, float, float]:
+    """Fill the admitted widths; derive both image-row heights from their pixels."""
     with Image.open(OUTPUT_DIR / f"dye_gradient_day{tracer.frames[0].day}.png") as image:
         tracer_aspect = image.width / (image.height + TRACER_SCALE_MARGIN_PX)
-    panel_width_inches = FIGURE_SIZE[0] * (FIGURE_RIGHT - FIGURE_LEFT)
+    panel_width_inches = FIGURE_WIDTH_INCHES * (FIGURE_RIGHT - FIGURE_LEFT)
     tracer_height_inches = panel_width_inches / tracer_aspect
-    available_height_inches = FIGURE_SIZE[1] * (FIGURE_TOP - FIGURE_BOTTOM)
-    axes_height_inches = available_height_inches / (1 + 2 * FIGURE_ROW_GAP / 3)
-    lower_height_inches = axes_height_inches - 2 * tracer_height_inches
-    if lower_height_inches <= 0:
-        raise ValueError("Figure height cannot hold width-filling tracer panels")
+    column_width_inches = panel_width_inches / (1 + 2 * COLUMN_GAP / 3)
+    pair_width_inches = column_width_inches * (1 - COUNT_PANEL_FRACTION + COLUMN_GAP / 3)
+    image_width_inches = pair_width_inches / (2 + IMAGE_PAIR_GAP)
+    lower_height_inches = image_width_inches * view.shape.height / view.shape.width
     return tracer_height_inches, tracer_height_inches, lower_height_inches
 
 
@@ -410,18 +416,21 @@ def main() -> None:
     metadata = ValidationSources.read(DATA_DIR / "sources.json")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10, "pdf.fonttype": 42})
-    fig = plt.figure(figsize=FIGURE_SIZE, facecolor="white")
+    view = min(metadata.views, key=lambda candidate: candidate.plate)
+    row_heights = figure_row_heights(metadata.tracer, view)
+    figure_height = sum(row_heights) * (1 + 2 * FIGURE_ROW_GAP / 3) / (FIGURE_TOP - FIGURE_BOTTOM)
+    fig = plt.figure(figsize=(FIGURE_WIDTH_INCHES, figure_height), facecolor="white")
     grid = fig.add_gridspec(
         3,
         3,
-        height_ratios=figure_row_heights(metadata.tracer),
+        height_ratios=row_heights,
         width_ratios=(IMAGE_PANEL_FRACTION, IMAGE_PANEL_FRACTION, COUNT_PANEL_FRACTION),
         left=FIGURE_LEFT,
         right=FIGURE_RIGHT,
         top=FIGURE_TOP,
         bottom=FIGURE_BOTTOM,
         hspace=FIGURE_ROW_GAP,
-        wspace=.14,
+        wspace=COLUMN_GAP,
     )
     for i, frame in enumerate(metadata.tracer.frames):
         ax = fig.add_subplot(grid[i, :])
@@ -431,8 +440,7 @@ def main() -> None:
 
     # One large image pair shows the saved segmentation clearly; the count panel
     # beside it carries all three plates and every retained device observation.
-    view = min(metadata.views, key=lambda candidate: candidate.plate)
-    pair = grid[2, :2].subgridspec(1, 2, wspace=.02)
+    pair = grid[2, :2].subgridspec(1, 2, wspace=IMAGE_PAIR_GAP)
     image_ax = fig.add_subplot(pair[0, 0])
     outline_ax = fig.add_subplot(pair[0, 1])
     view.draw(image_ax, outline_ax)
@@ -441,7 +449,7 @@ def main() -> None:
     ax = fig.add_subplot(grid[2, 2])
     counts.draw(ax)
     ax.set_ylabel("CTB-positive cells", fontsize=9)
-    ax.tick_params(axis="x", labelsize=8.5)
+    ax.tick_params(axis="x", labelsize=8)
     ax.set_xlim(-.5, 2.5)
     ax.set_ylim(bottom=0)
     ax.spines[["top", "right"]].set_visible(False)
