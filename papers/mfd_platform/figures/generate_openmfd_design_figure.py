@@ -369,9 +369,9 @@ class FigureOneLayout:
 
 
 FIGURE_ONE_LAYOUT = FigureOneLayout(
-    figsize=(6.5, 5.8),
+    figsize=(6.5, 6.05),
     grid_widths=(1.0, 1.0, 1.0),
-    grid_heights=(1.65, 1.35, 1.55),
+    grid_heights=(1.65, 1.55, 1.55),
     column_gap=0.08,
     row_gap=0.08,
     cell_padding_inches=0.04,

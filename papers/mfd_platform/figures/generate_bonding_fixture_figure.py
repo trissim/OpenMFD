@@ -168,7 +168,9 @@ def draw_photo_panel(ax: plt.Axes, path: Path) -> None:
 
 
 def draw_labeled_photo_panel(ax: plt.Axes, path: Path, label: str) -> None:
-    draw_photo_panel(ax, path)
+    setup_axis(ax)
+    photo_ax = ax.inset_axes([0, 0, 1, 1])
+    draw_photo_panel(photo_ax, path)
     PanelBadge.draw(ax, 0.02, 0.96, label)
 
 
