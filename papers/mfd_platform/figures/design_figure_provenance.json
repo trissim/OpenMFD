@@ -1,12 +1,12 @@
 {
-  "validation_scope": "Figure 1 keeps full-width A above six visual cells with flat borderless backgrounds: B, C, D single-device inserts; D array, E and F. Figure 5 has four column headings once and a uniform background. Scientific inputs unchanged.",
+  "validation_scope": "Figure1 full-width A over six lettered cells B-G, borderless pale backgrounds linked to output colors. Three standard callouts only. Figure5 four column headers once on white, row titles on white and uniformly shaded image rows. Source photographs and CAD geometry unchanged.",
   "output_sha256": {
-    "rendered/openmfd_design.pdf": "498713e68eb7cf8f03c4d8ab05eaf8d8b94c0891090decfe748f2d0530e54bc2",
-    "rendered_docx/openmfd_design.png": "40d4ad4d23700eef2703bca68c3da75f8267ae25d46e24eafa58fe32824453cc",
+    "rendered/openmfd_design.pdf": "42c6a0b462c2142313473daef549185644d7a1f04a020da362641ce15153316f",
+    "rendered_docx/openmfd_design.png": "df6c1489425eaf4c6248fd0a1c6e6edfed66736da4905cf5b52abe646331966b",
     "rendered/insert_bonding.pdf": "c20556de2549c47f0f7b41dbe2bc2bc58f79d857477672ba248a88805a18adf7",
     "rendered_docx/insert_bonding.png": "d43b1cba7f34c76fc5817a0e5c3ebae63b961f49f4f58a6b956db83762493e66",
-    "rendered/generalizability.pdf": "799389db51392d12168595a70d0a4cc9a9db628054765112422512c4d91cc2ad",
-    "rendered_docx/generalizability.png": "c69b0892545401ef6f3f67bafea8c7abcf9cd42a00ad31a3fcb90145490b133b"
+    "rendered/generalizability.pdf": "5368957cdc0039220a0ab8367a7448a80d1661ef6185b04a28ab2b6c8f776576",
+    "rendered_docx/generalizability.png": "c055426c680d334a9c19f3211298211dd28266f16617012791faabd1a0f2ff7c"
   },
   "source_sha256": {
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_aligned.dxf": "c48e557b2b5bfb84aac45707afe364c6dca94aba941087d78baa6adf0132d777",
@@ -93,8 +93,8 @@
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly.jpg": "080a75480b4271047076ae48e1170d39c79da6a212c59484c55a56a9748ab4a7",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
     "figures/generate_bonding_fixture_figure.py": "c5a18a04c1d750ca4a88835c28bb942909c4675fb07c4c30d830b741ae976c3a",
-    "figures/generate_generalizability_figure.py": "180807a719fd420af50e610b9ec8ac7745c7ac4b9edc3cee85b61a1e5bfd57ea",
-    "figures/generate_openmfd_design_figure.py": "11d879b6147d9f0bab729917ad136dd73793ffa45e4c6a2a895b1c67c89b8e5c",
+    "figures/generate_generalizability_figure.py": "f27ac72e26c85e940262fe91a0c809246748f9c0d7cab5d753975a22bf487b67",
+    "figures/generate_openmfd_design_figure.py": "f8762e81520fdf3ed7e62d9781f9a268daef29ceb3939c5ca48a7bdaa9ad5b1e",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
   "source_scope": "Three generators, the OpenMFD package, retained DXF/STL assets in the four selected design folders, frame STL and five source photographs. This is an explicit asset-set fingerprint, not a complete dynamic import or minimal file-read trace.",
@@ -119,8 +119,8 @@
     "source_census": "NRA source census:192 modules parsed, existing mf_device.py:783 omission. Syntax/lexical scope only.",
     "unchanged": "Scientific photographs, STL geometry and validation data are unchanged. Four bottom/aligned mask pairs were regenerated from their existing geometry after deleting only the stale recipe annotation.",
     "shared_consumers": "Figure 1 panel D has two declared axes occupying separate cells; its subfigure exporter accepts the declared axis group. Figure 5 header centers derive from the existing inset bounds; repeated per-row captions and differing background colors were deleted.",
-    "run": "Figure1 CLI completed with borderless backgrounds. Figure5 shared-heading composite was previously rendered and inspected. Final exact manuscript build and placed-page inspection follow.",
+    "run": "Figure1 CLI and Figure5 composite render completed with existing dependencies. Exact build and final placed-page inspection follow.",
     "limits": "Artwork/layout and declared-input checks only, not scientific analysis or fresh dimensional metrology. A placed-page reading build is still required."
   },
-  "render_source_commit": "0c767b30b7a4c67ba89c5fc046ce624b1844141b"
+  "render_source_commit": "221c1cc4615d9970ccacc3d51138d6d747e127ca"
 }

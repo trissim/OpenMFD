@@ -8,7 +8,7 @@
     "figures/generate_device_assembly_protocol.py": "00cebbd2c1c009602849dd3460fde62c8e4b2a2fc4ee6a5fdb1d76ecc05a9778",
     "figures/blender_render_mesh_parts.py": "1d3268ce6f858d27fff7e16ae9d1280a06c1f2b092015cd86241a57dfc3563d2",
     "figures/blender_boolean_mesh.py": "2f4f3f9a6f8ee3c2cf87d965122b4843db73f1f8ea917e3950c3957ed8475420",
-    "figures/generate_openmfd_design_figure.py": "11d879b6147d9f0bab729917ad136dd73793ffa45e4c6a2a895b1c67c89b8e5c",
+    "figures/generate_openmfd_design_figure.py": "f8762e81520fdf3ed7e62d9781f9a268daef29ceb3939c5ca48a7bdaa9ad5b1e",
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_wells_insert.stl": "12cdca91d9edfe46b898aeb25ac9511380f122c5d137849819b1a75d803561ec",
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_single_bottom.dxf": "ba4a3767dda8fd7408481de7419e30ef6bf802ed00ffa658c05859ec757b09bb",
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_single_top.dxf": "e6ee7a1ae279bbf41198d3bcd49318bb77db21193990f4271b8069eb04e23c09",
@@ -48,5 +48,5 @@
   ],
   "inspection": "All nine steps rendered; actual final PNG inspected for row association, arrow shafts, adhesive/syringe separation and unchanged processing order. Same camera edge guard and scene geometry. This is not dimensional metrology.",
   "render_source_commit": "0a23af6c5fefa625ceaccd6fcc6091ed0ed6068c",
-  "source_update": "Shared Figure 1 module changed Figure 1 layout and Figure 5 imports only; assembly mesh, camera and projection declarations remain unchanged. Retained Figure 3 outputs remain byte-identical."
+  "source_update": "Shared style module changed Figure1-only callouts, layout and panel lettering. Retained Figure3 projection/camera/mesh and output hashes are unchanged."
 }
