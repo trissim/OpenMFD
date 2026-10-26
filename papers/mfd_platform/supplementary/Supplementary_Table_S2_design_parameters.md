@@ -1,9 +1,10 @@
 # Supplementary Table S2. Design parameters and adaptation
 
-Shared dimensions connect the photomasks, alignment pins, insert skirts, and
-frame. These are the nominal values used for the neuronal device, before
-parylene coating. When adapting a layout, assess printing accuracy, alignment,
-adhesive sealing, demolding, final dimensions, and assay performance together.
+Shared dimensions connect the photomasks, alignment pins, insert skirts and
+frame. The nominal design dimensions describe the neuronal device before
+parylene coating; the pin-height range is a measurement from one printed array.
+When adapting a layout, assess printing accuracy, alignment, adhesive sealing,
+demolding, final dimensions and assay performance together.
 
 | Feature | Values and relationships used here |
 |---|---|

@@ -88,6 +88,10 @@ for cell survival, joint strength, and leaks in the complete framed device.
 
 ## C. Assemble the framed plate
 
+The earlier plasma treatment activates PDMS and glass before they are bonded
+(B6). After frame assembly and adhesive curing, a second treatment prepares the
+assembled device for aqueous coating and culture (C6).
+
 1. Decontaminate the HIPS frame with 70% ethanol, allow it to dry, and invert it
    so that the adhesive groove surrounding the device opening faces upward.
 2. Dispense 0.5–1 mL LOCTITE SI 5140 into the upward-facing frame groove using
@@ -118,7 +122,10 @@ for cell survival, joint strength, and leaks in the complete framed device.
    imaging, with green and red channels suited to the two fluorophores.
 8. Compare green fluorescence in the initially lower-volume left compartment
    between Hour 0 and 72 h. The readout is qualitative tracer redistribution
-   from the higher-volume right compartment.
+   from the higher-volume right compartment after one unequal-volume loading.
+
+The two images do not measure flow rate or establish how long the initial volume
+difference persisted.
 
 ## E. Coat and seed primary cortical neurons
 
@@ -146,6 +153,11 @@ for cell survival, joint strength, and leaks in the complete framed device.
    above applied across all three plates.
 
 ## F. Perform CTB retrograde axon tracing and imaging
+
+CTB retrograde tracing tests whether neurons can take up a tracer through axons
+in the distal compartment and carry it back to their cell bodies. The tracer is
+applied distally, and labeled cell bodies are counted in the soma compartment
+24 h later.
 
 1. At DIV10, add CTB-647 to the 25 µL distal compartment at a final
    concentration of 1 µg/mL.

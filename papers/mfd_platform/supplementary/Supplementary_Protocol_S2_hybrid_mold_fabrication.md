@@ -105,8 +105,9 @@ the compressible backing allows all pins to seat.
 
 ## D. Bond inserts to the SU-8/SUEX wafer
 
-1. Transfer the insert array from the resin-printer build plate to a bonding
-   plate suitable for clamping against the full wafer.
+1. Move the flexible metal build plate carrying the insert array to a bonding
+   plate suitable for clamping against the full wafer. Keep the inserts on the
+   flexible plate in their printed relative positions.
 2. Place a 0.03125-inch-thick, 60A EPDM rubber sheet between the fixed magnet
    on the clamping build plate and the flexible metal build plate carrying
    the inserts.

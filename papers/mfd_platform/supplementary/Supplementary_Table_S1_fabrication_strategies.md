@@ -2,7 +2,7 @@
 
 Representative strategies for combining micrometer-scale features with millimeter-scale wells or other tall structures are summarized below. The comparison emphasizes the operations and equipment each strategy adds to conventional PDMS soft lithography.
 
-| Approach | Micrometer-scale features | Millimeter-scale wells or tall structures | Plate-format and automation compatibility | Added workflow and equipment | Representative references |
+| Approach | Micrometer-scale features | Millimeter-scale wells or tall structures | Format and production mode | Added workflow and equipment | Representative references |
 |---|---|---|---|---|---|
 | Conventional PDMS soft lithography with manual punching | SU-8 photolithography for micrometer-scale channels | Openings made with a biopsy punch after casting | Each opening is made separately after casting | Biopsy punching and manual debris removal during every device-production cycle | Baseline approach; see Taylor et al., 2005 |
 | CO2 laser micromachining of PDMS | Maskless laser-ablated trenches whose profile depends on power, pulse density, and traverse speed | Laser-ablated PDMS channels rather than cast well features | Computer-controlled but serial processing of PDMS sheets | CO2 laser processing during each device-production cycle | Holle et al., 2007 |
