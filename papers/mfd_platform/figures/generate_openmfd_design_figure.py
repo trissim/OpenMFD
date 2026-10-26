@@ -14,7 +14,7 @@ from matplotlib.collections import LineCollection
 from matplotlib.collections import PolyCollection
 from matplotlib.patches import FancyArrowPatch, FancyBboxPatch, Rectangle
 from matplotlib.text import Text
-from matplotlib.transforms import Transform
+from matplotlib.transforms import Bbox, Transform
 from PIL import Image, ImageOps
 
 
@@ -135,18 +135,6 @@ class ParameterLabel(ParameterText, LeftText):
 
 
 class ParameterValue(ParameterText, RightText):
-    pass
-
-
-class CompactParameterText(ParameterText):
-    fontsize = 6.4
-
-
-class CompactParameterLabel(CompactParameterText, LeftText):
-    pass
-
-
-class CompactParameterValue(CompactParameterText, RightText):
     pass
 
 
@@ -351,17 +339,17 @@ class FigureOneLayout:
 
 
 FIGURE_ONE_LAYOUT = FigureOneLayout(
-    figsize=(6.5, 4.35),
+    figsize=(6.5, 5.8),
     grid_widths=(1.0, 1.0, 1.0),
-    grid_heights=(1.0, 1.0),
+    grid_heights=(1.65, 1.35, 1.55),
     column_gap=0.08,
-    row_gap=0.10,
+    row_gap=0.08,
     cell_padding_inches=0.04,
     insets=FigureOneInsets(
         unit_dxf=AxisBox(0.035, 0.040, 0.930, 0.850),
         wafer_mask=AxisBox(0.055, 0.025, 0.890, 0.900),
-        insert_single=AxisBox(0.025, 0.035, 0.455, 0.880),
-        insert_array=AxisBox(0.520, 0.035, 0.455, 0.880),
+        insert_single=AxisBox(0.040, 0.035, 0.920, 0.880),
+        insert_array=AxisBox(0.040, 0.035, 0.920, 0.880),
         frame_stl=AxisBox(0.035, 0.025, 0.930, 0.900),
         device_photo=AxisBox(0.035, 0.025, 0.930, 0.900),
     ),
@@ -660,11 +648,11 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     setup_axis(ax)
     PanelBadge.draw(ax, 0.02, 0.96, "A")
 
-    input_left = 0.045
-    input_width = 0.91
-    rounded_box(ax, (input_left, 0.35), input_width, 0.57, "white", COLORS["grid"], linewidth=1.0)
-    ParameterTitle.draw(ax, input_left + 0.035, 0.865, "Inputs to OpenMFD")
-    CompactParameterLabel.draw(ax, input_left + 0.035, 0.800, "Neuronal plate layout")
+    input_left, input_width = 0.055, 0.52
+    rounded_box(ax, (input_left, 0.11), input_width, 0.75,
+                "white", COLORS["grid"], linewidth=1.0)
+    ParameterTitle.draw(ax, input_left + 0.025, 0.82, "Inputs to OpenMFD")
+    ParameterLabel.draw(ax, input_left + 0.025, 0.74, "Neuronal plate layout")
 
     channels = cfg.channels_config()
     rows, columns = cfg.grid_size
@@ -676,39 +664,37 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
         ("Microchannels", f"{channels.num_channels} at {channels.width * 1000:.0f} µm"),
         ("Pin / hole", f"{cfg.insert_pin_dims[0]:.2f} / {cfg.insert_hole_dims[0]:.2f} mm"),
         ("Sidewall taper", f"{cfg.outer_taper_degrees:.0f}°; {cfg.insert_height:.1f} mm tall"),
-        ("PDMS shrinkage", f"×{cfg.pdms_config().scale_factor():.4f} at {cfg.cure_temp}°C"),
+        ("PDMS shrinkage scale", f"×{cfg.pdms_config().scale_factor():.4f} at {cfg.cure_temp}°C"),
     ]
-    label_x = input_left + 0.04
-    value_x = input_left + input_width - 0.035
-    y = 0.735
+    label_x = input_left + 0.03
+    value_x = input_left + input_width - 0.02
+    y = 0.650
     for name, value in values:
-        CompactParameterLabel.draw(ax, label_x, y, name)
-        CompactParameterValue.draw(ax, value_x, y, value)
-        ax.plot([label_x, value_x], [y - 0.026, y - 0.026], color="#edf1f6", lw=0.8)
-        y -= 0.052
+        ParameterLabel.draw(ax, label_x, y, name)
+        ParameterValue.draw(ax, value_x, y, value)
+        ax.plot([label_x, value_x], [y - 0.034, y - 0.034], color="#edf1f6", lw=0.8)
+        y -= 0.064
 
-    output_left = 0.045
-    output_width = 0.91
-    output_gap = 0.025
-    box_width = (output_width - 2 * output_gap) / 3
+    output_left, output_width, output_height = 0.68, 0.25, 0.12
     outputs = (
-        ("Masks\nDXF (B, C)", COLORS["bottom"]),
-        ("Inserts\nSTL (D)", COLORS["insert"]),
-        ("Frame\nSTL (E)", COLORS["frame"]),
+        (0.700, "Photomasks: DXF (B, C)", COLORS["bottom"]),
+        (0.475, "Well inserts: STL (D)", COLORS["insert"]),
+        (0.250, "Plate frame: STL (E)", COLORS["frame"]),
     )
-    for index, (label, color) in enumerate(outputs):
-        x = output_left + index * (box_width + output_gap)
-        rounded_box(ax, (x, 0.035), box_width, 0.135, "white", color, linewidth=1.4)
-        CompactParameterText.draw(ax, x + box_width / 2, 0.1025, label)
+    for y_out, label, color in outputs:
+        rounded_box(ax, (output_left, y_out), output_width, output_height,
+                    "white", color, linewidth=1.6)
+        LargeText.draw(ax, output_left + output_width / 2,
+                       y_out + output_height / 2, label)
+        add_arrow(ax, (input_left + input_width + 0.01, 0.49),
+                  (output_left, y_out + output_height / 2), color)
 
-    callout_width = output_width * 0.88
-    callout_left = output_left + (output_width - callout_width) / 2
-    rounded_box(ax, (callout_left, 0.205), callout_width, 0.105,
+    output_center = output_left + output_width / 2
+    callout_width = 0.31
+    callout_left = output_center - callout_width / 2
+    rounded_box(ax, (callout_left, 0.055), callout_width, 0.14,
                 "#fff8ea", "#f2c46d", linewidth=1.0)
-    CompactParameterText.draw(ax, output_left + output_width / 2, 0.2575,
-                              "Matched masks + printed parts")
-    add_arrow(ax, (input_left + input_width / 2, 0.35),
-              (output_left + output_width / 2, 0.31), COLORS["frame"])
+    ParameterText.draw(ax, output_center, 0.125, "Matched masks + printed parts")
 
 
 def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
@@ -725,20 +711,27 @@ def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfS
     draw_dxf_layer_raw(drawing_ax, dxf.single_top, COLORS["top"], 1.15, 0.92)
 
 
-def draw_insert_stls(
+def draw_insert_view(
     ax: plt.Axes,
-    _cfg: TwoCompartmentDeviceConfig,
-    stl: StlSources,
-    label: str = "A",
-    _title: str = "Generated insert STLs",
+    spec: StlRenderSpec,
+    inset: AxisBox,
+    *,
+    label: str | None,
+    title: str,
 ) -> None:
     setup_axis(ax)
-    PanelBadge.draw(ax, 0.02, 0.96, label)
+    if label is not None:
+        PanelBadge.draw(ax, 0.02, 0.96, label)
+        title_x = 0.12
+    else:
+        title_x = 0.04
+    PanelTitle.draw(ax, title_x, 0.956, title)
+    draw_stl_mesh_raw_equal(add_inset(ax, inset), spec)
 
-    single_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.insert_single)
-    array_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.insert_array)
-    draw_stl_mesh_raw_equal(
-        single_ax,
+
+def draw_single_insert(ax: plt.Axes, stl: StlSources) -> None:
+    draw_insert_view(
+        ax,
         StlRenderSpec(
             stl.single_insert,
             5000,
@@ -751,9 +744,15 @@ def draw_insert_stls(
             highlight_color="#ffe2a3",
             edge_color="#593100",
         ),
+        FIGURE_ONE_LAYOUT.insets.insert_single,
+        label="D",
+        title="Single insert",
     )
-    draw_stl_mesh_raw_equal(
-        array_ax,
+
+
+def draw_insert_array(ax: plt.Axes, stl: StlSources) -> None:
+    draw_insert_view(
+        ax,
         StlRenderSpec(
             stl.array_insert,
             100000,
@@ -766,6 +765,9 @@ def draw_insert_stls(
             highlight_color="#ffe2a3",
             edge_color="#593100",
         ),
+        FIGURE_ONE_LAYOUT.insets.insert_array,
+        label=None,
+        title="Insert array",
     )
 
 
@@ -865,52 +867,66 @@ def draw_plate_outputs(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfS
     draw_dxf_layer_raw(mask_ax, dxf.aligned, "#0f8ea5", 0.24, 0.92)
 
 
-def save_subfigure_images(fig: plt.Figure, axes: dict[str, plt.Axes], output_dir: Path) -> None:
-    """Export only declared panels; retain unrelated files and restore visibility."""
+def save_subfigure_images(
+    fig: plt.Figure,
+    panels: dict[str, tuple[plt.Axes, ...]],
+    output_dir: Path,
+) -> None:
+    """Export declared panels, including panels composed from several axes."""
     subfigure_dir = output_dir / "subfigures"
     subfigure_dir.mkdir(parents=True, exist_ok=True)
     fig.canvas.draw()
     renderer = fig.canvas.get_renderer()
-    visibility = {ax: ax.get_visible() for ax in axes.values()}
+    all_axes = tuple(ax for members in panels.values() for ax in members)
+    visibility = {ax: ax.get_visible() for ax in all_axes}
     try:
-        for label, ax in axes.items():
-            for panel in axes.values():
-                panel.set_visible(panel is ax and visibility[panel])
-            bbox = ax.get_tightbbox(renderer).expanded(1.03, 1.05)
+        for label, members in panels.items():
+            for panel in all_axes:
+                panel.set_visible(panel in members and visibility[panel])
+            bbox = Bbox.union([ax.get_tightbbox(renderer) for ax in members]).expanded(1.03, 1.05)
             bbox_inches = bbox.transformed(fig.dpi_scale_trans.inverted())
-            fig.savefig(subfigure_dir / f"{label}.png", dpi=SUBFIGURE_DPI, bbox_inches=bbox_inches, pad_inches=0.02)
+            fig.savefig(subfigure_dir / f"{label}.png", dpi=SUBFIGURE_DPI,
+                        bbox_inches=bbox_inches, pad_inches=0.02)
     finally:
         for ax, visible in visibility.items():
             ax.set_visible(visible)
 
 
-def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
+def build_figure() -> tuple[plt.Figure, dict[str, tuple[plt.Axes, ...]]]:
     cfg = TwoCompartmentDeviceConfig()
     dxf = DxfSources.from_generated_design()
     stl = StlSources.from_generated_design()
 
     fig = plt.figure(figsize=FIGURE_ONE_LAYOUT.figsize)
     grid = fig.add_gridspec(
-        2,
+        3,
         3,
         **FIGURE_ONE_LAYOUT.gridspec_kwargs(),
     )
     fig.patch.set_facecolor("white")
-    axes = {
-        "A": fig.add_subplot(grid[0, 0]),
-        "B": fig.add_subplot(grid[0, 1]),
-        "C": fig.add_subplot(grid[0, 2]),
-        "D": fig.add_subplot(grid[1, 0]),
-        "E": fig.add_subplot(grid[1, 1]),
-        "F": fig.add_subplot(grid[1, 2]),
+    a_ax = fig.add_subplot(grid[0, :])
+    b_ax = fig.add_subplot(grid[1, 0])
+    c_ax = fig.add_subplot(grid[1, 1])
+    d_single_ax = fig.add_subplot(grid[1, 2])
+    d_array_ax = fig.add_subplot(grid[2, 0])
+    e_ax = fig.add_subplot(grid[2, 1])
+    f_ax = fig.add_subplot(grid[2, 2])
+    all_axes = (a_ax, b_ax, c_ax, d_single_ax, d_array_ax, e_ax, f_ax)
+    panels = {
+        "A": (a_ax,),
+        "B": (b_ax,),
+        "C": (c_ax,),
+        "D": (d_single_ax, d_array_ax),
+        "E": (e_ax,),
+        "F": (f_ax,),
     }
-    for ax in axes.values():
+    for ax in all_axes:
         ax.set_facecolor("none")
 
     fig.subplots_adjust(**FIGURE_ONE_LAYOUT.subplot_adjust_kwargs())
     pad_x = FIGURE_ONE_LAYOUT.cell_padding_inches / fig.get_figwidth()
     pad_y = FIGURE_ONE_LAYOUT.cell_padding_inches / fig.get_figheight()
-    for ax in axes.values():
+    for ax in all_axes:
         bounds = ax.get_position()
         fig.add_artist(FancyBboxPatch(
             (bounds.x0 - pad_x, bounds.y0 - pad_y),
@@ -925,14 +941,15 @@ def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
             zorder=-10,
         ))
 
-    draw_parameter_panel(axes["A"], cfg)
-    draw_unit_geometry(axes["B"], cfg, dxf)
-    draw_plate_outputs(axes["C"], cfg, dxf)
-    draw_insert_stls(axes["D"], cfg, stl, "D", "Generated insert STLs")
-    draw_frame_cad(axes["E"], stl)
-    draw_assembled_device(axes["F"])
+    draw_parameter_panel(a_ax, cfg)
+    draw_unit_geometry(b_ax, cfg, dxf)
+    draw_plate_outputs(c_ax, cfg, dxf)
+    draw_single_insert(d_single_ax, stl)
+    draw_insert_array(d_array_ax, stl)
+    draw_frame_cad(e_ax, stl)
+    draw_assembled_device(f_ax)
 
-    return fig, axes
+    return fig, panels
 
 
 def main() -> int:

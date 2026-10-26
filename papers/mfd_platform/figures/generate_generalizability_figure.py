@@ -23,7 +23,6 @@ from generate_openmfd_design_figure import (
     Bounds,
     COLORS,
     DxfDrawing,
-    LargeText,
     PanelBadge,
     PanelTitle,
     StlMesh,
@@ -49,10 +48,12 @@ PDMS_SCALE = PDMSConfiguration(cure_temp=CURE_TEMP).scale_factor()
 SINGLE_INSERT_AZIMUTH = 0.0
 ARRAY_INSERT_AZIMUTH = 0.0
 ARRAY_INSERT_ELEVATION = 28.0
-ROW_BACKGROUNDS = ("#F3F7FB", "#FBF6EE", "#F2F8F5")
+ROW_BACKGROUND = "#F3F7FB"
+ROW_BACKGROUNDS = (ROW_BACKGROUND,) * 3
 BASE_ROW_GAP = 0.11
 ROW_GAP_SCALE = 1.20
 ROW_PADDING_INCHES = 0.06
+HEADER_PADDING_INCHES = 0.08
 
 
 @dataclass(frozen=True)
@@ -234,6 +235,7 @@ class DesignPanel(ABC):
 
 
 class DxfPanel(DesignPanel):
+    COLUMN_TITLES = ("Single-unit mask", "Wafer-scale mask")
     single_box = AxisBox(0.025, 0.05, 0.43, 0.90)
     aligned_box = AxisBox(0.50, 0.03, 0.475, 0.94)
 
@@ -257,7 +259,7 @@ class DxfPanel(DesignPanel):
 
 
 class InsertPanel(DesignPanel):
-    TITLE = "Insert models"
+    COLUMN_TITLES = ("Single-unit insert", "Arrayed inserts")
     single_box = AxisBox(0.025, 0.06, 0.43, 0.88)
     array_box = AxisBox(0.50, 0.06, 0.475, 0.88)
 
@@ -267,53 +269,32 @@ class InsertPanel(DesignPanel):
         draw_stl_mesh_raw_equal(single_ax, design.single_insert_spec())
         draw_insert_array_preview(array_ax, design)
 
-    def title(self, design: GeneralizabilityDesign) -> str:
-        return self.TITLE
-
 
 @dataclass(frozen=True)
 class LabeledPanel(DesignPanel):
     label: str
-    caption_y = 0.015
 
     def decorate(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
         PanelBadge.draw(ax, 0.02, 0.96, self.label)
         PanelTitle.draw(ax, 0.11, 0.956, self.title(design))
-        self.captions(ax)
 
     @property
     @abstractmethod
     def single_box(self) -> AxisBox:
         raise NotImplementedError
 
-    def captions(self, ax: plt.Axes) -> None:
-        LargeText.draw(ax, self.single_box.center_x, self.caption_y, "Single unit")
-
 
 class LabeledDxfPanel(LabeledPanel, DxfPanel):
-    single_box = AxisBox(0.03, 0.07, 0.40, 0.86)
-    aligned_box = AxisBox(0.46, 0.07, 0.51, 0.86)
-
-    def captions(self, ax: plt.Axes) -> None:
-        super().captions(ax)
-        LargeText.draw(ax, self.aligned_box.center_x, self.caption_y, "Wafer-scale mask")
+    single_box = AxisBox(0.03, 0.03, 0.40, 0.90)
+    aligned_box = AxisBox(0.46, 0.03, 0.51, 0.90)
 
 
 class LabeledInsertPanel(LabeledPanel, InsertPanel):
-    single_box = AxisBox(0.035, 0.07, 0.430, 0.86)
-    array_box = AxisBox(0.535, 0.07, 0.430, 0.86)
-
-    def captions(self, ax: plt.Axes) -> None:
-        super().captions(ax)
-        LargeText.draw(ax, self.array_box.center_x, self.caption_y, "Arrayed inserts")
-
-
-class UntitledLabeledInsertPanel(LabeledInsertPanel):
-    """Rows below the column heading retain only their panel identity."""
+    single_box = AxisBox(0.035, 0.03, 0.430, 0.90)
+    array_box = AxisBox(0.535, 0.03, 0.430, 0.90)
 
     def decorate(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
         PanelBadge.draw(ax, 0.02, 0.96, self.label)
-        self.captions(ax)
 
 
 def draw_single_unit_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
@@ -431,7 +412,7 @@ def export_individual_subfigures(designs: tuple[GeneralizabilityDesign, ...]) ->
 def build_figure() -> plt.Figure:
     myelination, axon_guidance, three_compartment = make_designs()
 
-    fig = plt.figure(figsize=(6.5, 5.35))
+    fig = plt.figure(figsize=(6.5, 5.55))
     fig.patch.set_facecolor("white")
     grid = fig.add_gridspec(
         3,
@@ -441,24 +422,24 @@ def build_figure() -> plt.Figure:
         left=0.025,
         right=0.985,
         bottom=0.03,
-        top=0.98,
+        top=0.90,
         wspace=0.08,
         hspace=BASE_ROW_GAP * ROW_GAP_SCALE,
     )
 
     layout = (
-        ("A", "B", myelination, LabeledInsertPanel),
-        ("C", "D", axon_guidance, UntitledLabeledInsertPanel),
-        ("E", "F", three_compartment, UntitledLabeledInsertPanel),
+        ("A", "B", myelination),
+        ("C", "D", axon_guidance),
+        ("E", "F", three_compartment),
     )
     row_axes: list[tuple[plt.Axes, plt.Axes]] = []
-    for row, (dxf_label, insert_label, design, insert_panel) in enumerate(layout):
+    for row, (dxf_label, insert_label, design) in enumerate(layout):
         dxf_ax = fig.add_subplot(grid[row, 0])
         insert_ax = fig.add_subplot(grid[row, 1])
         dxf_ax.set_facecolor(ROW_BACKGROUNDS[row])
         insert_ax.set_facecolor(ROW_BACKGROUNDS[row])
         LabeledDxfPanel(dxf_label)(dxf_ax, design)
-        insert_panel(insert_label)(insert_ax, design)
+        LabeledInsertPanel(insert_label)(insert_ax, design)
         row_axes.append((dxf_ax, insert_ax))
 
     pad_x = ROW_PADDING_INCHES / fig.get_figwidth()
@@ -476,6 +457,33 @@ def build_figure() -> plt.Figure:
             clip_on=False,
             zorder=-10,
         ))
+
+    first_left_ax, first_right_ax = row_axes[0]
+    left = first_left_ax.get_position()
+    right = first_right_ax.get_position()
+    header_bottom = max(left.y1, right.y1) + HEADER_PADDING_INCHES / fig.get_figheight()
+    header_top = 0.985
+    header_y = (header_bottom + header_top) / 2
+    fig.add_artist(Rectangle(
+        (left.x0 - pad_x, header_bottom),
+        right.x1 - left.x0 + 2 * pad_x,
+        header_top - header_bottom,
+        transform=fig.transFigure,
+        facecolor=ROW_BACKGROUND,
+        edgecolor="none",
+        clip_on=False,
+        zorder=-10,
+    ))
+    header_positions = (
+        left.x0 + LabeledDxfPanel.single_box.center_x * left.width,
+        left.x0 + LabeledDxfPanel.aligned_box.center_x * left.width,
+        right.x0 + LabeledInsertPanel.single_box.center_x * right.width,
+        right.x0 + LabeledInsertPanel.array_box.center_x * right.width,
+    )
+    header_titles = DxfPanel.COLUMN_TITLES + InsertPanel.COLUMN_TITLES
+    for x, title in zip(header_positions, header_titles, strict=True):
+        fig.text(x, header_y, title, ha="center", va="center",
+                 fontsize=9.0, fontweight="bold", color=COLORS["ink"])
 
     return fig
 
