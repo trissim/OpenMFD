@@ -18,7 +18,7 @@ Dimensions refer to the neuronal layout before parylene coating. The pin-height 
 
 ## Alternative layouts
 
-All layouts have a 2.5 mm well radius. Only the neuronal layout was fabricated and used for culture; the other layouts correspond to the fabrication files shown in Figure 5.
+All layouts have a 2.5 mm well radius. Only the neuronal layout was fabricated and used for culture; the other layouts correspond to the fabrication files shown in Figure 2.
 
 - **Neuronal:** 18 × 9 mm unit spacing; 6 × 8 units; 62 channels, 10 µm wide with 30 µm gaps.
 - **Myelination:** 18 × 18 mm spacing; 6 × 4 units; 125 channels at 10 µm, plus an oligodendrocyte branch.

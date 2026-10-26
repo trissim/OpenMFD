@@ -257,7 +257,7 @@ class CtbView:
         with Image.open(DATA_DIR / self.display) as image:
             pixels = np.asarray(image)
         for ax in (image_ax, outline_ax):
-            ax.imshow(pixels, cmap="gray_r", vmin=0, vmax=64,
+            ax.imshow(pixels, cmap="gray_r", vmin=1, vmax=24,
                       extent=(-.5, self.shape.width-.5, self.shape.height-.5, -.5),
                       interpolation="nearest")
             ax.set_xlim(-.5, self.shape.width-.5)
@@ -268,9 +268,9 @@ class CtbView:
             ax.text(x, y - self.shape.height * .025, "500 µm", color="black", fontsize=7)
         contours = tuple(tuple((point.x, point.y) for point in contour) for contour in self.outlines)
         outline_ax.add_collection(PolyCollection(
-            contours, facecolors="#D17800", edgecolors="none", alpha=.35), autolim=False)
+            contours, facecolors="#FFD400", edgecolors="none", alpha=.9), autolim=False)
         outline_ax.add_collection(LineCollection(
-            contours, colors="#D17800", linewidths=.4), autolim=False)
+            contours, colors="#B36B00", linewidths=.5), autolim=False)
         image_ax.set_anchor("E")
         outline_ax.set_anchor("W")
         image_ax.set_title("CTB", fontsize=8, pad=3)
