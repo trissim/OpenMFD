@@ -1,12 +1,12 @@
 {
-  "validation_scope": "Figures 1 and 5 redrawn from the retained CAD/photo sources. Figure 1 uses a shorter full-width layout with an 8-point parameter table and larger model/device panels. Figure 5 uses pale row bands and layout/model labels. The obsolete 60 mL mixing sentence was deleted at both mask-annotation owners and the four publication mask exports were regenerated. Figure 2 artwork remains byte-identical.",
+  "validation_scope": "Figures 1 and 5 redrawn from retained CAD/photo sources. Figure 1 is a two-by-three panel matrix with equal derived cell backgrounds and one compact input-to-output panel. Figure 5 uses one shared insert-model heading, row-matched backgrounds and row gaps enlarged by 20%. Figure 2 artwork remains byte-identical.",
   "output_sha256": {
-    "rendered/openmfd_design.pdf": "3e0805e3b83da103b50913c0151dee74a67006130681df3fbf30138b78da9b86",
-    "rendered_docx/openmfd_design.png": "8d5ba7cff458af8fd24cd890e1ffa9497f833382fa0055005d9d328bf7c97cf1",
+    "rendered/openmfd_design.pdf": "9b9ebe9f7d2952689c54519b140f4a0624d43560933f90a535a42504d4c8ff2f",
+    "rendered_docx/openmfd_design.png": "ab1b8d2b76d45b606a72246bfee50ee3fe13cf313b898721635722069ee2f7aa",
     "rendered/insert_bonding.pdf": "c20556de2549c47f0f7b41dbe2bc2bc58f79d857477672ba248a88805a18adf7",
     "rendered_docx/insert_bonding.png": "d43b1cba7f34c76fc5817a0e5c3ebae63b961f49f4f58a6b956db83762493e66",
-    "rendered/generalizability.pdf": "6438de49bc36a9fd01494edbd00c72362468af4d1703cc380363946d9d47c3b1",
-    "rendered_docx/generalizability.png": "2754ba286961e652aa82a232ee45fece4d2e8e743e2a80ad58fa38a32590a1e6"
+    "rendered/generalizability.pdf": "3f831d75ded1a1cef3de241b862e97c7dafeca0f9bb36988169006d059b5cebc",
+    "rendered_docx/generalizability.png": "b98d378ebb6fd2a70188262e80656ba020593ff131a02c97c8ee91c0b5b1378c"
   },
   "source_sha256": {
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_aligned.dxf": "c48e557b2b5bfb84aac45707afe364c6dca94aba941087d78baa6adf0132d777",
@@ -93,8 +93,8 @@
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly.jpg": "080a75480b4271047076ae48e1170d39c79da6a212c59484c55a56a9748ab4a7",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
     "figures/generate_bonding_fixture_figure.py": "c5a18a04c1d750ca4a88835c28bb942909c4675fb07c4c30d830b741ae976c3a",
-    "figures/generate_generalizability_figure.py": "c164930bb999daab3e545f93903923310759b6367e110dc21568d358bdae05dc",
-    "figures/generate_openmfd_design_figure.py": "1080d08b03bbe56f7d62de22f8a3416b75e9a33a75b58fbcf7a121d7331d3353",
+    "figures/generate_generalizability_figure.py": "55ae8986b64a9f8c3e1cc8d91f1b9d7d2a1cdd824fd4dc4e368ceb257356d213",
+    "figures/generate_openmfd_design_figure.py": "5e360d2c17a52c4cf4378f36b222ff6ddd04ccb0c2399663cd6314f038030e89",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
   "source_scope": "Three generators, the OpenMFD package, retained DXF/STL assets in the four selected design folders, frame STL and five source photographs. This is an explicit asset-set fingerprint, not a complete dynamic import or minimal file-read trace.",
@@ -104,7 +104,7 @@
     "heading_points": 10.5,
     "pdf_raster_dpi": 600,
     "composite_png_dpi": 300,
-    "figure1_parameter_points": 8.0,
+    "figure1_parameter_points": 6.4,
     "figure5_caption_points": 10.0
   },
   "versions": {
@@ -118,9 +118,9 @@
     "comparison_commit": "37fd67c3aa92434eb1451fc0cac012e851fefe68",
     "source_census": "NRA source census:192 modules parsed, existing mf_device.py:783 omission. Syntax/lexical scope only.",
     "unchanged": "Scientific photographs, STL geometry and validation data are unchanged. Four bottom/aligned mask pairs were regenerated from their existing geometry after deleting only the stale recipe annotation.",
-    "shared_consumers": "All five main figure PDFs use DejaVu Sans regular/bold. Figure 1 parameter text is intentionally smaller so the full figure can remain at manuscript width; Figure 5 retains 10-point captions.",
-    "run": "The complete Figure 1 and Figure 5 CLIs passed against existing dependencies; the final main Figure 5 composite was rerendered after adding row bands. Actual final PNGs were inspected before publication. Figure 2 was not regenerated.",
+    "shared_consumers": "All five main figure PDFs use DejaVu Sans regular/bold. Figure 1 panel geometry is derived from one two-by-three grid; Figure 5 row padding is physical and its gap is 1.20 times the prior gap.",
+    "run": "The complete Figure 1 and Figure 5 CLIs passed against existing dependencies. Actual final PNGs were inspected before publication: Figure 1 text is contained and centered; Figure 5 has one insert-model column title and consistent row bands.",
     "limits": "Artwork/layout and declared-input checks only, not scientific analysis or fresh dimensional metrology. A placed-page reading build is still required."
   },
-  "render_source_commit": "435c4fa405453e7420a736ebf803c533b5664388"
+  "render_source_commit": "0a23af6c5fefa625ceaccd6fcc6091ed0ed6068c"
 }

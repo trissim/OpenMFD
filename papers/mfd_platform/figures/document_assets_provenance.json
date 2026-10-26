@@ -1,15 +1,15 @@
 {
-  "validation_scope": "Figure 4 redrawn through the retained typed image/count owners from original stitched display crops, the saved ROI outlines and the unchanged 72-count CSV with the author-confirmed 67-device selection. Panel B now shows one enlarged Plate 1 CTB/outline pair; panel C retains all three plate cohorts, means, sample SDs and five excluded observations. No segmentation or counting rerun. Supplementary Figures S1/S2 remain byte-identical retained assets.",
+  "validation_scope": "Figure 4 redrawn through the retained typed image/count owners from original stitched display crops, saved ROI outlines and unchanged 72-count CSV with the author-confirmed 67-device selection. Panel A row heights derive from the retained montage aspect so it fills manuscript width; panel B receives the enlarged lower-image area and panel C uses the remaining 27% width. No segmentation or counting rerun. Supplementary Figures S1/S2 remain byte-identical.",
   "output_sha256": {
     "rendered/supp_fig_s1_no_lp360.pdf": "7586c435edd4377245a27b2f3987965753ca621ad08cf8990f835743184f3b68",
     "rendered_docx/supp_fig_s1_no_lp360.png": "b4aef8aa6ccb7357e6a814d5c9d18ea28d842e0c22e109d3d552f5f97807202f",
     "rendered/supp_fig_s2_delamination.pdf": "1b3d51eb42efda4812b4deb51522942edeb6df4b75cab06f96cc9b6b12a42f69",
     "rendered_docx/supp_fig_s2_delamination.png": "6a0604755566d1c651db955df795139cb92a47c95d7478282269281856442551",
-    "rendered/validation.pdf": "288cc0737cfa6b36d6ff3568a46122c3ef39a5a3def8375f97ae365192284d88",
-    "rendered_docx/validation.png": "5afccdafc7606e861b521b516aff4c065f115c15973fb3c64e601f44e585e985"
+    "rendered/validation.pdf": "df0b22677019a13c93850ddce97422475bfe544c8aca5eb349ef861547c11aac",
+    "rendered_docx/validation.png": "a2c128a6d539268feaf9e11c394c25ba760c1a427052eeb1d3b358f5341b5466"
   },
   "source_sha256": {
-    "figures/generate_validation_figure.py": "33e9539fad43657c609a8abcd58dc349152a3c54578386d79b28ccd25c4e4134",
+    "figures/generate_validation_figure.py": "70d8a4aa8e54c64ff47d97f0491a0ffcbcc242dca40e96b6fbd222422084302e",
     "figures/render_figures.py": "3d310b35cd13fc432612565587cb50ac5591682d38ee779bce22b5f3fbc29dcb",
     "supplementary/validation/sources.json": "048e18cabdd1564baedab1a974eb903913fd6f861895a2caa4e21a6f4a1ea5b8",
     "supplementary/validation/ctb_device_counts.csv": "261097e6ac195563a0c93688645437b1e7fcb0f9b3015bd84e0342d65a688ce3",
@@ -22,7 +22,7 @@
     "figures/final_drop/Fig5_plate_layout_validation/dye_gradient_day0.png": "da64f2eb0d8da7aa84f1a7cae4ad1dabf505f3453cb9ba45139b50801ba2f286",
     "figures/final_drop/Fig5_plate_layout_validation/dye_gradient_day3.png": "f0b93f6fe2862570c052cda9406a35f128edbd0852b7f11e70856c85514829b4"
   },
-  "render_source_commit": "435c4fa405453e7420a736ebf803c533b5664388",
+  "render_source_commit": "0a23af6c5fefa625ceaccd6fcc6091ed0ed6068c",
   "command": [
     "nice",
     "-n",
@@ -45,7 +45,7 @@
     "metaclass-registry": "0.2.1"
   },
   "verification": {
-    "source_evidence": "CtbView still decodes outlines once and owns image/outline calibration; PlateCounts uses the existing inclusion-family summary. The final Figure 4 CLI completed with n=22/21/24 and unchanged means/SDs.",
+    "source_evidence": "CtbView still decodes outlines once and owns image/outline calibration; PlateCounts uses the existing inclusion-family summary. The final Figure 4 CLI completed with n=22/21/24 and unchanged means/SDs. Layout heights derive from the tracer pixel aspect and shared scale-bar margin.",
     "author_decision": "Original October15 session lines13665/13674 identify analysis artifacts in five devices;13694/13784 approve extraP1 exclusions for cell counts only. All72 PRE values and both flag histories preserved.",
     "image_evidence": "Original template-match CSVs plus saved fixed-crop declaration; three original stitched images cropped without rerunning registration. Original ROI overlays visually align. Native calibration checked against acquisition XML for each plate. sources.json carries raw-source/archive/XML hashes and crop coordinates.",
     "preserved": "Counts, inclusion flags, source images, saved outlines, width outputs and supplementary S1/S2 outputs remain unchanged. Only Figure 4 layout and its selected displayed example changed.",

@@ -8,7 +8,7 @@
     "figures/generate_device_assembly_protocol.py": "00cebbd2c1c009602849dd3460fde62c8e4b2a2fc4ee6a5fdb1d76ecc05a9778",
     "figures/blender_render_mesh_parts.py": "1d3268ce6f858d27fff7e16ae9d1280a06c1f2b092015cd86241a57dfc3563d2",
     "figures/blender_boolean_mesh.py": "2f4f3f9a6f8ee3c2cf87d965122b4843db73f1f8ea917e3950c3957ed8475420",
-    "figures/generate_openmfd_design_figure.py": "1080d08b03bbe56f7d62de22f8a3416b75e9a33a75b58fbcf7a121d7331d3353",
+    "figures/generate_openmfd_design_figure.py": "5e360d2c17a52c4cf4378f36b222ff6ddd04ccb0c2399663cd6314f038030e89",
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_wells_insert.stl": "12cdca91d9edfe46b898aeb25ac9511380f122c5d137849819b1a75d803561ec",
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_single_bottom.dxf": "ba4a3767dda8fd7408481de7419e30ef6bf802ed00ffa658c05859ec757b09bb",
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_single_top.dxf": "e6ee7a1ae279bbf41198d3bcd49318bb77db21193990f4271b8069eb04e23c09",
@@ -47,6 +47,6 @@
     "papers/mfd_platform/figures/generate_device_assembly_protocol.py"
   ],
   "inspection": "All nine steps rendered; actual final PNG inspected for row association, arrow shafts, adhesive/syringe separation and unchanged processing order. Same camera edge guard and scene geometry. This is not dimensional metrology.",
-  "render_source_commit": "cc814250a99226b195b788b6d2bc28af73eb3298",
-  "source_update": "The shared Figure 1 generator changed only Figure 1 text/layout declarations after this retained Figure 3 render. Assembly mesh, projection and camera declarations remain unchanged; the published Figure 3 PDF/PNG hashes are byte-identical."
+  "render_source_commit": "0a23af6c5fefa625ceaccd6fcc6091ed0ed6068c",
+  "source_update": "The shared Figure 1 generator now owns a two-by-three Figure 1 layout. Assembly mesh, projection and camera declarations remain unchanged; the published Figure 3 PDF/PNG hashes are byte-identical."
 }
