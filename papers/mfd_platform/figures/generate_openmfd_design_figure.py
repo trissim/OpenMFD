@@ -27,6 +27,7 @@ DESIGN_STEM = "2_compartment_96_well_300um_suex200_v27"
 FRAME_STL = ROOT / "plates" / "96_well_plate_reservoirs_print_hips_2" / "96_well_plate_reservoirs_print_hips_2.stl"
 ASSEMBLED_DEVICE_PHOTO = OUTPUT_DIR / "assembled_device_photo.png"
 STL_DISPLAY_Z_SCALE = 1.0
+PANEL_BACKGROUND = "#e9eef3"
 
 sys.path.insert(0, str(ROOT))
 
@@ -144,6 +145,10 @@ class PanelTitle(PresetTitle, AxesText):
 
 class PanelBadge(PanelTitle):
     zorder = 100
+
+
+class InsetBadge(PanelBadge):
+    va = "top"
 
 
 class BackedText(TextStyle):
@@ -612,14 +617,18 @@ def rounded_box(
     facecolor: str,
     edgecolor: str,
     linewidth: float = 1.2,
-    radius: float = 0.03,
+    radius_inches: float = 0.025,
     alpha: float = 1.0,
 ) -> FancyBboxPatch:
+    position = ax.get_position()
+    width_inches = position.width * ax.figure.get_figwidth()
+    height_inches = position.height * ax.figure.get_figheight()
     box = FancyBboxPatch(
         xy,
         width,
         height,
-        boxstyle=f"round,pad=0.014,rounding_size={radius}",
+        boxstyle=f"round,pad=0,rounding_size={radius_inches / width_inches}",
+        mutation_aspect=width_inches / height_inches,
         facecolor=facecolor,
         edgecolor=edgecolor,
         linewidth=linewidth,
@@ -646,7 +655,7 @@ def add_arrow(ax: plt.Axes, start: tuple[float, float], end: tuple[float, float]
 
 def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     setup_axis(ax)
-    PanelBadge.draw(ax, 0.02, 0.96, "A")
+    InsetBadge.draw(ax, 0.02, 0.96, "A")
 
     input_left, input_width = 0.055, 0.52
     rounded_box(ax, (input_left, 0.11), input_width, 0.75,
@@ -675,11 +684,11 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
         ax.plot([label_x, value_x], [y - 0.034, y - 0.034], color="#edf1f6", lw=0.8)
         y -= 0.064
 
-    output_left, output_width, output_height = 0.68, 0.25, 0.12
+    output_left, output_width, output_height = 0.655, 0.30, 0.12
     outputs = (
         (0.700, "Photomasks: DXF (B, C)", COLORS["bottom"]),
-        (0.475, "Well inserts: STL (D)", COLORS["insert"]),
-        (0.250, "Plate frame: STL (E)", COLORS["frame"]),
+        (0.475, "Well inserts: STL (D, E)", COLORS["insert"]),
+        (0.250, "Plate frame: STL (F)", COLORS["frame"]),
     )
     for y_out, label, color in outputs:
         rounded_box(ax, (output_left, y_out), output_width, output_height,
@@ -699,7 +708,7 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
 
 def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
     setup_axis(ax)
-    PanelBadge.draw(ax, 0.02, 0.96, "B")
+    InsetBadge.draw(ax, 0.02, 0.96, "B")
 
     bounds = Bounds.combine((dxf.single_top, dxf.single_bottom))
     pad_x = 0.55
@@ -716,16 +725,10 @@ def draw_insert_view(
     spec: StlRenderSpec,
     inset: AxisBox,
     *,
-    label: str | None,
-    title: str,
+    label: str,
 ) -> None:
     setup_axis(ax)
-    if label is not None:
-        PanelBadge.draw(ax, 0.02, 0.96, label)
-        title_x = 0.12
-    else:
-        title_x = 0.04
-    PanelTitle.draw(ax, title_x, 0.956, title)
+    InsetBadge.draw(ax, 0.02, 0.96, label)
     draw_stl_mesh_raw_equal(add_inset(ax, inset), spec)
 
 
@@ -746,7 +749,6 @@ def draw_single_insert(ax: plt.Axes, stl: StlSources) -> None:
         ),
         FIGURE_ONE_LAYOUT.insets.insert_single,
         label="D",
-        title="Single insert",
     )
 
 
@@ -766,14 +768,13 @@ def draw_insert_array(ax: plt.Axes, stl: StlSources) -> None:
             edge_color="#593100",
         ),
         FIGURE_ONE_LAYOUT.insets.insert_array,
-        label=None,
-        title="Insert array",
+        label="E",
     )
 
 
 def draw_frame_cad(ax: plt.Axes, stl: StlSources) -> None:
     setup_axis(ax)
-    PanelBadge.draw(ax, 0.02, 0.96, "E")
+    InsetBadge.draw(ax, 0.02, 0.96, "F")
 
     card_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.frame_stl)
     draw_stl_mesh_raw_equal(
@@ -836,7 +837,7 @@ class CroppedContrastPhoto(ContrastPhoto, CroppedPhoto):
 
 def draw_assembled_device(ax: plt.Axes) -> None:
     setup_axis(ax)
-    PanelBadge.draw(ax, 0.02, 0.96, "F")
+    InsetBadge.draw(ax, 0.02, 0.96, "G")
 
     image_ax = add_inset(ax, FIGURE_ONE_LAYOUT.insets.device_photo)
     image = ContrastPhoto(ASSEMBLED_DEVICE_PHOTO).read()
@@ -856,7 +857,7 @@ def draw_assembled_device(ax: plt.Axes) -> None:
 
 def draw_plate_outputs(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
     setup_axis(ax)
-    PanelBadge.draw(ax, 0.02, 0.96, "C")
+    InsetBadge.draw(ax, 0.02, 0.96, "C")
 
     pad_x = dxf.aligned.bounds.width * 0.035
     pad_y = dxf.aligned.bounds.height * 0.035
@@ -916,9 +917,10 @@ def build_figure() -> tuple[plt.Figure, dict[str, tuple[plt.Axes, ...]]]:
         "A": (a_ax,),
         "B": (b_ax,),
         "C": (c_ax,),
-        "D": (d_single_ax, d_array_ax),
-        "E": (e_ax,),
-        "F": (f_ax,),
+        "D": (d_single_ax,),
+        "E": (d_array_ax,),
+        "F": (e_ax,),
+        "G": (f_ax,),
     }
     for ax in all_axes:
         ax.set_facecolor("none")
@@ -933,7 +935,7 @@ def build_figure() -> tuple[plt.Figure, dict[str, tuple[plt.Axes, ...]]]:
             bounds.width + 2 * pad_x,
             bounds.height + 2 * pad_y,
             transform=fig.transFigure,
-            facecolor=COLORS["paper"],
+            facecolor=PANEL_BACKGROUND,
             edgecolor="none",
             clip_on=False,
             zorder=-10,

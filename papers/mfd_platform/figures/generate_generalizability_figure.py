@@ -24,6 +24,7 @@ from generate_openmfd_design_figure import (
     COLORS,
     DxfDrawing,
     PanelBadge,
+    PANEL_BACKGROUND,
     PanelTitle,
     StlMesh,
     StlRenderSpec,
@@ -48,7 +49,7 @@ PDMS_SCALE = PDMSConfiguration(cure_temp=CURE_TEMP).scale_factor()
 SINGLE_INSERT_AZIMUTH = 0.0
 ARRAY_INSERT_AZIMUTH = 0.0
 ARRAY_INSERT_ELEVATION = 28.0
-ROW_BACKGROUND = "#F3F7FB"
+ROW_BACKGROUND = PANEL_BACKGROUND
 ROW_BACKGROUNDS = (ROW_BACKGROUND,) * 3
 BASE_ROW_GAP = 0.11
 ROW_GAP_SCALE = 1.20
