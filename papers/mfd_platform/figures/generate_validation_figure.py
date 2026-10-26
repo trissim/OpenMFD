@@ -57,7 +57,7 @@ class PlateId(str):
 
     @property
     def label(self) -> str:
-        return f"Plate {self[1:]}"
+        return self.upper()
 
 
 class DeviceId(str):
@@ -155,7 +155,7 @@ class PlateCounts:
 
     @property
     def label(self) -> str:
-        return f"{self.plate.label}\nn = {self.summary.n}"
+        return f"{self.plate.label}\nn={self.summary.n}"
 
     def draw(self, ax: Axes, index: int, color: str) -> None:
         summary = self.summary
