@@ -21,8 +21,9 @@ adapting the layout, materials, and coating.
 
 - 6-inch silicon wafer (UniversityWafer ID857 was used here).
 - SU-8 2005 negative photoresist (Kayaku Advanced Materials).
-- SUEX K200 dry film.
-- PGMEA developer.
+- SUEX K200 dry-film photoresist (DJ MicroLaminates), 200 µm thick.
+- Facility-supplied propylene glycol monomethyl ether acetate (PGMEA), used to
+  develop both photoresists.
 - LP360 long-pass filter for SUEX exposure.
 - Laurell WS-650-8B spin coater or equivalent.
 - SK 335R6 laminator or equivalent dry-film laminator.
@@ -32,7 +33,8 @@ adapting the layout, materials, and coating.
   equivalent.
 - Detachable magnetic resin-printer build plate or equivalent transfer fixture.
 - Larger bonding plate compatible with the full wafer.
-- EPDM rubber sheet, 0.03125 inch thickness, 60A durometer.
+- Ethylene propylene diene monomer (EPDM) rubber sheet, 0.03125 inch thickness,
+  60A durometer.
 - EPO-TEK 301-2 epoxy.
 - Acetone baths and dry air gun.
 - Specialty Coating Systems SCS 200 parylene coater or equivalent parylene C
@@ -54,7 +56,8 @@ adapting the layout, materials, and coating.
 
 ## B. Pattern the SU-8/SUEX wafer
 
-1. Start with a clean 6-inch silicon wafer.
+1. Start with a clean 6-inch silicon wafer. No dehydration bake or
+   hexamethyldisilazane (HMDS) adhesion-promoter treatment was used in this work.
 2. Spin coat SU-8 2005 for a 5 µm target thickness.
 3. Flood expose the first SU-8 2005 layer without a mask. Do not develop this
    layer. This layer functions as an adhesion base for the microchannel layer.
@@ -64,10 +67,12 @@ adapting the layout, materials, and coating.
    SU-8 2005 process for a 5 µm target thickness.
 7. Hard bake the developed two-layer SU-8 stack for 10 min at 150°C
    before SUEX lamination. Place the approximately 10 µm stack directly in the
-   heated oven and remove it after 10 min.
+   heated oven and remove it after 10 min. No controlled heating or cooling
+   ramp was used for this pre-SUEX bake.
 8. Laminate SUEX K200 dry film onto the wafer.
 9. Expose the SUEX layer through the well and insert-alignment photomask using
-   an LP360 long-pass filter at 2800 mJ/cm².
+   an LP360 long-pass filter at 2800 mJ/cm². The filter blocks shorter-wavelength
+   ultraviolet light.
 10. Post-exposure bake by ramping from room temperature to 50°C at
    1°C/min, holding at 50°C for at least 12 h overnight, then
    shutting off the oven and allowing it to cool.
@@ -134,8 +139,9 @@ with their pins seated in the alignment holes.
 ## E. Parylene coat the hybrid mold
 
 1. Coat the bonded hybrid mold with 1 µm parylene C.
-2. Use a local parylene coater or send the completed hybrid mold to an external
-   university core or commercial coating service.
+2. This work used a Specialty Coating Systems SCS 200 coater at the McGill
+   Nanotools Microfab facility. Use a local parylene coater or send the completed
+   hybrid mold to an external university core or commercial coating service.
 3. After coating, store and handle the mold as a reusable wafer-scale mold for
    PDMS casting.
 

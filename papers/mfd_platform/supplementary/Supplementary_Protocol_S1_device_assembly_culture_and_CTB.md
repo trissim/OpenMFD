@@ -101,8 +101,8 @@ assembled device for aqueous coating and culture (C6).
 4. Inspect the adhesive joint for visible gaps.
 5. Cure at room temperature for 3 days, turn the framed device upright, and
    trim excess cured adhesive with a clean razor blade.
-6. Before coating or culture, plasma-treat the assembled device with dry air at
-   high power (30 W) for 10 min at approximately 400 mTorr to decontaminate the
+6. Before coating or culture, plasma-treat the assembled device in a Harrick
+   PDC-001 with dry air at high power (30 W) for 10 min at approximately 400 mTorr to decontaminate the
    surface and make it hydrophilic. Begin aqueous coating within 15 min of
    plasma treatment.
 
