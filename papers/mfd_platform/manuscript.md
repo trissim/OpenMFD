@@ -56,7 +56,6 @@ Micrometer measurements of all 96 pins in one printed array guided the choice of
 
 Plate-format compatibility was checked by filling eight wells in parallel with a multichannel pipette and collecting images on Opera Phenix Plus and ImageXpress Micro Confocal microscopes without custom handling or instrument modification.
 
-### Pre-culture seal and tracer-movement check
 Before neuronal culture, we used fluorescent tracers to check the assembled-device seal and observe movement between its connected compartments under an imposed volume difference. In each of 24 two-compartment devices, Alexa Fluor 568-conjugated secondary antibody diluted 1:1000 in phosphate-buffered saline (PBS) was loaded at 25 µL into the left compartment, and Alexa Fluor 488-conjugated secondary antibody diluted 1:1000 in PBS was loaded at 50 µL into the right compartment. We imaged the devices immediately after loading and after 72 h in a cell-culture incubator without replenishment or volume adjustment. Tracer movement was assessed visually by comparing green fluorescence appearing in the initially lower-volume compartment with red fluorescence appearing in the opposite compartment. Flow rate and the duration of the pressure difference were not measured.
 
 ### Primary cortical neuron culture and CTB retrograde axon tracing
