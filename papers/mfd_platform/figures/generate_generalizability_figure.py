@@ -49,6 +49,7 @@ PDMS_SCALE = PDMSConfiguration(cure_temp=CURE_TEMP).scale_factor()
 SINGLE_INSERT_AZIMUTH = 0.0
 ARRAY_INSERT_AZIMUTH = 0.0
 ARRAY_INSERT_ELEVATION = 28.0
+ROW_BACKGROUNDS = ("#F3F7FB", "#FBF6EE", "#F2F8F5")
 
 
 @dataclass(frozen=True)
@@ -113,21 +114,21 @@ def make_designs() -> tuple[GeneralizabilityDesign, ...]:
     linear_unit_dims = (27.0, 9.0, 0.0)
     linear_grid_size = (4, 8)
     myelination = GeneralizabilityDesign.from_assets(
-        title="Myelination assay",
+        title="Myelination layout",
         stem="myelination",
         design_dir=base / "myelination",
         dims=diamond_unit_dims,
         grid_size=diamond_grid_size,
     )
     axon_guidance = GeneralizabilityDesign.from_assets(
-        title="Axon guidance assay",
+        title="Axon-guidance layout",
         stem="axon_guidance",
         design_dir=base / "axon_guidance",
         dims=diamond_unit_dims,
         grid_size=diamond_grid_size,
     )
     three_compartment = GeneralizabilityDesign.from_assets(
-        title="Three-compartment assay",
+        title="Three-compartment layout",
         stem="three_compartment",
         design_dir=base / "three_compartment",
         dims=linear_unit_dims,
@@ -213,6 +214,8 @@ def draw_insert_array_preview(ax: plt.Axes, design: GeneralizabilityDesign) -> N
 class DesignPanel(ABC):
     def __call__(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
         setup_axis(ax)
+        ax.add_patch(Rectangle((0, 0), 1, 1, transform=ax.transAxes,
+                               facecolor=ax.get_facecolor(), edgecolor="none", zorder=-100))
         self.draw_content(ax, design)
         self.decorate(ax, design)
 
@@ -261,7 +264,7 @@ class InsertPanel(DesignPanel):
         draw_insert_array_preview(array_ax, design)
 
     def title(self, design: GeneralizabilityDesign) -> str:
-        return "Printable inserts"
+        return "Insert models"
 
 
 @dataclass(frozen=True)
@@ -427,8 +430,8 @@ def build_figure() -> plt.Figure:
         right=0.985,
         bottom=0.03,
         top=0.98,
-        wspace=0.07,
-        hspace=0.10,
+        wspace=0.08,
+        hspace=0.11,
     )
 
     layout = (
@@ -439,8 +442,8 @@ def build_figure() -> plt.Figure:
     for row, (dxf_label, insert_label, design) in enumerate(layout):
         dxf_ax = fig.add_subplot(grid[row, 0])
         insert_ax = fig.add_subplot(grid[row, 1])
-        dxf_ax.set_facecolor(COLORS["paper"])
-        insert_ax.set_facecolor(COLORS["paper"])
+        dxf_ax.set_facecolor(ROW_BACKGROUNDS[row])
+        insert_ax.set_facecolor(ROW_BACKGROUNDS[row])
         LabeledDxfPanel(dxf_label)(dxf_ax, design)
         LabeledInsertPanel(insert_label)(insert_ax, design)
 

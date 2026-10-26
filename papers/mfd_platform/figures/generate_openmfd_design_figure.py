@@ -122,6 +122,22 @@ class PresetValue(LargeText, RightText):
     pass
 
 
+class ParameterTitle(PresetTitle):
+    fontsize = 9.5
+
+
+class ParameterText(TextStyle):
+    fontsize = 8.0
+
+
+class ParameterLabel(ParameterText, LeftText):
+    pass
+
+
+class ParameterValue(ParameterText, RightText):
+    pass
+
+
 class PanelTitle(PresetTitle, AxesText):
     va = "bottom"
 
@@ -322,9 +338,9 @@ class FigureOneLayout:
 
 
 FIGURE_ONE_LAYOUT = FigureOneLayout(
-    figsize=(6.5, 7.3),
+    figsize=(6.5, 5.8),
     grid_widths=(1.0, 1.0),
-    grid_heights=(2.9, 1.6, 1.3, 1.6),
+    grid_heights=(1.85, 1.35, 1.45, 1.65),
     column_gap=0.025,
     row_gap=0.035,
     insets=FigureOneInsets(
@@ -631,8 +647,8 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     PanelBadge.draw(ax, 0.02, 0.96, "A")
 
     rounded_box(ax, (0.055, 0.11), 0.52, 0.75, "white", COLORS["grid"], linewidth=1.0)
-    PresetTitle.draw(ax, 0.08, 0.805, "Inputs to OpenMFD")
-    PresetLabel.draw(ax, 0.08, 0.735, "Neuronal plate layout")
+    ParameterTitle.draw(ax, 0.08, 0.82, "Inputs to OpenMFD")
+    ParameterLabel.draw(ax, 0.08, 0.74, "Neuronal plate layout")
 
     channels = cfg.channels_config()
     rows, columns = cfg.grid_size
@@ -648,15 +664,15 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     ]
     y = 0.650
     for name, value in values:
-        PresetLabel.draw(ax, 0.085, y, name)
-        PresetValue.draw(ax, 0.555, y, value)
+        ParameterLabel.draw(ax, 0.085, y, name)
+        ParameterValue.draw(ax, 0.555, y, value)
         ax.plot([0.08, 0.555], [y - 0.034, y - 0.034], color="#edf1f6", lw=0.8)
         y -= 0.064
 
     outputs = [
-        ((0.68, 0.700), "Photomasks\nDXF (B, C)", COLORS["bottom"]),
-        ((0.68, 0.475), "Well inserts\nSTL (D)", COLORS["insert"]),
-        ((0.68, 0.250), "Plate frame\nSTL (E)", COLORS["frame"]),
+        ((0.68, 0.700), "Photomasks: DXF (B, C)", COLORS["bottom"]),
+        ((0.68, 0.475), "Well inserts: STL (D)", COLORS["insert"]),
+        ((0.68, 0.250), "Plate frame: STL (E)", COLORS["frame"]),
     ]
     for (x, y_out), label, color in outputs:
         rounded_box(ax, (x, y_out), 0.25, 0.12, "white", color, linewidth=1.6)
@@ -664,7 +680,7 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
         add_arrow(ax, (0.585, 0.49), (x, y_out + 0.060), color)
 
     rounded_box(ax, (0.65, 0.055), 0.31, 0.14, "#fff8ea", "#f2c46d", linewidth=1.0)
-    LargeText.draw(ax, 0.805, 0.125, "Matched masks\nand printed parts")
+    ParameterText.draw(ax, 0.805, 0.125, "Matched masks + printed parts")
 
 
 def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:

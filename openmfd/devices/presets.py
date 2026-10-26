@@ -441,11 +441,6 @@ class TwoCompartmentDeviceConfig(CompartmentalizedDevicePreset):
 
         text_annotations = [
             TextConfiguration(text=cure_text, position=(text_x, text_y), size=2.0),
-            TextConfiguration(
-                text="Use 60mL of Sylgard 184 in 1:10 ratio",
-                position=(text_x, text_y - self.casing_y / 2),
-                size=2.0
-            )
         ]
 
         return CompleteDeviceConfiguration(

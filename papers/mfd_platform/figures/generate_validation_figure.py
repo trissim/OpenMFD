@@ -362,32 +362,34 @@ def main() -> None:
     metadata = ValidationSources.read(DATA_DIR / "sources.json")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10, "pdf.fonttype": 42})
-    fig = plt.figure(figsize=(7, 7.6), facecolor="white")
-    grid = fig.add_gridspec(4, 3, height_ratios=(1.5, 1.5, 1.9, 1.5),
-                           left=.09, right=.98, top=.97, bottom=.07, hspace=.12, wspace=.12)
+    fig = plt.figure(figsize=(7, 5.8), facecolor="white")
+    grid = fig.add_gridspec(3, 3, height_ratios=(1.4, 1.4, 2.2),
+                           left=.09, right=.98, top=.97, bottom=.08, hspace=.14, wspace=.18)
     for i, frame in enumerate(metadata.tracer.frames):
         ax = fig.add_subplot(grid[i, :])
         metadata.tracer.draw(ax, frame)
         if i == 0:
             fig.text(.02, ax.get_position().y1 + .01, "A", weight="bold", fontsize=13)
-    for i, view in enumerate(metadata.views):
-        pair = grid[2, i].subgridspec(1, 2, wspace=.06)
-        image_ax = fig.add_subplot(pair[0, 0])
-        outline_ax = fig.add_subplot(pair[0, 1])
-        view.draw(image_ax, outline_ax)
-        if i == 0:
-            fig.text(.02, image_ax.get_position().y1 + .025, "B", weight="bold", fontsize=13)
-    ax = fig.add_subplot(grid[3, :])
+
+    # One large image pair shows the saved segmentation clearly; the count panel
+    # beside it carries all three plates and every retained device observation.
+    view = min(metadata.views, key=lambda candidate: candidate.plate)
+    pair = grid[2, :2].subgridspec(1, 2, wspace=.06)
+    image_ax = fig.add_subplot(pair[0, 0])
+    outline_ax = fig.add_subplot(pair[0, 1])
+    view.draw(image_ax, outline_ax)
+    fig.text(.02, image_ax.get_position().y1 + .025, "B", weight="bold", fontsize=13)
+
+    ax = fig.add_subplot(grid[2, 2])
     counts.draw(ax)
     ax.set_ylabel("CTB-positive cells", fontsize=10)
-    ax.set_xlim(-.5, 2.7)
+    ax.set_xlim(-.5, 2.5)
     ax.set_ylim(bottom=0)
     ax.spines[["top", "right"]].set_visible(False)
     ax.set_axisbelow(True)
     ax.yaxis.grid(True, color="#E6E6E6", linewidth=.6)
-    fig.text(.02, ax.get_position().y1 + .01, "C", weight="bold", fontsize=13)
-    ax.text(.99, .98, "Bars: mean; whiskers: SD\nDots: devices; red crosses: excluded",
-            transform=ax.transAxes, ha="right", va="top", fontsize=8)
+    fig.text(ax.get_position().x0 - .035, ax.get_position().y1 + .025,
+             "C", weight="bold", fontsize=13)
     fig.savefig(OUTPUT_DIR / "draft_figure.pdf", dpi=300)
     fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300)
     plt.close(fig)

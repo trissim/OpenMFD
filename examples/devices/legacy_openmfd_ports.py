@@ -208,10 +208,7 @@ def make_cure_text(
         size=2.0,
         offset_y=offset_y,
     )
-    return create_multiline_text(
-        [f"Cure at {CURE_TEMP}C", "Use 60mL of Sylgard 184 in 1:10 ratio"],
-        context,
-    )
+    return create_multiline_text([f"Cure at {CURE_TEMP}C"], context)
 
 
 def build_device_function(

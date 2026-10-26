@@ -152,7 +152,7 @@ def create_multiline_text(
     --------
     >>> # Create multi-line instructions
     >>> text = create_multiline_text(
-    ...     ["Cure at 100°C", "Use 60mL Sylgard 184 in 1:10 ratio"],
+    ...     ["Cure at 100°C", "Inspect the cured surface before demolding"],
     ...     TextLayoutContext.from_fields([6, 8], [9.0, 9.0, 0], size=2.0, offset_y=-40)
     ... )
     """
@@ -178,12 +178,8 @@ def create_multiline_text(
 def create_cure_temperature_text(
     cure_temp: int,
     context: TextLayoutContext,
-    include_instructions: bool = True,
 ) -> solid.OpenSCADObject:
-    """Create cure temperature annotation text.
-
-    Creates standardized text for PDMS curing temperature with optional
-    mixing instructions.
+    """Create a cure-temperature annotation.
 
     Parameters
     ----------
@@ -191,8 +187,6 @@ def create_cure_temperature_text(
         Cure temperature in Celsius.
     context : TextLayoutContext
         Shared placement context for the text block.
-    include_instructions : bool, default=True
-        Whether to include mixing instructions.
 
     Returns
     -------
@@ -207,22 +201,9 @@ def create_cure_temperature_text(
     ...     context=TextLayoutContext.from_fields([6, 8], [9.0, 9.0, 0])
     ... )
     """
-    # Create cure temperature text
     cure_text = f"Cure at {cure_temp}°C"
-
-    # Calculate offset to position below array
     offset_y = -(context.grid_size[1] + 3) * context.dims[1] / 2
-    positioned_context = context.with_offset(offset_y)
-
-    if include_instructions:
-        lines = [cure_text, "Use 60mL of Sylgard 184 in 1:10 ratio"]
-        return create_multiline_text(
-            lines,
-            positioned_context,
-            line_spacing=context.dims[1] / 2,
-        )
-
-    return create_centered_text(cure_text, positioned_context)
+    return create_centered_text(cure_text, context.with_offset(offset_y))
 
 
 def create_device_label(
