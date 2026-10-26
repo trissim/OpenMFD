@@ -1,7 +1,11 @@
 # Plate-format PDMS microfluidic culture devices from hybrid SU-8/3D-printed resin wafer molds
 
-**Authors:** Tristan Simas, Yonatan Morocz, Jathav Puvirajan, David Juncker, and Alyson Fournier  
-**Affiliations:** McGill University  
+**Authors:** Tristan Simas¹, Yonatan Morocz², Jathav Puvirajan¹, David Juncker², and Alyson Fournier¹
+
+**Affiliations:** ¹Department of Neurology and Neurosurgery, Montréal Neurological Institute, McGill University, Montréal, Québec, Canada
+
+²Victor Phillip Dahdaleh Institute of Genomic Medicine, McGill University, Montréal, QC, Canada
+
 **Corresponding author:** Tristan Simas
 
 ## Abstract
