@@ -23,7 +23,7 @@ from generate_openmfd_design_figure import (
     Bounds,
     COLORS,
     DxfDrawing,
-    MutedText,
+    HeadingText,
     PanelBadge,
     PanelTitle,
     StlMesh,
@@ -267,7 +267,7 @@ class InsertPanel(DesignPanel):
 @dataclass(frozen=True)
 class LabeledPanel(DesignPanel):
     label: str
-    caption_y = 0.085
+    caption_y = 0.055
 
     def decorate(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
         PanelBadge.draw(ax, 0.02, 0.96, self.label)
@@ -280,25 +280,25 @@ class LabeledPanel(DesignPanel):
         raise NotImplementedError
 
     def captions(self, ax: plt.Axes) -> None:
-        MutedText.draw(ax, self.single_box.center_x, self.caption_y, "Single unit")
+        HeadingText.draw(ax, self.single_box.center_x, self.caption_y, "Single unit")
 
 
 class LabeledDxfPanel(LabeledPanel, DxfPanel):
-    single_box = AxisBox(0.03, 0.16, 0.40, 0.74)
-    aligned_box = AxisBox(0.46, 0.16, 0.51, 0.74)
+    single_box = AxisBox(0.03, 0.07, 0.40, 0.86)
+    aligned_box = AxisBox(0.46, 0.07, 0.51, 0.86)
 
     def captions(self, ax: plt.Axes) -> None:
         super().captions(ax)
-        MutedText.draw(ax, self.aligned_box.center_x, self.caption_y, "Wafer-scale mask")
+        HeadingText.draw(ax, self.aligned_box.center_x, self.caption_y, "Wafer-scale mask")
 
 
 class LabeledInsertPanel(LabeledPanel, InsertPanel):
-    single_box = AxisBox(0.035, 0.18, 0.430, 0.72)
-    array_box = AxisBox(0.535, 0.18, 0.430, 0.72)
+    single_box = AxisBox(0.035, 0.07, 0.430, 0.86)
+    array_box = AxisBox(0.535, 0.07, 0.430, 0.86)
 
     def captions(self, ax: plt.Axes) -> None:
         super().captions(ax)
-        MutedText.draw(ax, self.array_box.center_x, self.caption_y, "Arrayed inserts")
+        HeadingText.draw(ax, self.array_box.center_x, self.caption_y, "Arrayed inserts")
 
 
 def draw_single_unit_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
@@ -416,7 +416,7 @@ def export_individual_subfigures(designs: tuple[GeneralizabilityDesign, ...]) ->
 def build_figure() -> plt.Figure:
     myelination, axon_guidance, three_compartment = make_designs()
 
-    fig = plt.figure(figsize=(6.5, 6.0))
+    fig = plt.figure(figsize=(6.5, 5.2))
     fig.patch.set_facecolor("white")
     grid = fig.add_gridspec(
         3,

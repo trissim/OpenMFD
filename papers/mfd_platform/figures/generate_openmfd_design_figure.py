@@ -110,6 +110,18 @@ class PresetTitle(HeadingText, LeftText):
     pass
 
 
+class PresetText(TextStyle):
+    fontsize = 10.0
+
+
+class PresetLabel(PresetText, LeftText):
+    pass
+
+
+class PresetValue(PresetText, RightText):
+    pass
+
+
 class PanelTitle(PresetTitle, AxesText):
     va = "bottom"
 
@@ -312,16 +324,16 @@ class FigureOneLayout:
 FIGURE_ONE_LAYOUT = FigureOneLayout(
     figsize=(6.5, 7.3),
     grid_widths=(1.0, 1.0),
-    grid_heights=(2.4, 1.6, 1.3, 1.6),
+    grid_heights=(2.9, 1.6, 1.3, 1.6),
     column_gap=0.025,
-    row_gap=0.075,
+    row_gap=0.035,
     insets=FigureOneInsets(
-        unit_dxf=AxisBox(0.025, 0.075, 0.950, 0.820),
-        wafer_mask=AxisBox(0.020, 0.030, 0.960, 0.900),
-        insert_single=AxisBox(0.035, 0.035, 0.455, 0.900),
-        insert_array=AxisBox(0.510, 0.035, 0.455, 0.900),
-        frame_stl=AxisBox(0.010, 0.030, 0.980, 0.900),
-        device_photo=AxisBox(0.015, 0.035, 0.970, 0.895),
+        unit_dxf=AxisBox(0.025, 0.035, 0.950, 0.860),
+        wafer_mask=AxisBox(0.020, 0.015, 0.960, 0.950),
+        insert_single=AxisBox(0.035, 0.015, 0.455, 0.950),
+        insert_array=AxisBox(0.510, 0.015, 0.455, 0.950),
+        frame_stl=AxisBox(0.010, 0.015, 0.980, 0.950),
+        device_photo=AxisBox(0.015, 0.015, 0.970, 0.950),
     ),
 )
 
@@ -619,43 +631,40 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     PanelBadge.draw(ax, 0.02, 0.96, "A")
 
     rounded_box(ax, (0.055, 0.11), 0.52, 0.75, "white", COLORS["grid"], linewidth=1.0)
-    PresetTitle.draw(ax, 0.08, 0.805, "OpenMFD preset")
-    LeftMutedText.draw(ax, 0.08, 0.735, "editable defaults")
+    PresetTitle.draw(ax, 0.08, 0.805, "Inputs to OpenMFD")
+    PresetLabel.draw(ax, 0.08, 0.735, "Neuronal plate layout")
 
     channels = cfg.channels_config()
     rows, columns = cfg.grid_size
-    rows_text = f"{rows} x {columns} units"
+    rows_text = f"{rows} × {columns} units"
     values = [
-        ("unit pitch", f"{cfg.casing_x:.0f} x {cfg.casing_y:.0f} mm"),
-        ("array", f"{rows_text}; {rows * columns * 2} wells"),
-        ("well radius", f"{cfg.well_radius:.2f} mm"),
-        ("microchannels", f"{channels.num_channels} at {channels.width * 1000:.0f} um"),
-        ("pin / hole", f"{cfg.insert_pin_dims[0]:.2f} / {cfg.insert_hole_dims[0]:.2f} mm"),
-        ("outer taper", f"{cfg.outer_taper_degrees:.0f} deg, {cfg.insert_height:.1f} mm tall"),
-        ("PDMS scale", f"x{cfg.pdms_config().scale_factor():.4f} at {cfg.cure_temp} deg C"),
+        ("Device spacing", f"{cfg.casing_x:.0f} × {cfg.casing_y:.0f} mm"),
+        ("Array", f"{rows_text}; {rows * columns * 2} wells"),
+        ("Well radius", f"{cfg.well_radius:.2f} mm"),
+        ("Microchannels", f"{channels.num_channels} at {channels.width * 1000:.0f} µm"),
+        ("Pin / hole", f"{cfg.insert_pin_dims[0]:.2f} / {cfg.insert_hole_dims[0]:.2f} mm"),
+        ("Sidewall taper", f"{cfg.outer_taper_degrees:.0f}°; {cfg.insert_height:.1f} mm tall"),
+        ("Cure compensation", f"×{cfg.pdms_config().scale_factor():.4f} at {cfg.cure_temp}°C"),
     ]
     y = 0.650
     for name, value in values:
-        LeftMutedText.draw(ax, 0.085, y, name)
-        RightText.draw(ax, 0.555, y, value)
+        PresetLabel.draw(ax, 0.085, y, name)
+        PresetValue.draw(ax, 0.555, y, value)
         ax.plot([0.08, 0.555], [y - 0.034, y - 0.034], color="#edf1f6", lw=0.8)
         y -= 0.064
 
-    LeftText.draw(ax, 0.08, 0.155, "Demonstrated-device defaults;\neditable, not fixed constants.")
-
     outputs = [
-        ((0.68, 0.740), "matched\nphotomask DXFs", COLORS["bottom"]),
-        ((0.68, 0.580), "printable\ninsert STLs", COLORS["insert"]),
-        ((0.68, 0.420), "printable\nframe STL", COLORS["frame"]),
-        ((0.68, 0.260), "wafer-scale\nmask CAD", COLORS["top"]),
+        ((0.68, 0.700), "Photomasks\nDXF (B, C)", COLORS["bottom"]),
+        ((0.68, 0.475), "Well inserts\nSTL (D)", COLORS["insert"]),
+        ((0.68, 0.250), "Plate frame\nSTL (E)", COLORS["frame"]),
     ]
     for (x, y_out), label, color in outputs:
         rounded_box(ax, (x, y_out), 0.25, 0.12, "white", color, linewidth=1.6)
-        TextStyle.draw(ax, x + 0.125, y_out + 0.060, label)
+        PresetText.draw(ax, x + 0.125, y_out + 0.060, label)
         add_arrow(ax, (0.585, 0.49), (x, y_out + 0.060), color)
 
     rounded_box(ax, (0.65, 0.055), 0.31, 0.14, "#fff8ea", "#f2c46d", linewidth=1.0)
-    TextStyle.draw(ax, 0.805, 0.125, "same coordinates\nfor every output")
+    PresetText.draw(ax, 0.805, 0.125, "Matched masks\nand printed parts")
 
 
 def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:

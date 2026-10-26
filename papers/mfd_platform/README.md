@@ -13,8 +13,10 @@ fail rather than being silently omitted. The old paper.md path is only a pointer
 
 ## Supplementary text and data
 
-The supplement declaration includes three tables, two illustrated fabrication
-notes, the apparent-channel-width note, and the two final protocols. Individual
+The supplement opens with the two protocols, followed by illustrated fabrication
+troubleshooting, one design-dimension table and the apparent-width note. The full
+fabrication-method comparison is supplied as a linked CSV (Data S6), not three
+pages of typeset table. Individual
 pin heights, printer profiles, apparent widths and retained per-device counts
 are separate data files, listed in
 [supplementary/Supplementary_data.md](supplementary/Supplementary_data.md).

@@ -5,10 +5,8 @@ in a shared microfabrication facility, starting from OpenMFD-generated masks
 and insert models. The finished parylene-coated mold is used repeatedly for
 PDMS casting and plate assembly as described in Supplementary Protocol S1.
 
-Follow the manufacturers' instructions for routine material processing;
-changes used in this work are specified below.
-Supplementary Table S2 gives the shared dimensions and considerations for
-adapting the layout, materials, and coating.
+Follow the manufacturers' instructions except for the modifications below.
+Supplementary Table S1 gives the device and mold dimensions.
 
 ## Required design files
 
@@ -19,7 +17,7 @@ adapting the layout, materials, and coating.
 
 ## Materials and equipment
 
-- 6-inch silicon wafer (UniversityWafer ID857 was used here).
+- 6-inch silicon wafer (UniversityWafer ID857).
 - SU-8 2005 negative photoresist (Kayaku Advanced Materials).
 - SUEX K200 dry-film photoresist (DJ MicroLaminates), 200 µm thick.
 - Facility-supplied propylene glycol monomethyl ether acetate (PGMEA), used to
@@ -47,9 +45,8 @@ adapting the layout, materials, and coating.
 2. Confirm that the channel layer, SUEX well and alignment-hole layer, insert
    pins, insert skirts, taper allowances, and cutting/frame outlines share the
    same coordinate system.
-3. Apply the demonstrated horizontal PDMS shrinkage compensation factor of
-   1.0226 (2.26% enlargement) for the 100°C cure consistently to matching mask
-   and insert outputs (Supplementary Table S2). Do not add an independent
+3. Apply a horizontal scale factor of 1.0226 (2.26% enlargement) for the 100°C
+   cure to matching mask and insert outputs (Supplementary Table S1). Do not add an independent
    slicer scale correction.
 4. Before fabrication, inspect the single-device and wafer-scale DXF outputs and
    the single and arrayed insert STL outputs.
@@ -146,4 +143,18 @@ with their pins seated in the alignment holes.
    PDMS casting.
 
 Inspect the first PDMS cast for clean release, open wells, and intact channel
-regions. The design dimensions in Table S2 refer to the mold before coating.
+regions. The design dimensions in Table S1 refer to the mold before coating.
+
+## Mold inspection and reuse
+
+Five molds were assembled with the final protocol. Three routinely used molds
+together produced more than 50 usable PDMS casts; the most recent molds remained
+in use for more than 8 months without visible degradation. A cast was usable if
+it demolded intact with open wells and preserved microchannel regions. The
+inserts remained bonded and the SU-8/SUEX features remained attached to the mold.
+Cast quality was assessed by inspection, not dimensional measurements.
+
+Two wafer assemblies were lost during casting or handling: one wafer broke
+during demolding, and leaked PDMS cured beneath a second wafer in the casting
+rack. Supplementary Figures S1 and S2 illustrate the SUEX-surface and SU-8-adhesion
+problems addressed by the exposure and bake steps above.

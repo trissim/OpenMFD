@@ -9,11 +9,12 @@ import tempfile
 from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from functools import lru_cache
+from itertools import groupby
 from pathlib import Path
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.patches import FancyArrowPatch
+from matplotlib.patches import FancyArrowPatch, Rectangle
 from PIL import Image
 
 from generate_openmfd_design_figure import StlMesh, rotation_matrix, triangle_normals
@@ -1014,8 +1015,7 @@ def draw_scene_blender(
                 1.0,
             )
             manifest["ortho_scale"] *= measured_growth * 1.04
-        white = Image.new("RGBA", rendered.size, (255, 255, 255, 255))
-        image = np.asarray(Image.alpha_composite(white, rendered).convert("RGB"))
+        image = np.asarray(rendered)
     ax.imshow(
         image,
         extent=(frame_x, frame_x + frame_w, frame_y, frame_y + frame_h),
@@ -1698,7 +1698,7 @@ class AssembleFrame(Step):
         ax.plot(target[0], target[1], marker="o", markersize=6.5,
                 markerfacecolor=COLORS["adhesive"], markeredgecolor="#8f6515",
                 markeredgewidth=0.7, linestyle="none", zorder=10)
-        self.annotate(ax, x + width * 0.72, y + height * 0.96,
+        self.annotate(ax, x + width * 0.47, y + height * 0.96,
                       "Adhesive", color="#8f6515")
 
 
@@ -1756,10 +1756,20 @@ def draw_workflow() -> None:
     for number, step in enumerate(STEPS, 1):
         row, column = divmod(number - 1, 3)
         column = 2 - column if row % 2 else column
-        frame = (0.035 + column * 0.325, 0.69 - row * 0.30, 0.28, 0.20)
+        frame = (0.035 + column * 0.325, 0.69 - row * 0.315, 0.28, 0.20)
         print(f"Rendering step {number}: {step.title}", flush=True)
         step.draw(ax, frame, number)
         frames.append(frame)
+
+    for _, row in groupby(frames, key=lambda frame: frame[1]):
+        row_frames = tuple(row)
+        left = min(frame[0] for frame in row_frames)
+        right = max(frame[0] + frame[2] for frame in row_frames)
+        _, y, _, height = row_frames[0]
+        ax.add_patch(Rectangle(
+            (left - 0.01, y - 0.05), right - left + 0.02, height + 0.105,
+            facecolor="#f5f7fa", edgecolor="none", zorder=0,
+        ))
 
     for previous, following in zip(frames, frames[1:]):
         px, py, width, height = previous
@@ -1767,8 +1777,10 @@ def draw_workflow() -> None:
         if py == ny:
             direction = math.copysign(1.0, nx - px)
             edge = (1 + direction) / 2
-            add_arrow(ax, (px + width * edge + direction * 0.005, py + height / 2),
-                      (nx + width * (1 - edge) - direction * 0.005, ny + height / 2))
+            # Use the scene's empty camera margin, without covering the solids.
+            inset = width * (1.0 - 1.0 / MIN_CAMERA_MARGIN) / 3.0
+            add_arrow(ax, (px + width * edge - direction * inset, py + height / 2),
+                      (nx + width * (1 - edge) + direction * inset, ny + height / 2))
         else:
             outer_x = px + width / 2 + math.copysign(0.16, px + width / 2 - 0.5)
             add_arrow(ax, (outer_x, py), (outer_x, ny + height))

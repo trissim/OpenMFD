@@ -5,7 +5,7 @@
 - Write as a biology-facing platform paper, not as an internal engineering report.
 - Lead with the experimental or fabrication consequence, then explain the implementation detail.
 - Keep explaining why: connect each result to the practical problem it addresses, the reason for the observation, and what it enables or changes. Make that connection understandable without specialist knowledge where possible; do not replace an explanation with a verdict or a list of steps.
-- Explain OpenMFD through the matching files it generates; keep the reusable hybrid mold and cast-in-place wells as the main story.
+- Explain OpenMFD through the matching files it generates; keep the reusable hybrid mold and cast-in-place wells as the main story. In the Introduction, explain what the user supplies, what the software produces and why matching parts help. In Methods, explain the pipeline at a high level before naming implementation libraries; tie inputs and outputs to Figure 1.
 - Write positively from demonstrated results. State limits that change interpretation where they belong, rather than repeating defensive qualifications in the abstract, Results, Discussion, and conclusion.
 - Describe the final working process. Keep development failures only when they explain a necessary step or the evidence for a result.
 
@@ -50,7 +50,17 @@ Examples:
 - Keep the final reproducible protocols, concise design comparisons, and useful figures in the typeset supplement.
 - Supply individual measurements and detailed printer or instrument profiles as supplementary data files. Preserve every value and unit, explain the file contents, and update all references when tables move.
 - Give each supplementary reference a reason at that exact location. Explain the relevant purpose or observation first, then say what the protocol, table, figure or data file supplies. Do not interrupt a sentence with a label, send readers to unrelated material, or use cross-references as substitutes for an explanation.
-- A supplement is not a complete development log. Retain observations that support a process choice without retelling every failed attempt.
+- A supplement is not a complete development log. Retain observations that support a process choice without retelling every failed attempt. Put the protocols first and the relevant troubleshooting immediately afterward; keep measurements and long comparisons in reader-accessible data files.
+
+## Figures and legends
+
+- Legends should explain the figure independently: panel contents, relevant conditions, colours, symbols, scale bars and, for plots, the observation unit, sample counts and error summary. Fuller legends are useful when they add this information, not when they pad a panel inventory.
+- Compare actual Fournier-coauthored figures and legends across papers; do not invent a universal house style from one example. Preserve the distinction between design files, fabricated devices and measured observations.
+- Enlarge useful content and text rather than filling space with bigger margins. Group Figure 3's steps clearly, leave visible arrow shafts, and keep labels clear of equipment and neighbouring text.
+
+## Working conversation
+
+- Talk to Tristan and other contributors in ordinary English. Say what changed in the paper and what needs attention; do not replace a conversation with build bookkeeping or private administrative terms.
 
 ## Preferred Framing
 
