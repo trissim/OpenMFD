@@ -45,7 +45,7 @@ Keeping the inserts on their detachable, flexible metal build plate preserved th
 We coated the bonded mold with 1 µm parylene C to reduce potential cytotoxicity from the printed resin, protect the mold surface from material degradation and aid PDMS release (Musgrove et al., 2023; Chen et al., 2013). Design dimensions refer to the mold before parylene coating.
 
 ### PDMS casting and plate assembly
-We mixed Sylgard 184 PDMS at a 10:1 base:curing-agent ratio and poured approximately 30 mL per wafer mold, below the insert tops to leave the wells open. The wafer rack allowed multiple filled molds to be degassed and cured in parallel; curing was for 1 h at 100°C (Figure 3, steps 1–4; Protocol S1). Tapered mold features aided demolding (Park et al., 2010; Ristola et al., 2019).
+We mixed Sylgard 184 PDMS at a 10:1 base:curing-agent ratio and poured approximately 30 mL per wafer mold, filling the mold to just below the insert tops to maximize well height without covering the insert tops. The wafer rack allowed multiple filled molds to be degassed and cured in parallel; curing was for 1 h at 100°C (Figure 3, steps 1–4; Protocol S1). Tapered mold features aided demolding (Park et al., 2010; Ristola et al., 2019).
 
 We demolded the array and trimmed it along molded cutting guides to 108 × 72 mm. Plasma treatment activated the PDMS and glass surfaces before we bonded the array to a 110 × 74 × 0.17 mm glass sheet for optical access. We checked the PDMS–glass seal before autoclaving (Figure 3, steps 5–7).
 
