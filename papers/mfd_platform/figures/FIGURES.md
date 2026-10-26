@@ -72,7 +72,7 @@ Figures 1, 2 and 5 are authored at 6.5 inches wide and placed at that width. `Te
 
 ### Figure 4. Combined platform validation
 
-- **Purpose:** Show the qualitative directional dye-bias test, endpoint CTB tracing, and descriptive plate-level CTB-positive soma counts.
+- **Purpose:** Show the pre-culture fluorescent-antibody-solution check, endpoint CTB tracing, and descriptive plate-level CTB-positive soma counts.
 - **Source assets:** `papers/mfd_platform/figures/final_drop/Fig5_plate_layout_validation/`
 - **Rendered asset:** `papers/mfd_platform/figures/rendered/validation.pdf`
 - **Status:** Restoration source uses original stitched crops paired with original ROI outlines, plus plate means/sample SD from the preserved PRE count CSV. October15 author approval confirms five cell-count exclusions and67 included devices (n22/21/24). `CtbView` owns both views and calibration; `PlateCounts` draws means behind device dots. The real desktop CLI completed at73c940b; the final PNG was inspected and the authored/published pairs were committed together atf5b9d18. Placed-page inspection is next. The older composite remains preserved through3cc8034 and checkpoint8e51fb0. Exact historical analysis-run configuration and ethics remain unresolved.

@@ -27,7 +27,6 @@ DESIGN_STEM = "2_compartment_96_well_300um_suex200_v27"
 FRAME_STL = ROOT / "plates" / "96_well_plate_reservoirs_print_hips_2" / "96_well_plate_reservoirs_print_hips_2.stl"
 ASSEMBLED_DEVICE_PHOTO = OUTPUT_DIR / "assembled_device_photo.png"
 STL_DISPLAY_Z_SCALE = 1.0
-PANEL_BACKGROUND = "#e9eef3"
 
 sys.path.insert(0, str(ROOT))
 
@@ -303,6 +302,14 @@ class StlRenderSpec:
     base_color: str = COLORS["insert"]
     highlight_color: str = "#ffe0a0"
     edge_color: str = "#7a4308"
+
+    def draw_background(self, ax: plt.Axes, bounds: Bounds, x_pad: float, y_pad: float) -> None:
+        ax.add_patch(Rectangle(
+            (bounds.min_x - x_pad, bounds.min_y - y_pad),
+            bounds.width + 2 * x_pad, bounds.height + 2 * y_pad,
+            facecolor=COLORS["dark_card"], edgecolor=COLORS["frame"],
+            linewidth=1.1, zorder=0,
+        ))
 
 
 @dataclass(frozen=True)
@@ -607,17 +614,7 @@ def draw_stl_mesh_raw_equal(ax: plt.Axes, spec: StlRenderSpec) -> None:
     ax.set_ylim(bounds.min_y - y_pad, bounds.max_y + y_pad)
     ax.set_aspect("equal", adjustable="box")
     ax.axis("off")
-    ax.add_patch(
-        Rectangle(
-            (bounds.min_x - x_pad, bounds.min_y - y_pad),
-            bounds.width + 2 * x_pad,
-            bounds.height + 2 * y_pad,
-            facecolor=COLORS["dark_card"],
-            edgecolor=COLORS["frame"],
-            linewidth=1.1,
-            zorder=0,
-        )
-    )
+    spec.draw_background(ax, bounds, x_pad, y_pad)
     draw_stl_polygons(ax, polygons, depth, normals, spec, zorder=2)
 
 
@@ -676,11 +673,9 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     InsetBadge.label(ax, "A")
 
     input_left, input_width = 0.055, 0.52
-    rounded_box(ax, (input_left, 0.11), input_width, 0.75,
+    input_bottom, input_height = 0.11, 0.75
+    rounded_box(ax, (input_left, input_bottom), input_width, input_height,
                 "white", COLORS["grid"], linewidth=1.0)
-    ParameterTitle.draw(ax, input_left + 0.025, 0.82, "Inputs to OpenMFD")
-    ParameterLabel.draw(ax, input_left + 0.025, 0.74, "Neuronal plate layout")
-
     channels = cfg.channels_config()
     rows, columns = cfg.grid_size
     rows_text = f"{rows} × {columns} units"
@@ -695,12 +690,18 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     ]
     label_x = input_left + 0.03
     value_x = input_left + input_width - 0.02
-    y = 0.650
+    row_step = 0.068
+    heading_gap = 0.090
+    content_height = len(values) * row_step + 2 * heading_gap
+    table_bottom = input_bottom + (input_height - content_height) / 2
+    y = table_bottom + (len(values) - 0.5) * row_step
+    ParameterTitle.draw(ax, input_left + 0.025, y + 2 * heading_gap, "Inputs to OpenMFD")
+    ParameterLabel.draw(ax, input_left + 0.025, y + heading_gap, "Neuronal plate layout")
     for name, value in values:
-        ParameterLabel.draw(ax, label_x, y, name)
-        ParameterValue.draw(ax, value_x, y, value)
-        ax.plot([label_x, value_x], [y - 0.034, y - 0.034], color="#edf1f6", lw=0.8)
-        y -= 0.064
+        ParameterLabel.draw(ax, label_x, y - 0.008, name)
+        ParameterValue.draw(ax, value_x, y - 0.008, value)
+        ax.plot([label_x, value_x], [y - row_step / 2, y - row_step / 2], color="#edf1f6", lw=0.8)
+        y -= row_step
 
     output_left, output_width, output_height = 0.655, 0.30, 0.12
     outputs = (
@@ -941,7 +942,6 @@ def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
     pad_y = FIGURE_ONE_LAYOUT.cell_padding_inches / fig.get_figheight()
     printed_panel_opacity = 0.18
     background_groups = (
-        (PANEL_BACKGROUND, 1.0, (a_ax, f_ax)),
         (COLORS["bottom"], 0.07, (b_ax, c_ax)),
         (COLORS["insert"], printed_panel_opacity, (d_single_ax, d_array_ax)),
         (COLORS["frame"], printed_panel_opacity, (e_ax,)),

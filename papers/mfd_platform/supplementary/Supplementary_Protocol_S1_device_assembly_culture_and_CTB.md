@@ -3,8 +3,8 @@
 ## Scope
 
 This protocol covers PDMS casting from the parylene-coated hybrid mold,
-plate assembly, neuronal culture, and imaging. The assays measure tracer
-movement between compartments and count CTB-positive neuronal cell bodies
+plate assembly, neuronal culture, and imaging. The assays visualize fluorescent-antibody
+solution redistribution between compartments and count CTB-positive neuronal cell bodies
 in each device.
 
 The plate contains 48 two-compartment devices and 96 pipette-accessible wells
@@ -110,15 +110,16 @@ assembled device for aqueous coating and culture (C6).
 
 ## Shared fluorescence-imaging settings
 
-Acquire the tracer images in Section D and CTB images in Section F in widefield
+Acquire images of the fluorescent-antibody solutions in Section D and CTB-labeled
+neurons in Section F in widefield
 mode on a PerkinElmer Opera Phenix Plus using a 10×/0.30 NA objective, 2 × 2
 camera binning, and 100 ms fluorescence exposures. Use red and green channels
-suited to the paired tracers in Section D. For CTB imaging, use the built-in laser
+suited to the paired fluorescent-antibody solutions in Section D. For CTB imaging, use the built-in laser
 autofocus, 640 nm excitation and 706 nm emission; acquire accompanying
 brightfield images with a 10 ms exposure. The effective pixel size is 1.187 µm.
 Keep exposure and optical settings constant within each assay.
 
-## D. Compare tracer redistribution between compartments
+## D. Compare fluorescent-solution redistribution between compartments
 
 1. Reserve 24 assembled two-compartment devices for the directional fluid movement
    assay.

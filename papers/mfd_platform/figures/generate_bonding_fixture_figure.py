@@ -570,8 +570,8 @@ def draw_lock_view(
     detail_ax.axis("off")
     detail_ax.add_patch(
         Rectangle(
-            (schematic_left, crop[2]),
-            crop[1] - schematic_left,
+            (crop[0], crop[2]),
+            crop[1] - crop[0],
             crop[3] - crop[2],
             facecolor="#f1f4f8",
             edgecolor="none",
