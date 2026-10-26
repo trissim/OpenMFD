@@ -371,12 +371,12 @@ def label_panel(fig: plt.Figure, ax: Axes, label: str) -> None:
     bounds = ax.get_position()
     fig.text(
         bounds.x0 - PANEL_LABEL_GAP_INCHES / fig.get_figwidth(),
-        bounds.y1 + PANEL_LABEL_GAP_INCHES / fig.get_figheight(),
+        bounds.y1,
         label,
         weight="bold",
         fontsize=13,
         ha="right",
-        va="bottom",
+        va="top",
     )
 
 
@@ -431,6 +431,7 @@ def main() -> None:
     ax = fig.add_subplot(grid[2, 2])
     counts.draw(ax)
     ax.set_ylabel("CTB-positive cells", fontsize=9)
+    ax.tick_params(axis="x", labelsize=8.5)
     ax.set_xlim(-.5, 2.5)
     ax.set_ylim(bottom=0)
     ax.spines[["top", "right"]].set_visible(False)
