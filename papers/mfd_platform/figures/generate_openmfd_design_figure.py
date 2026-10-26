@@ -644,7 +644,7 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
         ("Microchannels", f"{channels.num_channels} at {channels.width * 1000:.0f} µm"),
         ("Pin / hole", f"{cfg.insert_pin_dims[0]:.2f} / {cfg.insert_hole_dims[0]:.2f} mm"),
         ("Sidewall taper", f"{cfg.outer_taper_degrees:.0f}°; {cfg.insert_height:.1f} mm tall"),
-        ("Cure compensation", f"×{cfg.pdms_config().scale_factor():.4f} at {cfg.cure_temp}°C"),
+        ("PDMS shrinkage scale", f"×{cfg.pdms_config().scale_factor():.4f} at {cfg.cure_temp}°C"),
     ]
     y = 0.650
     for name, value in values:
