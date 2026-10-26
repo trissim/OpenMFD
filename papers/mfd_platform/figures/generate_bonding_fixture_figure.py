@@ -17,7 +17,6 @@ from generate_openmfd_design_figure import (
     LeftText,
     PanelBadge,
     TextStyle,
-    BackedText,
     DxfSources,
     StlSources,
     TwoCompartmentDeviceConfig,
@@ -631,7 +630,6 @@ def draw_lock_view(
         (p_insert_2[0] - vertical_label_gap, (p_insert_2[1] + p_insert_3[1]) / 2),
         90.0,
         extension_points=dimension_extension_points(hull, p_insert_2, p_insert_3),
-        text_style=BackedText,
     )
 
     platform_arrow_y = platform_y[1] + outer_dimension_gap

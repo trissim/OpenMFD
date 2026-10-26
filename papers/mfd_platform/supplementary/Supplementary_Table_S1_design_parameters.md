@@ -3,7 +3,7 @@
 Dimensions refer to the neuronal layout before parylene coating. The pin-height range was measured in one printed array; the other values specify the design dimensions.
 
 | Feature | Dimensions |
-|---|---|
+|----------|------------------------------|
 | Plate layout | 6 × 8 two-well units: 48 devices and 96 wells. Unit spacing: 18 × 9 mm; well centres: ±4.5 mm from each unit centre, on a 9 mm grid. |
 | Device, glass and wafer | 108 × 72 mm device; 110 × 74 mm glass, with a designed 1 mm margin per side; 150 mm wafer with a 57.5 mm flat. |
 | Wells and channels | 2.5 mm well radius; 5.0 mm chamber width; 62 channels, 10 µm wide with 30 µm gaps. Channel-array width: 2.45 mm; chamber margin: 1.275 mm per side. |
