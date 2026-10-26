@@ -111,7 +111,7 @@ class PresetTitle(HeadingText, LeftText):
 
 
 class PanelTitle(PresetTitle, AxesText):
-    va = "top"
+    va = "bottom"
 
 
 class PanelBadge(PanelTitle):
