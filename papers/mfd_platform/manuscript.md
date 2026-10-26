@@ -74,12 +74,9 @@ To test whether the cultured neurons extended axons into the distal compartment,
 <!-- Author confirmation required: tissue-procurement/animal-use committee, applicable guidelines and approval identifier. -->
 
 ### CTB image stitching and cell counting
-Images were collected at 35 positions (7 × 5 grid) on Plates 1 and 2 and 42 positions (7 × 6 grid) on Plate 3, with approximately 10% overlap, then stitched into one image per device. To compare counts over the same device area despite this difference in coverage, each stitched image was aligned to a reference brightfield image and cropped to a common area. One cell count was recorded per analyzed device. These were baseline images collected before axotomy (Supplementary Protocol S1).
+Images were collected at 35 positions (7 × 5 grid) on Plates 1 and 2 and 42 positions (7 × 6 grid) on Plate 3, with approximately 10% overlap, then stitched into one image per device. To compare counts over the same device area despite this difference in coverage, each stitched image was aligned to a reference brightfield image and cropped to a common area. One cell count was recorded per analyzed device. These were baseline images collected before axotomy; Figure 4C reports the mean and standard deviation across analyzed interior devices for each plate (Supplementary Protocol S1).
 
 <!-- Analysis provenance: the original October 15 desktop session identifies artifacts in the five excluded counts (lines 13665/13674) and explicitly approves the two additional P1 exclusions for cell counts, not axon analysis (lines 13694/13784). The selected cohort is 67 devices: P1 n=22, P2 n=21, P3 n=24. All 72 retained PRE counts match the original per-device count exports; both flag histories remain supplied. Figure 4 was redrawn from those observations and the original image/ROI sources, using the within-plate mean and sample SD, rather than importing the historically unbound plot raster. Exact analysis software/version, stitching/segmentation run configuration, positivity rule and manual corrections remain unverified. The saved crop declaration and visual overlay alignment do not establish that historical run. See reviews/CTB_ANALYSIS_HANDOFF.md. -->
-
-### Statistical analysis and reporting
-Plate-by-plate summaries describe variation within one neuronal preparation. All three culture plates contained neurons isolated from the same E18 rat embryo; the plates and their devices are therefore technical replicates. Figure 4C shows the mean number of CTB-positive cell bodies per device for each plate, with the standard deviation across the analyzed interior devices.
 
 ## Results
 
