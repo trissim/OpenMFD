@@ -706,8 +706,8 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     output_left, output_width, output_height = 0.655, 0.30, 0.12
     outputs = (
         (0.650, "Photomasks: DXF (B, C)", COLORS["bottom"]),
-        (0.425, "Well inserts: STL (D, F)", COLORS["insert"]),
-        (0.200, "Plate frame: STL (E)", COLORS["frame"]),
+        (0.425, "Well inserts: STL (E, F)", COLORS["insert"]),
+        (0.200, "Plate frame: STL (D)", COLORS["frame"]),
     )
     for y_out, label, color in outputs:
         rounded_box(ax, (output_left, y_out), output_width, output_height,
@@ -761,7 +761,7 @@ def draw_single_insert(ax: plt.Axes, stl: StlSources) -> None:
             edge_color="#593100",
         ),
         FIGURE_ONE_LAYOUT.insets.insert_single,
-        label="F",
+        label="E",
     )
 
 
@@ -781,13 +781,13 @@ def draw_insert_array(ax: plt.Axes, stl: StlSources) -> None:
             edge_color="#593100",
         ),
         FIGURE_ONE_LAYOUT.insets.insert_array,
-        label="D",
+        label="F",
     )
 
 
 def draw_frame_cad(ax: plt.Axes, stl: StlSources) -> None:
     setup_axis(ax)
-    InsetBadge.label(ax, "E")
+    InsetBadge.label(ax, "D")
 
     card_ax = FIGURE_ONE_LAYOUT.image_inset(ax, FIGURE_ONE_LAYOUT.insets.frame_stl)
     draw_stl_mesh_raw_equal(
@@ -920,18 +920,18 @@ def build_figure() -> tuple[plt.Figure, dict[str, plt.Axes]]:
     a_ax = fig.add_subplot(grid[0, :])
     b_ax = fig.add_subplot(grid[1, 0])
     c_ax = fig.add_subplot(grid[1, 1])
-    d_single_ax = fig.add_subplot(grid[2, 1])
-    d_array_ax = fig.add_subplot(grid[1, 2])
-    e_ax = fig.add_subplot(grid[2, 0])
+    d_single_ax = fig.add_subplot(grid[2, 0])
+    d_array_ax = fig.add_subplot(grid[2, 1])
+    e_ax = fig.add_subplot(grid[1, 2])
     f_ax = fig.add_subplot(grid[2, 2])
     all_axes = (a_ax, b_ax, c_ax, d_single_ax, d_array_ax, e_ax, f_ax)
     panels = {
         "A": a_ax,
         "B": b_ax,
         "C": c_ax,
-        "D": d_array_ax,
-        "E": e_ax,
-        "F": d_single_ax,
+        "D": e_ax,
+        "E": d_single_ax,
+        "F": d_array_ax,
         "G": f_ax,
     }
     for ax in all_axes:
