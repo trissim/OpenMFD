@@ -33,6 +33,15 @@ OUTPUT_DIR = FIGURE_DIR / "final_drop/Fig5_plate_layout_validation"
 DATA_DIR = ROOT / "supplementary/validation"
 COLORS = ("#0072B2", "#D17800", "#00856A")
 PANEL_LABEL_GAP_INCHES = 0.08
+TRACER_SCALE_MARGIN_PX = 300
+FIGURE_SIZE = (7.0, 5.8)
+FIGURE_LEFT = 0.045
+FIGURE_RIGHT = 0.99
+FIGURE_TOP = 0.97
+FIGURE_BOTTOM = 0.08
+FIGURE_ROW_GAP = 0.04
+COUNT_PANEL_FRACTION = 0.23
+IMAGE_PANEL_FRACTION = (1.0 - COUNT_PANEL_FRACTION) / 2.0
 WireObject = Mapping[str, object]
 
 
@@ -289,7 +298,7 @@ class TracerScale:
             image = source.convert("RGB")
             ax.imshow(image)
         ax.set_axis_off()
-        ax.set_ylim(image.height + 300, -.5)
+        ax.set_ylim(image.height + TRACER_SCALE_MARGIN_PX, -.5)
         ax.set_title(f"Hour {frame.day * 24}", fontsize=10, loc="left", pad=3)
         span = np.linalg.norm(np.asarray((frame.second_centre.x-frame.first_centre.x,
                                          frame.second_centre.y-frame.first_centre.y)))
@@ -371,24 +380,38 @@ def label_panel(fig: plt.Figure, ax: Axes, label: str) -> None:
     )
 
 
+def figure_row_heights(tracer: TracerScale) -> tuple[float, float, float]:
+    """Size tracer rows from their pixels so their image fills the text width."""
+    with Image.open(OUTPUT_DIR / f"dye_gradient_day{tracer.frames[0].day}.png") as image:
+        tracer_aspect = image.width / (image.height + TRACER_SCALE_MARGIN_PX)
+    panel_width_inches = FIGURE_SIZE[0] * (FIGURE_RIGHT - FIGURE_LEFT)
+    tracer_height_inches = panel_width_inches / tracer_aspect
+    available_height_inches = FIGURE_SIZE[1] * (FIGURE_TOP - FIGURE_BOTTOM)
+    axes_height_inches = available_height_inches / (1 + 2 * FIGURE_ROW_GAP / 3)
+    lower_height_inches = axes_height_inches - 2 * tracer_height_inches
+    if lower_height_inches <= 0:
+        raise ValueError("Figure height cannot hold width-filling tracer panels")
+    return tracer_height_inches, tracer_height_inches, lower_height_inches
+
+
 def main() -> None:
     argparse.ArgumentParser(description=__doc__).parse_args()
     counts = CountDataset.read(DATA_DIR / "ctb_device_counts.csv")
     metadata = ValidationSources.read(DATA_DIR / "sources.json")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10, "pdf.fonttype": 42})
-    fig = plt.figure(figsize=(7, 5.8), facecolor="white")
+    fig = plt.figure(figsize=FIGURE_SIZE, facecolor="white")
     grid = fig.add_gridspec(
         3,
         3,
-        height_ratios=(1.4, 1.4, 2.2),
-        width_ratios=(1.25, 1.25, 0.72),
-        left=.055,
-        right=.98,
-        top=.97,
-        bottom=.08,
-        hspace=.14,
-        wspace=.16,
+        height_ratios=figure_row_heights(metadata.tracer),
+        width_ratios=(IMAGE_PANEL_FRACTION, IMAGE_PANEL_FRACTION, COUNT_PANEL_FRACTION),
+        left=FIGURE_LEFT,
+        right=FIGURE_RIGHT,
+        top=FIGURE_TOP,
+        bottom=FIGURE_BOTTOM,
+        hspace=FIGURE_ROW_GAP,
+        wspace=.14,
     )
     for i, frame in enumerate(metadata.tracer.frames):
         ax = fig.add_subplot(grid[i, :])
