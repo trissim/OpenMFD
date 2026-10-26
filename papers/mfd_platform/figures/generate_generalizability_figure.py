@@ -23,7 +23,7 @@ from generate_openmfd_design_figure import (
     Bounds,
     COLORS,
     DxfDrawing,
-    HeadingText,
+    LargeText,
     PanelBadge,
     PanelTitle,
     StlMesh,
@@ -267,7 +267,7 @@ class InsertPanel(DesignPanel):
 @dataclass(frozen=True)
 class LabeledPanel(DesignPanel):
     label: str
-    caption_y = 0.055
+    caption_y = 0.015
 
     def decorate(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
         PanelBadge.draw(ax, 0.02, 0.96, self.label)
@@ -280,7 +280,7 @@ class LabeledPanel(DesignPanel):
         raise NotImplementedError
 
     def captions(self, ax: plt.Axes) -> None:
-        HeadingText.draw(ax, self.single_box.center_x, self.caption_y, "Single unit")
+        LargeText.draw(ax, self.single_box.center_x, self.caption_y, "Single unit")
 
 
 class LabeledDxfPanel(LabeledPanel, DxfPanel):
@@ -289,7 +289,7 @@ class LabeledDxfPanel(LabeledPanel, DxfPanel):
 
     def captions(self, ax: plt.Axes) -> None:
         super().captions(ax)
-        HeadingText.draw(ax, self.aligned_box.center_x, self.caption_y, "Wafer-scale mask")
+        LargeText.draw(ax, self.aligned_box.center_x, self.caption_y, "Wafer-scale mask")
 
 
 class LabeledInsertPanel(LabeledPanel, InsertPanel):
@@ -298,7 +298,7 @@ class LabeledInsertPanel(LabeledPanel, InsertPanel):
 
     def captions(self, ax: plt.Axes) -> None:
         super().captions(ax)
-        HeadingText.draw(ax, self.array_box.center_x, self.caption_y, "Arrayed inserts")
+        LargeText.draw(ax, self.array_box.center_x, self.caption_y, "Arrayed inserts")
 
 
 def draw_single_unit_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
@@ -428,7 +428,7 @@ def build_figure() -> plt.Figure:
         bottom=0.03,
         top=0.98,
         wspace=0.07,
-        hspace=0.06,
+        hspace=0.10,
     )
 
     layout = (

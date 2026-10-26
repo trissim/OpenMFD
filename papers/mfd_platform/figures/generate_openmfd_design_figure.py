@@ -110,15 +110,15 @@ class PresetTitle(HeadingText, LeftText):
     pass
 
 
-class PresetText(TextStyle):
+class LargeText(TextStyle):
     fontsize = 10.0
 
 
-class PresetLabel(PresetText, LeftText):
+class PresetLabel(LargeText, LeftText):
     pass
 
 
-class PresetValue(PresetText, RightText):
+class PresetValue(LargeText, RightText):
     pass
 
 
@@ -660,11 +660,11 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
     ]
     for (x, y_out), label, color in outputs:
         rounded_box(ax, (x, y_out), 0.25, 0.12, "white", color, linewidth=1.6)
-        PresetText.draw(ax, x + 0.125, y_out + 0.060, label)
+        LargeText.draw(ax, x + 0.125, y_out + 0.060, label)
         add_arrow(ax, (0.585, 0.49), (x, y_out + 0.060), color)
 
     rounded_box(ax, (0.65, 0.055), 0.31, 0.14, "#fff8ea", "#f2c46d", linewidth=1.0)
-    PresetText.draw(ax, 0.805, 0.125, "Matched masks\nand printed parts")
+    LargeText.draw(ax, 0.805, 0.125, "Matched masks\nand printed parts")
 
 
 def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
