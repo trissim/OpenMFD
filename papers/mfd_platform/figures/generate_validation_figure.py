@@ -34,13 +34,13 @@ DATA_DIR = ROOT / "supplementary/validation"
 COLORS = ("#0072B2", "#D17800", "#00856A")
 PANEL_LABEL_GAP_INCHES = 0.08
 TRACER_SCALE_MARGIN_PX = 420
-FIGURE_SIZE = (7.0, 5.8)
+FIGURE_SIZE = (7.0, 7.2)
 FIGURE_LEFT = 0.045
 FIGURE_RIGHT = 0.99
 FIGURE_TOP = 0.97
 FIGURE_BOTTOM = 0.08
 FIGURE_ROW_GAP = 0.06
-COUNT_PANEL_FRACTION = 0.27
+COUNT_PANEL_FRACTION = 0.25
 IMAGE_PANEL_FRACTION = (1.0 - COUNT_PANEL_FRACTION) / 2.0
 WireObject = Mapping[str, object]
 
@@ -250,6 +250,8 @@ class CtbView:
         outline_ax.add_collection(LineCollection(
             tuple(tuple((point.x, point.y) for point in contour) for contour in self.outlines),
             colors="#D17800", linewidths=.4), autolim=False)
+        image_ax.set_anchor("E")
+        outline_ax.set_anchor("W")
         image_ax.set_title("CTB", fontsize=8, pad=3)
         outline_ax.set_title("Outlines", fontsize=8, pad=3)
         left = image_ax.get_position()
