@@ -1,8 +1,8 @@
 {
-  "validation_scope": "Figure 1 retains full-width panel A above six visual cells: B, C, D single-device inserts; D insert array, E and F. Cell backgrounds derive from grid bounds. Figure 5 uses four column headers once and one uniform row background. Scientific source photographs, CAD geometry and Figure 2 remain unchanged.",
+  "validation_scope": "Figure 1 keeps full-width A above six visual cells with flat borderless backgrounds: B, C, D single-device inserts; D array, E and F. Figure 5 has four column headings once and a uniform background. Scientific inputs unchanged.",
   "output_sha256": {
-    "rendered/openmfd_design.pdf": "e075f5a2fad749bd6b045e0962c6d9a92b57b928667d79bdc25bb2c9a816132f",
-    "rendered_docx/openmfd_design.png": "0b111c28a029fceed47340f5bc3660c7fff76c95f275c010b8973451362a1c19",
+    "rendered/openmfd_design.pdf": "498713e68eb7cf8f03c4d8ab05eaf8d8b94c0891090decfe748f2d0530e54bc2",
+    "rendered_docx/openmfd_design.png": "40d4ad4d23700eef2703bca68c3da75f8267ae25d46e24eafa58fe32824453cc",
     "rendered/insert_bonding.pdf": "c20556de2549c47f0f7b41dbe2bc2bc58f79d857477672ba248a88805a18adf7",
     "rendered_docx/insert_bonding.png": "d43b1cba7f34c76fc5817a0e5c3ebae63b961f49f4f58a6b956db83762493e66",
     "rendered/generalizability.pdf": "799389db51392d12168595a70d0a4cc9a9db628054765112422512c4d91cc2ad",
@@ -94,7 +94,7 @@
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
     "figures/generate_bonding_fixture_figure.py": "c5a18a04c1d750ca4a88835c28bb942909c4675fb07c4c30d830b741ae976c3a",
     "figures/generate_generalizability_figure.py": "180807a719fd420af50e610b9ec8ac7745c7ac4b9edc3cee85b61a1e5bfd57ea",
-    "figures/generate_openmfd_design_figure.py": "704065b263a2c1b1bca94b2ff6317b8d7bb4faa89baec9e922d8013f12964e0d",
+    "figures/generate_openmfd_design_figure.py": "11d879b6147d9f0bab729917ad136dd73793ffa45e4c6a2a895b1c67c89b8e5c",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
   "source_scope": "Three generators, the OpenMFD package, retained DXF/STL assets in the four selected design folders, frame STL and five source photographs. This is an explicit asset-set fingerprint, not a complete dynamic import or minimal file-read trace.",
@@ -119,8 +119,8 @@
     "source_census": "NRA source census:192 modules parsed, existing mf_device.py:783 omission. Syntax/lexical scope only.",
     "unchanged": "Scientific photographs, STL geometry and validation data are unchanged. Four bottom/aligned mask pairs were regenerated from their existing geometry after deleting only the stale recipe annotation.",
     "shared_consumers": "Figure 1 panel D has two declared axes occupying separate cells; its subfigure exporter accepts the declared axis group. Figure 5 header centers derive from the existing inset bounds; repeated per-row captions and differing background colors were deleted.",
-    "run": "Figure 1 CLI and Figure 5 composite build completed using existing dependencies. Both final source PNGs inspected: A full-width, six lower visual cells, centered output callout; Figure 5 shared headers and uniform backgrounds. Final placed-page check required.",
+    "run": "Figure1 CLI completed with borderless backgrounds. Figure5 shared-heading composite was previously rendered and inspected. Final exact manuscript build and placed-page inspection follow.",
     "limits": "Artwork/layout and declared-input checks only, not scientific analysis or fresh dimensional metrology. A placed-page reading build is still required."
   },
-  "render_source_commit": "63ac2be28ae49c5c4e6575264cdc4ad00282e896"
+  "render_source_commit": "0c767b30b7a4c67ba89c5fc046ce624b1844141b"
 }
