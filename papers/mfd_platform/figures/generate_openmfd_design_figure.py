@@ -686,9 +686,9 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
 
     output_left, output_width, output_height = 0.655, 0.30, 0.12
     outputs = (
-        (0.700, "Photomasks: DXF (B, C)", COLORS["bottom"]),
-        (0.475, "Well inserts: STL (D, E)", COLORS["insert"]),
-        (0.250, "Plate frame: STL (F)", COLORS["frame"]),
+        (0.650, "Photomasks: DXF (B, C)", COLORS["bottom"]),
+        (0.425, "Well inserts: STL (D, E)", COLORS["insert"]),
+        (0.200, "Plate frame: STL (F)", COLORS["frame"]),
     )
     for y_out, label, color in outputs:
         rounded_box(ax, (output_left, y_out), output_width, output_height,
@@ -698,12 +698,6 @@ def draw_parameter_panel(ax: plt.Axes, cfg: TwoCompartmentDeviceConfig) -> None:
         add_arrow(ax, (input_left + input_width + 0.01, 0.49),
                   (output_left, y_out + output_height / 2), color)
 
-    output_center = output_left + output_width / 2
-    callout_width = 0.31
-    callout_left = output_center - callout_width / 2
-    rounded_box(ax, (callout_left, 0.055), callout_width, 0.14,
-                "#fff8ea", "#f2c46d", linewidth=1.0)
-    ParameterText.draw(ax, output_center, 0.125, "Matched masks + printed parts")
 
 
 def draw_unit_geometry(ax: plt.Axes, _cfg: TwoCompartmentDeviceConfig, dxf: DxfSources) -> None:
@@ -928,18 +922,26 @@ def build_figure() -> tuple[plt.Figure, dict[str, tuple[plt.Axes, ...]]]:
     fig.subplots_adjust(**FIGURE_ONE_LAYOUT.subplot_adjust_kwargs())
     pad_x = FIGURE_ONE_LAYOUT.cell_padding_inches / fig.get_figwidth()
     pad_y = FIGURE_ONE_LAYOUT.cell_padding_inches / fig.get_figheight()
-    for ax in all_axes:
-        bounds = ax.get_position()
-        fig.add_artist(Rectangle(
-            (bounds.x0 - pad_x, bounds.y0 - pad_y),
-            bounds.width + 2 * pad_x,
-            bounds.height + 2 * pad_y,
-            transform=fig.transFigure,
-            facecolor=PANEL_BACKGROUND,
-            edgecolor="none",
-            clip_on=False,
-            zorder=-10,
-        ))
+    background_groups = (
+        (PANEL_BACKGROUND, 1.0, (a_ax, f_ax)),
+        (COLORS["bottom"], 0.07, (b_ax, c_ax)),
+        (COLORS["insert"], 0.07, (d_single_ax, d_array_ax)),
+        (COLORS["frame"], 0.07, (e_ax,)),
+    )
+    for color, opacity, members in background_groups:
+        for ax in members:
+            bounds = ax.get_position()
+            fig.add_artist(Rectangle(
+                (bounds.x0 - pad_x, bounds.y0 - pad_y),
+                bounds.width + 2 * pad_x,
+                bounds.height + 2 * pad_y,
+                transform=fig.transFigure,
+                facecolor=color,
+                alpha=opacity,
+                edgecolor="none",
+                clip_on=False,
+                zorder=-10,
+            ))
 
     draw_parameter_panel(a_ax, cfg)
     draw_unit_geometry(b_ax, cfg, dxf)
