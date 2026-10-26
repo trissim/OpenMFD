@@ -121,8 +121,9 @@ assembled device for aqueous coating and culture (C6).
    2 × 2 camera binning, and 100 ms fluorescence exposure used for the CTB
    imaging, with green and red channels suited to the two fluorophores.
 8. Compare green fluorescence in the initially lower-volume left compartment
-   between Hour 0 and 72 h. The readout is qualitative tracer redistribution
-   from the higher-volume right compartment after one unequal-volume loading.
+   and red fluorescence in the right compartment between Hour 0 and 72 h.
+   The readout is qualitative tracer redistribution after one unequal-volume
+   loading.
 
 The two images do not measure flow rate or establish how long the initial volume
 difference persisted.

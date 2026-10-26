@@ -47,11 +47,13 @@ raw inclusion strings or dictionary keys.
 
 The original October 15 author answers confirm all five cell-count exclusions
 and the 67-device selection, superseding the earlier 69-device interpretation.
-The current source restores the paired black-on-white views and mean bars
-behind device dots through `CtbView` and `PlateCounts`; no old raster statistics
-are imported. The published pair remains the older composite until the explicit
-restoration render and publication complete. Earlier pairs are preserved in
-checkpoint `8e51fb0` and tracked history through `3cc8034`.
+The paired black-on-white views and mean bars behind device dots are restored
+through `CtbView` and `PlateCounts`; no old raster statistics are imported. The
+real desktop CLI completed at `73c940b`, its final PNG was inspected, and both
+source and published pairs were committed at `f5b9d18`. The apparent-width pair
+was byte-identical before and after. Placed-page inspection follows the new
+reading build. Earlier pairs are preserved in checkpoint `8e51fb0` and tracked
+history through `3cc8034`.
 
 Exact historical software/run configuration, positivity and manual corrections
 remain unverified, as do ethics details; see

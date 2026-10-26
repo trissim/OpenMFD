@@ -16,7 +16,7 @@ Display crops use the saved template-match bounding boxes followed by the fixed 
 
 ROI contours can lie at -0.5 on the image boundary; these half-pixel coordinates are preserved without clipping. Contour-path totals are not cell totals and are not used to recalculate counts. The saved crop declaration and visual alignment establish the display reconstruction, **not the exact historical software-run binding**.
 
-The original authored and published Figure 4 pairs are preserved by the protected desktop checkpoint `8e51fb028d0d570f30761b149511f6f99aebc620` and pre-restoration tracked history through `3cc8034`. The new drawing source restores paired black-on-white CTB/outline views, calibrated bars and mean bars behind device dots. Rendering and placed-page acceptance are still pending at this source checkpoint.
+The original authored and published Figure 4 pairs are preserved by the protected desktop checkpoint `8e51fb028d0d570f30761b149511f6f99aebc620` and pre-restoration tracked history through `3cc8034`. The restored drawing has paired black-on-white CTB/outline views, calibrated bars and mean bars behind device dots. Its real desktop CLI completed at source commit `73c940b`; the final PNG was opened and inspected, and the authored/published pairs were committed together at `f5b9d18`. The apparent-width PDF/PNG remained byte-identical. New placed-page and portable-package checks follow; exact historical analysis-run and ethics facts remain open.
 
 ## Facts still needed before submission
 

@@ -57,7 +57,7 @@ To judge whether molds continued to produce usable casts, we inspected the patte
 
 To document the channel geometry visible in cast devices, we read apparent widths between the centres of opposing dark wall bands in brightfield images. Three channel positions were measured in one interior device from each of the three plates, giving nine distances at a native calibration of 1.18675253 µm per pixel. Supplementary Figure S3 shows the placements, and Supplementary Data S4 provides the full measurements.
 
-To select materials for the frame assembly, we visually inspected printed frames and assembled joints. To screen adhesives, we assessed whether primary cortical-neuron cultures survived to the end of the experiment. Cell toxicity was not quantified.
+We visually compared printed frames for warping and inspected the assembled joints for visible leaks and damage during incubator transfers. To screen adhesives, we assessed whether primary cortical-neuron cultures survived to the end of the experiment. Cell toxicity was not quantified.
 
 To test whether cells could grow at the outer positions without the frame, one PDMS device was bonded to glass without a frame or frame adhesive and placed in a 14.5 cm-diameter polystyrene culture dish. This control removed both the frame assembly and the sealing effect of the frame adhesive.
 
@@ -73,7 +73,7 @@ To promote neuronal attachment, we coated the wells with dendritic polyglycerol 
 
 We seeded the cell-body (soma) compartment with 5,000–10,000 neurons in 50 µL medium per well. The seeding medium was Dulbecco's modified Eagle medium (DMEM) containing 10% fetal bovine serum (FBS). After at least 30 min for attachment, we switched to supplemented Neurobasal Plus medium (1% N2, 2% B27, 1% glutamine). To bias fluid movement toward the distal compartment, on the opposite side of the microchannels, we used 50 µL in the soma compartment and 25 µL in the distal compartment.
 
-To test retrograde axon labeling, we applied Alexa Fluor-conjugated cholera toxin subunit B (CTB-647) to the lower-volume distal compartment. The tracer was added at 1 µg/mL on day 10 in vitro (DIV10). Cultures were maintained to DIV11. CTB-positive neuronal cell bodies were counted 24 h later, with one count per analyzed device. Analysis was restricted to the 24 interior devices on each plate because culture performance was poorer at the plate edges. Five devices were excluded from the cell-count analysis because of segmentation or cell-count artifacts. The exclusions are identified in Supplementary Data S5; cell-count value alone was not an exclusion criterion. Supplementary Protocol S1 provides the complete procedure.
+To assess tracer transport from distal axons back to their cell bodies, we applied Alexa Fluor-conjugated cholera toxin subunit B (CTB-647) to the lower-volume distal compartment. The tracer was added at 1 µg/mL on day 10 in vitro (DIV10). Cultures were maintained to DIV11. CTB-positive neuronal cell bodies were counted 24 h later, with one count per analyzed device. Analysis was restricted to the 24 interior devices on each plate because culture performance was poorer at the plate edges. Five devices were excluded from the cell-count analysis because of segmentation or cell-count artifacts. The exclusions are identified in Supplementary Data S5; cell-count value alone was not an exclusion criterion. Supplementary Protocol S1 provides the complete procedure.
 
 <!-- Author confirmation required: tissue-procurement/animal-use committee, applicable guidelines and approval identifier. -->
 

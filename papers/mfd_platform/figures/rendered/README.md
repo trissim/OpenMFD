@@ -36,7 +36,8 @@ The full `python papers/mfd_platform/figures/render_figures.py` command runs eve
 declared producer. Figure 4's producer reads the original count/image/outline
 files without new segmentation; the author-confirmed selection is 67 devices.
 It redraws Figure 4 only, leaving the retained apparent-width pair untouched.
-The restored source still needs its explicit render, publication and placed-page
-inspection; exact historical analysis-run configuration and ethics remain open.
+The restored pair completed its real desktop render, PNG inspection and selective
+publication at `f5b9d18`; its placed-page check follows the reading build. Exact
+historical analysis-run configuration and ethics remain open.
 Automatic `build_paper.py --refresh-figures` remains unavailable: ordinary document
 builds reuse the inspected assets rather than launching authoring workflows.
