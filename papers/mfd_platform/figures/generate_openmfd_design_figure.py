@@ -147,14 +147,14 @@ class PanelBadge(PanelTitle):
     zorder = 100
 
 
-class InsetBadge(PanelBadge):
-    va = "top"
-
-
 class BackedText(TextStyle):
     @classmethod
     def background(cls) -> dict[str, object]:
         return {"boxstyle": "round,pad=0.10", "facecolor": "white", "edgecolor": "none", "alpha": 0.92}
+
+
+class InsetBadge(PanelBadge, BackedText):
+    va = "top"
 
 
 @dataclass(frozen=True)
