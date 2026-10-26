@@ -1,14 +1,14 @@
 {
-  "validation_scope": "Fresh nine-step assembly schematic rendered with Blender5.2.2 and FreeCAD1.1.4 on2026-10-25, at final6.5-inch width. Diagram rendering only: no biological images, counts, calibration or scientific analysis regenerated.",
+  "validation_scope": "Nine-step assembly schematic redrawn from original scene/CAD sources with pale row backgrounds, longer horizontal arrows and adhesive text clear of syringe. No biological data changed.",
   "output_sha256": {
-    "rendered/mold_casts_package.pdf": "ee3925ff00608c1f0ef62616d5a18fc0600ccc78e1cdd4638ee07b508411218d",
-    "rendered_docx/mold_casts_package.png": "735b9e91edb9eace64ee52e10417dad03abdefb55bd6ed7509333a7c91198b4c"
+    "rendered/mold_casts_package.pdf": "f44bd5dd6fe80153bb37deb576dc1469e6cc4edfcee6e75bdfe57af03025c58b",
+    "rendered_docx/mold_casts_package.png": "f855ec072dab4ebb4ea7eeb0f2b2ae25ecb256c66ed4e3a12a0224fc4e5a1a75"
   },
   "source_sha256": {
-    "figures/generate_device_assembly_protocol.py": "8673ee727ef8b3e9e1b67fbcabc342eeb44046d7ffb67b98a355502e8cbb475d",
+    "figures/generate_device_assembly_protocol.py": "00cebbd2c1c009602849dd3460fde62c8e4b2a2fc4ee6a5fdb1d76ecc05a9778",
     "figures/blender_render_mesh_parts.py": "1d3268ce6f858d27fff7e16ae9d1280a06c1f2b092015cd86241a57dfc3563d2",
     "figures/blender_boolean_mesh.py": "2f4f3f9a6f8ee3c2cf87d965122b4843db73f1f8ea917e3950c3957ed8475420",
-    "figures/generate_openmfd_design_figure.py": "67330ef23da4e02bce58a9ad65311b15c445535a01bd71140a15a747e67ecff9",
+    "figures/generate_openmfd_design_figure.py": "d299c94d7273069d3b08f5528ec5e2c62a8bd51ea9cbaaa98eacec6e677267f6",
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_wells_insert.stl": "12cdca91d9edfe46b898aeb25ac9511380f122c5d137849819b1a75d803561ec",
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_single_bottom.dxf": "ba4a3767dda8fd7408481de7419e30ef6bf802ed00ffa658c05859ec757b09bb",
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_single_top.dxf": "e6ee7a1ae279bbf41198d3bcd49318bb77db21193990f4271b8069eb04e23c09",
@@ -33,12 +33,19 @@
     "-u",
     "VIRTUAL_ENV",
     "PATH=/usr/bin:/bin",
-    "/home/ts/code/projects/papers-only/.venv/bin/python",
+    "nice",
+    "-n",
+    "15",
+    "timeout",
+    "-s",
+    "INT",
+    "1200",
+    ".venv/bin/python",
     "-u",
     "-X",
     "faulthandler",
     "papers/mfd_platform/figures/generate_device_assembly_protocol.py"
   ],
-  "inspection": "Final-size layout uses10.5pt headings and8.5pt details; axes physical aspect and vertical camera fitting;9scene renders passed the24px alpha-content edge guard. This is not a dimensional-metrology validation.",
-  "subsequent_shared_source_review": "The design generator later changed during the Figures1/2/5 typography refactor. Its StlMesh, rotation_matrix and triangle_normals declarations consumed by assembly and biological callers were checked AST-identical to commit166c824. The original render-time source hash above is deliberately retained; the assembly image was not rendered again. The historical-source audit therefore reports this changed full file."
+  "inspection": "All nine steps rendered; actual final PNG inspected for row association, arrow shafts, adhesive/syringe separation and unchanged processing order. Same camera edge guard and scene geometry. This is not dimensional metrology.",
+  "render_source_commit": "cc814250a99226b195b788b6d2bc28af73eb3298"
 }
