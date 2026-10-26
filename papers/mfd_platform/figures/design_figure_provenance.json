@@ -1,12 +1,12 @@
 {
-  "validation_scope": "Figures 1 and 5 redrawn from retained CAD/photo sources. Figure 1 is a two-by-three panel matrix with equal derived cell backgrounds and one compact input-to-output panel. Figure 5 uses one shared insert-model heading, row-matched backgrounds and row gaps enlarged by 20%. Figure 2 artwork remains byte-identical.",
+  "validation_scope": "Figure 1 retains full-width panel A above six visual cells: B, C, D single-device inserts; D insert array, E and F. Cell backgrounds derive from grid bounds. Figure 5 uses four column headers once and one uniform row background. Scientific source photographs, CAD geometry and Figure 2 remain unchanged.",
   "output_sha256": {
-    "rendered/openmfd_design.pdf": "9b9ebe9f7d2952689c54519b140f4a0624d43560933f90a535a42504d4c8ff2f",
-    "rendered_docx/openmfd_design.png": "ab1b8d2b76d45b606a72246bfee50ee3fe13cf313b898721635722069ee2f7aa",
+    "rendered/openmfd_design.pdf": "e075f5a2fad749bd6b045e0962c6d9a92b57b928667d79bdc25bb2c9a816132f",
+    "rendered_docx/openmfd_design.png": "0b111c28a029fceed47340f5bc3660c7fff76c95f275c010b8973451362a1c19",
     "rendered/insert_bonding.pdf": "c20556de2549c47f0f7b41dbe2bc2bc58f79d857477672ba248a88805a18adf7",
     "rendered_docx/insert_bonding.png": "d43b1cba7f34c76fc5817a0e5c3ebae63b961f49f4f58a6b956db83762493e66",
-    "rendered/generalizability.pdf": "3f831d75ded1a1cef3de241b862e97c7dafeca0f9bb36988169006d059b5cebc",
-    "rendered_docx/generalizability.png": "b98d378ebb6fd2a70188262e80656ba020593ff131a02c97c8ee91c0b5b1378c"
+    "rendered/generalizability.pdf": "799389db51392d12168595a70d0a4cc9a9db628054765112422512c4d91cc2ad",
+    "rendered_docx/generalizability.png": "c69b0892545401ef6f3f67bafea8c7abcf9cd42a00ad31a3fcb90145490b133b"
   },
   "source_sha256": {
     "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_aligned.dxf": "c48e557b2b5bfb84aac45707afe364c6dca94aba941087d78baa6adf0132d777",
@@ -93,8 +93,8 @@
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly.jpg": "080a75480b4271047076ae48e1170d39c79da6a212c59484c55a56a9748ab4a7",
     "figures/final_drop/Fig3_bonding_fixture/clamp_assembly_seperated.jpg": "cce018a3bb8fd0538b9df6ec6f975641d24f83360c28479d49db16552055fce5",
     "figures/generate_bonding_fixture_figure.py": "c5a18a04c1d750ca4a88835c28bb942909c4675fb07c4c30d830b741ae976c3a",
-    "figures/generate_generalizability_figure.py": "55ae8986b64a9f8c3e1cc8d91f1b9d7d2a1cdd824fd4dc4e368ceb257356d213",
-    "figures/generate_openmfd_design_figure.py": "5e360d2c17a52c4cf4378f36b222ff6ddd04ccb0c2399663cd6314f038030e89",
+    "figures/generate_generalizability_figure.py": "180807a719fd420af50e610b9ec8ac7745c7ac4b9edc3cee85b61a1e5bfd57ea",
+    "figures/generate_openmfd_design_figure.py": "704065b263a2c1b1bca94b2ff6317b8d7bb4faa89baec9e922d8013f12964e0d",
     "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d"
   },
   "source_scope": "Three generators, the OpenMFD package, retained DXF/STL assets in the four selected design folders, frame STL and five source photographs. This is an explicit asset-set fingerprint, not a complete dynamic import or minimal file-read trace.",
@@ -104,7 +104,7 @@
     "heading_points": 10.5,
     "pdf_raster_dpi": 600,
     "composite_png_dpi": 300,
-    "figure1_parameter_points": 6.4,
+    "figure1_parameter_points": 8.0,
     "figure5_caption_points": 10.0
   },
   "versions": {
@@ -118,9 +118,9 @@
     "comparison_commit": "37fd67c3aa92434eb1451fc0cac012e851fefe68",
     "source_census": "NRA source census:192 modules parsed, existing mf_device.py:783 omission. Syntax/lexical scope only.",
     "unchanged": "Scientific photographs, STL geometry and validation data are unchanged. Four bottom/aligned mask pairs were regenerated from their existing geometry after deleting only the stale recipe annotation.",
-    "shared_consumers": "All five main figure PDFs use DejaVu Sans regular/bold. Figure 1 panel geometry is derived from one two-by-three grid; Figure 5 row padding is physical and its gap is 1.20 times the prior gap.",
-    "run": "The complete Figure 1 and Figure 5 CLIs passed against existing dependencies. Actual final PNGs were inspected before publication: Figure 1 text is contained and centered; Figure 5 has one insert-model column title and consistent row bands.",
+    "shared_consumers": "Figure 1 panel D has two declared axes occupying separate cells; its subfigure exporter accepts the declared axis group. Figure 5 header centers derive from the existing inset bounds; repeated per-row captions and differing background colors were deleted.",
+    "run": "Figure 1 CLI and Figure 5 composite build completed using existing dependencies. Both final source PNGs inspected: A full-width, six lower visual cells, centered output callout; Figure 5 shared headers and uniform backgrounds. Final placed-page check required.",
     "limits": "Artwork/layout and declared-input checks only, not scientific analysis or fresh dimensional metrology. A placed-page reading build is still required."
   },
-  "render_source_commit": "0a23af6c5fefa625ceaccd6fcc6091ed0ed6068c"
+  "render_source_commit": "63ac2be28ae49c5c4e6575264cdc4ad00282e896"
 }
