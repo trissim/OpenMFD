@@ -665,7 +665,7 @@ def draw_lock_view(
         detail_ax,
         p0,
         p1,
-        f"{pins.hole_dims[0]:.2f} mm alignment hole",
+        f"{pins.hole_dims[0]:.2f} mm hole",
         ((p0[0] + p1[0]) / 2, p0[1] + horizontal_label_gap),
         extension_points=((right_insert.lock_x[0], lock_y[1]), (right_insert.lock_x[1], lock_y[1])),
     )
@@ -676,7 +676,7 @@ def draw_lock_view(
         detail_ax,
         p2,
         p3,
-        f"{pins.dims[0]:.2f} mm printed pin",
+        f"{pins.dims[0]:.2f} mm pin",
         ((p2[0] + p3[0]) / 2, p2[1] - horizontal_label_gap),
         extension_points=((right_insert.pin_x[0], pin_y[0]), (right_insert.pin_x[1], pin_y[0])),
     )
