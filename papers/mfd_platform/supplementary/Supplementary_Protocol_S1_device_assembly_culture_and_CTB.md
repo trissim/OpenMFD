@@ -12,7 +12,7 @@ on a 9 mm well grid. The two-well device units are
 spaced 18 × 9 mm apart. CTB-positive cell bodies were counted in the 24
 interior devices on each plate because culture performance was poorer at the
 plate edges during long-term culture. Each plate also contains 24 perimeter
-devices. The safe maximum working volume for this plate is 50 µL per well.
+devices. Use up to 50 µL per well in this plate.
 
 ## Materials and equipment
 
@@ -106,7 +106,7 @@ assembled device for aqueous coating and culture (C6).
    surface and make it hydrophilic. Begin aqueous coating within 15 min of
    plasma treatment.
 
-## D. Perform the qualitative two-compartment directional fluid movement assay
+## D. Compare tracer redistribution between compartments
 
 1. Reserve 24 assembled two-compartment devices for the directional fluid movement
    assay.
@@ -129,9 +129,10 @@ difference persisted.
 
 ## E. Coat and seed primary cortical neurons
 
+<!-- Author confirmation required before submission: identify the tissue-procurement/animal-use committee, applicable guidelines and approval identifier, or the applicable source/exemption. The cited isolation method does not establish approval for this experiment. -->
+
 1. Isolate cortical neurons from one embryonic day 18 (E18) Sprague Dawley rat
-   embryo following the procedure described by Harris et al. (2007), under the
-   laboratory's approved animal-use procedure.
+   embryo following Harris et al. (2007).
 2. Distribute neurons from that embryo across three separately assembled
    plates. Because the neurons all come from the same embryo, the plates are
    technical replicates, not independent biological samples.
@@ -184,8 +185,9 @@ applied distally, and labeled cell bodies are counted in the soma compartment
 ## G. Analysis set and descriptive statistics
 
 CTB-positive cells were counted before axotomy in the February 2026
-three-plate DMSO-only experiment. Of the 72 interior devices, 69 had images
-suitable for counting; contamination or a technical failure prevented counting
-in three devices. All usable counts were included, regardless of value.
-Per-plate means and standard deviations describe variation among devices
-from the same neuronal preparation.
+three-plate DMSO-only experiment. Five of the 72 interior devices were excluded
+from the cell-count analysis because of segmentation or cell-count artifacts,
+leaving 67 devices: 22 from Plate 1, 21 from Plate 2 and 24 from Plate 3.
+Exclusions are identified in Supplementary Data S5; cell-count value alone was
+not an exclusion criterion. Per-plate means and standard deviations describe
+variation among devices from the same neuronal preparation.

@@ -22,5 +22,5 @@ All layouts have a 2.5 mm well radius. Only the neuronal layout was fabricated a
 
 - **Neuronal:** 18 × 9 mm unit spacing; 6 × 8 units; 62 channels, 10 µm wide with 30 µm gaps.
 - **Myelination:** 18 × 18 mm spacing; 6 × 4 units; 125 channels at 10 µm, plus an oligodendrocyte branch.
-- **Axon guidance:** 18 × 18 mm spacing; 6 × 4 units; 83 channels at 10 µm per arm, with orthogonal gradients.
+- **Axon guidance:** 18 × 18 mm spacing; 6 × 4 units; 83 channels at 10 µm per arm, arranged for gradients at right angles to each other.
 - **Three compartments:** 27 × 9 mm spacing; 4 × 8 units; two successive arrays of 125 channels at 10 µm.

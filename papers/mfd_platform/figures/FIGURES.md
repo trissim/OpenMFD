@@ -75,7 +75,7 @@ Figures 1, 2 and 5 are authored at 6.5 inches wide and placed at that width. `Te
 - **Purpose:** Show the qualitative directional dye-bias test, endpoint CTB tracing, and descriptive plate-level CTB-positive soma counts.
 - **Source assets:** `papers/mfd_platform/figures/final_drop/Fig5_plate_layout_validation/`
 - **Rendered asset:** `papers/mfd_platform/figures/rendered/validation.pdf`
-- **Status:** Frozen September15 published A-C composite, with two CTB views and a bar plot labeled69. The October authored source has three views and67 included devices; it is not the published figure. The published bars also disagree with the retained pre-count summaries, so changing the inclusion total alone cannot reconcile them. The publication declaration retains and verifies the existing PDF/PNG pair without running the validation producer. Measurement source and endpoint-specific inclusion still require author confirmation; neither version is scientifically accepted.
+- **Status:** Restoration source uses original stitched crops paired with original ROI outlines, plus plate means/sample SD from the preserved PRE count CSV. October15 author approval confirms five cell-count exclusions and67 included devices (n22/21/24). `CtbView` owns both views and calibration; `PlateCounts` draws means behind device dots. The explicit restoration render/publication/placed-page check is pending; the older published composite remains preserved through3cc8034 and checkpoint8e51fb0. Exact historical analysis-run configuration and ethics remain unresolved.
 
 ### Figure 5. Platform generalizability across published geometries
 
@@ -112,4 +112,4 @@ Figures 1, 2 and 5 are authored at 6.5 inches wide and placed at that width. `Te
 - **Published pair:** `rendered/channel_widths.pdf` and `rendered_docx/channel_widths.png`.
 - **Publication owner:** `AuthoredFigure` publishes the existing pair; it has no executable producer. `GeneratedFigure` shares its source/copy behavior but adds regeneration only for the four declared design/casting producers.
 - **Data:** Supplementary Data S4 supplies all nine apparent widths from three devices, native pixel coordinates/calibration, image crops and their bounds. The bounds are a reader projection of the existing `WidthCrop` records, not new measurements.
-- **Scope:** Retained planar wall-band-centre observations, not channel depth, complete cross-sectional metrology or a fresh CTB analysis. Figure 4 stays frozen.
+- **Scope:** Retained planar wall-band-centre observations, not channel depth, complete cross-sectional metrology or a fresh CTB analysis. Figure4's separate producer leaves this pair untouched.

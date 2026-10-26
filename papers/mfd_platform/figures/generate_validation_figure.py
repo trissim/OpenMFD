@@ -21,6 +21,7 @@ import matplotlib
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.axes import Axes
+from matplotlib.collections import LineCollection
 from metaclass_registry import AutoRegisterMeta
 import numpy as np
 from PIL import Image
@@ -144,11 +145,12 @@ class PlateCounts:
         return f"{self.plate.label}\nn = {self.summary.n}"
 
     def draw(self, ax: Axes, index: int, color: str) -> None:
+        summary = self.summary
+        ax.bar(index, summary.mean, width=.66, color=color, alpha=.2, zorder=1)
         for j, device in enumerate(sorted(self.devices, key=lambda d: d.device)):
             x = index + ((j * 7) % 24 - 11.5) / 60
             device.draw(ax, x, color)
-        summary = self.summary
-        ax.errorbar(index+.29, summary.mean, yerr=summary.sd, color="black",
+        ax.errorbar(index, summary.mean, yerr=summary.sd, color="black",
                     fmt="_", markersize=11, capsize=4, linewidth=1.3, zorder=4)
 
 
@@ -211,22 +213,39 @@ class CtbView:
     shape: ImageShape
     pixel_size_um: float
     display: Path
+    outlines: tuple[tuple[Point, ...], ...]
 
     @classmethod
     def decode(cls, plate: str, wire: WireObject) -> Self:
+        contours = cast(Sequence[Sequence[Sequence[float]]],
+                        json.loads((DATA_DIR / str(wire["outlines"])).read_text()))
         return cls(PlateId(plate), DeviceId(str(wire["device"])),
                    ImageShape.decode(cast(Sequence[int], wire["source_shape_yx"])),
-                   float(cast(float, wire["pixel_size_um"])), Path(str(wire["display"])))
+                   float(cast(float, wire["pixel_size_um"])), Path(str(wire["display"])),
+                   tuple(tuple(Point.decode(point) for point in contour) for contour in contours))
 
-    def draw(self, ax: Axes) -> None:
+    def draw(self, image_ax: Axes, outline_ax: Axes) -> None:
         with Image.open(DATA_DIR / self.display) as image:
-            ax.imshow(image, cmap="gray", vmin=0, vmax=255,
-                      extent=(0, self.shape.width, self.shape.height, 0), interpolation="nearest")
-        ax.set_axis_off()
-        ax.set_title(f"{self.plate.label} / {self.device}", fontsize=9, pad=4)
-        x, y = self.shape.width * .08, self.shape.height * .94
-        ax.plot([x, x + 500 / self.pixel_size_um], [y, y], color="white", linewidth=2.5)
-        ax.text(x, y - self.shape.height * .025, "500 µm", color="white", fontsize=9)
+            pixels = np.asarray(image)
+        for ax in (image_ax, outline_ax):
+            ax.imshow(pixels, cmap="gray_r", vmin=0, vmax=64,
+                      extent=(-.5, self.shape.width-.5, self.shape.height-.5, -.5),
+                      interpolation="nearest")
+            ax.set_xlim(-.5, self.shape.width-.5)
+            ax.set_ylim(self.shape.height-.5, -.5)
+            ax.set_axis_off()
+            x, y = self.shape.width * .08, self.shape.height * .94
+            ax.plot([x, x + 500 / self.pixel_size_um], [y, y], color="black", linewidth=2)
+            ax.text(x, y - self.shape.height * .025, "500 µm", color="black", fontsize=7)
+        outline_ax.add_collection(LineCollection(
+            tuple(tuple((point.x, point.y) for point in contour) for contour in self.outlines),
+            colors="#D17800", linewidths=.4), autolim=False)
+        image_ax.set_title("CTB", fontsize=8, pad=3)
+        outline_ax.set_title("Outlines", fontsize=8, pad=3)
+        left = image_ax.get_position()
+        right = outline_ax.get_position()
+        image_ax.figure.text((left.x0 + right.x1) / 2, left.y1 + .025,
+                             f"{self.plate.label} / {self.device}", ha="center", fontsize=8)
 
 
 @dataclass(frozen=True)
@@ -341,7 +360,6 @@ def main() -> None:
     argparse.ArgumentParser(description=__doc__).parse_args()
     counts = CountDataset.read(DATA_DIR / "ctb_device_counts.csv")
     metadata = ValidationSources.read(DATA_DIR / "sources.json")
-    widths = WidthMeasurement.read(DATA_DIR / "channel_widths.csv")
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
     plt.rcParams.update({"font.family": "DejaVu Sans", "font.size": 10, "pdf.fonttype": 42})
     fig = plt.figure(figsize=(7, 7.6), facecolor="white")
@@ -353,24 +371,26 @@ def main() -> None:
         if i == 0:
             fig.text(.02, ax.get_position().y1 + .01, "A", weight="bold", fontsize=13)
     for i, view in enumerate(metadata.views):
-        ax = fig.add_subplot(grid[2, i])
-        view.draw(ax)
+        pair = grid[2, i].subgridspec(1, 2, wspace=.06)
+        image_ax = fig.add_subplot(pair[0, 0])
+        outline_ax = fig.add_subplot(pair[0, 1])
+        view.draw(image_ax, outline_ax)
         if i == 0:
-            fig.text(.02, ax.get_position().y1 + .01, "B", weight="bold", fontsize=13)
+            fig.text(.02, image_ax.get_position().y1 + .025, "B", weight="bold", fontsize=13)
     ax = fig.add_subplot(grid[3, :])
     counts.draw(ax)
-    ax.set_ylabel("CTβ-positive cells", fontsize=10)
+    ax.set_ylabel("CTB-positive cells", fontsize=10)
     ax.set_xlim(-.5, 2.7)
     ax.set_ylim(bottom=0)
     ax.spines[["top", "right"]].set_visible(False)
+    ax.set_axisbelow(True)
     ax.yaxis.grid(True, color="#E6E6E6", linewidth=.6)
     fig.text(.02, ax.get_position().y1 + .01, "C", weight="bold", fontsize=13)
-    ax.text(.99, .98, "Dots: devices; black: mean ± SD\nRed crosses: excluded counting artifacts",
+    ax.text(.99, .98, "Bars: mean; whiskers: SD\nDots: devices; red crosses: excluded",
             transform=ax.transAxes, ha="right", va="top", fontsize=8)
     fig.savefig(OUTPUT_DIR / "draft_figure.pdf", dpi=300)
     fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300)
     plt.close(fig)
-    metadata.render_widths(widths)
     print(json.dumps([asdict(plate.summary) for plate in counts.plates], indent=2))
 
 

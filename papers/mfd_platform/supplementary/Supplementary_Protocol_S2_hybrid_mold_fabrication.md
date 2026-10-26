@@ -45,9 +45,10 @@ Supplementary Table S1 gives the device and mold dimensions.
 2. Confirm that the channel layer, SUEX well and alignment-hole layer, insert
    pins, insert skirts, taper allowances, and cutting/frame outlines share the
    same coordinate system.
-3. Apply a horizontal scale factor of 1.0226 (2.26% enlargement) for the 100°C
-   cure to matching mask and insert outputs (Supplementary Table S1). Do not add an independent
-   slicer scale correction.
+3. To compensate for PDMS shrinkage during curing at 100°C, apply the same
+   horizontal scale factor of 1.0226 (2.26% enlargement) to the matching mask and
+   insert outputs. Supplementary Table S1 gives the design dimensions. Do not
+   add a second scale correction in the printer's slicer.
 4. Before fabrication, inspect the single-device and wafer-scale DXF outputs and
    the single and arrayed insert STL outputs.
 
@@ -149,10 +150,10 @@ regions. The design dimensions in Table S1 refer to the mold before coating.
 
 Five molds were assembled with the final protocol. Three routinely used molds
 together produced more than 50 usable PDMS casts; the most recent molds remained
-in use for more than 8 months without visible degradation. A cast was usable if
-it demolded intact with open wells and preserved microchannel regions. The
-inserts remained bonded and the SU-8/SUEX features remained attached to the mold.
-Cast quality was assessed by inspection, not dimensional measurements.
+in use for more than 8 months without visible degradation. A cast was judged
+usable on visual inspection if it demolded intact with open wells and preserved
+microchannel regions. The inserts remained bonded and the SU-8/SUEX features
+remained attached to the mold.
 
 Two wafer assemblies were lost during casting or handling: one wafer broke
 during demolding, and leaked PDMS cured beneath a second wafer in the casting

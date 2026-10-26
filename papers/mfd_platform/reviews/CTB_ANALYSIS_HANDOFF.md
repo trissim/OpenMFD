@@ -1,4 +1,35 @@
-# CTB Analysis Handoff: MFD Manuscript Figure 4C
+# CTB analysis: current Figure 4 sources and unresolved methods
+
+## Current decision, 26 October 2026
+
+The original desktop session resolves the inclusion decision: **67 analyzed devices after five cell-count exclusions**, not the earlier 69-device interpretation. In the 15 October session, lines 13665/13674 identify analysis artifacts in P1 R03C02/R06C02 and P2 R02C02/R05C03/R06C03. Lines 13694/13784 explicitly approve the two P1 exclusions for cell counts, not axon analysis. The source is the retained desktop session `rollout-2026-05-18T18-51-04-019e3d49-2424-7741-85ab-f1a4b81a4ac5.jsonl`, with the approval recorded at 2026-10-15T12:03:24Z.
+
+[Per-device CTB counts](../supplementary/validation/ctb_device_counts.csv) retain all 72 PRE observations and the five selected flags; all values match the original `_analysis/images_results/*_cell_counts_step2_details.csv` exports at slice index 0. Plate 1 contributes 22 included devices, Plate 2 contributes 21 and Plate 3 contributes 24. The [multi-endpoint table](../supplementary_bio/aggregated_data.csv) remains unchanged with its original three `pre_outlier` flags. Do not invent contamination, a numerical cutoff or axon-analysis exclusions to describe this cell-count selection.
+
+The restoration uses the existing `CountDataset`/`PlateCounts` owners to calculate plate means and sample standard deviations from included observations. Excluded observations remain visible as red crosses. It does not derive statistics from the old plot raster, infer its ICC/pairwise annotations or substitute POST measurements. The historical raster's exact source remains unknown; that does not prevent plotting the now-confirmed observations and exclusions.
+
+## Image and outline restoration
+
+Original stitched channel-2 images, original `_analysis` template-match CSVs and ROI archives have been located for P1 R03C04, P2 R03C02 and P3 R04C03. The later `_analysis_final` images are not used for these original-count overlays. [Source information](../supplementary/validation/sources.json) records the original paths/hashes, crop coordinates, acquisition XML hashes, calibration and display processing.
+
+Display crops use the saved template-match bounding boxes followed by the fixed crop in the archived `pre_analysis.py` (SHA256 `0c1776146d09c73ad31a6213cf4ae5f5d6ee9028fc6056cd4722de408f7eee3e`). All three 3700 × 2292 native-pixel crops have been visually inspected with their original ROI contours; the contours align with the cells. The acquisition XML supplies 1.1867525298988042 µm/pixel for each plate. Background subtraction, intensity normalization and proportional downsampling affect display only. No new registration, segmentation or counting was run.
+
+ROI contours can lie at -0.5 on the image boundary; these half-pixel coordinates are preserved without clipping. Contour-path totals are not cell totals and are not used to recalculate counts. The saved crop declaration and visual alignment establish the display reconstruction, **not the exact historical software-run binding**.
+
+The original authored and published Figure 4 pairs are preserved by the protected desktop checkpoint `8e51fb028d0d570f30761b149511f6f99aebc620` and pre-restoration tracked history through `3cc8034`. The new drawing source restores paired black-on-white CTB/outline views, calibrated bars and mean bars behind device dots. Rendering and placed-page acceptance are still pending at this source checkpoint.
+
+## Facts still needed before submission
+
+- Exact historical OpenHCS version, stitching/registration and segmentation configuration, CTB-positivity rule, and any manual corrections. Metadata naming OpenHCS 0.5.15 and candidate pipelines are not exact-run proof.
+- Animal/tissue committee, applicable guidelines and approval identifier, or the verified applicable source/exemption.
+- The study's one-E18-preparation, DIV10 application and DIV11 imaging statements remain investigator/protocol facts; acquisition XML does not independently establish them.
+
+The common counting area and P3's 42 acquisition sites versus 35 on P1/P2 remain documented below. This cell-count experiment remains separate from drug/no-drug axotomy analyses and September treatment corrections. Keep the manuscript PR draft while the method and ethics facts remain open.
+
+<details>
+<summary>Historical September audit — preserved record; inclusion/source-status conclusions superseded above</summary>
+
+The audit below records what was known in September. Its references to a current 69-device raster, unresolved exclusions and an image-cropping renderer are historical, not instructions or descriptions of the restored source.
 
 Updated 2026-09-09 with author clarification following the 2026-09-08 audit of
 acquisition XML, archived pipeline files, count tables, plotting code and the
@@ -296,3 +327,5 @@ changed. The earlier July-derived labels are retained in superseded outputs.
 
 This correction does not alter the February CTB cohort or the Figure 4C evidence
 discussed above.
+
+</details>

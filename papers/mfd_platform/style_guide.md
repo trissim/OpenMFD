@@ -3,17 +3,17 @@
 ## Voice
 
 - Write as a biology-facing platform paper, not as an internal engineering report.
-- Lead with the experimental or fabrication consequence, then explain the implementation detail.
+- Lead with the experimental or fabrication consequence, then explain the implementation detail. Use Alyson Fournier's actual publications to calibrate those explanations while keeping other Lab on a Chip readers in view: explain unfamiliar fabrication to a neuronal researcher and the biological purpose to a fabrication researcher. Do not invent a stereotyped reader persona.
 - Keep explaining why: connect each result to the practical problem it addresses, the reason for the observation, and what it enables or changes. Make that connection understandable without specialist knowledge where possible; do not replace an explanation with a verdict or a list of steps.
-- Explain OpenMFD through the matching files it generates; keep the reusable hybrid mold and cast-in-place wells as the main story. In the Introduction, explain what the user supplies, what the software produces and why matching parts help. In Methods, explain the pipeline at a high level before naming implementation libraries; tie inputs and outputs to Figure 1.
-- Write positively from demonstrated results. State limits that change interpretation where they belong, rather than repeating defensive qualifications in the abstract, Results, Discussion, and conclusion.
-- Describe the final working process. Keep development failures only when they explain a necessary step or the evidence for a result.
+- Explain OpenMFD through the coordination problem it solves; keep the reusable hybrid mold and cast-in-place wells as the main story. Briefly explain that separate channel and well patterns and printed inserts must line up, so changing dimensions requires corresponding changes in several files. Then explain how shared inputs produce matching outputs (Figure 1). Give enough context to make the software's purpose intuitive without a programming tutorial or repeated file inventories; name implementation libraries afterward in Methods.
+- Write positively from demonstrated results. State limits that change interpretation where they belong, rather than repeating defensive qualifications in the abstract, Results, Discussion, and conclusion. Judge each passage by what it explains, not by a blacklist of supposedly AI-like words.
+- Describe what worked and why that choice worked, not a chronological account of every failed attempt. Mention a failure briefly when it explains a necessary step or supports a result; put slightly fuller, useful troubleshooting after the supplementary protocols. Neither the main paper nor the supplement should become a lab-notebook exposition.
 
 ## Paragraph and sentence flow
 
 - Read the first sentence of every paragraph in order. Those sentences alone should carry the paper's argument, with each paragraph developing the expectation its opening creates.
 - Put familiar information before new information. Explain a new term when it appears, keep pronoun references local, and avoid making the reader retain unexplained objects across clauses or paragraphs.
-- In Methods, frequently state the concrete purpose before the action: `To keep the wells open, we poured PDMS below the insert tops.` Name the manipulation and its consequence rather than presenting an unexplained recipe.
+- In Methods, explain the concrete reason for the action: `To keep the wells open, we poured PDMS below the insert tops.` A purpose clause must explain an experimental or fabrication consequence, not rename the action (`To seed the compartment, we added cells`). Use natural sentence structure; repeating `To...` does not itself supply a reason.
 - Reference every figure panel meaningfully in the body, not only in its caption. A range is appropriate when the sentence explains the contents represented by every panel in that range; a blanket panel list is not an explanation.
 
 ## Anti-Pattern: Meta-Paper Framing

@@ -21,8 +21,11 @@ pin heights, printer profiles, apparent widths and retained per-device counts
 are separate data files, listed in
 [supplementary/Supplementary_data.md](supplementary/Supplementary_data.md).
 The data index also links the width-image crops and native crop bounds, both
-saved count-flag sets, the frame-printing G-code and microscope XML file. The
-count source and final inclusion decisions for Figure 4 remain unresolved.
+saved count-flag sets, the frame-printing G-code and microscope XML file.
+All 72 CTB counts match the original per-device exports; the original author's
+October 15 decision confirms five cell-count exclusions and 67 included devices.
+Exact historical analysis-run configuration and ethics details remain unresolved;
+[the CTB record](reviews/CTB_ANALYSIS_HANDOFF.md) distinguishes these questions.
 Supply these linked files with the supplement when preparing submission files;
 the build records and retains them as supporting inputs rather than typesetting
 every measurement and setting.

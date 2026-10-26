@@ -8,9 +8,11 @@ earlier versions, not editable copies of the current figure.
   5 mm bars use the known 9 mm well-centre spacing within the first device;
   montage gutters are excluded from that estimate. Acquisition metadata for
   these exports has not been recovered.
-- B: three baseline CTB views from the saved supplementary-biology package.
-  The 500 um bars use the original acquisition scale, 1.18675253 um/pixel.
-  Background subtraction and contrast normalization affect display only.
+- B: original stitched CTB images cropped using saved match coordinates and
+  the fixed-crop declaration, paired with their original counting outlines.
+  All three pairs have been visually inspected for cell/outline alignment.
+  The 500 um bars use the acquisition XML scale, 1.18675253 um/pixel.
+  Background subtraction, normalization and downsampling affect display only.
 - C: all 72 saved DMSO device counts, including five flagged counting artifacts
   shown as red crosses. Plate summaries exclude the flagged devices: n = 22,
   21 and 24; means +/- sample SD = 177.7 +/- 43.7, 269.3 +/- 62.3 and
@@ -26,12 +28,14 @@ in this figure.
 Supplementary Figure S3. The widths are visible wall-band-centre distances,
 10.7-13.1 um, not channel-depth measurements.
 
-Historical authoring entry point, to use only after the scientific source and
-inclusion decisions are resolved:
+Redraw Figure 4 from its retained inputs in the existing desktop environment:
 
 ```sh
-/usr/bin/python3 papers/mfd_platform/figures/generate_validation_figure.py
+.venv/bin/python papers/mfd_platform/figures/generate_validation_figure.py
 ```
+
+This does not run segmentation, change counts or regenerate Supplementary
+Figure S3. Inspect the drawing before selectively publishing its declared pair.
 
 The original import and its 72-count verification are historical work from
 commit `f4f2111`; their source paths, hash, calibration and verification are
@@ -41,15 +45,17 @@ reads retained CSV/JSON once into typed measurement and image records. Inclusion
 classes own summary membership and point style; downstream plots do not inspect
 raw inclusion strings or dictionary keys.
 
-The published document Figure 4 still contains the older September composite.
-The October authored source described above has 67 included devices, while the
-author intends 69 for cell counts. The published bars rank P3 > P1 > P2; the
-retained pre-count summaries rank P2 > P3 > P1 under either saved inclusion set.
-Thus inclusion alone cannot explain the mismatch. The `_analysis_final` exports
-also contain different measurements and cannot substitute by directory name.
-Do not regenerate or publish this figure until the measurement source and
-endpoint-specific exclusion reasons are reconciled. Its publication declaration
-uses the existing retained-pair type: bulk publication verifies the frozen PDF
-and PNG without running this generator or copying its authored outputs.
-Structural decoder changes do not authorize changing a measurement, inclusion
-flag, calibration or artwork.
+The original October 15 author answers confirm all five cell-count exclusions
+and the 67-device selection, superseding the earlier 69-device interpretation.
+The current source restores the paired black-on-white views and mean bars
+behind device dots through `CtbView` and `PlateCounts`; no old raster statistics
+are imported. The published pair remains the older composite until the explicit
+restoration render and publication complete. Earlier pairs are preserved in
+checkpoint `8e51fb0` and tracked history through `3cc8034`.
+
+Exact historical software/run configuration, positivity and manual corrections
+remain unverified, as do ethics details; see
+`../../../reviews/CTB_ANALYSIS_HANDOFF.md`. Display reconstruction and the
+confirmed exclusions do not supply those missing facts. Neither later
+`_analysis_final` measurements nor default settings from a current OpenHCS
+installation may substitute for them.
