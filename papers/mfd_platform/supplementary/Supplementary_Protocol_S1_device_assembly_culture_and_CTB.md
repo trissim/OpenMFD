@@ -16,7 +16,7 @@ devices. Use up to 50 µL per well in this plate.
 
 ## Materials and equipment
 
-- Completed parylene-coated hybrid mold (Supplementary Protocol S2).
+- Completed parylene-coated hybrid mold (Protocol S2).
 - Sylgard 184 PDMS base and curing agent.
 - 60 mL syringe for dispensing PDMS into the wafer mold.
 - Vacuum desiccator and 100°C oven.
@@ -192,7 +192,7 @@ transport it back to their cell bodies.
 CTB-positive cells were counted before axotomy in the February 2026
 three-plate DMSO-only experiment. Five of the 72 interior devices were excluded
 from the cell-count analysis because of segmentation or cell-count artifacts
-(Supplementary Data S5), leaving 67 devices: 22 from Plate 1, 21 from Plate 2 and
+(Data S5), leaving 67 devices: 22 from Plate 1, 21 from Plate 2 and
 24 from Plate 3. Cell-count value alone was not an exclusion criterion.
 Per-plate means and standard deviations describe
 variation among devices from the same neuronal preparation.

@@ -2,8 +2,8 @@
 
 This protocol describes how to make the reusable mold for the neuronal device
 in a shared microfabrication facility, starting from OpenMFD-generated masks
-and insert models (Supplementary Table S1). The finished parylene-coated mold
-is used repeatedly for PDMS casting and plate assembly (Supplementary Protocol S1).
+and insert models (Table S1). The finished parylene-coated mold
+is used repeatedly for PDMS casting and plate assembly (Protocol S1).
 
 Follow the manufacturers' instructions except for the modifications below.
 
@@ -49,7 +49,7 @@ OpenMFD source and design-generation instructions are available at
    same coordinate system.
 3. To compensate for PDMS shrinkage during curing at 100°C, apply the same
    horizontal scale factor of 1.0226 (2.26% enlargement) to the matching mask and
-   insert outputs (Supplementary Table S1). Do not add a second scale correction
+   insert outputs (Table S1). Do not add a second scale correction
    in the printer's slicer.
 4. Before fabrication, inspect the single-device and wafer-scale DXF outputs and
    the single and arrayed insert STL outputs.
@@ -89,7 +89,7 @@ holes are intact, and the SUEX surfaces are flat enough for a continuous epoxy s
 
 1. Print the OpenMFD-generated insert array. This work used Siraya Tech
    Sculpt Clear resin on an Elegoo Mars 3 Pro printer with the settings in
-   Supplementary Data S2. Test settings for other printers and resins before
+   Data S2. Test settings for other printers and resins before
    printing the full array.
 2. Record resin, layer height, exposure, lift/retract, washing, and post-cure
    settings with the local printer profile. These settings apply to the local
@@ -104,7 +104,7 @@ holes are intact, and the SUEX surfaces are flat enough for a continuous epoxy s
 
 During development, pin-height measurements from one 8 × 12 printed array
 showed a 116 µm range and guided the choice of backing thickness and firmness
-(Supplementary Data S1). This measurement is not a required inspection of every
+(Data S1). This measurement is not a required inspection of every
 array before bonding.
 
 Before bonding, check that the clean, intact inserts remain in position and that
@@ -161,6 +161,6 @@ remained attached to the mold.
 
 Two wafer assemblies were lost during casting or handling: one wafer broke
 during demolding, and leaked PDMS cured beneath a second wafer in the casting
-rack. Filtered exposure reduced SUEX-surface ridges (Supplementary Figure S1),
+rack. Filtered exposure reduced SUEX-surface ridges (Figure S1),
 and the flood-exposed base and pre-SUEX bake helped keep the SU-8 features
-attached (Supplementary Note S2).
+attached (Note S2).
