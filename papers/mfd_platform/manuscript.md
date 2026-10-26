@@ -56,9 +56,6 @@ Micrometer measurements of all 96 pins in one printed array guided the choice of
 
 Plate-format compatibility was checked by filling eight wells in parallel with a multichannel pipette and collecting images on Opera Phenix Plus and ImageXpress Micro Confocal microscopes without custom handling or instrument modification.
 
-### Fluorescence imaging
-Tracer and CTB images were acquired in widefield mode on a PerkinElmer Opera Phenix Plus using a 10×/0.30 NA objective, 2 × 2 camera binning and 100 ms fluorescence exposures. The tracer check used red and green channels suited to its fluorophores. CTB imaging used laser autofocus with 640 nm excitation and 706 nm emission; accompanying brightfield images used a 10 ms exposure. The effective pixel size was 1.187 µm.
-
 ### Pre-culture seal and tracer-movement check
 Before neuronal culture, we used fluorescent tracers to check the assembled-device seal and observe movement between its connected compartments under an imposed volume difference. In each of 24 two-compartment devices, Alexa Fluor 568-conjugated secondary antibody diluted 1:1000 in phosphate-buffered saline (PBS) was loaded at 25 µL into the left compartment, and Alexa Fluor 488-conjugated secondary antibody diluted 1:1000 in PBS was loaded at 50 µL into the right compartment. We imaged the devices immediately after loading and after 72 h in a cell-culture incubator without replenishment or volume adjustment. Tracer movement was assessed visually by comparing green fluorescence appearing in the initially lower-volume compartment with red fluorescence appearing in the opposite compartment. Flow rate and the duration of the pressure difference were not measured.
 
@@ -73,8 +70,10 @@ To test whether the cultured neurons extended axons into the distal compartment,
 
 <!-- Author confirmation required: tissue-procurement/animal-use committee, applicable guidelines and approval identifier. -->
 
-### CTB image stitching and cell counting
-Images were collected at 35 positions (7 × 5 grid) on Plates 1 and 2 and 42 positions (7 × 6 grid) on Plate 3, with approximately 10% overlap, then stitched into one image per device. To compare counts over the same device area despite this difference in coverage, each stitched image was aligned to a reference brightfield image and cropped to a common area. One cell count was recorded per analyzed device. These were baseline images collected before axotomy; Figure 4C reports the mean and standard deviation across analyzed interior devices for each plate (Supplementary Protocol S1).
+### Imaging and image analysis
+Tracer and CTB images were acquired in widefield mode on a PerkinElmer Opera Phenix Plus using a 10×/0.30 NA objective, 2 × 2 camera binning and 100 ms fluorescence exposures. The tracer check used red and green channels suited to its fluorophores. CTB imaging used laser autofocus with 640 nm excitation and 706 nm emission; accompanying brightfield images used a 10 ms exposure. The effective pixel size was 1.187 µm.
+
+CTB images were collected at 35 positions (7 × 5 grid) on Plates 1 and 2 and 42 positions (7 × 6 grid) on Plate 3, with approximately 10% overlap, then stitched into one image per device. To compare counts over the same device area despite this difference in coverage, each stitched image was aligned to a reference brightfield image and cropped to a common area. One cell count was recorded per analyzed device. These were baseline images collected before axotomy; Figure 4C reports the mean and standard deviation across analyzed interior devices for each plate (Supplementary Protocol S1).
 
 <!-- Analysis provenance: the original October 15 desktop session identifies artifacts in the five excluded counts (lines 13665/13674) and explicitly approves the two additional P1 exclusions for cell counts, not axon analysis (lines 13694/13784). The selected cohort is 67 devices: P1 n=22, P2 n=21, P3 n=24. All 72 retained PRE counts match the original per-device count exports; both flag histories remain supplied. Figure 4 was redrawn from those observations and the original image/ROI sources, using the within-plate mean and sample SD, rather than importing the historically unbound plot raster. Exact analysis software/version, stitching/segmentation run configuration, positivity rule and manual corrections remain unverified. The saved crop declaration and visual overlay alignment do not establish that historical run. See reviews/CTB_ANALYSIS_HANDOFF.md. -->
 
