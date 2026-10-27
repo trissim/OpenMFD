@@ -2,16 +2,15 @@
 
 This protocol describes how to make the reusable mold for the neuronal device
 in a shared microfabrication facility, starting from OpenMFD-generated masks
-and insert models. The finished parylene-coated mold is used repeatedly for
-PDMS casting and plate assembly as described in Supplementary Protocol S1.
+and insert models (Table S1). The finished parylene-coated mold
+is used repeatedly for PDMS casting and plate assembly (Protocol S1).
 
-Follow the manufacturers' instructions for routine material processing;
-changes used in this work are specified below.
-Supplementary Table S3 provides validation checks for adapting the array,
-device spacing, well radius, pin clearance, SUEX thickness, channel layout,
-resin, printer, or parylene thickness.
+Follow the manufacturers' instructions except for the modifications below.
 
 ## Required design files
+
+OpenMFD source and design-generation instructions are available at
+`https://github.com/trissim/OpenMFD`.
 
 - OpenMFD-generated channel-layer photomask.
 - OpenMFD-generated SUEX well-layer and insert-alignment photomask.
@@ -20,10 +19,11 @@ resin, printer, or parylene thickness.
 
 ## Materials and equipment
 
-- 6-inch silicon wafer (UniversityWafer ID857 was used here).
+- 6-inch silicon wafer (UniversityWafer ID857).
 - SU-8 2005 negative photoresist (Kayaku Advanced Materials).
-- SUEX K200 dry film.
-- PGMEA developer.
+- SUEX K200 dry-film photoresist (DJ MicroLaminates), 200 µm thick.
+- Facility-supplied propylene glycol monomethyl ether acetate (PGMEA), used to
+  develop both photoresists.
 - LP360 long-pass filter for SUEX exposure.
 - Laurell WS-650-8B spin coater or equivalent.
 - SK 335R6 laminator or equivalent dry-film laminator.
@@ -33,7 +33,8 @@ resin, printer, or parylene thickness.
   equivalent.
 - Detachable magnetic resin-printer build plate or equivalent transfer fixture.
 - Larger bonding plate compatible with the full wafer.
-- EPDM rubber sheet, 0.03125 inch thickness, 60A durometer.
+- Ethylene propylene diene monomer (EPDM) rubber sheet, 0.03125 inch thickness,
+  60A durometer.
 - EPO-TEK 301-2 epoxy.
 - Acetone baths and dry air gun.
 - Specialty Coating Systems SCS 200 parylene coater or equivalent parylene C
@@ -46,16 +47,17 @@ resin, printer, or parylene thickness.
 2. Confirm that the channel layer, SUEX well and alignment-hole layer, insert
    pins, insert skirts, taper allowances, and cutting/frame outlines share the
    same coordinate system.
-3. Apply the demonstrated horizontal PDMS shrinkage compensation factor of
-   1.0226 (2.26% enlargement) for the 100°C cure consistently to matching mask
-   and insert outputs (Supplementary Table S3). Do not add an independent
-   slicer scale correction.
+3. To compensate for PDMS shrinkage during curing at 100°C, apply the same
+   horizontal scale factor of 1.0226 (2.26% enlargement) to the matching mask and
+   insert outputs (Table S1). Do not add a second scale correction
+   in the printer's slicer.
 4. Before fabrication, inspect the single-device and wafer-scale DXF outputs and
    the single and arrayed insert STL outputs.
 
 ## B. Pattern the SU-8/SUEX wafer
 
-1. Start with a clean 6-inch silicon wafer.
+1. Start with a clean 6-inch silicon wafer. No dehydration bake or
+   hexamethyldisilazane (HMDS) adhesion-promoter treatment was used in this work.
 2. Spin coat SU-8 2005 for a 5 µm target thickness.
 3. Flood expose the first SU-8 2005 layer without a mask. Do not develop this
    layer. This layer functions as an adhesion base for the microchannel layer.
@@ -65,11 +67,12 @@ resin, printer, or parylene thickness.
    SU-8 2005 process for a 5 µm target thickness.
 7. Hard bake the developed two-layer SU-8 stack for 10 min at 150°C
    before SUEX lamination. Place the approximately 10 µm stack directly in the
-   heated oven and remove it after 10 min; no controlled heating ramp or
-   cooldown is required.
+   heated oven and remove it after 10 min. No controlled heating or cooling
+   ramp was used for this pre-SUEX bake.
 8. Laminate SUEX K200 dry film onto the wafer.
 9. Expose the SUEX layer through the well and insert-alignment photomask using
-   an LP360 long-pass filter at 2800 mJ/cm².
+   an LP360 long-pass filter at 2800 mJ/cm². The filter blocks shorter-wavelength
+   ultraviolet light.
 10. Post-exposure bake by ramping from room temperature to 50°C at
    1°C/min, holding at 50°C for at least 12 h overnight, then
    shutting off the oven and allowing it to cool.
@@ -79,18 +82,14 @@ resin, printer, or parylene thickness.
     3°C/min, holding for 30 min, and ramping down by powering off the
     oven.
 
-Routine inspection after photolithography:
-
-- Confirm that the 5 µm SU-8 microchannel features remain attached.
-- Confirm that the SUEX well features and insert-alignment holes are visibly intact.
-- Confirm that the SUEX top surfaces are sufficiently flat for a continuous
-  insert-wafer epoxy seal.
+Check that the microchannels remain attached, the SUEX features and alignment
+holes are intact, and the SUEX surfaces are flat enough for a continuous epoxy seal.
 
 ## C. Print and prepare resin inserts
 
 1. Print the OpenMFD-generated insert array. This work used Siraya Tech
    Sculpt Clear resin on an Elegoo Mars 3 Pro printer with the settings in
-   Supplementary Table S4. Test settings for other printers and resins before
+   Data S2. Test settings for other printers and resins before
    printing the full array.
 2. Record resin, layer height, exposure, lift/retract, washing, and post-cure
    settings with the local printer profile. These settings apply to the local
@@ -102,21 +101,20 @@ Routine inspection after photolithography:
    the print in an Elegoo Mercury X rotating UV cure station for 15 min.
 5. Keep the inserts in their printed relative positions on the detachable
    flexible metal build plate or equivalent transfer fixture.
-6. Measure each printed pin individually with a micrometer before bonding.
-   In one 8 × 12 array of 96 pins, the tallest and shortest pins differed by
-   116 µm (Supplementary Table S1).
 
-Routine inspection before bonding:
+During development, pin-height measurements from one 8 × 12 printed array
+showed a 116 µm range and guided the choice of backing thickness and firmness
+(Data S1). This measurement is not a required inspection of every
+array before bonding.
 
-- Confirm that inserts remain in their intended array positions.
-- Confirm that pins are intact and free of resin debris.
-- Confirm that the compressible clamping layers allow all pins to seat despite
-  the measured differences in height.
+Before bonding, check that the clean, intact inserts remain in position and that
+the compressible backing allows all pins to seat.
 
 ## D. Bond inserts to the SU-8/SUEX wafer
 
-1. Transfer the insert array from the resin-printer build plate to a bonding
-   plate suitable for clamping against the full wafer.
+1. Move the flexible metal build plate carrying the insert array to a bonding
+   plate suitable for clamping against the full wafer. Keep the inserts on the
+   flexible plate in their printed relative positions.
 2. Place a 0.03125-inch-thick, 60A EPDM rubber sheet between the fixed magnet
    on the clamping build plate and the flexible metal build plate carrying
    the inserts.
@@ -137,27 +135,32 @@ Routine inspection before bonding:
 12. Release the bonded insert array from the transfer fixture by flexing the
     flexible metal build plate while preserving the insert-wafer bond.
 
-Routine inspection after bonding:
-
-- Confirm that all inserts remain bonded.
-- Confirm that all pins are visibly seated in their alignment holes across the
-  array.
-- Confirm that the wafer remains intact after release from the bonding stack.
+After release, check that the wafer is intact and that all inserts remain bonded
+with their pins seated in the alignment holes.
 
 ## E. Parylene coat the hybrid mold
 
 1. Coat the bonded hybrid mold with 1 µm parylene C.
-2. Use a local parylene coater or send the completed hybrid mold to an external
-   university core or commercial coating service.
+2. This work used a Specialty Coating Systems SCS 200 coater. Use a local
+   parylene coater or send the completed hybrid mold to an external university
+   core or commercial coating service.
 3. After coating, store and handle the mold as a reusable wafer-scale mold for
    PDMS casting.
 
-Routine inspection during the first casting cycle:
+Inspect the first PDMS cast for clean release, open wells, and intact channel
+regions. The design dimensions in Table S1 refer to the mold before coating.
 
-- Confirm that the parylene-coated mold releases PDMS.
-- Confirm that the cast wells are open after demolding.
-- Confirm that the cast retains the intended well features.
+## Mold inspection and reuse
 
-Microscopy confirmed open channels after coating and casting. Specified
-microchannel dimensions in the manuscript and design tables refer to the
-design dimensions before parylene coating.
+Five molds were assembled with the final protocol. Three routinely used molds
+together produced more than 50 usable PDMS casts; the most recent molds remained
+in use for more than 8 months without visible degradation. A cast was judged
+usable on visual inspection if it demolded intact with open wells and preserved
+microchannel regions. The inserts remained bonded and the SU-8/SUEX features
+remained attached to the mold.
+
+Two wafer assemblies were lost during casting or handling: one wafer broke
+during demolding, and leaked PDMS cured beneath a second wafer in the casting
+rack. Filtered exposure reduced SUEX-surface ridges (Figure S1),
+and the flood-exposed base and pre-SUEX bake helped keep the SU-8 features
+attached (Note S2).

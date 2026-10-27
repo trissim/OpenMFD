@@ -1,0 +1,24 @@
+Parameter,Setting
+Printer,"Creality K1C, enclosed"
+Slicer,Creality Print 6.0.4.1795
+Filament,"Generic HIPS, 1.75 mm diameter"
+Nozzle,0.4 mm brass
+Layer height,0.20 mm
+First-layer height,0.20 mm
+Nozzle temperature,"220°C, first and subsequent layers"
+Build-plate temperature,"100°C, first and subsequent layers"
+Part cooling,Disabled
+Wall loops,2
+Top layers,5 (0.8 mm)
+Bottom layers,3
+Sparse infill,15% grid
+Supports,Disabled
+Build-plate adhesion,"5 mm outer brim, 0 mm object gap"
+Outer-wall speed,200 mm/s
+Inner-wall speed,300 mm/s
+Sparse-infill speed,270 mm/s
+Top-surface speed,200 mm/s
+Initial-layer speed,60 mm/s
+Travel speed,500 mm/s
+Maximum filament volumetric speed,5 mm³/s
+Printed height / layer count,17.0 mm / 85 layers

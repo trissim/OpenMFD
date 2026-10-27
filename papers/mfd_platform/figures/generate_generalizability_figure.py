@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import math
 import sys
-from dataclasses import dataclass
+from abc import ABC, abstractmethod
+from dataclasses import dataclass, replace
 from pathlib import Path
 from typing import Callable
 
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.patches import Rectangle
 
 ROOT = Path(__file__).resolve().parents[3]
 sys.path.insert(0, str(ROOT))
@@ -22,21 +22,18 @@ from generate_openmfd_design_figure import (
     Bounds,
     COLORS,
     DxfDrawing,
+    PanelBadge,
+    PanelTitle,
     StlMesh,
     StlRenderSpec,
-    TextRole,
-    add_arrow,
-    add_bounds_background,
     add_inset,
-    add_text,
     draw_dxf_layer_raw,
-    draw_stl_polygons,
     draw_stl_mesh_raw_equal,
-    panel_badge,
+    draw_stl_polygons,
     project_stl_render,
-    rounded_box,
     setup_axis,
     setup_raw_dxf_axis,
+    SUBFIGURE_DPI,
 )
 
 FIGURE_DIR = Path(__file__).resolve().parent
@@ -46,76 +43,72 @@ INDIVIDUAL_SUBFIGURE_DIR = SUBFIGURE_DIR / "individual"
 
 CURE_TEMP = 100
 PDMS_SCALE = PDMSConfiguration(cure_temp=CURE_TEMP).scale_factor()
-PIN_INSET = 0.0
-PIN_DIMS = (1.85, 1.85)
-PIN_HEIGHT = 0.14
-PIN_INNER_HEIGHT = 2.0
-SKIRT_HEIGHT = 0.70
-INSERT_HEIGHT = 3.8
-FIGURE1_WELL_RADIUS = 2.5
-DIAMOND_PIN_ROTATION = 45.0
 SINGLE_INSERT_AZIMUTH = 0.0
 ARRAY_INSERT_AZIMUTH = 0.0
 ARRAY_INSERT_ELEVATION = 28.0
-WALL_THICKNESS = 7.0
-WALL_PAD = 9.0
+BASE_ROW_GAP = 0.11
+ROW_GAP_SCALE = 1.20
+ROW_SPACING_INCREASE = 1.80
+HEADER_PADDING_INCHES = 0.08
+
+
+class UnbackedStlRenderSpec(StlRenderSpec):
+    def draw_background(self, ax: plt.Axes, bounds: Bounds, x_pad: float, y_pad: float) -> None:
+        pass
 
 
 @dataclass(frozen=True)
 class GeneralizabilityDesign:
-    label: str
     title: str
     stem: str
     design_dir: Path
     dims: tuple[float, float, float]
     grid_size: tuple[int, int]
-    pin_positions: tuple[tuple[float, float], ...]
-    pin_rotation: float
-    summary_rows: tuple[tuple[str, str], ...]
-    layout_note: str
     single_top: DxfDrawing
     single_bottom: DxfDrawing
     multi_top: DxfDrawing
     multi_bottom: DxfDrawing
     wafer_top: DxfDrawing
     wafer_bottom: DxfDrawing
-    aligned: DxfDrawing
     single_insert: StlMesh
 
     @classmethod
     def from_assets(
         cls,
         *,
-        label: str,
         title: str,
         stem: str,
         design_dir: Path,
         dims: tuple[float, float, float],
         grid_size: tuple[int, int],
-        pin_positions: tuple[tuple[float, float], ...],
-        pin_rotation: float,
-        summary_rows: tuple[tuple[str, str], ...],
-        layout_note: str,
     ) -> "GeneralizabilityDesign":
         return cls(
-            label=label,
             title=title,
             stem=stem,
             design_dir=design_dir,
             dims=dims,
             grid_size=grid_size,
-            pin_positions=pin_positions,
-            pin_rotation=pin_rotation,
-            summary_rows=summary_rows,
-            layout_note=layout_note,
             single_top=DxfDrawing.from_file(design_dir / f"{stem}_single_top.dxf"),
             single_bottom=DxfDrawing.from_file(design_dir / f"{stem}_single_bottom.dxf"),
             multi_top=DxfDrawing.from_file(design_dir / f"{stem}_multi_top.dxf"),
             multi_bottom=DxfDrawing.from_file(design_dir / f"{stem}_multi_bottom.dxf"),
             wafer_top=DxfDrawing.from_file(design_dir / f"{stem}_top.dxf"),
             wafer_bottom=DxfDrawing.from_file(design_dir / f"{stem}_bottom.dxf"),
-            aligned=DxfDrawing.from_file(design_dir / f"{stem}_aligned.dxf"),
             single_insert=StlMesh.from_file(design_dir / f"{stem}_single_insert.stl"),
+        )
+
+    def single_insert_spec(self) -> StlRenderSpec:
+        return UnbackedStlRenderSpec(
+            self.single_insert,
+            26000,
+            azimuth=SINGLE_INSERT_AZIMUTH,
+            elevation=24.0,
+            z_scale=1.0,
+            edge_alpha=0.32,
+            linewidth=0.018,
+            base_color="#d8871f",
+            highlight_color="#ffe2a3",
+            edge_color="#593100",
         )
 
 
@@ -125,217 +118,28 @@ def make_designs() -> tuple[GeneralizabilityDesign, ...]:
     diamond_grid_size = (6, 4)
     linear_unit_dims = (27.0, 9.0, 0.0)
     linear_grid_size = (4, 8)
-    diamond_well = 6.36 / math.sqrt(2.0)
-    diamond_pins = tuple(
-        inset_toward_origin(position)
-        for position in (
-            (-diamond_well, -diamond_well),
-            (diamond_well, -diamond_well),
-            (-diamond_well, diamond_well),
-            (diamond_well, diamond_well),
-        )
-    )
-    linear_pins = tuple(
-        inset_toward_origin(position)
-        for position in (
-            (-9.0, 0.0),
-            (0.0, 0.0),
-            (9.0, 0.0),
-        )
-    )
     myelination = GeneralizabilityDesign.from_assets(
-        label="A",
-        title="Myelination assay",
+        title="Myelination layout",
         stem="myelination",
         design_dir=base / "myelination",
         dims=diamond_unit_dims,
         grid_size=diamond_grid_size,
-        pin_positions=diamond_pins,
-        pin_rotation=DIAMOND_PIN_ROTATION,
-        summary_rows=(
-            ("unit pitch", "18 x 18 mm"),
-            ("array", "6 x 4 units"),
-            ("well radius", f"{FIGURE1_WELL_RADIUS:.2f} mm"),
-            ("microchannels", "125 at 10 um"),
-            ("pin / hole", "1.85 / 2.00 mm"),
-            ("outer taper", "16 deg, 3.8 mm tall"),
-            ("PDMS scale", f"x{PDMS_SCALE:.4f}"),
-        ),
-        layout_note="legacy open-chamber build with an oligo branch and the same pin/skirt system as Fig. 1",
     )
     axon_guidance = GeneralizabilityDesign.from_assets(
-        label="D",
-        title="Axon guidance assay",
+        title="Axon-guidance layout",
         stem="axon_guidance",
         design_dir=base / "axon_guidance",
         dims=diamond_unit_dims,
         grid_size=diamond_grid_size,
-        pin_positions=diamond_pins,
-        pin_rotation=DIAMOND_PIN_ROTATION,
-        summary_rows=(
-            ("unit pitch", "18 x 18 mm"),
-            ("array", "6 x 4 units"),
-            ("well radius", f"{FIGURE1_WELL_RADIUS:.2f} mm"),
-            ("microchannels", "83 at 10 um"),
-            ("pin / hole", "1.85 / 2.00 mm"),
-            ("outer taper", "16 deg, 3.8 mm tall"),
-            ("PDMS scale", f"x{PDMS_SCALE:.4f}"),
-        ),
-        layout_note="legacy open-chamber build with symmetric crossing gradient arms and the same pin/skirt system as Fig. 1",
     )
     three_compartment = GeneralizabilityDesign.from_assets(
-        label="F",
-        title="Three-compartment assay",
+        title="Three-compartment layout",
         stem="three_compartment",
         design_dir=base / "three_compartment",
         dims=linear_unit_dims,
         grid_size=linear_grid_size,
-        pin_positions=linear_pins,
-        pin_rotation=0.0,
-        summary_rows=(
-            ("unit pitch", "27 x 9 mm"),
-            ("array", "4 x 8 units"),
-            ("well radius", f"{FIGURE1_WELL_RADIUS:.2f} mm"),
-            ("pin / hole", "1.85 / 2.00 mm"),
-            ("outer taper", "16 deg, 3.8 mm tall"),
-            ("PDMS scale", f"x{PDMS_SCALE:.4f}"),
-            ("microchannels", "125 at 10 um"),
-        ),
-        layout_note="legacy open-chamber build with three compartments and the same pin/skirt system as Fig. 1",
     )
     return myelination, axon_guidance, three_compartment
-
-
-def point_key(point: tuple[float, float]) -> tuple[float, float]:
-    return (round(point[0], 4), round(point[1], 4))
-
-
-def inset_toward_origin(position: tuple[float, float]) -> tuple[float, float]:
-    x, y = position
-    radius = math.hypot(x, y)
-    if radius == 0.0:
-        return position
-    adjusted_radius = radius + PIN_INSET
-    if adjusted_radius <= 0.0:
-        raise ValueError(f"pin inset {PIN_INSET} collapses position {position}")
-    scale = adjusted_radius / radius
-    return (x * scale, y * scale)
-
-
-def polygon_area(points: np.ndarray) -> float:
-    x = points[:, 0]
-    y = points[:, 1]
-    return float(0.5 * np.sum(x * np.roll(y, -1) - np.roll(x, -1) * y))
-
-
-def closed_dxf_loops(drawing: DxfDrawing) -> list[np.ndarray]:
-    """Recover the closed loops emitted by OpenSCAD's DXF exporter."""
-    loops: list[np.ndarray] = []
-    current: list[tuple[float, float]] = []
-    start: tuple[float, float] | None = None
-    last: tuple[float, float] | None = None
-
-    for segment_start, segment_end in drawing.segments:
-        if not current:
-            current = [segment_start, segment_end]
-            start = point_key(segment_start)
-            last = point_key(segment_end)
-        elif point_key(segment_start) == last:
-            current.append(segment_end)
-            last = point_key(segment_end)
-        elif point_key(segment_end) == last:
-            current.append(segment_start)
-            last = point_key(segment_start)
-        else:
-            if len(current) >= 3:
-                loops.append(np.array(current, dtype=float))
-            current = [segment_start, segment_end]
-            start = point_key(segment_start)
-            last = point_key(segment_end)
-
-        if len(current) > 3 and last == start:
-            loops.append(np.array(current[:-1], dtype=float))
-            current = []
-            start = None
-            last = None
-
-    if len(current) >= 3:
-        loops.append(np.array(current, dtype=float))
-    return loops
-
-
-def scale_about_center(points: np.ndarray, factor: float) -> np.ndarray:
-    center = points.mean(axis=0)
-    return center + (points - center) * factor
-
-
-def prism_from_polygon(
-    polygon: np.ndarray,
-    *,
-    z0: float,
-    z1: float,
-    taper: float = 0.0,
-) -> np.ndarray:
-    if len(polygon) < 3:
-        return np.empty((0, 3, 3), dtype=float)
-
-    points = polygon[:-1] if np.allclose(polygon[0], polygon[-1]) else polygon
-    if polygon_area(points) < 0:
-        points = points[::-1]
-
-    bottom_xy = scale_about_center(points, 1.0 + taper)
-    bottom = np.column_stack((bottom_xy, np.full(len(points), z0)))
-    top = np.column_stack((points, np.full(len(points), z1)))
-
-    triangles: list[np.ndarray] = []
-    for idx in range(1, len(points) - 1):
-        triangles.append(np.array([top[0], top[idx], top[idx + 1]], dtype=float))
-        triangles.append(np.array([bottom[0], bottom[idx + 1], bottom[idx]], dtype=float))
-
-    for idx in range(len(points)):
-        nxt = (idx + 1) % len(points)
-        triangles.append(np.array([bottom[idx], bottom[nxt], top[nxt]], dtype=float))
-        triangles.append(np.array([bottom[idx], top[nxt], top[idx]], dtype=float))
-
-    return np.array(triangles, dtype=float)
-
-
-def rotated_square(
-    center: tuple[float, float],
-    dims: tuple[float, float],
-    rotation: float,
-) -> np.ndarray:
-    half_x = dims[0] / 2.0
-    half_y = dims[1] / 2.0
-    points = np.array(
-        [
-            [-half_x, -half_y],
-            [half_x, -half_y],
-            [half_x, half_y],
-            [-half_x, half_y],
-        ],
-        dtype=float,
-    )
-    radians = math.radians(rotation)
-    matrix = np.array(
-        [
-            [math.cos(radians), -math.sin(radians)],
-            [math.sin(radians), math.cos(radians)],
-        ]
-    )
-    return points @ matrix.T + np.array(center, dtype=float)
-
-
-def translated_prisms(
-    loops: list[np.ndarray],
-    offset: tuple[float, float],
-    *,
-    z0: float,
-    z1: float,
-    taper: float,
-) -> list[np.ndarray]:
-    offset_array = np.array(offset, dtype=float)
-    return [prism_from_polygon(loop + offset_array, z0=z0, z1=z1, taper=taper) for loop in loops]
 
 
 def unit_offsets(design: GeneralizabilityDesign, *, array: bool) -> list[tuple[float, float]]:
@@ -352,22 +156,8 @@ def unit_offsets(design: GeneralizabilityDesign, *, array: bool) -> list[tuple[f
     return offsets
 
 
-def insert_preview_mesh(design: GeneralizabilityDesign, *, array: bool) -> StlMesh:
-    if not array:
-        return design.single_insert
-
-    base_offset = np.array(unit_offsets(design, array=False)[0], dtype=float)
-    triangles: list[np.ndarray] = []
-    for offset in unit_offsets(design, array=True):
-        delta = (np.array(offset, dtype=float) - base_offset) * PDMS_SCALE
-        translated = design.single_insert.triangles.copy()
-        translated[:, :, :2] += delta
-        triangles.append(translated)
-    return StlMesh(np.concatenate(triangles, axis=0))
-
-
 def array_insert_render_spec(design: GeneralizabilityDesign) -> StlRenderSpec:
-    return StlRenderSpec(
+    return UnbackedStlRenderSpec(
         design.single_insert,
         26000,
         azimuth=ARRAY_INSERT_AZIMUTH,
@@ -404,17 +194,7 @@ def draw_insert_array_preview(ax: plt.Axes, design: GeneralizabilityDesign) -> N
     ax.set_ylim(bounds.min_y - y_pad, bounds.max_y + y_pad)
     ax.set_aspect("equal", adjustable="box")
     ax.axis("off")
-    ax.add_patch(
-        Rectangle(
-            (bounds.min_x - x_pad, bounds.min_y - y_pad),
-            bounds.width + 2 * x_pad,
-            bounds.height + 2 * y_pad,
-            facecolor=COLORS["dark_card"],
-            edgecolor=COLORS["frame"],
-            linewidth=1.1,
-            zorder=0,
-        )
-    )
+    spec.draw_background(ax, bounds, x_pad, y_pad)
     for center_x, center_y in projected_centers:
         draw_stl_polygons(
             ax,
@@ -426,218 +206,96 @@ def draw_insert_array_preview(ax: plt.Axes, design: GeneralizabilityDesign) -> N
         )
 
 
-def frame_preview_mesh(design: GeneralizabilityDesign) -> StlMesh:
-    width = design.grid_size[0] * design.dims[0] + WALL_PAD * 2.0
-    height = design.grid_size[1] * design.dims[1] + WALL_PAD * 2.0
-    center_x = design.grid_size[0] * design.dims[0] / 2.0
-    center_y = design.grid_size[1] * design.dims[1] / 2.0
-    x0 = center_x - width / 2.0
-    x1 = center_x + width / 2.0
-    y0 = center_y - height / 2.0
-    y1 = center_y + height / 2.0
-    t = WALL_THICKNESS
-    bars = (
-        np.array([(x0, y0), (x1, y0), (x1, y0 + t), (x0, y0 + t)], dtype=float),
-        np.array([(x0, y1 - t), (x1, y1 - t), (x1, y1), (x0, y1)], dtype=float),
-        np.array([(x0, y0), (x0 + t, y0), (x0 + t, y1), (x0, y1)], dtype=float),
-        np.array([(x1 - t, y0), (x1, y0), (x1, y1), (x1 - t, y1)], dtype=float),
-    )
-    triangles = np.concatenate(
-        [prism_from_polygon(bar, z0=0.0, z1=10.0, taper=0.0) for bar in bars],
-        axis=0,
-    )
-    return StlMesh(triangles)
+class DesignPanel(ABC):
+    def __call__(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+        setup_axis(ax)
+        self.draw_content(ax, design)
+        self.decorate(ax, design)
+
+    @classmethod
+    @abstractmethod
+    def image_boxes(cls) -> tuple[AxisBox, AxisBox]:
+        raise NotImplementedError
+
+    @abstractmethod
+    def draw_content(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+        raise NotImplementedError
+
+    def decorate(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+        pass
+
+    def title(self, design: GeneralizabilityDesign) -> str:
+        return design.title
 
 
-def draw_summary_panel(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
-    setup_axis(ax)
-    panel_badge(ax, design.label)
-    add_text(ax, 0.11, 0.956, design.title, TextRole.PANEL_TITLE)
-
-    rounded_box(ax, (0.055, 0.11), 0.52, 0.78, "white", COLORS["grid"], linewidth=1.0)
-    add_text(ax, 0.08, 0.825, "OpenMFD preset", TextRole.PRESET_TITLE)
-    add_text(ax, 0.08, 0.765, "editable legacy layout", TextRole.MUTED_LEFT)
-
-    y = 0.685
-    for key, value in design.summary_rows:
-        add_text(ax, 0.085, y, key, TextRole.TABLE_KEY)
-        add_text(ax, 0.545, y, value, TextRole.TABLE_VALUE)
-        ax.plot([0.08, 0.555], [y - 0.030, y - 0.030], color="#edf1f6", lw=0.8)
-        y -= 0.070
-
-    add_text(
-        ax,
-        0.08,
-        0.155,
-        f"{design.layout_note}\nall outputs share the Fig. 1 coordinate system.",
-        TextRole.NOTE,
-    )
-
-    outputs = (
-        ((0.66, 0.715), "photomask\nDXFs", COLORS["bottom"]),
-        ((0.66, 0.575), "insert\nCAD/STL", COLORS["insert"]),
-        ((0.66, 0.435), "wall\nCAD/STL", COLORS["frame"]),
-        ((0.66, 0.295), "wafer-mask\nCAD", COLORS["top"]),
-    )
-    for (x, y_out), label, color in outputs:
-        rounded_box(ax, (x, y_out), 0.255, 0.102, "white", color, linewidth=1.6)
-        add_text(ax, x + 0.1275, y_out + 0.051, label, TextRole.OUTPUT_BOX)
-        add_arrow(ax, (0.585, 0.50), (x, y_out + 0.051), color)
-
-
-def draw_dxf_panel(ax: plt.Axes, design: GeneralizabilityDesign, panel_label: str) -> None:
-    setup_axis(ax)
-    panel_badge(ax, panel_label)
-    add_text(ax, 0.11, 0.956, f"{design.title} DXF outputs", TextRole.PANEL_TITLE)
-
-    single_box = AxisBox(0.03, 0.16, 0.40, 0.68)
-    aligned_box = AxisBox(0.46, 0.10, 0.51, 0.78)
-
-    single_ax = add_inset(ax, single_box)
-    aligned_ax = add_inset(ax, aligned_box)
-
-    single_bounds = Bounds.combine((design.single_top, design.single_bottom))
-    single_pad_x = max(single_bounds.width * 0.05, 0.55)
-    single_pad_y = max(single_bounds.height * 0.05, 0.55)
-    setup_raw_dxf_axis(single_ax, single_bounds, single_pad_x, single_pad_y)
-    add_bounds_background(single_ax, single_bounds, single_pad_x, single_pad_y)
-    draw_dxf_layer_raw(single_ax, design.single_bottom, COLORS["bottom"], 0.12, 0.60)
-    draw_dxf_layer_raw(single_ax, design.single_top, COLORS["top"], 1.10, 0.94)
-
-    aligned_bounds = Bounds.combine((design.wafer_top, design.wafer_bottom))
-    aligned_pad_x = max(aligned_bounds.width * 0.035, 0.55)
-    aligned_pad_y = max(aligned_bounds.height * 0.035, 0.55)
-    setup_raw_dxf_axis(aligned_ax, aligned_bounds, aligned_pad_x, aligned_pad_y)
-    add_bounds_background(aligned_ax, aligned_bounds, aligned_pad_x, aligned_pad_y)
-    draw_dxf_layer_raw(aligned_ax, design.wafer_bottom, COLORS["bottom"], 0.16, 0.58)
-    draw_dxf_layer_raw(aligned_ax, design.wafer_top, COLORS["top"], 0.34, 0.92)
-
-    add_text(ax, 0.16, 0.085, "single unit", TextRole.SMALL_MUTED)
-    add_text(ax, 0.65, 0.085, "wafer-scale mask", TextRole.SMALL_MUTED)
-
-
-def draw_output_panel(
-    ax: plt.Axes,
-    design: GeneralizabilityDesign,
-    *,
-    panel_label: str,
-    show_frame: bool = True,
-) -> None:
-    setup_axis(ax)
-    panel_badge(ax, panel_label)
-    add_text(ax, 0.11, 0.956, f"{design.title} insert outputs", TextRole.PANEL_TITLE)
-
-    if show_frame:
-        single_box = AxisBox(0.035, 0.315, 0.295, 0.545)
-        array_box = AxisBox(0.355, 0.315, 0.295, 0.545)
-        wall_box = AxisBox(0.675, 0.315, 0.295, 0.545)
-    else:
-        single_box = AxisBox(0.035, 0.315, 0.430, 0.545)
-        array_box = AxisBox(0.535, 0.315, 0.430, 0.545)
-        wall_box = None
-
-    single_ax = add_inset(ax, single_box)
-    array_ax = add_inset(ax, array_box)
-    wall_ax = add_inset(ax, wall_box) if wall_box is not None else None
-
-    draw_stl_mesh_raw_equal(
-        single_ax,
-        StlRenderSpec(
-            insert_preview_mesh(design, array=False),
-            26000,
-            azimuth=SINGLE_INSERT_AZIMUTH,
-            elevation=24.0,
-            z_scale=1.0,
-            edge_alpha=0.32,
-            linewidth=0.018,
-            base_color="#d8871f",
-            highlight_color="#ffe2a3",
-            edge_color="#593100",
-        ),
-    )
-    draw_insert_array_preview(array_ax, design)
-    if wall_ax is not None:
-        draw_stl_mesh_raw_equal(
-            wall_ax,
-            StlRenderSpec(
-                frame_preview_mesh(design),
-                2000,
-                azimuth=-36.0,
-                elevation=25.0,
-                z_scale=1.35,
-                edge_alpha=0.52,
-                linewidth=0.020,
-                base_color="#485466",
-                highlight_color="#d3d9e2",
-                edge_color="#070b12",
-            ),
-        )
-
-    add_text(
-        ax,
-        single_box.left + single_box.width / 2.0,
-        0.245,
-        "single insert",
-        TextRole.SMALL_MUTED,
-    )
-    add_text(
-        ax,
-        array_box.left + array_box.width / 2.0,
-        0.245,
-        "array insert",
-        TextRole.SMALL_MUTED,
-    )
-    if wall_box is not None:
-        add_text(ax, wall_box.left + wall_box.width / 2.0, 0.245, "wall frame", TextRole.SMALL_MUTED)
-
-
-def draw_clean_dxf_subfigure(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
-    setup_axis(ax)
-
+class DxfPanel(DesignPanel):
+    COLUMN_TITLES = ("Single-unit mask", "Wafer-scale mask")
     single_box = AxisBox(0.025, 0.05, 0.43, 0.90)
     aligned_box = AxisBox(0.50, 0.03, 0.475, 0.94)
-    single_ax = add_inset(ax, single_box)
-    aligned_ax = add_inset(ax, aligned_box)
 
-    single_bounds = Bounds.combine((design.single_top, design.single_bottom))
-    single_pad_x = max(single_bounds.width * 0.05, 0.55)
-    single_pad_y = max(single_bounds.height * 0.05, 0.55)
-    setup_raw_dxf_axis(single_ax, single_bounds, single_pad_x, single_pad_y)
-    add_bounds_background(single_ax, single_bounds, single_pad_x, single_pad_y)
-    draw_dxf_layer_raw(single_ax, design.single_bottom, COLORS["bottom"], 0.12, 0.60)
-    draw_dxf_layer_raw(single_ax, design.single_top, COLORS["top"], 1.10, 0.94)
+    @classmethod
+    def image_boxes(cls) -> tuple[AxisBox, AxisBox]:
+        return cls.single_box, cls.aligned_box
 
-    aligned_bounds = Bounds.combine((design.wafer_top, design.wafer_bottom))
-    aligned_pad_x = max(aligned_bounds.width * 0.035, 0.55)
-    aligned_pad_y = max(aligned_bounds.height * 0.035, 0.55)
-    setup_raw_dxf_axis(aligned_ax, aligned_bounds, aligned_pad_x, aligned_pad_y)
-    add_bounds_background(aligned_ax, aligned_bounds, aligned_pad_x, aligned_pad_y)
-    draw_dxf_layer_raw(aligned_ax, design.wafer_bottom, COLORS["bottom"], 0.16, 0.58)
-    draw_dxf_layer_raw(aligned_ax, design.wafer_top, COLORS["top"], 0.34, 0.92)
+    def draw_content(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+        single_ax = add_inset(ax, self.single_box)
+        aligned_ax = add_inset(ax, self.aligned_box)
+        single_bounds = Bounds.combine((design.single_top, design.single_bottom))
+        single_pad_x = max(single_bounds.width * 0.05, 0.55)
+        single_pad_y = max(single_bounds.height * 0.05, 0.55)
+        setup_raw_dxf_axis(single_ax, single_bounds, single_pad_x, single_pad_y)
+        draw_dxf_layer_raw(single_ax, design.single_bottom, COLORS["bottom"], 0.12, 0.60)
+        draw_dxf_layer_raw(single_ax, design.single_top, COLORS["top"], 1.10, 0.94)
+        aligned_bounds = Bounds.combine((design.wafer_top, design.wafer_bottom))
+        aligned_pad_x = max(aligned_bounds.width * 0.035, 0.55)
+        aligned_pad_y = max(aligned_bounds.height * 0.035, 0.55)
+        setup_raw_dxf_axis(aligned_ax, aligned_bounds, aligned_pad_x, aligned_pad_y)
+        draw_dxf_layer_raw(aligned_ax, design.wafer_bottom, COLORS["bottom"], 0.16, 0.58)
+        draw_dxf_layer_raw(aligned_ax, design.wafer_top, COLORS["top"], 0.34, 0.92)
 
 
-def draw_clean_insert_subfigure(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
-    setup_axis(ax)
+class InsertPanel(DesignPanel):
+    COLUMN_TITLES = ("Single-unit insert", "Arrayed inserts")
+    single_box = AxisBox(0.025, 0.06, 0.43, 0.88)
+    array_box = AxisBox(0.50, 0.06, 0.475, 0.88)
 
-    single_ax = add_inset(ax, AxisBox(0.025, 0.06, 0.43, 0.88))
-    array_ax = add_inset(ax, AxisBox(0.50, 0.06, 0.475, 0.88))
+    @classmethod
+    def image_boxes(cls) -> tuple[AxisBox, AxisBox]:
+        return cls.single_box, cls.array_box
 
-    draw_stl_mesh_raw_equal(
-        single_ax,
-        StlRenderSpec(
-            insert_preview_mesh(design, array=False),
-            26000,
-            azimuth=SINGLE_INSERT_AZIMUTH,
-            elevation=24.0,
-            z_scale=1.0,
-            edge_alpha=0.32,
-            linewidth=0.018,
-            base_color="#d8871f",
-            highlight_color="#ffe2a3",
-            edge_color="#593100",
-        ),
-    )
-    draw_insert_array_preview(array_ax, design)
+    def draw_content(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+        single_ax = add_inset(ax, self.single_box)
+        array_ax = add_inset(ax, self.array_box)
+        draw_stl_mesh_raw_equal(single_ax, design.single_insert_spec())
+        draw_insert_array_preview(array_ax, design)
+
+
+@dataclass(frozen=True)
+class LabeledPanel(DesignPanel):
+    label: str
+    image_band = AxisBox(0.0, 0.03, 1.0, 0.90)
+
+    def decorate(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+        PanelBadge.draw(ax, 0.02, 0.96, self.label)
+        PanelTitle.draw(ax, 0.11, 0.956, self.title(design))
+
+    @property
+    @abstractmethod
+    def single_box(self) -> AxisBox:
+        raise NotImplementedError
+
+
+class LabeledDxfPanel(LabeledPanel, DxfPanel):
+    single_box = replace(LabeledPanel.image_band, left=0.03, width=0.40)
+    aligned_box = replace(LabeledPanel.image_band, left=0.46, width=0.51)
+
+
+class LabeledInsertPanel(LabeledPanel, InsertPanel):
+    single_box = replace(LabeledPanel.image_band, left=0.035, width=0.430)
+    array_box = replace(LabeledPanel.image_band, left=0.535, width=0.430)
+
+    def decorate(self, ax: plt.Axes, design: GeneralizabilityDesign) -> None:
+        PanelBadge.draw(ax, 0.02, 0.96, self.label)
 
 
 def draw_single_unit_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
@@ -645,7 +303,6 @@ def draw_single_unit_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> 
     pad_x = max(bounds.width * 0.06, 0.55)
     pad_y = max(bounds.height * 0.06, 0.55)
     setup_raw_dxf_axis(ax, bounds, pad_x, pad_y)
-    add_bounds_background(ax, bounds, pad_x, pad_y)
     draw_dxf_layer_raw(ax, design.single_bottom, COLORS["bottom"], 0.14, 0.60)
     draw_dxf_layer_raw(ax, design.single_top, COLORS["top"], 1.25, 0.94)
 
@@ -655,7 +312,6 @@ def draw_wafer_mask_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> N
     pad_x = max(bounds.width * 0.035, 0.55)
     pad_y = max(bounds.height * 0.035, 0.55)
     setup_raw_dxf_axis(ax, bounds, pad_x, pad_y)
-    add_bounds_background(ax, bounds, pad_x, pad_y)
     draw_dxf_layer_raw(ax, design.wafer_bottom, COLORS["bottom"], 0.18, 0.58)
     draw_dxf_layer_raw(ax, design.wafer_top, COLORS["top"], 0.36, 0.92)
 
@@ -665,7 +321,6 @@ def draw_plate_layout_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) ->
     pad_x = max(bounds.width * 0.025, 0.55)
     pad_y = max(bounds.height * 0.025, 0.55)
     setup_raw_dxf_axis(ax, bounds, pad_x, pad_y)
-    add_bounds_background(ax, bounds, pad_x, pad_y)
     draw_dxf_layer_raw(ax, design.multi_bottom, COLORS["bottom"], 0.18, 0.58)
     draw_dxf_layer_raw(ax, design.multi_top, COLORS["top"], 0.36, 0.92)
 
@@ -673,37 +328,12 @@ def draw_plate_layout_dxf_asset(ax: plt.Axes, design: GeneralizabilityDesign) ->
 def draw_single_insert_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
     draw_stl_mesh_raw_equal(
         ax,
-        StlRenderSpec(
-            insert_preview_mesh(design, array=False),
-            26000,
-            azimuth=SINGLE_INSERT_AZIMUTH,
-            elevation=24.0,
-            z_scale=1.0,
-            edge_alpha=0.32,
-            linewidth=0.018,
-            base_color="#d8871f",
-            highlight_color="#ffe2a3",
-            edge_color="#593100",
-        ),
+        design.single_insert_spec(),
     )
 
 
 def draw_array_insert_asset(ax: plt.Axes, design: GeneralizabilityDesign) -> None:
     draw_insert_array_preview(ax, design)
-
-
-def save_clean_subfigure(
-    output_path: Path,
-    design: GeneralizabilityDesign,
-    draw_function: Callable[[plt.Axes, GeneralizabilityDesign], None],
-) -> None:
-    fig = plt.figure(figsize=(6.8, 3.3))
-    fig.patch.set_facecolor("white")
-    ax = fig.add_axes([0, 0, 1, 1])
-    ax.set_facecolor(COLORS["paper"])
-    draw_function(ax, design)
-    fig.savefig(output_path, dpi=300, bbox_inches="tight", pad_inches=0.02)
-    plt.close(fig)
 
 
 def save_individual_subfigure(
@@ -725,16 +355,16 @@ def save_individual_subfigure(
 def export_clean_subfigures(designs: tuple[GeneralizabilityDesign, ...]) -> None:
     SUBFIGURE_DIR.mkdir(parents=True, exist_ok=True)
     exports = (
-        ("A", "dxf_outputs", designs[0], draw_clean_dxf_subfigure),
-        ("B", "insert_outputs", designs[0], draw_clean_insert_subfigure),
-        ("C", "dxf_outputs", designs[1], draw_clean_dxf_subfigure),
-        ("D", "insert_outputs", designs[1], draw_clean_insert_subfigure),
-        ("E", "dxf_outputs", designs[2], draw_clean_dxf_subfigure),
-        ("F", "insert_outputs", designs[2], draw_clean_insert_subfigure),
+        ("A", "dxf_outputs", designs[0], DxfPanel()),
+        ("B", "insert_outputs", designs[0], InsertPanel()),
+        ("C", "dxf_outputs", designs[1], DxfPanel()),
+        ("D", "insert_outputs", designs[1], InsertPanel()),
+        ("E", "dxf_outputs", designs[2], DxfPanel()),
+        ("F", "insert_outputs", designs[2], InsertPanel()),
     )
     for label, suffix, design, draw_function in exports:
         output_path = SUBFIGURE_DIR / f"{label}_{design.stem}_{suffix}.png"
-        save_clean_subfigure(output_path, design, draw_function)
+        save_individual_subfigure(output_path, design, draw_function, figsize=(6.8, 3.3))
 
 
 def export_individual_subfigures(designs: tuple[GeneralizabilityDesign, ...]) -> None:
@@ -779,47 +409,56 @@ def export_individual_subfigures(designs: tuple[GeneralizabilityDesign, ...]) ->
 
 def build_figure() -> plt.Figure:
     myelination, axon_guidance, three_compartment = make_designs()
-
-    fig = plt.figure(figsize=(13.6, 11.5))
-    fig.patch.set_facecolor("white")
-    grid = fig.add_gridspec(
-        3,
-        2,
-        width_ratios=(1.0, 1.0),
-        height_ratios=(1.0, 1.0, 1.0),
-        left=0.025,
-        right=0.985,
-        bottom=0.03,
-        top=0.98,
-        wspace=0.07,
-        hspace=0.06,
-    )
-
     layout = (
         ("A", "B", myelination),
         ("C", "D", axon_guidance),
         ("E", "F", three_compartment),
     )
+    row_count = len(layout)
+    original_gap = BASE_ROW_GAP * ROW_GAP_SCALE
+    row_gap = original_gap * ROW_SPACING_INCREASE
+    height_scale = (row_count + (row_count - 1) * row_gap) / (row_count + (row_count - 1) * original_gap)
+    fig = plt.figure(figsize=(6.5, 5.55 * height_scale))
+    fig.patch.set_facecolor("white")
+    grid = fig.add_gridspec(
+        row_count,
+        2,
+        width_ratios=(1.0, 1.0),
+        height_ratios=(1.0,) * row_count,
+        left=0.025,
+        right=0.985,
+        bottom=0.03,
+        top=0.90,
+        wspace=0.08,
+        hspace=row_gap,
+    )
+    row_axes: list[tuple[plt.Axes, plt.Axes]] = []
     for row, (dxf_label, insert_label, design) in enumerate(layout):
         dxf_ax = fig.add_subplot(grid[row, 0])
         insert_ax = fig.add_subplot(grid[row, 1])
-        dxf_ax.set_facecolor(COLORS["paper"])
-        insert_ax.set_facecolor(COLORS["paper"])
-        draw_dxf_panel(dxf_ax, design, panel_label=dxf_label)
-        draw_output_panel(
-            insert_ax,
-            design,
-            panel_label=insert_label,
-            show_frame=False,
-        )
+        dxf_ax.set_facecolor("none")
+        insert_ax.set_facecolor("none")
+        LabeledDxfPanel(dxf_label)(dxf_ax, design)
+        LabeledInsertPanel(insert_label)(insert_ax, design)
+        row_axes.append((dxf_ax, insert_ax))
 
-    fig.suptitle(
-        "Matched fabrication files for literature-inspired assay layouts",
-        fontsize=12.0,
-        fontweight="bold",
-        color=COLORS["ink"],
-        y=0.985,
+    first_left_ax, first_right_ax = row_axes[0]
+    left = first_left_ax.get_position()
+    right = first_right_ax.get_position()
+    header_bottom = max(left.y1, right.y1) + HEADER_PADDING_INCHES / fig.get_figheight()
+    header_top = 0.985
+    header_y = (header_bottom + header_top) / 2
+    header_positions = (
+        left.x0 + LabeledDxfPanel.single_box.center_x * left.width,
+        left.x0 + LabeledDxfPanel.aligned_box.center_x * left.width,
+        right.x0 + LabeledInsertPanel.single_box.center_x * right.width,
+        right.x0 + LabeledInsertPanel.array_box.center_x * right.width,
     )
+    header_titles = DxfPanel.COLUMN_TITLES + InsertPanel.COLUMN_TITLES
+    for x, title in zip(header_positions, header_titles, strict=True):
+        fig.text(x, header_y, title, ha="center", va="center",
+                 fontsize=9.0, fontweight="bold", color=COLORS["ink"])
+
     return fig
 
 
@@ -829,7 +468,7 @@ def main() -> int:
     export_clean_subfigures(designs)
     export_individual_subfigures(designs)
     fig = build_figure()
-    fig.savefig(OUTPUT_DIR / "draft_figure.pdf", bbox_inches="tight")
+    fig.savefig(OUTPUT_DIR / "draft_figure.pdf", dpi=SUBFIGURE_DPI, bbox_inches="tight")
     fig.savefig(OUTPUT_DIR / "draft_figure.png", dpi=300, bbox_inches="tight")
     plt.close(fig)
     return 0

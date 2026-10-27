@@ -1,0 +1,16 @@
+{
+  "validation_scope": "Existing authored width PDF/PNG promoted byte-for-byte using AuthoredFigure.publish(). All nine rounded labels match the retained full-precision CSV. No renderer or biological analysis was invoked. The source figure was visually inspected. Source hashes are a bounded retained-input fingerprint, not fresh raw-image calibration, optical-bias measurement or proof of CTB software/version/source claims in the historical source record. All previously published figure bytes were preserved.",
+  "output_sha256": {
+    "rendered/channel_widths.pdf": "e16562716e585841bed595ff712d1be44ee432d6b188662f2e149a3b64138821",
+    "rendered_docx/channel_widths.png": "37eb05f1dc18e2659fe3f8903308b1073aec6291ec20d823f1e67a42493ac6c4"
+  },
+  "source_sha256": {
+    "figures/final_drop/Fig5_plate_layout_validation/channel_widths.pdf": "e16562716e585841bed595ff712d1be44ee432d6b188662f2e149a3b64138821",
+    "figures/final_drop/Fig5_plate_layout_validation/channel_widths.png": "37eb05f1dc18e2659fe3f8903308b1073aec6291ec20d823f1e67a42493ac6c4",
+    "supplementary/validation/channel_widths.csv": "459899a208537bbdd4a8441c6672a490ece149fdafa843ff6b8b365f4922a9d8",
+    "supplementary/validation/sources.json": "004306b41d0e7db5e036279718c4a94c390255807908c4ed30fe9a69dab2a2ef",
+    "supplementary/validation/P1_width_crop.npy": "4cc6d4b9efc031874984142d01283420101639026eda6f2cc1f2e353af90d67b",
+    "supplementary/validation/P2_width_crop.npy": "e09a207983296d5cbb6a5ac45b24e0e3f7a50812920bd18839baa99041fd45b3",
+    "supplementary/validation/P3_width_crop.npy": "23a74f148b87da973f07ba10e283ba894aba811f060a56ed633a25abeb7385fe"
+  }
+}

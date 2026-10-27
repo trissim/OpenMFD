@@ -6,16 +6,15 @@ import math
 import json
 import subprocess
 import tempfile
-import textwrap
+from abc import ABC, abstractmethod
 from dataclasses import dataclass
 from functools import lru_cache
+from itertools import groupby
 from pathlib import Path
 
-import matplotlib.colors as mcolors
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.collections import PolyCollection
-from matplotlib.patches import Circle, Ellipse, FancyArrowPatch
+from matplotlib.patches import FancyArrowPatch, Rectangle
 from PIL import Image
 
 from generate_openmfd_design_figure import StlMesh, rotation_matrix, triangle_normals
@@ -53,71 +52,70 @@ TOP_LAYER_COMPLEMENT_SIZE = (112.4856, 75.6724)
 COLORS = {
     "ink": "#20242b",
     "muted": "#606a76",
-    "guide": "#d5dbe2",
     "accent": "#1669a8",
     "wafer": "#626b73",
-    "wafer_highlight": "#b6bec5",
     "insert": "#b64d4f",
-    "insert_highlight": "#e8948d",
     "pdms": "#8eb6d9",
-    "pdms_highlight": "#d8e8f4",
-    "glass": "#b9dce9",
-    "glass_highlight": "#edf8fb",
     "frame": "#252b31",
-    "frame_highlight": "#59636d",
-    "pouch": "#c8bfdc",
-    "pouch_highlight": "#eeeaf5",
     "adhesive": "#d8aa37",
     "blade": "#69717a",
-    "blade_highlight": "#d7dce0",
     "tape": "#3d8fc4",
-    "tape_highlight": "#b7ddf2",
-    "rack": "#747d85",
-    "rack_highlight": "#d8dde1",
     "foil": "#aeb5ba",
-    "foil_highlight": "#f0f2f3",
     "paper": "#ffffff",
-    "paper_highlight": "#ffffff",
-    "cut_guide": "#4f83a6",
-    "cut_guide_highlight": "#b9d8eb",
 }
 
 
-@dataclass(frozen=True)
-class Step:
-    number: int
-    title: str
-    detail: str
+class Step(ABC):
+    """One protocol step owns its scene, view and process annotations."""
+
+    azimuth = -38.0
+    elevation = -32.0
+    z_scale = 1.7
+    annotation_size = 8.5
+
+    @property
+    @abstractmethod
+    def title(self) -> str: ...
+
+    @property
+    @abstractmethod
+    def detail(self) -> str: ...
+
+    @abstractmethod
+    def scene_parts(self) -> tuple[MeshPart, ...]: ...
+
+    def draw_marks(self, ax: plt.Axes, frame: tuple[float, float, float, float]) -> None:
+        pass
+
+    def annotate(self, ax: plt.Axes, x: float, y: float, text: str, *, color: str = COLORS["accent"]) -> None:
+        ax.text(x, y, text, ha="center", va="bottom", fontsize=self.annotation_size,
+                fontweight="bold", color=color, zorder=6)
+
+    def draw(self, ax: plt.Axes, frame: tuple[float, float, float, float], number: int) -> None:
+        draw_scene_blender(ax, self.scene_parts(), frame, azimuth=self.azimuth,
+                           elevation=self.elevation, z_scale=self.z_scale)
+        self.draw_marks(ax, frame)
+        x, y, width, height = frame
+        title_y = y + height + 0.025
+        ax.text(x, title_y, str(number), ha="left", va="bottom", fontsize=10.5,
+                fontweight="bold", color=COLORS["accent"])
+        ax.text(x + 0.045, title_y, self.title, ha="left", va="bottom", fontsize=10.5,
+                fontweight="bold", color=COLORS["ink"])
+        ax.text(x + width / 2, y - 0.018, self.detail, ha="center", va="top",
+                fontsize=self.annotation_size, color=COLORS["muted"])
 
 
 @dataclass(frozen=True)
 class MeshPart:
     mesh: StlMesh
     base_color: str
-    highlight_color: str
-    edge_color: str
     alpha: float = 1.0
-    max_faces: int = 18_000
-    edge_alpha: float = 0.14
     roughness: float = 0.48
     metallic: float = 0.0
     emission_strength: float = 0.0
     transparency_overlap: bool = True
     dissolve_coplanar: bool = False
     transmission_weight: float | None = None
-
-
-STEPS = (
-    Step(1, "Hybrid mold ready", "Parylene-coated wafer with bonded resin well inserts"),
-    Step(2, "Pour PDMS", "Cover the full wafer, stopping below the insert tops"),
-    Step(3, "Degas in rack", "Load filled molds into the six-shelf rack and degas"),
-    Step(4, "Cure in rack", "Transfer the loaded rack directly to the curing oven"),
-    Step(5, "Demold cast", "Release the circular PDMS cast with wells facing upward"),
-    Step(6, "Tape and trim", "Tape inside the wall marks, cut, and chamfer the corners"),
-    Step(7, "Bond and autoclave", "Plasma-bond to glass, thermally stabilize, and autoclave at 121 degrees C for 15 min"),
-    Step(8, "Frame assembly", "Fill the inverted frame groove and seat the glass-side-up device"),
-    Step(9, "Cure and prepare", "After the 3 d adhesive cure, turn the framed device upright and plasma-treat"),
-)
 
 
 def mesh_from_triangles(triangles: list[np.ndarray] | np.ndarray) -> StlMesh:
@@ -624,14 +622,12 @@ def cavity_device_mesh(*, trimmed: bool = True) -> StlMesh:
         try:
             subprocess.run(
                 [
-                    "blender", "--background", "--factory-startup", "--python",
+                    "blender", "--background", "--factory-startup", "--python-exit-code", "1", "--python",
                     str(BLENDER_BOOLEAN), "--", str(base_path), str(inserts_path),
                     str(filled_floors_path), str(thick_layer_path),
                     str(channels_path), str(stl_path),
                 ],
                 check=True,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
             )
         except FileNotFoundError as error:
             raise RuntimeError("Blender is required to generate the complete PDMS negative") from error
@@ -861,156 +857,12 @@ def rack_insert_cap_load_mesh() -> StlMesh:
     return mesh_from_triangles(caps)
 
 
-def sampled(mesh: StlMesh, max_faces: int) -> np.ndarray:
-    triangles = mesh.triangles
-    if len(triangles) <= max_faces:
-        return triangles
-    indices = np.linspace(0, len(triangles) - 1, max_faces, dtype=int)
-    return triangles[indices]
 
 
-def tessellate_for_depth(
-    triangles: np.ndarray,
-    *,
-    max_edge: float = 12.0,
-    max_rounds: int = 6,
-) -> np.ndarray:
-    """Split coarse faces so painter depth remains local across large surfaces."""
-    refined = triangles
-    for _ in range(max_rounds):
-        edge_lengths = np.stack(
-            (
-                np.linalg.norm(refined[:, 1] - refined[:, 0], axis=1),
-                np.linalg.norm(refined[:, 2] - refined[:, 1], axis=1),
-                np.linalg.norm(refined[:, 0] - refined[:, 2], axis=1),
-            ),
-            axis=1,
-        )
-        split = edge_lengths.max(axis=1) > max_edge
-        if not np.any(split):
-            break
-        retained = refined[~split]
-        source = refined[split]
-        p0, p1, p2 = source[:, 0], source[:, 1], source[:, 2]
-        m01 = (p0 + p1) / 2
-        m12 = (p1 + p2) / 2
-        m20 = (p2 + p0) / 2
-        children = np.concatenate(
-            (
-                np.stack((p0, m01, m20), axis=1),
-                np.stack((m01, p1, m12), axis=1),
-                np.stack((m20, m12, p2), axis=1),
-                np.stack((m01, m12, m20), axis=1),
-            ),
-            axis=0,
-        )
-        refined = np.concatenate((retained, children), axis=0)
-    return refined
 
 
-def shade_color(base: str, highlight: str, value: float, alpha: float) -> tuple[float, float, float, float]:
-    base_rgb = np.asarray(mcolors.to_rgb(base)) * 0.58
-    highlight_rgb = np.asarray(mcolors.to_rgb(highlight))
-    rgb = base_rgb * (1.0 - value) + highlight_rgb * value
-    return (*rgb, alpha)
 
 
-def draw_scene(
-    ax: plt.Axes,
-    parts: tuple[MeshPart, ...],
-    frame: tuple[float, float, float, float],
-    *,
-    azimuth: float = -38.0,
-    elevation: float = -32.0,
-    z_scale: float = 2.4,
-    shadow_scale: float = 0.78,
-) -> None:
-    frame_x, frame_y, frame_w, frame_h = frame
-    ax.add_patch(
-        Ellipse(
-            (frame_x + frame_w / 2, frame_y + frame_h * 0.16),
-            frame_w * shadow_scale,
-            frame_h * 0.16,
-            facecolor="#9098a1",
-            edgecolor="none",
-            alpha=0.18,
-            zorder=0,
-        )
-    )
-
-    sampled_parts = []
-    for part in parts:
-        triangles = sampled(part.mesh, part.max_faces).copy()
-        triangles[:, :, 2] *= z_scale
-        longest_edges = np.maximum.reduce(
-            (
-                np.linalg.norm(triangles[:, 1] - triangles[:, 0], axis=1),
-                np.linalg.norm(triangles[:, 2] - triangles[:, 1], axis=1),
-                np.linalg.norm(triangles[:, 0] - triangles[:, 2], axis=1),
-            )
-        )
-        depth_edge = 35.0 if len(triangles) > 8_000 else 12.0
-        if np.any(longest_edges > depth_edge):
-            triangles = tessellate_for_depth(
-                triangles,
-                max_edge=depth_edge,
-                max_rounds=3 if len(triangles) > 8_000 else 6,
-            )
-        sampled_parts.append((part, triangles))
-    all_points = np.concatenate([triangles.reshape((-1, 3)) for _, triangles in sampled_parts], axis=0)
-    center = (all_points.min(axis=0) + all_points.max(axis=0)) / 2
-    rotation = rotation_matrix(azimuth, elevation)
-
-    projected_parts: list[tuple[MeshPart, np.ndarray, np.ndarray, np.ndarray]] = []
-    projected_all = []
-    for part, triangles in sampled_parts:
-        rotated = ((triangles.reshape((-1, 3)) - center) @ rotation).reshape((-1, 3, 3))
-        polygons = rotated[:, :, :2]
-        depth = rotated[:, :, 2].mean(axis=1)
-        normals = triangle_normals(rotated)
-        projected_parts.append((part, polygons, depth, normals))
-        projected_all.append(polygons.reshape((-1, 2)))
-
-    all_xy = np.concatenate(projected_all, axis=0)
-    min_xy = all_xy.min(axis=0)
-    max_xy = all_xy.max(axis=0)
-    size = np.maximum(max_xy - min_xy, 1e-9)
-    scale = min(frame_w / size[0], frame_h / size[1])
-    offset = np.array([frame_x, frame_y]) + (np.array([frame_w, frame_h]) - size * scale) / 2
-
-    light = np.array([-0.35, -0.45, 0.82])
-    light /= np.linalg.norm(light)
-    fitted_faces: list[np.ndarray] = []
-    face_colors: list[np.ndarray] = []
-    edge_colors: list[np.ndarray] = []
-    face_depths: list[np.ndarray] = []
-    for part, polygons, depth, normals in projected_parts:
-        fitted = (polygons - min_xy) * scale + offset
-        illumination = np.clip(np.abs(normals @ light), 0.0, 1.0)
-        shade = np.clip(0.16 + 0.78 * illumination, 0.0, 1.0)
-        colors = np.asarray([
-            shade_color(part.base_color, part.highlight_color, value, part.alpha) for value in shade
-        ])
-        edgecolor = mcolors.to_rgba(part.edge_color, min(part.alpha, part.edge_alpha))
-        fitted_faces.append(fitted)
-        face_colors.append(colors)
-        edge_colors.append(np.tile(edgecolor, (len(fitted), 1)))
-        face_depths.append(depth)
-
-    all_faces = np.concatenate(fitted_faces, axis=0)
-    all_face_colors = np.concatenate(face_colors, axis=0)
-    all_edge_colors = np.concatenate(edge_colors, axis=0)
-    all_depths = np.concatenate(face_depths, axis=0)
-    order = np.argsort(all_depths)
-    ax.add_collection(
-        PolyCollection(
-            all_faces[order],
-            facecolors=all_face_colors[order],
-            edgecolors=all_edge_colors[order],
-            linewidths=0.12,
-            zorder=2,
-        )
-    )
 
 
 def write_binary_stl(path: Path, triangles: np.ndarray) -> None:
@@ -1102,9 +954,14 @@ def draw_scene_blender(
                     "transmission_weight": part.transmission_weight,
                 }
             )
-        frame_aspect = frame_w / frame_h
-        render_height = 1200
-        render_width = max(640, round(render_height * frame_aspect))
+        # Normalized coordinates are not physical lengths on a rectangular
+        # canvas. Fit to the actual destination pixels, including axes scaling.
+        lower, upper = ax.transData.transform(
+            ((frame_x, frame_y), (frame_x + frame_w, frame_y + frame_h))
+        )
+        frame_aspect = (upper[0] - lower[0]) / (upper[1] - lower[1])
+        render_height = max(1200, math.ceil(640 / frame_aspect))
+        render_width = round(render_height * frame_aspect)
         aspect = render_width / render_height
         fitted_scale = max(size[1], size[0] / aspect)
         pixel_guard_scale = 1.0 + 2.0 * CAMERA_EDGE_GUARD_PX / min(render_width, render_height)
@@ -1125,12 +982,10 @@ def draw_scene_blender(
             manifest_path.write_text(json.dumps(manifest), encoding="utf-8")
             subprocess.run(
                 [
-                    "blender", "--background", "--factory-startup", "--python",
+                    "blender", "--background", "--factory-startup", "--python-exit-code", "1", "--python",
                     str(BLENDER_RENDERER), "--", str(manifest_path),
                 ],
                 check=True,
-                stdout=subprocess.DEVNULL,
-                stderr=subprocess.DEVNULL,
             )
             rendered = Image.open(output_path).convert("RGBA")
             visible_alpha = rendered.getchannel("A").point(
@@ -1160,8 +1015,7 @@ def draw_scene_blender(
                 1.0,
             )
             manifest["ortho_scale"] *= measured_growth * 1.04
-        white = Image.new("RGBA", rendered.size, (255, 255, 255, 255))
-        image = np.asarray(Image.alpha_composite(white, rendered).convert("RGB"))
+        image = np.asarray(rendered)
     ax.imshow(
         image,
         extent=(frame_x, frame_x + frame_w, frame_y, frame_y + frame_h),
@@ -1171,110 +1025,40 @@ def draw_scene_blender(
     )
 
 
-def draw_desiccator_outline(
-    ax: plt.Axes,
-    frame: tuple[float, float, float, float],
-) -> None:
-    """Overlay a restrained vessel silhouette without occluding the solid rack render."""
-    x, y, width, height = frame
-    edge = "#7895a5"
-    lid_y = y + height * 0.91
-    lid_width = width * 0.96
-    lid_height = height * 0.14
-    # Rigid lid and its opaque elastomer gasket. The lower ellipse and short
-    # side segments give the lid visible thickness without obscuring the rack.
-    ax.add_patch(
-        Ellipse(
-            (x + width * 0.50, lid_y),
-            lid_width,
-            lid_height,
-            facecolor="#dfe8ec",
-            edgecolor="#30383d",
-            linewidth=3.0,
-            alpha=0.72,
-            zorder=3,
-        )
-    )
-    ax.add_patch(
-        Ellipse(
-            (x + width * 0.50, lid_y - height * 0.025),
-            lid_width,
-            lid_height,
-            facecolor="none",
-            edgecolor="#30383d",
-            linewidth=2.4,
-            alpha=1.0,
-            zorder=3,
-        )
-    )
-    for side in (0.02, 0.98):
-        ax.plot(
-            [x + width * side, x + width * side],
-            [lid_y - height * 0.025, lid_y],
-            color="#30383d",
-            linewidth=2.4,
-            solid_capstyle="round",
-            zorder=3,
-        )
-    ax.add_patch(
-        Ellipse(
-            (x + width * 0.50, y + height * 0.01),
-            width * 0.96,
-            height * 0.14,
-            facecolor="none",
-            edgecolor=edge,
-            linewidth=1.8,
-            alpha=0.58,
-            zorder=3,
-        )
-    )
-    for side in (0.05, 0.95):
-        actual_side = 0.02 if side < 0.5 else 0.98
-        ax.plot(
-            [x + width * actual_side, x + width * actual_side],
-            [y + height * 0.01, lid_y - height * 0.025],
-            color=edge,
-            linewidth=1.8,
-            alpha=0.64,
-            zorder=3,
-        )
 
 
 def wafer_part(z: float = 0.0) -> MeshPart:
     return MeshPart(
         positioned_wafer(z_center=z),
-        COLORS["wafer"], COLORS["wafer_highlight"], "#30373d", max_faces=2_000, edge_alpha=0.02,
+        COLORS["wafer"],
     )
 
 
 def insert_part(z: float = 0.7) -> MeshPart:
     return MeshPart(
-        centered_generated_insert(z_bottom=z), COLORS["insert"], COLORS["insert_highlight"], "#6f2529",
-        max_faces=100_000, edge_alpha=0.0,
+        centered_generated_insert(z_bottom=z), COLORS["insert"],
     )
 
 
 def insert_cap_part(z: float = 0.7, pdms_top: float = 4.85) -> MeshPart:
     return MeshPart(
         exposed_insert_mesh(z_bottom=z, pdms_top=pdms_top),
-        COLORS["insert"], COLORS["insert_highlight"], "#6f2529",
-        max_faces=100_000, edge_alpha=0.0,
+        COLORS["insert"],
     )
 
 
 def thick_layer_part(z: float = 0.7) -> MeshPart:
     return MeshPart(
         positioned_thick_layer(z_bottom=z),
-        "#2c8f86", "#91d2c3", "#17645e",
-        alpha=1.0, max_faces=70_000, edge_alpha=0.0,
+        "#2c8f86",
+        alpha=1.0,
     )
 
 
 def device_part(z: float = 0.0, alpha: float = 0.66, *, trimmed: bool = True) -> MeshPart:
     return MeshPart(
         device_mesh(z=z, trimmed=trimmed),
-        COLORS["pdms"], COLORS["pdms_highlight"], "#507b9d", alpha=alpha,
-        edge_alpha=0.08,
+        COLORS["pdms"], alpha=alpha,
     )
 
 
@@ -1293,8 +1077,8 @@ def cavity_device_part(
     )
     return MeshPart(
         mesh,
-        "#79a7ca", COLORS["pdms_highlight"], "#416783",
-        alpha=alpha, max_faces=100_000, edge_alpha=0.0, roughness=0.48,
+        "#79a7ca",
+        alpha=alpha,   roughness=0.48,
         transparency_overlap=False,
     )
 
@@ -1345,16 +1129,16 @@ def cavity_device_render_parts(
 
     outer = MeshPart(
         positioned(~internal),
-        "#79a7ca", COLORS["pdms_highlight"], "#416783",
-        alpha=alpha, max_faces=100_000, edge_alpha=0.0, roughness=0.48,
+        "#79a7ca",
+        alpha=alpha,   roughness=0.48,
         transparency_overlap=False, dissolve_coplanar=True,
         transmission_weight=0.0,
     )
     cavities = MeshPart(
         positioned(internal),
-        "#274f68", "#789caf", "#17374a",
-        alpha=0.78, max_faces=120_000,
-        edge_alpha=0.0, roughness=0.34, transparency_overlap=False,
+        "#274f68",
+        alpha=0.78,
+         roughness=0.34, transparency_overlap=False,
         dissolve_coplanar=True, transmission_weight=0.0,
     )
     return outer, cavities
@@ -1414,15 +1198,15 @@ def single_device_cavity_render_parts(
 
     outer = MeshPart(
         positioned(outer_faces & visible_faces),
-        "#79a7ca", COLORS["pdms_highlight"], "#416783",
-        alpha=0.58, max_faces=5_000, edge_alpha=0.06, roughness=0.42,
+        "#79a7ca",
+        alpha=0.58,   roughness=0.42,
         transparency_overlap=False, dissolve_coplanar=True,
         transmission_weight=0.0,
     )
     cavities = MeshPart(
         positioned(~outer_faces & visible_faces),
-        "#507d98", "#a7c2d0", "#315b73",
-        alpha=0.72, max_faces=5_000, edge_alpha=0.04, roughness=0.30,
+        "#507d98",
+        alpha=0.72,   roughness=0.30,
         transparency_overlap=False, dissolve_coplanar=True,
         transmission_weight=0.0,
     )
@@ -1432,16 +1216,16 @@ def single_device_cavity_render_parts(
 def foil_part(z: float = 0.7) -> MeshPart:
     return MeshPart(
         foil_reservoir_mesh(z=z),
-        COLORS["foil"], COLORS["foil_highlight"], "#686f74",
-        alpha=0.72, max_faces=5_000, edge_alpha=0.12,
+        COLORS["foil"],
+        alpha=0.72,
     )
 
 
 def paper_part(z: float = -0.5) -> MeshPart:
     return MeshPart(
         box_mesh(246.0, 186.0, 0.6, center=(0.0, 0.0, z)),
-        COLORS["paper"], COLORS["paper_highlight"], "#aaa69e",
-        alpha=1.0, edge_alpha=0.0, roughness=0.92, emission_strength=0.28,
+        COLORS["paper"],
+        alpha=1.0,  roughness=0.92, emission_strength=0.28,
     )
 
 
@@ -1454,7 +1238,7 @@ def glass_part(
 ) -> MeshPart:
     return MeshPart(
         box_mesh(width, depth, 0.8, center=(0.0, 0.0, z)),
-        "#b9dce9", "#f5fbfd", "#6ca5b9", alpha=alpha, edge_alpha=0.0,
+        "#b9dce9", alpha=alpha,
         roughness=0.18, transparency_overlap=False, transmission_weight=0.0,
     )
 
@@ -1504,8 +1288,7 @@ def frame_part(z: float = 0.0, *, upside_down: bool = False) -> MeshPart:
         rotation_x=180.0 if upside_down else 0.0,
     )
     return MeshPart(
-        mesh, COLORS["frame"], COLORS["frame_highlight"], "#11151a", max_faces=4_000,
-        edge_alpha=0.06,
+        mesh, COLORS["frame"],
     )
 
 
@@ -1513,8 +1296,8 @@ def frame_shell_part(z: float = 0.0) -> MeshPart:
     """Opaque source-dimension shell used where the exterior frame is exposed."""
     return MeshPart(
         rectangular_shell_mesh(127.5, 85.35, 112.2, 76.2, 17.0, z=z),
-        COLORS["frame"], COLORS["frame_highlight"], "#11151a",
-        alpha=1.0, max_faces=200, edge_alpha=0.04,
+        COLORS["frame"],
+        alpha=1.0,
     )
 
 
@@ -1527,8 +1310,8 @@ def rack_part(*, rotation_z: float = 0.0, translation_z: float = 0.0) -> MeshPar
             translation=(0.0, 0.0, translation_z),
             pivot=(0.0, 0.0, (-12.7 + 177.1015) / 2),
         ),
-        "#aeb8bd", "#edf1f3", "#535d63",
-        max_faces=40_000, edge_alpha=0.018, metallic=0.28, roughness=0.38,
+        "#aeb8bd",
+          metallic=0.28, roughness=0.38,
     )
 
 
@@ -1539,8 +1322,8 @@ def rack_shelf_part(*, rotation_z: float = 0.0, translation_z: float = 0.0) -> M
             translation=(0.0, 0.0, translation_z),
             pivot=(0.0, 0.0, (-12.7 + 177.1015) / 2),
         ),
-        "#c2c9cd", "#f5f7f8", "#5b6469",
-        alpha=1.0, max_faces=2_000, edge_alpha=0.03, metallic=0.22, roughness=0.40,
+        "#c2c9cd",
+        alpha=1.0,   metallic=0.22, roughness=0.40,
     )
 
 
@@ -1552,8 +1335,8 @@ def rack_wafer_load_part(*, rotation_z: float = 0.0, translation_z: float = 0.0)
             translation=(0.0, 0.0, translation_z),
             pivot=(0.0, 0.0, 0.0),
         ),
-        COLORS["wafer"], COLORS["wafer_highlight"], "#30373d",
-        alpha=1.0, max_faces=4_000, edge_alpha=0.02,
+        COLORS["wafer"],
+        alpha=1.0,
     )
 
 
@@ -1564,8 +1347,8 @@ def rack_insert_load_part(*, rotation_z: float = 0.0, translation_z: float = 0.0
             translation=(0.0, 0.0, translation_z),
             pivot=(0.0, 0.0, 0.0),
         ),
-        COLORS["insert"], COLORS["insert_highlight"], "#6f2529",
-        alpha=1.0, max_faces=130_000, edge_alpha=0.0,
+        COLORS["insert"],
+        alpha=1.0,
     )
 
 
@@ -1576,8 +1359,8 @@ def rack_insert_cap_load_part(*, rotation_z: float = 0.0, translation_z: float =
             translation=(0.0, 0.0, translation_z),
             pivot=(0.0, 0.0, 0.0),
         ),
-        "#b83e43", "#f3a09a", "#6f2529",
-        alpha=1.0, max_faces=130_000, edge_alpha=0.0,
+        "#b83e43",
+        alpha=1.0,
     )
 
 
@@ -1589,8 +1372,8 @@ def rack_cast_load_part(*, rotation_z: float = 0.0, translation_z: float = 0.0) 
             translation=(0.0, 0.0, translation_z),
             pivot=(0.0, 0.0, 0.0),
         ),
-        "#689bc7", COLORS["pdms_highlight"], "#3d6f99",
-        alpha=1.0, max_faces=4_000, edge_alpha=0.0,
+        "#689bc7",
+        alpha=1.0,
     )
 
 
@@ -1602,8 +1385,8 @@ def rack_foil_load_part(*, rotation_z: float = 0.0, translation_z: float = 0.0) 
             translation=(0.0, 0.0, translation_z),
             pivot=(0.0, 0.0, 0.0),
         ),
-        COLORS["foil"], COLORS["foil_highlight"], "#686f74",
-        alpha=1.0, max_faces=7_000, edge_alpha=0.0,
+        COLORS["foil"],
+        alpha=1.0,
     )
 
 
@@ -1614,16 +1397,16 @@ def desiccator_part() -> MeshPart:
     fitting = cylinder_mesh(7.0, 24.0, center=(0.0, 0.0, 143.0), segments=32)
     return MeshPart(
         mesh_from_triangles([wall.triangles, lid.triangles, base.triangles, fitting.triangles]),
-        "#c4d8df", "#f5fbfd", "#77939e",
-        alpha=0.16, max_faces=5_000, edge_alpha=0.015,
+        "#c4d8df",
+        alpha=0.16,
     )
 
 
 def desiccator_gasket_part() -> MeshPart:
     return MeshPart(
         circular_ring_mesh(130.0, 123.0, 4.0, center=(0.0, 0.0, 125.0), segments=96),
-        "#2f3538", "#555e62", "#171b1d",
-        alpha=1.0, max_faces=2_000, edge_alpha=0.0,
+        "#2f3538",
+        alpha=1.0,
     )
 
 
@@ -1645,8 +1428,8 @@ def vacuum_valve_part() -> MeshPart:
                 handle_stem.triangles, gauge_neck.triangles, gauge_case.triangles,
             ]
         ),
-        "#686f74", "#d8dde1", "#2f353a",
-        alpha=1.0, max_faces=2_000, edge_alpha=0.08,
+        "#686f74",
+        alpha=1.0,
     )
 
 
@@ -1657,8 +1440,8 @@ def vacuum_gauge_face_part() -> MeshPart:
         rotation_x=90.0,
     )
     return MeshPart(
-        face, "#f4f4f0", "#ffffff", "#343a40",
-        alpha=1.0, max_faces=500, edge_alpha=0.08,
+        face, "#f4f4f0",
+        alpha=1.0,
     )
 
 
@@ -1678,8 +1461,8 @@ def oven_frame_part() -> MeshPart:
             rotation_z=90.0,
             pivot=(0.0, 0.0, 0.0),
         ),
-        "#42494e", "#747d82", "#202529",
-        alpha=1.0, max_faces=2_000, edge_alpha=0.0, roughness=0.60,
+        "#42494e",
+        alpha=1.0,   roughness=0.60,
     )
 
 
@@ -1690,8 +1473,8 @@ def oven_window_part() -> MeshPart:
             rotation_z=90.0,
             pivot=(0.0, 0.0, 0.0),
         ),
-        "#8eabb7", "#e4f0f4", "#587580",
-        alpha=0.16, max_faces=100, edge_alpha=0.0,
+        "#8eabb7",
+        alpha=0.16,
     )
 
 
@@ -1707,15 +1490,47 @@ def oven_handle_part() -> MeshPart:
             rotation_z=90.0,
             pivot=(0.0, 0.0, 0.0),
         ),
-        "#aeb6ba", "#f0f2f3", "#545d62",
-        alpha=1.0, max_faces=200, edge_alpha=0.0, roughness=0.24, metallic=0.58,
+        "#aeb6ba",
+        alpha=1.0,   roughness=0.24, metallic=0.58,
     )
 
 
-def scene_parts(step: int) -> tuple[MeshPart, ...]:
-    if step == 1:
+class MoldView(Step):
+    z_scale = 1.35
+
+
+class LoadedRack(Step):
+    azimuth = -65.0
+    elevation = -76.0
+    z_scale = 1.0
+    translation_z = 0.0
+
+    def scene_parts(self) -> tuple[MeshPart, ...]:
+        load_rotation = 180.0
+        return (
+            rack_part(translation_z=self.translation_z),
+            rack_shelf_part(translation_z=self.translation_z),
+            rack_wafer_load_part(rotation_z=load_rotation, translation_z=self.translation_z),
+            rack_insert_load_part(rotation_z=load_rotation, translation_z=self.translation_z),
+            rack_cast_load_part(rotation_z=load_rotation, translation_z=self.translation_z),
+            rack_insert_cap_load_part(rotation_z=load_rotation, translation_z=self.translation_z),
+            rack_foil_load_part(rotation_z=load_rotation, translation_z=self.translation_z),
+        )
+
+
+class PreparedMold(MoldView):
+    title = "Hybrid mold ready"
+    detail = "Parylene-coated mold"
+
+    def scene_parts(self) -> tuple[MeshPart, ...]:
         return wafer_part(0.0), thick_layer_part(0.7), insert_part(0.9)
-    if step == 2:
+
+
+class PourPDMS(MoldView):
+    title = "Pour PDMS"
+    detail = "Fill below insert tops"
+
+    def scene_parts(self) -> tuple[MeshPart, ...]:
         pdms_top = 4.85
         pdms_pool = MeshPart(
             notched_wafer_solid(
@@ -1723,51 +1538,64 @@ def scene_parts(step: int) -> tuple[MeshPart, ...]:
                 height=pdms_top - 0.7,
                 z_center=(pdms_top + 0.7) / 2,
             ),
-            COLORS["pdms"], COLORS["pdms_highlight"], "#507b9d", alpha=0.48, edge_alpha=0.025,
+            COLORS["pdms"], alpha=0.48,
         )
         return (
             wafer_part(0.0), thick_layer_part(0.7), insert_part(0.9), pdms_pool,
             insert_cap_part(0.9, pdms_top), foil_part(0.7),
         )
-    if step == 3:
-        load_rotation = 180.0
-        # Draw the transparent vessel before its opaque contents so the rack
-        # remains solid while the chamber silhouette stays visible around it.
-        return (
-            desiccator_part(), desiccator_gasket_part(), vacuum_valve_part(), vacuum_gauge_face_part(),
-            rack_part(), rack_shelf_part(),
-            rack_wafer_load_part(rotation_z=load_rotation),
-            rack_insert_load_part(rotation_z=load_rotation),
-            rack_cast_load_part(rotation_z=load_rotation),
-            rack_insert_cap_load_part(rotation_z=load_rotation),
-            rack_foil_load_part(rotation_z=load_rotation),
-        )
-    if step == 4:
-        rack_floor_offset = -18.0
-        load_rotation = 180.0
-        return (
-            oven_frame_part(), oven_window_part(), oven_handle_part(),
-            rack_part(translation_z=rack_floor_offset),
-            rack_shelf_part(translation_z=rack_floor_offset),
-            rack_wafer_load_part(
-                rotation_z=load_rotation, translation_z=rack_floor_offset,
-            ),
-            rack_insert_load_part(
-                rotation_z=load_rotation, translation_z=rack_floor_offset,
-            ),
-            rack_cast_load_part(
-                rotation_z=load_rotation, translation_z=rack_floor_offset,
-            ),
-            rack_insert_cap_load_part(
-                rotation_z=load_rotation, translation_z=rack_floor_offset,
-            ),
-            rack_foil_load_part(
-                rotation_z=load_rotation, translation_z=rack_floor_offset,
-            ),
-        )
-    if step == 5:
+    def draw_marks(self, ax: plt.Axes, frame: tuple[float, float, float, float]) -> None:
+        x, y, width, height = frame
+        ax.add_patch(FancyArrowPatch(
+            (x + width * 0.83, y + height * 0.92),
+            (x + width * 0.62, y + height * 0.60),
+            arrowstyle="-|>", mutation_scale=12, linewidth=1.5,
+            color=COLORS["accent"], zorder=6,
+        ))
+
+
+class Degas(LoadedRack):
+    title = "Degas in rack"
+    detail = "Until bubbles clear"
+
+    def scene_parts(self) -> tuple[MeshPart, ...]:
+        # Render the vessel before its contents so the rack remains solid.
+        return (desiccator_part(), desiccator_gasket_part(), vacuum_valve_part(),
+                vacuum_gauge_face_part(), *super().scene_parts())
+
+
+class Cure(LoadedRack):
+    title = "Cure in rack"
+    detail = "100 °C for 1 h"
+    translation_z = -18.0
+
+    def scene_parts(self) -> tuple[MeshPart, ...]:
+        return (oven_frame_part(), oven_window_part(), oven_handle_part(),
+                *super().scene_parts())
+
+    def draw_marks(self, ax: plt.Axes, frame: tuple[float, float, float, float]) -> None:
+        x, y, width, height = frame
+        for fraction in (0.40, 0.50, 0.60):
+            xs = np.linspace(x + width * fraction, x + width * (fraction + 0.015), 30)
+            ys = np.linspace(y + height * 0.76, y + height * 0.98, 30)
+            ax.plot(xs + np.sin(np.linspace(0, 2 * math.pi, 30)) * width * 0.014, ys,
+                    color="#9c5a68", linewidth=1.2, zorder=6)
+
+
+class Demold(Step):
+    title = "Demold cast"
+    detail = "Peel from the corners"
+
+    def scene_parts(self) -> tuple[MeshPart, ...]:
         return cavity_device_render_parts(0.0, trimmed=False)
-    if step == 6:
+
+
+class Trim(Step):
+    title = "Tape and trim"
+    detail = "108 × 72 mm"
+    z_scale = 1.3
+
+    def scene_parts(self) -> tuple[MeshPart, ...]:
         paper_center_z = -1.2
         # Keep the flipped cast just above the paper surface. Exact coplanar
         # contact makes the circular STL's triangulated underside z-fight with
@@ -1776,29 +1604,29 @@ def scene_parts(step: int) -> tuple[MeshPart, ...]:
         cast_top_z = cast_bottom_z + BONDED_PDMS_THICKNESS
         cutter_platform = MeshPart(
             cutter_platform_mesh(),
-            "#aeb8bd", "#eef2f3", "#59646a",
-            alpha=1.0, max_faces=1_000, edge_alpha=0.0,
+            "#aeb8bd",
+            alpha=1.0,
         )
         tape = MeshPart(
             tape_guide_mesh(z=cast_top_z + 0.35),
-            COLORS["tape"], COLORS["tape_highlight"], "#155982",
-            alpha=0.88, edge_alpha=0.0,
+            COLORS["tape"],
+            alpha=0.88,
         )
         cutter_blade = MeshPart(
-            cutter_blade_mesh(), "#25292c", "#636a6f", "#111315",
-            edge_alpha=0.0, roughness=0.30, metallic=0.18,
+            cutter_blade_mesh(), "#25292c",
+             roughness=0.30, metallic=0.18,
         )
         cutter_edge = MeshPart(
-            cutter_edge_mesh(), "#b6bdc1", "#f3f5f6", "#626a6f",
-            edge_alpha=0.0, roughness=0.24, metallic=0.62,
+            cutter_edge_mesh(), "#b6bdc1",
+             roughness=0.24, metallic=0.62,
         )
         cutter_grip = MeshPart(
-            cutter_grip_mesh(), "#17191b", "#4a4f53", "#0b0c0d",
-            edge_alpha=0.0, roughness=0.52,
+            cutter_grip_mesh(), "#17191b",
+             roughness=0.52,
         )
         cutter_hinge = MeshPart(
-            cutter_hinge_mesh(), "#9ca5aa", "#f1f3f4", "#535b60",
-            edge_alpha=0.0, roughness=0.22, metallic=0.68,
+            cutter_hinge_mesh(), "#9ca5aa",
+             roughness=0.22, metallic=0.68,
         )
         return (
             cutter_platform,
@@ -1810,12 +1638,35 @@ def scene_parts(step: int) -> tuple[MeshPart, ...]:
             ),
             tape, cutter_blade, cutter_edge, cutter_grip, cutter_hinge,
         )
-    if step == 7:
+    def draw_marks(self, ax: plt.Axes, frame: tuple[float, float, float, float]) -> None:
+        x, y, width, height = frame
+        self.annotate(ax, x + width * 0.22, y + height * 0.94, "Masking tape")
+        self.annotate(ax, x + width * 0.80, y + height * 0.94, "Cutter", color=COLORS["blade"])
+
+
+class BondAndAutoclave(Step):
+    title = "Bond and autoclave"
+    detail = "121 °C for 15 min"
+
+    def scene_parts(self) -> tuple[MeshPart, ...]:
         return bonded_device_parts(pdms_bottom=0.0)
-    if step == 8:
+
+    def draw_marks(self, ax: plt.Axes, frame: tuple[float, float, float, float]) -> None:
+        x, y, width, height = frame
+        for fraction in (0.34, 0.50, 0.66):
+            ax.plot([x + width * fraction, x + width * (fraction + 0.03)],
+                    [y + height * 0.96, y + height * 0.82],
+                    color=COLORS["accent"], linewidth=1.5, zorder=6)
+
+
+class AssembleFrame(Step):
+    title = "Frame assembly"
+    detail = "Seat glass-side up"
+
+    def scene_parts(self) -> tuple[MeshPart, ...]:
         adhesive = MeshPart(
             perimeter_ring_mesh(117.0, 81.0, 3.2, 0.8, z=6.6),
-            COLORS["adhesive"], "#f4d77e", "#8f6515", alpha=0.92,
+            COLORS["adhesive"], alpha=0.92,
         )
         return (
             *bonded_device_parts(
@@ -1825,17 +1676,49 @@ def scene_parts(step: int) -> tuple[MeshPart, ...]:
             ),
             frame_part(0.0, upside_down=True), adhesive,
         )
-    if step == 9:
+    def draw_marks(self, ax: plt.Axes, frame: tuple[float, float, float, float]) -> None:
+        x, y, width, height = frame
+        # The tip terminates on the visible right-hand adhesive groove.
+        start = np.array((x + width * 0.78, y + height * 0.95))
+        target = np.array((x + width * 0.79, y + height * 0.47))
+        direction = target - start
+        direction /= np.linalg.norm(direction)
+        barrel_end = start + (target - start) * 0.52
+        ax.plot([start[0], barrel_end[0]], [start[1], barrel_end[1]], color="#4f5a63",
+                linewidth=8.0, solid_capstyle="round", zorder=8)
+        ax.plot([start[0], barrel_end[0]], [start[1], barrel_end[1]], color="#d7e9ef",
+                linewidth=5.2, solid_capstyle="round", zorder=9)
+        ax.plot([barrel_end[0], target[0]], [barrel_end[1], target[1]], color="#4f5a63",
+                linewidth=1.2, zorder=9)
+        normal = np.array((-direction[1], direction[0]))
+        flange_a = start - normal * width * 0.030
+        flange_b = start + normal * width * 0.030
+        ax.plot([flange_a[0], flange_b[0]], [flange_a[1], flange_b[1]],
+                color="#4f5a63", linewidth=2.0, zorder=9)
+        ax.plot(target[0], target[1], marker="o", markersize=6.5,
+                markerfacecolor=COLORS["adhesive"], markeredgecolor="#8f6515",
+                markeredgewidth=0.7, linestyle="none", zorder=10)
+        self.annotate(ax, x + width * 0.47, y + height * 0.96,
+                      "Adhesive", color="#8f6515")
+
+
+class PrepareCulture(Step):
+    title = "Cure and prepare"
+    detail = "3 d cure; then plasma"
+
+    def scene_parts(self) -> tuple[MeshPart, ...]:
         adhesive = MeshPart(
             perimeter_ring_mesh(113.0, 77.0, 2.4, 0.8, z=-6.6),
-            COLORS["adhesive"], "#f4d77e", "#8f6515", alpha=0.92,
+            COLORS["adhesive"], alpha=0.92,
         )
         return (
             *bonded_device_parts(pdms_bottom=-6.2),
             adhesive,
             frame_part(0.0),
         )
-    raise ValueError(step)
+# Protocol order is declared once; labels and serpentine placement derive from it.
+STEPS = (PreparedMold(), PourPDMS(), Degas(), Cure(), Demold(), Trim(),
+         BondAndAutoclave(), AssembleFrame(), PrepareCulture())
 
 
 def add_arrow(
@@ -1861,227 +1744,50 @@ def add_arrow(
     )
 
 
-def add_row_label(ax: plt.Axes, y: float, text: str) -> None:
-    ax.plot([0.038, 0.038], [y - 0.090, y + 0.090], color=COLORS["ink"], linewidth=2.2)
-    ax.text(
-        0.020,
-        y,
-        text,
-        rotation=90,
-        ha="center",
-        va="center",
-        fontsize=9.5,
-        fontweight="bold",
-        color=COLORS["ink"],
-    )
-
-
-def add_step_label(ax: plt.Axes, step: Step, x: float, y: float, *, compact: bool = False) -> None:
-    number_x = x - (0.135 if compact else 0.105)
-    # Point-sized markers stay circular in raster and vector output even though
-    # this figure's normalized x and y axes have different physical scales.
-    ax.plot(
-        number_x,
-        y + 0.015,
-        marker="o",
-        markersize=16.5 if compact else 17.5,
-        markerfacecolor=COLORS["accent"],
-        markeredgecolor="none",
-        linestyle="none",
-        zorder=9,
-    )
-    ax.text(number_x, y + 0.015, str(step.number), ha="center", va="center", fontsize=7.5 if compact else 8.2,
-            fontweight="bold", color="white", zorder=10)
-    ax.text(x, y + 0.016, step.title, ha="center", va="center", fontsize=9.2 if compact else 11.0,
-            fontweight="bold", color=COLORS["ink"])
-    ax.text(
-        x,
-        y - 0.020,
-        textwrap.fill(step.detail, 38),
-        ha="center",
-        va="top",
-        fontsize=6.8 if compact else 7.9,
-        color=COLORS["muted"],
-        linespacing=1.12,
-    )
-
-
-def add_process_marks(ax: plt.Axes, step: int, frame: tuple[float, float, float, float]) -> None:
-    x, y, width, height = frame
-    if step == 2:
-        ax.add_patch(
-            FancyArrowPatch(
-                (x + width * 0.83, y + height * 0.92),
-                (x + width * 0.62, y + height * 0.60),
-                arrowstyle="-|>", mutation_scale=12, linewidth=1.5,
-                color=COLORS["accent"], zorder=6,
-            )
-        )
-        ax.text(x + width * 0.82, y + height * 0.95, "PDMS below insert tops", ha="center", va="bottom",
-                fontsize=7.5, fontweight="bold", color=COLORS["accent"])
-    elif step == 3:
-        ax.text(x + width * 0.74, y + height * 0.98, "Vacuum degas", ha="center", va="bottom",
-                fontsize=7.5, fontweight="bold", color=COLORS["accent"])
-    elif step == 4:
-        for fraction in (0.40, 0.50, 0.60):
-            xs = np.linspace(x + width * fraction, x + width * (fraction + 0.015), 30)
-            ys = np.linspace(y + height * 0.76, y + height * 0.98, 30)
-            ax.plot(xs + np.sin(np.linspace(0, 2 * math.pi, 30)) * width * 0.014, ys,
-                    color="#9c5a68", linewidth=1.2, zorder=6)
-        ax.text(x + width * 0.50, y + height * 1.01, "100 degrees C, 1 h", ha="center", va="bottom",
-                fontsize=7.3, fontweight="bold", color="#8d4c5a")
-    elif step == 6:
-        ax.text(x + width * 0.22, y + height * 0.94, "Masking tape", ha="center", va="bottom",
-                fontsize=7.2, fontweight="bold", color=COLORS["accent"])
-        ax.text(x + width * 0.80, y + height * 0.94, "Guillotine cutter", ha="center", va="bottom",
-                fontsize=7.2, fontweight="bold", color=COLORS["blade"])
-    elif step == 7:
-        for fraction in (0.34, 0.50, 0.66):
-            ax.plot(
-                [x + width * fraction, x + width * (fraction + 0.03)],
-                [y + height * 0.96, y + height * 0.82],
-                color=COLORS["accent"], linewidth=1.5, zorder=6,
-            )
-    elif step == 8:
-        # The tip terminates on the visible right-hand adhesive groove.
-        start = np.array((x + width * 0.78, y + height * 0.95))
-        target = np.array((x + width * 0.79, y + height * 0.47))
-        direction = target - start
-        direction /= np.linalg.norm(direction)
-        barrel_end = start + (target - start) * 0.52
-        ax.plot([start[0], barrel_end[0]], [start[1], barrel_end[1]], color="#4f5a63",
-                linewidth=8.0, solid_capstyle="round", zorder=8)
-        ax.plot([start[0], barrel_end[0]], [start[1], barrel_end[1]], color="#d7e9ef",
-                linewidth=5.2, solid_capstyle="round", zorder=9)
-        ax.plot([barrel_end[0], target[0]], [barrel_end[1], target[1]], color="#4f5a63",
-                linewidth=1.2, zorder=9)
-        normal = np.array((-direction[1], direction[0]))
-        flange_a = start - normal * width * 0.030
-        flange_b = start + normal * width * 0.030
-        ax.plot([flange_a[0], flange_b[0]], [flange_a[1], flange_b[1]],
-                color="#4f5a63", linewidth=2.0, zorder=9)
-        ax.plot(
-            target[0], target[1], marker="o", markersize=6.5,
-            markerfacecolor=COLORS["adhesive"], markeredgecolor="#8f6515",
-            markeredgewidth=0.7, linestyle="none", zorder=10,
-        )
-        ax.text(x + width * 0.72, y + height * 0.96, "Dispense adhesive", ha="center", va="bottom",
-                fontsize=6.8, fontweight="bold", color="#8f6515")
-    elif step == 9:
-        ax.text(x + width * 0.76, y + height * 0.93, "3 d cure", ha="center", va="center",
-                fontsize=7.2, fontweight="bold", color="#8f6515")
-
-
 def draw_workflow() -> None:
-    fig, ax = plt.subplots(figsize=(13.2, 10.4))
+    # Author at manuscript width so labels retain their physical point sizes.
+    fig, ax = plt.subplots(figsize=(6.5, 6.2))
+    fig.subplots_adjust(left=0, right=1, bottom=0, top=1)
     ax.set_xlim(0, 1)
     ax.set_ylim(0, 1)
     ax.axis("off")
 
-    ax.text(0.055, 0.963, "Post-mold device replication and assembly", ha="left", va="top",
-            fontsize=17.0, fontweight="bold", color=COLORS["ink"])
-    ax.text(
-        0.055,
-        0.921,
-        "The same hybrid mold supports repeated plate-format PDMS casting and biological assembly.",
-        ha="left",
-        va="top",
-        fontsize=9.7,
-        color=COLORS["muted"],
-    )
-    ax.plot([0.055, 0.955], [0.895, 0.895], color=COLORS["guide"], linewidth=1.0)
+    frames = []
+    for number, step in enumerate(STEPS, 1):
+        row, column = divmod(number - 1, 3)
+        column = 2 - column if row % 2 else column
+        frame = (0.035 + column * 0.325, 0.69 - row * 0.315, 0.28, 0.20)
+        print(f"Rendering step {number}: {step.title}", flush=True)
+        step.draw(ax, frame, number)
+        frames.append(frame)
 
-    row_visuals = ((0.675, 0.845), (0.390, 0.560), (0.105, 0.275))
-    row_labels = ("Casting and curing", "Release and trimming", "Assembly and preparation")
-    row_steps = ((1, 2, 3), (6, 5, 4), (7, 8, 9))
-    row_centers = (
-        (0.200, 0.500, 0.800),
-        (0.200, 0.500, 0.800),
-        (0.200, 0.500, 0.800),
-    )
-    row_widths = (0.230, 0.230, 0.230)
+    for _, row in groupby(frames, key=lambda frame: frame[1]):
+        row_frames = tuple(row)
+        left = min(frame[0] for frame in row_frames)
+        right = max(frame[0] + frame[2] for frame in row_frames)
+        _, y, _, height = row_frames[0]
+        ax.add_patch(Rectangle(
+            (left - 0.01, y - 0.05), right - left + 0.02, height + 0.105,
+            facecolor="#f5f7fa", edgecolor="none", zorder=0,
+        ))
 
-    for row, (visual_bottom, visual_top) in enumerate(row_visuals):
-        add_row_label(ax, (visual_bottom + visual_top) / 2, row_labels[row])
-        centers = row_centers[row]
-        for column, center_x in enumerate(centers):
-            step_number = row_steps[row][column]
-            step = STEPS[step_number - 1]
-            visual_width = row_widths[row]
-            visual_frame = (center_x - visual_width / 2, visual_bottom, visual_width, visual_top - visual_bottom)
-            if step.number in (1, 2):
-                draw_scene_blender(
-                    ax,
-                    scene_parts(step.number),
-                    visual_frame,
-                    azimuth=-38.0,
-                    elevation=-32.0,
-                    z_scale=1.35,
-                )
-            elif step.number == 3:
-                draw_scene_blender(
-                    ax,
-                    scene_parts(step.number),
-                    visual_frame,
-                    azimuth=-65.0,
-                    elevation=-76.0,
-                    z_scale=1.0,
-                    framing_margin=1.18,
-                )
-            elif step.number == 4:
-                draw_scene_blender(
-                    ax,
-                    scene_parts(step.number),
-                    visual_frame,
-                    azimuth=-65.0,
-                    elevation=-76.0,
-                    z_scale=1.0,
-                    framing_margin=1.18,
-                )
-            elif step.number == 6:
-                draw_scene_blender(
-                    ax,
-                    scene_parts(step.number),
-                    visual_frame,
-                    azimuth=-38.0,
-                    elevation=-32.0,
-                    z_scale=1.3,
-                    framing_margin=1.12,
-                )
-            elif step.number in (8, 9):
-                draw_scene_blender(
-                    ax,
-                    scene_parts(step.number),
-                    visual_frame,
-                    azimuth=-38.0,
-                    elevation=-32.0,
-                    z_scale=1.7,
-                )
-            else:
-                draw_scene_blender(
-                    ax,
-                    scene_parts(step.number),
-                    visual_frame,
-                    azimuth=-38.0,
-                    elevation=-32.0,
-                    z_scale=1.7,
-                )
-            add_process_marks(ax, step.number, visual_frame)
-            add_step_label(ax, step, center_x, visual_bottom - 0.052, compact=row == 2)
-
-    for start_x, end_x in zip(row_centers[0][:-1], row_centers[0][1:], strict=True):
-        add_arrow(ax, (start_x + 0.125, 0.760), (end_x - 0.125, 0.760))
-    for start_x, end_x in zip(row_centers[1][:-1], row_centers[1][1:], strict=True):
-        add_arrow(ax, (end_x - 0.125, 0.475), (start_x + 0.125, 0.475))
-    for start_x, end_x in zip(row_centers[2][:-1], row_centers[2][1:], strict=True):
-        add_arrow(ax, (start_x + 0.103, 0.190), (end_x - 0.103, 0.190))
-
-    add_arrow(ax, (0.935, 0.675), (0.935, 0.560))
-    add_arrow(ax, (0.065, 0.390), (0.065, 0.275))
+    for previous, following in zip(frames, frames[1:]):
+        px, py, width, height = previous
+        nx, ny, _, _ = following
+        if py == ny:
+            direction = math.copysign(1.0, nx - px)
+            edge = (1 + direction) / 2
+            # Use the scene's empty camera margin, without covering the solids.
+            inset = width * (1.0 - 1.0 / MIN_CAMERA_MARGIN) / 3.0
+            add_arrow(ax, (px + width * edge - direction * inset, py + height / 2),
+                      (nx + width * (1 - edge) + direction * inset, ny + height / 2))
+        else:
+            outer_x = px + width / 2 + math.copysign(0.16, px + width / 2 - 0.5)
+            add_arrow(ax, (outer_x, py), (outer_x, ny + height))
 
     OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
-    fig.savefig(OUTPUT_DIR / f"{OUTPUT_STEM}.pdf", bbox_inches="tight", pad_inches=0.04)
-    fig.savefig(OUTPUT_DIR / f"{OUTPUT_STEM}.png", bbox_inches="tight", pad_inches=0.04, dpi=DPI)
+    fig.savefig(OUTPUT_DIR / f"{OUTPUT_STEM}.pdf", dpi=DPI)
+    fig.savefig(OUTPUT_DIR / f"{OUTPUT_STEM}.png", dpi=DPI)
     plt.close(fig)
 
 

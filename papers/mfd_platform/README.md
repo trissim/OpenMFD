@@ -11,6 +11,25 @@ supplement declaration is in [build_paper.py](build_paper.py); the combined
 review derives these same two declarations and parsed inputs. Missing sections
 fail rather than being silently omitted. The old paper.md path is only a pointer.
 
+## Supplementary text and data
+
+The supplement opens with the two protocols, followed by illustrated fabrication
+troubleshooting, one design-dimension table and the apparent-width note. The full
+fabrication-method comparison is supplied as a linked CSV (Data S6), not three
+pages of typeset table. Individual
+pin heights, printer profiles, apparent widths and retained per-device counts
+are separate data files, listed in
+[supplementary/Supplementary_data.md](supplementary/Supplementary_data.md).
+The data index also links the width-image crops and native crop bounds, both
+saved count-flag sets, the frame-printing G-code and microscope XML file.
+All 72 CTB counts match the original per-device exports; the original author's
+October 15 decision confirms five cell-count exclusions and 67 included devices.
+Exact historical analysis-run configuration and ethics details remain unresolved;
+[the CTB record](reviews/CTB_ANALYSIS_HANDOFF.md) distinguishes these questions.
+Supply these linked files with the supplement when preparing submission files;
+the build records and retains them as supporting inputs rather than typesetting
+every measurement and setting.
+
 ## Build a reading copy
 
 Use a build-only environment, not the OpenMFD runtime environment. Install
@@ -53,8 +72,8 @@ fallback to a different engine.
 
 Canonical figure references remain stable PDFs in figures/rendered. The local
 preparation owner projects them to existing rendered_docx PNGs for Word; missing
-projections fail, without launching a renderer. The small retained-asset receipt
-checks all14 current PDF/PNG assets. This is reused presentation evidence, not
+projections fail, without launching a renderer. The figure receipts check the declared PDF/PNG pairs. The apparent-width pair
+is published from its existing authored files without invoking the CTB renderer. This is reused presentation evidence, not
 fresh biological analysis or proof of regenerated figure sources.
 
 Existing scientific/authoring workflows remain in figures/ and are separate

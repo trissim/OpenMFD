@@ -1,0 +1,32 @@
+Section,Parameter,Setting
+Printer and resin,Resin,Siraya Tech Sculpt Clear high-temperature resin
+Printer and resin,Printer,Elegoo Mars 3 Pro
+Printer and resin,Build plate / transfer fixture,Magnetic removable build plate
+Printer and resin,Slicer profile name,Siraya High Temp
+Print profile,Layer height,0.020 mm
+Print profile,Bottom layer count,7
+Print profile,Exposure time,5.500 s
+Print profile,Bottom exposure time,50.000 s
+Print profile,Transition layer count,0
+Print profile,Transition type,Linear
+Print profile,Waiting mode during printing,Resting time
+Print profile,Rest time before lift,0.300 s
+Print profile,Rest time after lift,1.000 s
+Print profile,Rest time after retract,3.000 s
+Print profile,Bottom lift distance,3.000 + 0.000 mm
+Print profile,Lifting distance,4.000 + 0.000 mm
+Print profile,Bottom retract distance,3.000 + 0.000 mm
+Print profile,Retract distance,4.000 + 0.000 mm
+Print profile,Bottom lift speed,5.000 + 0.000 mm/min
+Print profile,Lifting speed,30.000 + 0.000 mm/min
+Print profile,Bottom retract speed,5.000 + 0.000 mm/min
+Print profile,Retract speed,30.000 + 0.000 mm/min
+Advanced slicer settings,Bottom light PWM,255
+Advanced slicer settings,Light PWM,255
+Advanced slicer settings,Anti-aliasing,Enabled
+Advanced slicer settings,Grey level,2
+Advanced slicer settings,Image blur,Disabled
+Advanced slicer settings,Shrinkage compensation,Disabled
+Advanced slicer settings,Tolerance compensation (beta),Disabled
+Advanced slicer settings,Bottom tolerance compensation,Disabled
+Advanced slicer settings,Print time compensation,Disabled

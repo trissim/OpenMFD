@@ -92,7 +92,7 @@ def main() -> int:
         bpy.ops.wm.stl_import(filepath=part["path"])
         obj = bpy.context.object
         obj.name = f"part-{index}"
-        if part.get("dissolve_coplanar", False):
+        if part["dissolve_coplanar"]:
             bpy.context.view_layer.objects.active = obj
             obj.select_set(True)
             bpy.ops.object.mode_set(mode="EDIT")
@@ -104,11 +104,11 @@ def main() -> int:
                 index,
                 part["color"],
                 part["alpha"],
-                part.get("roughness", 0.48),
-                part.get("metallic", 0.0),
-                part.get("emission_strength", 0.0),
-                part.get("transparency_overlap", True),
-                part.get("transmission_weight"),
+                part["roughness"],
+                part["metallic"],
+                part["emission_strength"],
+                part["transparency_overlap"],
+                part["transmission_weight"],
             )
         )
 
@@ -119,6 +119,9 @@ def main() -> int:
     camera.location = (0.0, 0.0, manifest["camera_z"])
     camera.rotation_euler = (0.0, 0.0, 0.0)
     camera_data.type = "ORTHO"
+    # The fitted scale is the view height; AUTO switches it to width on a
+    # landscape image and makes an otherwise fitted scene clip horizontally.
+    camera_data.sensor_fit = "VERTICAL"
     camera_data.ortho_scale = manifest["ortho_scale"]
     camera_data.lens = 50
     camera_data.clip_start = 0.01

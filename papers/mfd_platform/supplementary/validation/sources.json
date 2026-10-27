@@ -1,12 +1,25 @@
 {
   "count_source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/figure_handoff/no_drug_reproducibility/data.csv",
   "count_source_sha256": "d4b99f111212e4a7abdd5db26694eb7368ace0ff68181e1838a185f5cdd125a2",
-  "analysis_version": "OpenHCS 0.5.15",
+  "analysis_run_status": "Exact software version and historical run are not verified; the former metadata label OpenHCS 0.5.15 is not run provenance.",
+  "count_inclusion_authorization": "Original October 15 desktop session: analysis artifacts confirmed at lines 13665/13674; additional P1 exclusions explicitly approved for cell counts, not axon analysis, at lines 13694/13784. The per-device CTB CSV carries the selected flags.",
+  "representative_selection": "Three saved device IDs retained as illustrative views; no new device selection or biological analysis.",
+  "display_crop_declaration": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/final_scripts/pre_analysis.py",
+  "display_crop_declaration_sha256": "0c1776146d09c73ad31a6213cf4ae5f5d6ee9028fc6056cd4722de408f7eee3e",
+  "display_reconstruction": "Original stitched images cropped using saved template-match coordinates and the fixed-crop declaration. All three original ROI overlays visually align with these crops. The exact historical binding of the saved pipeline to the count run remains unverified. No template matching, segmentation or counting was rerun.",
+  "display_processing": "White top-hat background subtraction (30 px radius, 4x reduced estimate), 0.1-99.9 percentile normalization and proportional downsampling; display only",
   "ctb_channel": 2,
   "representatives": {
     "p1": {
       "device": "R03C04",
-      "source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P1_20260203__2026-02-03T19_23_43-Measurement 1_stitched_analysis_final/images/r03c04f001p001-ch2sk1fk1fl1.tiff",
+      "source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P1_20260203__2026-02-03T19_23_43-Measurement 1_stitched/images/r03c04f001p001-ch2sk1fk1fl1.tiff",
+      "source_sha256": "dd89e72a8f20aac556aeb1ce927850463dc0b3fb9859cede6dd91c1a0c4f1f07",
+      "stitched_crop_xyxy": [3321, 648, 5613, 4348],
+      "crop_match_source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P1_20260203__2026-02-03T19_23_43-Measurement 1_stitched_analysis/images_results/r03c04f001p001-ch1sk1fk1fl1_match_results_step0_mtm_matches.csv",
+      "crop_match_sha256": "1ffbed812752c51950ae2ba5206f297c0580ad3e0edb0852fe8efe2903405ed0",
+      "outlines": "p1_R03C04_outlines.json",
+      "outline_source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P1_20260203__2026-02-03T19_23_43-Measurement 1_stitched_analysis/images_results/r03c04f001p001-ch2sk1fk1fl1_segmentation_masks_step2_rois.roi.zip",
+      "outline_source_sha256": "fbd085acd7af87166744f1af6596da17e65b195493f3cc69c5b39725cb5e6bd9",
       "acquisition_xml": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/TS_MFD_PRE_P1_20260203__2026-02-03T19_23_43-Measurement 1/Images/Index.xml",
       "source_shape_yx": [
         3700,
@@ -14,12 +27,18 @@
       ],
       "pixel_size_um": 1.1867525298988042,
       "display": "p1_R03C04_ctb.png",
-      "display_processing": "White top-hat background subtraction (30 px radius, 4x reduced estimate) followed by 0.1-99.9 percentile normalization in panel B mosaics and panel G; display only",
-      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break"
+      "acquisition_xml_sha256": "828ed5429364e614d37fd21dee587e3fd992e07a44c29851dfb45a4c487ecd35"
     },
     "p2": {
       "device": "R03C02",
-      "source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P2_20260203__2026-02-03T19_50_17-Measurement 1_stiched_analysis_final/images/r03c02f001p001-ch2sk1fk1fl1.tiff",
+      "source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P2_20260203__2026-02-03T19_50_17-Measurement 1_stiched/images/r03c02f001p001-ch2sk1fk1fl1.tiff",
+      "source_sha256": "e68813b7326e92b7a9cca38b2f7900b2bef83a527dc87c84f54a6387c632bf7c",
+      "stitched_crop_xyxy": [3685, 779, 5977, 4479],
+      "crop_match_source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P2_20260203__2026-02-03T19_50_17-Measurement 1_stiched_analysis/images_results/r03c02f001p001-ch1sk1fk1fl1_match_results_step0_mtm_matches.csv",
+      "crop_match_sha256": "bd2721baa47a73599926904d592c69e661855898eef247943abed1cfb1787b7b",
+      "outlines": "p2_R03C02_outlines.json",
+      "outline_source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P2_20260203__2026-02-03T19_50_17-Measurement 1_stiched_analysis/images_results/r03c02f001p001-ch2sk1fk1fl1_segmentation_masks_step2_rois.roi.zip",
+      "outline_source_sha256": "e68eb6d3c6be3b86793ac7e7894758bf2456a7a958a782b37a5bf2d389b322bb",
       "acquisition_xml": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/TS_MFD_PRE_P2_20260203__2026-02-03T19_50_17-Measurement 1/Images/Index.xml",
       "source_shape_yx": [
         3700,
@@ -27,12 +46,18 @@
       ],
       "pixel_size_um": 1.1867525298988042,
       "display": "p2_R03C02_ctb.png",
-      "display_processing": "White top-hat background subtraction (30 px radius, 4x reduced estimate) followed by 0.1-99.9 percentile normalization in panel B mosaics and panel G; display only",
-      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break"
+      "acquisition_xml_sha256": "4d3046a00b544bfecb8c44ab7ee97377c2bd99edc0859c3d1eb89db49a97b228"
     },
     "p3": {
       "device": "R04C03",
-      "source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P3_20260203__2026-02-03T20_12_32-Measurement 1_stitched_analysis_final/images/r04c03f001p001-ch2sk1fk1fl1.tiff",
+      "source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P3_20260203__2026-02-03T20_12_32-Measurement 1_stitched/images/r04c03f001p001-ch2sk1fk1fl1.tiff",
+      "source_sha256": "3bb587ce69defa7e68359bbca22780fb5fbedf50fe319c16aa2df26b5e3d70e3",
+      "stitched_crop_xyxy": [3621, 809, 5913, 4509],
+      "crop_match_source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P3_20260203__2026-02-03T20_12_32-Measurement 1_stitched_analysis/images_results/r04c03f001p001-ch1sk1fk1fl1_match_results_step0_mtm_matches.csv",
+      "crop_match_sha256": "de5644e96b2e5bf9bb52022a85777f1488e1b46b54350a0f24e068b27e115c4c",
+      "outlines": "p3_R04C03_outlines.json",
+      "outline_source": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P3_20260203__2026-02-03T20_12_32-Measurement 1_stitched_analysis/images_results/r04c03f001p001-ch2sk1fk1fl1_segmentation_masks_step2_rois.roi.zip",
+      "outline_source_sha256": "acbdce4fde0b5ef343e116ec84bd221617e352ae136ae25d80ab5434092ec526",
       "acquisition_xml": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/TS_MFD_PRE_P3_20260203__2026-02-03T20_12_32-Measurement 1/Images/Index.xml",
       "source_shape_yx": [
         3700,
@@ -40,8 +65,7 @@
       ],
       "pixel_size_um": 1.1867525298988042,
       "display": "p3_R04C03_ctb.png",
-      "display_processing": "White top-hat background subtraction (30 px radius, 4x reduced estimate) followed by 0.1-99.9 percentile normalization in panel B mosaics and panel G; display only",
-      "selection": "Per-plate minimum squared distance to four metric medians, scaled by median absolute deviations; excluded wells ineligible; well-ID tie break"
+      "acquisition_xml_sha256": "e55ae61a14612252cfdccb4028b2abb8104222f6851706fbd48e2a996b2bcb18"
     }
   },
   "tracer_scale": {
@@ -73,7 +97,7 @@
     "p2": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P2_20260203__2026-02-03T19_50_17-Measurement 1_stiched_analysis",
     "p3": "/run/media/ts/0BA20E780BA20E78/axotomy_testing/2026-02-03/Stitched_Plates/Pre/TS_MFD_PRE_P3_20260203__2026-02-03T20_12_32-Measurement 1_stitched_analysis"
   },
-  "count_verification": "All 72 counts match the original per-device count CSVs; later ROI exports are not the count source.",
+  "count_verification": "All 72 retained PRE counts match the original per-device count CSVs. ROI contours illustrate segmentation; they are not used to recalculate cell counts.",
   "width_crops": {
     "P1": {
       "slices_yx": [

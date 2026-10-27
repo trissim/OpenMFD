@@ -1,28 +1,43 @@
-# Rendered Figures
+# Published document figures
 
-These are stable figure assets referenced by `papers/mfd_platform/manuscript.md`
-and its supplementary sources. Ordinary document builds reuse these PDFs and
-the retained PNGs in rendered_docx; they do not regenerate figures.
+The manuscript uses the PDFs in this directory and the matching PNGs in
+`../rendered_docx/`. Ordinary document builds reuse these outputs; they do not
+regenerate scientific figures.
 
-Workflow:
+`FigureRenderSpec` in `../render_figures.py` owns each published PDF/PNG pair.
+Retained supplement pairs are verified in place.
+`AuthoredFigure` owns the source basename and copying an existing authored pair.
+`GeneratedFigure` inherits that behavior and additionally owns a producer script.
+The apparent-width figure uses `AuthoredFigure`: publication never runs the
+validation renderer. Shared
+`publish()` requires both formats before writing either. The manuscript sequence
+supplies the order; there is no separate generator roster.
 
-1. Edit the source `.odp` files in `papers/mfd_platform/figures/final_drop/`
-2. Run:
+Historical ODPs remain preserved as authoring history. They are not publication
+inputs, and file timestamps never select or re-export them over a scripted PDF.
+Publication does not delete unrelated files.
 
-```bash
-python papers/mfd_platform/build_paper.py build
+## Explicit authoring and publication
+
+After reviewing the relevant scientific inputs, run the figure's declared
+producer on the desktop. Then publish only the reviewed figure specification:
+
+```python
+from render_figures import FIGURE_SPECS
+
+spec = next(s for s in FIGURE_SPECS if s.rendered_name == "openmfd_design.pdf")
+spec.publish()
 ```
 
-or, if you only want to refresh the figures:
+Update the figure's existing provenance receipt with the actual output/source
+hashes and runtime versions, then rebuild and inspect the reading copies.
 
-```bash
-python papers/mfd_platform/figures/render_figures.py
-```
-
-3. The script prefers `draft_figure.pdf` from each figure folder. If only `draft_figure.odp` is present, it exports a fresh PDF first and then copies that PDF into this folder.
-4. The manuscript keeps referencing the stable files here
-
-Stable output selection is declared by FigureRenderSpec in render_figures.py;
-the actual document dependencies are derived from canonical Markdown references.
-
-Note: the paper points to the stable outputs in this folder. Live auto-refresh on every save is not configured; re-run the render script after editing an `.odp`.
+The full `python papers/mfd_platform/figures/render_figures.py` command runs every
+declared producer. Figure 4's producer reads the original count/image/outline
+files without new segmentation; the author-confirmed selection is 67 devices.
+It redraws Figure 4 only, leaving the retained apparent-width pair untouched.
+The restored pair completed its real desktop render, PNG inspection and selective
+publication at `f5b9d18`; its placed-page check follows the reading build. Exact
+historical analysis-run configuration and ethics remain open.
+Automatic `build_paper.py --refresh-figures` remains unavailable: ordinary document
+builds reuse the inspected assets rather than launching authoring workflows.

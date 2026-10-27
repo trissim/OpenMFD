@@ -1,0 +1,52 @@
+{
+  "validation_scope": "Nine-step assembly schematic redrawn from original scene/CAD sources with pale row backgrounds, longer horizontal arrows and adhesive text clear of syringe. No biological data changed.",
+  "output_sha256": {
+    "rendered/mold_casts_package.pdf": "f44bd5dd6fe80153bb37deb576dc1469e6cc4edfcee6e75bdfe57af03025c58b",
+    "rendered_docx/mold_casts_package.png": "f855ec072dab4ebb4ea7eeb0f2b2ae25ecb256c66ed4e3a12a0224fc4e5a1a75"
+  },
+  "source_sha256": {
+    "figures/generate_device_assembly_protocol.py": "00cebbd2c1c009602849dd3460fde62c8e4b2a2fc4ee6a5fdb1d76ecc05a9778",
+    "figures/blender_render_mesh_parts.py": "1d3268ce6f858d27fff7e16ae9d1280a06c1f2b092015cd86241a57dfc3563d2",
+    "figures/blender_boolean_mesh.py": "2f4f3f9a6f8ee3c2cf87d965122b4843db73f1f8ea917e3950c3957ed8475420",
+    "figures/generate_openmfd_design_figure.py": "2c8994c34da7f59cc8470a8e99ce86fc4757727ea2383695e56c805a0d8f5035",
+    "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_wells_insert.stl": "12cdca91d9edfe46b898aeb25ac9511380f122c5d137849819b1a75d803561ec",
+    "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_single_bottom.dxf": "ba4a3767dda8fd7408481de7419e30ef6bf802ed00ffa658c05859ec757b09bb",
+    "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_single_top.dxf": "e6ee7a1ae279bbf41198d3bcd49318bb77db21193990f4271b8069eb04e23c09",
+    "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/2_compartment_96_well_300um_suex200_v27_top.dxf": "aa0cfee9885f6ca6883c723cec59e4bf15ca2388f727608e5f08a245bb3d81d3",
+    "../../designs/open_chamber/2_compartment_96_well_300um_suex200_v27/wafer.dxf": "5f773b94eb689f03a24815fbf6a5f3d208f44224034970cef5a2a7f7a1bff462",
+    "../../plates/96_well_plate_reservoirs_print_hips_2/96_well_plate_reservoirs_print_hips_2.stl": "ebe9b6586754614630613480775995ee001121add3574347e4c4dbbea1c2a55d",
+    "../../orders/wafer_rack_send_cut_send_dec_9_2024/Wafer Rack 2 v5.step": "ead6ee6cb6c98bc222d8db615042a5496129d0f88df9eee4a357780282942300"
+  },
+  "protocol_steps": [
+    "PreparedMold",
+    "PourPDMS",
+    "Degas",
+    "Cure",
+    "Demold",
+    "Trim",
+    "BondAndAutoclave",
+    "AssembleFrame",
+    "PrepareCulture"
+  ],
+  "command": [
+    "env",
+    "-u",
+    "VIRTUAL_ENV",
+    "PATH=/usr/bin:/bin",
+    "nice",
+    "-n",
+    "15",
+    "timeout",
+    "-s",
+    "INT",
+    "1200",
+    ".venv/bin/python",
+    "-u",
+    "-X",
+    "faulthandler",
+    "papers/mfd_platform/figures/generate_device_assembly_protocol.py"
+  ],
+  "inspection": "All nine steps rendered; actual final PNG inspected for row association, arrow shafts, adhesive/syringe separation and unchanged processing order. Same camera edge guard and scene geometry. This is not dimensional metrology.",
+  "render_source_commit": "0a23af6c5fefa625ceaccd6fcc6091ed0ed6068c",
+  "source_update": "Shared STL renderer now asks its render specification to draw its backdrop; default artwork is preserved and Figure5 selects an unbacked subtype. Figure3 uses its retained assembly renderer/artwork. Output hashes unchanged."
+}
