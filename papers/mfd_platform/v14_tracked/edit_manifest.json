@@ -1,0 +1,187 @@
+{
+  "archive": "/home/ts/code/projects/mfd/papers/mfd_platform/review/MFDV14.zip",
+  "archive_sha256": "659f5c216d96fcc1e2e0c52a30a808e8016dce2350a81ed69227ca13ff27a332",
+  "documents": [
+    {
+      "original": "/home/ts/.cache/agent-scratch/openhcs-paper/v14-edited/Supplementary_Protocol_1_V14_original.docx",
+      "original_sha256": "24aea434819455b2e5aa8db223704f048a003a617af1d9d2a2b7b4616fcf8388",
+      "revised": "/home/ts/.cache/agent-scratch/openhcs-paper/v14-edited/Supplementary_Protocol_1_V14_revised.docx",
+      "revised_sha256": "8634c3efa4eceeac9d8476a7fd683692e5751595ada4a941d10f5aa519dcf2ff",
+      "references_unchanged": true,
+      "edits": [
+        {
+          "old": "SU-8/S2 block before SUEX/S1 block",
+          "new": "SUEX/S1 block before SU-8/S2 block",
+          "reason": "C3: move complete original paragraphs, images and captions without relabeling"
+        }
+      ],
+      "comments": [],
+      "image_changes": [],
+      "tracked_insertions": 5,
+      "tracked_deletions": 5,
+      "tracked": "/home/ts/.cache/agent-scratch/openhcs-paper/v14-edited/Supplementary_Protocol_1_V14_tracked.docx",
+      "tracked_sha256": "78b98b5ed4a59f2b8626872075231c87e68f3ef87536a2d84b74779828634430",
+      "native_accept_reject_text_and_media_verified": true,
+      "recording_enabled": true
+    },
+    {
+      "original": "/home/ts/.cache/agent-scratch/openhcs-paper/v14-edited/Supplementary_Protocol_2_V14_original.docx",
+      "original_sha256": "769fa53bd6d8ac4d0df6b30c65892c5800870359370eb5cce156af7bd81ae9f3",
+      "revised": "/home/ts/.cache/agent-scratch/openhcs-paper/v14-edited/Supplementary_Protocol_2_V14_revised.docx",
+      "revised_sha256": "3fce1cdc27b864ed16c8d13222e116480ad580bf4fb3d9e4d4d3efd195303b69",
+      "references_unchanged": true,
+      "edits": [
+        {
+          "old": "4. Transfer approximately 30 mL",
+          "new": "3. Transfer approximately 30 mL",
+          "reason": "C2: consecutive numbering; all eight retained actions confirmed by mfd13911"
+        },
+        {
+          "old": "5. Load the filled molds",
+          "new": "4. Load the filled molds",
+          "reason": "C2: consecutive numbering; all eight retained actions confirmed by mfd13911"
+        },
+        {
+          "old": "6. Transfer the loaded rack",
+          "new": "5. Transfer the loaded rack",
+          "reason": "C2: consecutive numbering; all eight retained actions confirmed by mfd13911"
+        },
+        {
+          "old": "7. Remove the aluminum foil",
+          "new": "6. Remove the aluminum foil",
+          "reason": "C2: consecutive numbering; all eight retained actions confirmed by mfd13911"
+        },
+        {
+          "old": "8. Support the wafer on a flat surface.",
+          "new": "7. Support the wafer on a flat surface.",
+          "reason": "C2: consecutive numbering; all eight retained actions confirmed by mfd13911"
+        },
+        {
+          "old": "9. Inspect the demolded cast.",
+          "new": "8. Inspect the demolded cast.",
+          "reason": "C2: consecutive numbering; all eight retained actions confirmed by mfd13911"
+        }
+      ],
+      "comments": [
+        {
+          "anchor": "Identify and count CTB-positive neuronal cell bodies using the same cell segmentation settings and criteria for CTB labeling in every cropped image.",
+          "text": "This repeat-use instruction does not establish the configuration used for the historical observations. Please confirm historical segmentation/positivity settings and manual corrections from the run records, or state the remaining limitation without substituting current defaults."
+        }
+      ],
+      "image_changes": [],
+      "tracked_insertions": 6,
+      "tracked_deletions": 6,
+      "tracked": "/home/ts/.cache/agent-scratch/openhcs-paper/v14-edited/Supplementary_Protocol_2_V14_tracked.docx",
+      "tracked_sha256": "a8f2bd9f45b1f73d101fa8dcc105a8539f30f0a352ec688b99a025c10fe00449",
+      "native_accept_reject_text_and_media_verified": true,
+      "recording_enabled": true
+    },
+    {
+      "original": "/home/ts/.cache/agent-scratch/openhcs-paper/v14-edited/MFD_V14_original.docx",
+      "original_sha256": "e7b757e2f11883a87656425e8302741626588430d36da79c8ee4f1489914790e",
+      "revised": "/home/ts/.cache/agent-scratch/openhcs-paper/v14-edited/MFD_V14_revised.docx",
+      "revised_sha256": "63d6ecdea6fd45dbf75133a8f89386148164921051e33939d63ebb84b1f46abc",
+      "references_unchanged": true,
+      "edits": [
+        {
+          "old": "; mold fabrication and assembly performance are evaluated in the subsequent Results sections.",
+          "new": ".",
+          "reason": "E1: remove navigation, retain finding"
+        },
+        {
+          "old": " Repeated casting performance and characterization of the finished microfluidic devices are addressed in the following section.",
+          "new": "",
+          "reason": "E1: remove navigation"
+        },
+        {
+          "old": " Fluid transport and neuronal compatibility of the assembled plates are evaluated in the following Results section.",
+          "new": "",
+          "reason": "E1: remove navigation"
+        },
+        {
+          "old": "These examples demonstrate coordinated generation of fabrication files for different compartment numbers and channel arrangements. These are computational design outputs only and alternative configurations were not fabricated, cast, or biologically validated.",
+          "new": "OpenMFD generated matched fabrication files for these different compartment numbers and channel arrangements; the alternative devices were not fabricated, cast or biologically tested.",
+          "reason": "E2: retain generated-only scope without repetition"
+        },
+        {
+          "old": "Schematics in panels A\u2013D are adapted from the original manuscript's fabrication workflow.",
+          "new": "Panels A\u2013D show the casting and plate-assembly workflow.",
+          "reason": "E5: remove draft-history framing"
+        },
+        {
+          "old": "Black signal on white is the original display convention",
+          "new": "CTB fluorescence is displayed as black signal on white",
+          "reason": "E6: name the display directly"
+        },
+        {
+          "old": "positions suggesting",
+          "new": "positions, suggesting",
+          "reason": "E7: punctuation"
+        },
+        {
+          "old": "Photographs and pin-height measurements are from the original fabrication experiments; panels B and D are schematic and are not to scale.",
+          "new": "Photographs and pin-height measurements are from the original fabrication experiments; panels B and D are schematic and are not to scale. In the procedure described in Supplementary Protocol 1D, the inserts remain on their flexible metal carrier during alignment and bonding; EPDM backing behind the carrier accommodates insert-height differences as the pins seat in the SUEX openings.",
+          "reason": "E4: describe documented procedure, not invisible schematic layers"
+        }
+      ],
+      "comments": [
+        {
+          "anchor": "Complete acquisition parameters, image positions, and analytical procedures are provided in Supplementary Protocol 2.",
+          "text": "Please confirm the historical analysis software/version, stitching/registration and segmentation settings, CTB-positive classification rule, and any manual corrections. The retained handoff does not establish that the same candidate configuration generated every historical count; do not substitute current defaults or silently rerun the observations."
+        },
+        {
+          "anchor": "ProtocolFournier-4748",
+          "text": "Retain this PI-supplied ethics information. Please confirm exact identifier typography and coverage of this preparation before submission."
+        },
+        {
+          "anchor": "Supporting plate frames were fabricated from high-impact polystyrene (HIPS) using a Creality K1C filament printer",
+          "text": "Workbook S3 retains five top layers and a source note of 0.8 mm at 0.20 mm layer height. Please check the native slicer/G-code for the controlling parameter or override; no supplied setting has been silently changed."
+        },
+        {
+          "anchor": "A versioned software and fabrication archive will be deposited for permanent access.",
+          "text": "Before submission, identify the actual archive/deposit and supplied microscopy, ROI/calibration/crop records, exclusion provenance, native printer profiles/G-code and fabrication files. The current ZIP/workbook does not contain all of those files. Keep prospective wording until deposit is complete; no DOI is invented here."
+        },
+        {
+          "anchor": "Representative CTB-647 images at DIV11, from one interior device on each plate",
+          "text": "The three named examples and yellow overlays are present and their IDs match the retained source handoff. Final source-image/crop/ROI/scale preservation still requires comparison with the native records; no biological image was redrawn in this revision."
+        },
+        {
+          "anchor": "Wafer-scale photomask containing 48 two-compartment devices",
+          "text": "Figure 1C artwork revision removes only the tiny conflicting recipe inscription. The unchanged protocol distinguishes about 35 mL mixed, 30 mL dispensed and a 60 mL syringe, with 10:1 base:curing agent. The entire original image is retained as the deleted image revision so rejecting the figure change restores V14."
+        }
+      ],
+      "image_changes": [
+        {
+          "part": "word/media/image1.png",
+          "old_sha256": "0bb1a6cac3381154c4c129c465345f42b4b787daad3beacf8513a6ef494605b1",
+          "new_sha256": "c92023e69a256836cc8f938bfde6670d80380229111dd655bc5c97ace662c275",
+          "removed_text": "Use 60mL of Sylgard 184 in 1:10 ratio",
+          "bounds_px": [
+            280,
+            731,
+            430,
+            744
+          ],
+          "changed_bbox_px": [
+            283,
+            731,
+            429,
+            744
+          ],
+          "reason": "C1: remove conflicting recipe instruction; retain procedure in protocol"
+        }
+      ],
+      "tracked_insertions": 25,
+      "tracked_deletions": 30,
+      "tracked": "/home/ts/.cache/agent-scratch/openhcs-paper/v14-edited/MFD_V14_tracked.docx",
+      "tracked_sha256": "9d2501e242c138f6afb6ca49b299c20d9458ddd9f3d4eb4197bff7689d3b63f3",
+      "native_accept_reject_text_and_media_verified": true,
+      "recording_enabled": true
+    }
+  ],
+  "workbook": {
+    "filename": "OpenMFD_Supplementary_Data_File_1.xlsx",
+    "sha256": "f847aa767ab2dde03ea444ab78725f85f2ad489e0a14ae1ccabc247a6f967588",
+    "unchanged": true
+  }
+}

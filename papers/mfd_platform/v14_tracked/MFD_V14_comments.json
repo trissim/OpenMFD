@@ -1,0 +1,26 @@
+[
+  {
+    "anchor": "Complete acquisition parameters, image positions, and analytical procedures are provided in Supplementary Protocol 2.",
+    "text": "Please confirm the historical analysis software/version, stitching/registration and segmentation settings, CTB-positive classification rule, and any manual corrections. The retained handoff does not establish that the same candidate configuration generated every historical count; do not substitute current defaults or silently rerun the observations."
+  },
+  {
+    "anchor": "ProtocolFournier-4748",
+    "text": "Retain this PI-supplied ethics information. Please confirm exact identifier typography and coverage of this preparation before submission."
+  },
+  {
+    "anchor": "Supporting plate frames were fabricated from high-impact polystyrene (HIPS) using a Creality K1C filament printer",
+    "text": "Workbook S3 retains five top layers and a source note of 0.8 mm at 0.20 mm layer height. Please check the native slicer/G-code for the controlling parameter or override; no supplied setting has been silently changed."
+  },
+  {
+    "anchor": "A versioned software and fabrication archive will be deposited for permanent access.",
+    "text": "Before submission, identify the actual archive/deposit and supplied microscopy, ROI/calibration/crop records, exclusion provenance, native printer profiles/G-code and fabrication files. The current ZIP/workbook does not contain all of those files. Keep prospective wording until deposit is complete; no DOI is invented here."
+  },
+  {
+    "anchor": "Representative CTB-647 images at DIV11, from one interior device on each plate",
+    "text": "The three named examples and yellow overlays are present and their IDs match the retained source handoff. Final source-image/crop/ROI/scale preservation still requires comparison with the native records; no biological image was redrawn in this revision."
+  },
+  {
+    "anchor": "Wafer-scale photomask containing 48 two-compartment devices",
+    "text": "Figure 1C artwork revision removes only the tiny conflicting recipe inscription. The unchanged protocol distinguishes about 35 mL mixed, 30 mL dispensed and a 60 mL syringe, with 10:1 base:curing agent. The entire original image is retained as the deleted image revision so rejecting the figure change restores V14."
+  }
+]
