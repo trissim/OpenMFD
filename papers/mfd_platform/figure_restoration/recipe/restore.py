@@ -136,6 +136,9 @@ class Manuscript(RestoredDocument):
                                  ('Taylor et al. (2015)', '(PMID: 26000554)'),
                                  ('Coquinco et al. (2014)', '(PMID: 24662423)')):
                     caption = caption.replace(old, new)
+            if number == 4:
+                caption = caption.replace('(Protocol S1; mold fabrication in Protocol S2).',
+                                          '(Supplementary Protocol 2; mold fabrication in Supplementary Protocol 1).')
             if number == 5:
                 caption = caption.replace('Scale bars: 5 mm, based on', 'Scale bars: approximately 5 mm, estimated from')
             old = self.paragraph_text(self.paragraph(f'Fig. {number}. '))

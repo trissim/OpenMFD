@@ -1,7 +1,7 @@
 [
   {
     "file": "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/MFD_original_figures_revised.pdf",
-    "sha256": "b52f0ee5fc96b2d9f739896cef131f9c6c755c921eb67a8aea1c0bc7c570db3a",
+    "sha256": "e525ff4bc01f8d80d3ede6fdf719a52a9ef9de486a5e7e21cededeeac1360cf4",
     "page_count": 18,
     "contact_sheets": [
       "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/pdf-review/MFD_original_figures_revised_pages_01-09.jpg",
@@ -158,8 +158,8 @@
           612.0,
           792.0
         ],
-        "characters": 1128,
-        "text": "17\nFig. 4. Reusable-mold casting and assembly of a framed PDMS culture plate. Numbers and connecting arrows give\nthe processing order. (1) The parylene-coated hybrid mold carries the well-forming inserts. (2) Sylgard 184 PDMS,\nmixed at a 10:1 base:curing-agent ratio, is poured below the insert tops so that the wells remain open. (3) Filled\nmolds are degassed together in a wafer rack until bubbles clear. (4) The loaded rack is heated at 100\u00b0C for 1 h. (5)\nThe cured cast is peeled from the mold, starting at the corners. (6) With its channel side facing upward, the cast is\nheld flat with masking tape and trimmed along molded cutting guides to 108 \u00d7 72 mm. (7) The PDMS is plasma-\nbonded to a 110 \u00d7 74 \u00d7 0.17 mm glass sheet. After inspecting the seal, the bonded assembly is autoclaved at 121\u00b0C\nfor 15 min. (8) The bonded array is seated glass-side up in an inverted HIPS frame containing LOCTITE SI 5140\nsilicone adhesive. (9) After a 3-day room-temperature adhesive cure, the plate is turned upright and receives a\nsecond plasma treatment before aqueous coating and culture (Protocol S1; mold fabrication in Protocol S2).\n"
+        "characters": 1154,
+        "text": "17\nFig. 4. Reusable-mold casting and assembly of a framed PDMS culture plate. Numbers and connecting arrows give\nthe processing order. (1) The parylene-coated hybrid mold carries the well-forming inserts. (2) Sylgard 184 PDMS,\nmixed at a 10:1 base:curing-agent ratio, is poured below the insert tops so that the wells remain open. (3) Filled\nmolds are degassed together in a wafer rack until bubbles clear. (4) The loaded rack is heated at 100\u00b0C for 1 h. (5)\nThe cured cast is peeled from the mold, starting at the corners. (6) With its channel side facing upward, the cast is\nheld flat with masking tape and trimmed along molded cutting guides to 108 \u00d7 72 mm. (7) The PDMS is plasma-\nbonded to a 110 \u00d7 74 \u00d7 0.17 mm glass sheet. After inspecting the seal, the bonded assembly is autoclaved at 121\u00b0C\nfor 15 min. (8) The bonded array is seated glass-side up in an inverted HIPS frame containing LOCTITE SI 5140\nsilicone adhesive. (9) After a 3-day room-temperature adhesive cure, the plate is turned upright and receives a\nsecond plasma treatment before aqueous coating and culture (Supplementary Protocol 2; mold fabrication in\nSupplementary Protocol 1).\n"
       },
       {
         "page": 18,
@@ -174,7 +174,7 @@
   },
   {
     "file": "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/Supplementary_Protocol_1_original_figures_revised.pdf",
-    "sha256": "70823f9115d148ab1f90de61c5241c109637d1da308fb6ce667ceec0e3f2cfcd",
+    "sha256": "53c58fe24c6d9170bb802a01471cde68a7db5fb05a414cd3fae53b5c6731bab9",
     "page_count": 6,
     "contact_sheets": [
       "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/pdf-review/Supplementary_Protocol_1_original_figures_revised_pages_01-06.jpg"
@@ -238,7 +238,7 @@
   },
   {
     "file": "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/Supplementary_Protocol_2_original_figures_revised.pdf",
-    "sha256": "ec76436d0f4c4247f580487336135f47d0c5799451ff66f89d79e55b072c4f55",
+    "sha256": "68ae62f76e23b4c153e62c883fadb3c9de4fcc3e4dd02c4a850591b102893859",
     "page_count": 5,
     "contact_sheets": [
       "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/pdf-review/Supplementary_Protocol_2_original_figures_revised_pages_01-05.jpg"

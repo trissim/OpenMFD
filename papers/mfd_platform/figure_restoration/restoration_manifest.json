@@ -5,7 +5,7 @@
       "original": "v14_tracked/MFD_V14_original.docx",
       "revised": "MFD_original_figures_revised.docx",
       "original_sha256": "e7b757e2f11883a87656425e8302741626588430d36da79c8ee4f1489914790e",
-      "revised_sha256": "5d17430fa08f8d0333d5d6d50ea9dfb62c2feefa06f9dc41b1156f5a0f598add",
+      "revised_sha256": "d39abaa6671b6afec9861154312cc18687a555fcfce44d8023b35f1dfe0794e7",
       "edits": [
         {
           "old": "For the demonstrated two-compartment neuronal device, the single-unit photomask places two culture wells on opposite sides of 62 parallel microchannels with a design width of 10 \u00b5m and 30 \u00b5m interchannel gaps (Fig. 1B). The SU-8 channel features and SUEX well bases and alignment openings are represented as distinct coordinated mask layers. Repetition of the unit at 18 \u00d7 9 mm spacing produced a wafer-scale layout comprising 48 two-compartment devices in a 6 \u00d7 8 array, with 96 wells on a standard 9 mm plate grid (Fig. 1C). The corresponding insert models depict the two well-forming structures required for one device and their placement in the complete 96-insert array (Fig. 1D). OpenMFD also generated the matching plate-frame model (Fig. 1E). The assembled microfluidic plate shown in Fig. 1F demonstrates the physical plate format obtained from this coordinated design.",
@@ -129,7 +129,7 @@
         },
         {
           "old": "Fig. 4. Reusable hybrid molds enable repeated casting and assembly of plate-format microfluidic culture devices. (A) Original fabrication schematics showing the completed mold and subsequent PDMS casting below the tops of the retained well-forming inserts. (B) Schematic of a demolded PDMS array containing 48 two-compartment devices and 96 open wells formed directly during casting. (C) Trimming of a released cast and preparation of the glass-backed array. (D) Assembly of the glass-backed PDMS array into a printed supporting frame (schematic), alongside an original photograph of an assembled plate. (E) Recorded manufacturing outcomes: five hybrid molds assembled, three entering routine use, and two lost following wafer fracture or PDMS leakage beneath the wafer. The three routinely used molds collectively produced more than 50 usable PDMS casts; the most recently fabricated molds remained usable for over eight months without visible deterioration. Panel E reports aggregate observations and does not represent per-mold casting yields. Panels A\u2013D show the casting and plate-assembly workflow. ",
-          "new": "Fig. 4. Reusable-mold casting and assembly of a framed PDMS culture plate. Numbers and connecting arrows give the processing order. (1) The parylene-coated hybrid mold carries the well-forming inserts. (2) Sylgard 184 PDMS, mixed at a 10:1 base:curing-agent ratio, is poured below the insert tops so that the wells remain open. (3) Filled molds are degassed together in a wafer rack until bubbles clear. (4) The loaded rack is heated at 100\u00b0C for 1 h. (5) The cured cast is peeled from the mold, starting at the corners. (6) With its channel side facing upward, the cast is held flat with masking tape and trimmed along molded cutting guides to 108 \u00d7 72 mm. (7) The PDMS is plasma-bonded to a 110 \u00d7 74 \u00d7 0.17 mm glass sheet. After inspecting the seal, the bonded assembly is autoclaved at 121\u00b0C for 15 min. (8) The bonded array is seated glass-side up in an inverted HIPS frame containing LOCTITE SI 5140 silicone adhesive. (9) After a 3-day room-temperature adhesive cure, the plate is turned upright and receives a second plasma treatment before aqueous coating and culture (Protocol S1; mold fabrication in Protocol S2).",
+          "new": "Fig. 4. Reusable-mold casting and assembly of a framed PDMS culture plate. Numbers and connecting arrows give the processing order. (1) The parylene-coated hybrid mold carries the well-forming inserts. (2) Sylgard 184 PDMS, mixed at a 10:1 base:curing-agent ratio, is poured below the insert tops so that the wells remain open. (3) Filled molds are degassed together in a wafer rack until bubbles clear. (4) The loaded rack is heated at 100\u00b0C for 1 h. (5) The cured cast is peeled from the mold, starting at the corners. (6) With its channel side facing upward, the cast is held flat with masking tape and trimmed along molded cutting guides to 108 \u00d7 72 mm. (7) The PDMS is plasma-bonded to a 110 \u00d7 74 \u00d7 0.17 mm glass sheet. After inspecting the seal, the bonded assembly is autoclaved at 121\u00b0C for 15 min. (8) The bonded array is seated glass-side up in an inverted HIPS frame containing LOCTITE SI 5140 silicone adhesive. (9) After a 3-day room-temperature adhesive cure, the plate is turned upright and receives a second plasma treatment before aqueous coating and culture (Supplementary Protocol 2; mold fabrication in Supplementary Protocol 1).",
           "reason": "Restore original legend, retaining citation and scale qualifications"
         },
         {
@@ -183,7 +183,7 @@
       "comparison_baseline": "MFD_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "MFD_original_figures_tracked.docx",
-      "tracked_sha256": "b4a89bd5d6cf0e2906394151932c66ea291eb800048a9cb6a8b553cdb12d4c68",
+      "tracked_sha256": "1a20de9b0da6e504e53da94f3a0444df5394b442eeb3dc36e439542a17e0e810",
       "native_endpoints_verified": true
     },
     {
@@ -222,7 +222,7 @@
       "comparison_baseline": "Supplementary_Protocol_1_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_1_original_figures_tracked.docx",
-      "tracked_sha256": "d3e06c86c3610920d526ae8ba0859d5bdb3804dcac2ef00fa05eff00310cc603",
+      "tracked_sha256": "772cd33ed5023d83bffa90d5f093193da1b39a94a61e5b7a8ee48f586c90e30d",
       "native_endpoints_verified": true
     },
     {
@@ -235,7 +235,7 @@
       "comparison_baseline": "Supplementary_Protocol_2_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_2_original_figures_tracked.docx",
-      "tracked_sha256": "90d2da84826d59886cd7af665a41aa2211afddd24700216e5914e98d68da8b04",
+      "tracked_sha256": "8519acc2257e3ae5f7f0a710c327929a9c39b344993a25ae7afab1e05554d1ed",
       "native_endpoints_verified": true
     }
   ],
