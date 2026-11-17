@@ -1,0 +1,71 @@
+{
+  "documents": [
+    {
+      "file": "MFD_original_figures_tracked.docx",
+      "insertions": 64,
+      "deletions": 89,
+      "comments": 5,
+      "references_preserved": true,
+      "recording_enabled": true,
+      "native_accept_reject_text_media": true
+    },
+    {
+      "file": "Supplementary_Protocol_1_original_figures_tracked.docx",
+      "insertions": 123,
+      "deletions": 75,
+      "comments": 0,
+      "references_preserved": true,
+      "recording_enabled": true,
+      "native_accept_reject_text_media": true
+    },
+    {
+      "file": "Supplementary_Protocol_2_original_figures_tracked.docx",
+      "insertions": 6,
+      "deletions": 6,
+      "comments": 1,
+      "references_preserved": true,
+      "recording_enabled": true,
+      "native_accept_reject_text_media": true
+    }
+  ],
+  "baseline": "Returned MFD V14 (latest PI prose located)",
+  "figure_order": [
+    "1",
+    "2",
+    "3",
+    "4",
+    "5"
+  ],
+  "supplementary_figure_order": [
+    "S1",
+    "S2",
+    "S3"
+  ],
+  "original_main_image_hashes": [
+    "4791cf190333d75c83ea04b758cf0bd2b179e62f5c864ba83c52ec70cd927296",
+    "14faa64f4a8aa2c42ba2c2edd0c48ac26d7acd38a7bdecb2d7cf7b815af3302b",
+    "4dfb2f5a0ec63a7f06ff89f780cdbdb5aa9d46adf49ad32b4f2a0412d95ade2c",
+    "f855ec072dab4ebb4ea7eeb0f2b2ae25ecb256c66ed4e3a12a0224fc4e5a1a75",
+    "9674e4ee7c31188165216be99b1e686921ac632e416dccfe22c4d13acde8b103"
+  ],
+  "design_table_rows_in_S6": 12,
+  "original_workbook_cells_and_styles_byte_identical": true,
+  "fabrication_comparison_approaches": 11,
+  "pdfs": [
+    {
+      "file": "MFD_original_figures_revised.pdf",
+      "pages": 18,
+      "sha256": "b52f0ee5fc96b2d9f739896cef131f9c6c755c921eb67a8aea1c0bc7c570db3a"
+    },
+    {
+      "file": "Supplementary_Protocol_1_original_figures_revised.pdf",
+      "pages": 6,
+      "sha256": "70823f9115d148ab1f90de61c5241c109637d1da308fb6ce667ceec0e3f2cfcd"
+    },
+    {
+      "file": "Supplementary_Protocol_2_original_figures_revised.pdf",
+      "pages": 5,
+      "sha256": "ec76436d0f4c4247f580487336135f47d0c5799451ff66f89d79e55b072c4f55"
+    }
+  ]
+}

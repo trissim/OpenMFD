@@ -1,17 +1,21 @@
 # OpenMFD platform manuscript
 
-Read the latest successful [manuscript PDF](current/openmfd_manuscript.pdf),
-[supplement PDF](current/openmfd_supplement.pdf), or
-[combined review PDF](current/openmfd_review.pdf). DOCX files, input/output/tool
-provenance and complete build logs are beside them. All three switch together.
+The current PI-based revision is the [original-figure restoration package](figure_restoration/README.md):
+[tracked manuscript](figure_restoration/MFD_original_figures_tracked.docx) and
+[reading PDF](figure_restoration/MFD_original_figures_revised.pdf), with both
+protocols and the data workbook alongside. Its baseline is Alyson's returned V14;
+her prose is retained while the original full figures, legends and their callouts
+are restored. Use that package's recipe for this revision.
 
-Edit [manuscript.md](manuscript.md) for the main text and files in
+The `current/` links and Markdown build below describe the earlier pre-PI draft.
+Do not rebuild that draft over the returned prose. The earlier source is
+[manuscript.md](manuscript.md), with files in
 [supplementary](supplementary/) for supplementary text. The single ordered
 supplement declaration is in [build_paper.py](build_paper.py); the combined
 review derives these same two declarations and parsed inputs. Missing sections
 fail rather than being silently omitted. The old paper.md path is only a pointer.
 
-## Supplementary text and data
+## Earlier Markdown supplement and data
 
 The supplement opens with the two protocols, followed by illustrated fabrication
 troubleshooting, one design-dimension table and the apparent-width note. The full
@@ -30,7 +34,7 @@ Supply these linked files with the supplement when preparing submission files;
 the build records and retains them as supporting inputs rather than typesetting
 every measurement and setting.
 
-## Build a reading copy
+## Build the earlier Markdown reading copy
 
 Use a build-only environment, not the OpenMFD runtime environment. Install
 Pandoc, LibreOffice and Poppler on Linux, then install the pinned shared package:
