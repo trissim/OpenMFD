@@ -2,13 +2,14 @@
 
 ## Reading files
 
-- [Tracked manuscript](MFD_original_figures_tracked.docx)
-- [Clean manuscript PDF](MFD_original_figures_revised.pdf) — 18 pages
+- **Read:** [clean manuscript Word](prose_review/MFD_for_Alyson_reading.docx) or [PDF](prose_review/MFD_for_Alyson_reading.pdf) — 18 pages
+- **Review wording:** [prose redline](prose_review/MFD_for_Alyson_prose_redline.docx) — only Tristan's five figures; wording, caption and reference corrections remain tracked
+- [Earlier full comparison](MFD_original_figures_tracked.docx) — preserves deleted and replacement pictures; not the current reading/review copy
 - [Tracked Protocol 1](Supplementary_Protocol_1_original_figures_tracked.docx) and [reading PDF](Supplementary_Protocol_1_original_figures_revised.pdf) — 6 pages
 - [Tracked Protocol 2](Supplementary_Protocol_2_original_figures_tracked.docx) and [reading PDF](Supplementary_Protocol_2_original_figures_revised.pdf) — 5 pages
 - [Supplementary Data File 1](OpenMFD_Supplementary_Data_File_1.xlsx) — original five sheets preserved; complete design table moved to S6
 
-All three tracked files have actual unaccepted revisions and further Track Changes recording enabled. Original/revised copies and the previous delivery remain in `../v14_tracked/`. Files named `comparison_baseline` are comparison inputs, not reading copies.
+The prose redline fixes the final figures on both sides of the comparison: rejecting text edits restores Alyson's prose, not her pictures. See [the review notes](prose_review/README.md). All tracked files retain actual unaccepted text revisions and further Track Changes recording enabled. Original/revised copies and the previous delivery remain in `../v14_tracked/`. Files named `comparison_baseline` are comparison inputs, not reading copies.
 
 ## Changes
 
