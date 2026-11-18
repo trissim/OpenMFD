@@ -1,0 +1,36 @@
+{
+  "scope": "Prose-only redline. Tristan original figures are fixed in both views. Full earlier comparison preserved.",
+  "original_text_unchanged_in_comparison_baseline": true,
+  "references_preserved": true,
+  "native_accept_all": "Final reading text and five final figures",
+  "native_reject_all": "Original Alyson prose and the SAME five final figures; artwork is intentionally not redlined",
+  "drawings": 5,
+  "image_revisions": 0,
+  "insertions": 59,
+  "deletions": 84,
+  "retained_inputs": {
+    "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/v14_tracked/MFD_V14_original.docx": "e7b757e2f11883a87656425e8302741626588430d36da79c8ee4f1489914790e",
+    "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/MFD_original_figures_revised.docx": "d39abaa6671b6afec9861154312cc18687a555fcfce44d8023b35f1dfe0794e7",
+    "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/MFD_original_figures_tracked.docx": "1a20de9b0da6e504e53da94f3a0444df5394b442eeb3dc36e439542a17e0e810",
+    "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/MFD_original_figures_revised.pdf": "e525ff4bc01f8d80d3ede6fdf719a52a9ef9de486a5e7e21cededeeac1360cf4"
+  },
+  "files": [
+    {
+      "name": "MFD_for_Alyson_reading.docx",
+      "bytes": 11978755,
+      "sha256": "d39abaa6671b6afec9861154312cc18687a555fcfce44d8023b35f1dfe0794e7"
+    },
+    {
+      "name": "MFD_for_Alyson_reading.pdf",
+      "bytes": 12579929,
+      "sha256": "e525ff4bc01f8d80d3ede6fdf719a52a9ef9de486a5e7e21cededeeac1360cf4"
+    },
+    {
+      "name": "MFD_for_Alyson_prose_redline.docx",
+      "bytes": 11776460,
+      "sha256": "2cba8be200829bae1e9af546db4168ffb6cc1041842412289a910551523bcb88"
+    }
+  ],
+  "non_picture_revisions_identical_to_full_comparison": true,
+  "all_comment_texts_unchanged": 5
+}
