@@ -94,12 +94,17 @@ def main():
     with ZipFile(root / 'v14_tracked/OpenMFD_Supplementary_Data_File_1.xlsx') as original, ZipFile(out / 'OpenMFD_Supplementary_Data_File_1.xlsx') as revised:
         for name in original.namelist():
             if name.startswith(('xl/worksheets/', 'xl/sharedStrings', 'xl/styles')):
-                assert original.read(name) == revised.read(name), name
+                expected = original.read(name)
+                if name == 'xl/worksheets/sheet1.xml':
+                    expected = expected.replace(b'<x:v>Main Figure 3G</x:v>',
+                                                b'<x:v>Supplementary data only; not plotted in a main figure</x:v>')
+                assert expected == revised.read(name), name
         sheet = ET.fromstring(revised.read('xl/worksheets/sheet6.xml'))
         rows = [[ ''.join(c.itertext()) for c in row] for row in sheet.find(S + 'sheetData')]
         assert rows == manifest['design_rows']
     report['design_table_rows_in_S6'] = len(rows)
     report['original_workbook_cells_and_styles_byte_identical'] = True
+    report['sheet1_provenance_note_updated_from_main_figure_3g'] = True
     report['fabrication_comparison_approaches'] = len(actual) - 1
 
     report['pdfs'] = []

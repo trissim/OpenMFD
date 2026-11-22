@@ -188,7 +188,7 @@
       "comparison_baseline": "MFD_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "MFD_original_figures_tracked.docx",
-      "tracked_sha256": "23897dc8c97c9d88700c55327dd8e60e03da49f48af6697414e952fffd58c3bc",
+      "tracked_sha256": "37f98fed86bd81f564b81ceb96d929fd6791d032b0a8cda591509ed9920fab10",
       "native_endpoints_verified": true
     },
     {
@@ -227,7 +227,7 @@
       "comparison_baseline": "Supplementary_Protocol_1_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_1_original_figures_tracked.docx",
-      "tracked_sha256": "0238fbacf90a615bb6401b509b6042242c2a610b862c72678058a26af9f3f2d9",
+      "tracked_sha256": "d8942161fbf74d2a71f931fd6d3e0e4a90c4ffc506e68011cc615cb60f837421",
       "native_endpoints_verified": true
     },
     {
@@ -240,7 +240,7 @@
       "comparison_baseline": "Supplementary_Protocol_2_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_2_original_figures_tracked.docx",
-      "tracked_sha256": "323365152c68a3e2204664bf227c67283f314dd2420887227824d6fa8602bae0",
+      "tracked_sha256": "eef4999965bd4c25b54b5ae1e330e8f452dad6b2d3467f0df44a4cb14353813f",
       "native_endpoints_verified": true
     }
   ],

@@ -372,13 +372,23 @@ def workbook(original: Path, output: Path, rows: list[list[str]]) -> None:
         minidom.parseString(entries[name][1])
     name = f'xl/worksheets/sheet{identifier}.xml'
     entries[name] = (name, xml.toxml(encoding='utf-8'))
+    # The main figures no longer include a panel 3G; point the provenance note at what exists.
+    heights = entries['xl/worksheets/sheet1.xml']
+    stale = b'<x:v>Main Figure 3G</x:v>'
+    assert heights[1].count(stale) == 1
+    entries['xl/worksheets/sheet1.xml'] = (heights[0], heights[1].replace(
+        stale, b'<x:v>Supplementary data only; not plotted in a main figure</x:v>'))
     with ZipFile(output, 'w', compression=ZIP_DEFLATED) as archive:
         for entry, payload in entries.values():
             archive.writestr(entry, payload)
     with ZipFile(original) as old, ZipFile(output) as new:
         for name in old.namelist():
             if name.startswith(('xl/worksheets/', 'xl/sharedStrings', 'xl/styles')):
-                assert old.read(name) == new.read(name), name
+                expected = old.read(name)
+                if name == 'xl/worksheets/sheet1.xml':
+                    expected = expected.replace(b'<x:v>Main Figure 3G</x:v>',
+                                                b'<x:v>Supplementary data only; not plotted in a main figure</x:v>')
+                assert expected == new.read(name), name
 
 
 def main() -> None:
