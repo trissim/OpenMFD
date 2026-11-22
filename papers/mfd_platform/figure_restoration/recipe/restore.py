@@ -315,9 +315,10 @@ def workbook(original: Path, output: Path, rows: list[list[str]]) -> None:
         entries = {e.filename: (e, archive.read(e.filename)) for e in archive.infolist()}
     book = minidom.parseString(entries['xl/workbook.xml'][1])
     sheets = book.getElementsByTagNameNS(S, 'sheets')[0]
-    if any(n.getAttribute('name') == 'S6' for n in sheets.childNodes if n.nodeType == n.ELEMENT_NODE):
+    declared = [n for n in sheets.childNodes if n.nodeType == n.ELEMENT_NODE]
+    if any(n.getAttribute('name').startswith('S6') for n in declared):
         raise ValueError('Source workbook already has S6')
-    identifiers = [int(n.getAttribute('sheetId')) for n in sheets.childNodes if n.nodeType == n.ELEMENT_NODE]
+    identifiers = [int(n.getAttribute('sheetId')) for n in declared]
     identifier = max(identifiers) + 1
     rels = minidom.parseString(entries['xl/_rels/workbook.xml.rels'][1])
     rel = rels.createElementNS(rels.documentElement.namespaceURI, 'Relationship')
@@ -326,8 +327,11 @@ def workbook(original: Path, output: Path, rows: list[list[str]]) -> None:
     rel.setAttribute('Type', R + '/worksheet')
     rel.setAttribute('Target', f'worksheets/sheet{identifier}.xml')
     rels.documentElement.appendChild(rel)
-    sheet = book.createElementNS(S, 'sheet')
-    sheet.setAttribute('name', 'S6'); sheet.setAttribute('sheetId', str(identifier))
+    # minidom writes names as given: the new entry copies its siblings' prefix
+    # and relationship-namespace declaration, or the workbook is not XML at all.
+    sheet = book.createElementNS(S, declared[0].tagName)
+    sheet.setAttribute('xmlns:r', R)
+    sheet.setAttribute('name', 'S6 Design specifications'); sheet.setAttribute('sheetId', str(identifier))
     sheet.setAttributeNS(R, 'r:id', rid); sheets.appendChild(sheet)
     xml = minidom.parseString(f'<worksheet xmlns="{S}"><sheetData/></worksheet>')
     data = xml.getElementsByTagNameNS(S, 'sheetData')[0]
@@ -361,6 +365,7 @@ def workbook(original: Path, output: Path, rows: list[list[str]]) -> None:
     types.documentElement.appendChild(content)
     for name, document in [('xl/workbook.xml', book), ('xl/_rels/workbook.xml.rels', rels), ('[Content_Types].xml', types)]:
         entries[name] = (entries[name][0], document.toxml(encoding='utf-8'))
+        minidom.parseString(entries[name][1])
     name = f'xl/worksheets/sheet{identifier}.xml'
     entries[name] = (name, xml.toxml(encoding='utf-8'))
     with ZipFile(output, 'w', compression=ZIP_DEFLATED) as archive:
