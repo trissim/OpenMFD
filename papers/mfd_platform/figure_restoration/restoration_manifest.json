@@ -188,14 +188,14 @@
       "comparison_baseline": "MFD_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "MFD_original_figures_tracked.docx",
-      "tracked_sha256": "37f98fed86bd81f564b81ceb96d929fd6791d032b0a8cda591509ed9920fab10",
+      "tracked_sha256": "ceef94f926eeff68b48d7d529e37caa548d44d5bb67aa543a1e23b7a87041009",
       "native_endpoints_verified": true
     },
     {
       "original": "v14_tracked/Supplementary_Protocol_1_V14_original.docx",
       "revised": "Supplementary_Protocol_1_original_figures_revised.docx",
       "original_sha256": "24aea434819455b2e5aa8db223704f048a003a617af1d9d2a2b7b4616fcf8388",
-      "revised_sha256": "1b3932934ee21a7588d6e0f0377652955b5266ed998548e1861ac437bfde7b98",
+      "revised_sha256": "a5281cb4606fc55ea34e48e4e710119dc9185c93154422c87ed6842166deb111",
       "edits": [
         {
           "old": "The values in Table S1 describe",
@@ -227,7 +227,7 @@
       "comparison_baseline": "Supplementary_Protocol_1_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_1_original_figures_tracked.docx",
-      "tracked_sha256": "d8942161fbf74d2a71f931fd6d3e0e4a90c4ffc506e68011cc615cb60f837421",
+      "tracked_sha256": "ea6bac4ac660a3d1fbcb849d7bcf259c33324e3f77ed36b375c37aa7105ffefd",
       "native_endpoints_verified": true
     },
     {
@@ -240,7 +240,7 @@
       "comparison_baseline": "Supplementary_Protocol_2_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_2_original_figures_tracked.docx",
-      "tracked_sha256": "eef4999965bd4c25b54b5ae1e330e8f452dad6b2d3467f0df44a4cb14353813f",
+      "tracked_sha256": "1470231f228b77dd430585f8c15a164bc3c833ca664c269fc6d347087cd1d8ac",
       "native_endpoints_verified": true
     }
   ],

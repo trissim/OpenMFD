@@ -63,6 +63,13 @@ class RestoredDocument(V14Document):
     def paragraph_node(self, text: str):
         paragraph = self.document.createElementNS(W, 'w:p')
         run = self.document.createElementNS(W, 'w:r')
+        # Match the document's Times New Roman; the theme default would substitute another face.
+        properties = self.document.createElementNS(W, 'w:rPr')
+        fonts = self.document.createElementNS(W, 'w:rFonts')
+        for key in ('ascii', 'hAnsi', 'cs'):
+            fonts.setAttributeNS(W, 'w:' + key, 'Times New Roman')
+        properties.appendChild(fonts)
+        run.appendChild(properties)
         node = self.document.createElementNS(W, 'w:t')
         node.appendChild(self.document.createTextNode(text))
         run.appendChild(node)
@@ -290,9 +297,8 @@ class MoldProtocol(RestoredDocument):
                 spacing.setAttributeNS(W, 'w:after', '40'); spacing.setAttributeNS(W, 'w:line', '240')
                 properties.appendChild(spacing); paragraph.insertBefore(properties, paragraph.firstChild)
                 run = paragraph.getElementsByTagNameNS(W, 'r')[0]
-                properties = self.document.createElementNS(W, 'w:rPr')
+                properties = run.getElementsByTagNameNS(W, 'rPr')[0]
                 size = self.document.createElementNS(W, 'w:sz'); size.setAttributeNS(W, 'w:val', '18'); properties.appendChild(size)
-                run.insertBefore(properties, run.firstChild)
                 cell.appendChild(paragraph); row.appendChild(cell)
             comparison.appendChild(row)
         body.insertBefore(comparison, end)
