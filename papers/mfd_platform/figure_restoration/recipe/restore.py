@@ -33,7 +33,11 @@ class RestoredDocument(V14Document):
         text = self.paragraph_text(paragraph)
         if old not in text:
             raise ValueError((anchor, old))
-        self.replace(text, text.replace(old, new), 'Match restored figure/table content')
+        # Replace only the changed words: replacing the whole paragraph text would
+        # pour it all into the first run, turning a bold run-in heading into a bold paragraph.
+        # Last occurrence first, so earlier positions stay valid.
+        for index in reversed(range(text.count(old))):
+            self.replace(old, new, 'Match restored figure/table content', paragraph=paragraph, occurrence=index)
 
     def separate_images(self) -> None:
         """Use inline image paragraphs; floating anchors confuse native comparison."""
