@@ -56,17 +56,17 @@
     {
       "file": "MFD_original_figures_revised.pdf",
       "pages": 18,
-      "sha256": "d3cdb5184387a6014f8a517c1aa411c15933e08ed3ea37c631a4fb2de4523087"
+      "sha256": "acae3ee84ca222ad65bb80cf593b913f0c40bc93e55a15a57d79abb950fd35c8"
     },
     {
       "file": "Supplementary_Protocol_1_original_figures_revised.pdf",
       "pages": 6,
-      "sha256": "b88d634e2fab540a76528169d20a50b5461280ea10816ba8720d29814e667cd8"
+      "sha256": "887748a23a67fc40a77a3a1aabd9ff4f15edb750dd6b3f7fe20c7e547d1df33d"
     },
     {
       "file": "Supplementary_Protocol_2_original_figures_revised.pdf",
       "pages": 5,
-      "sha256": "61c0b8dbbe4fe7d774297a57dc4cc5d2d0557b3e7f9fe5f01ab3263f65a9655a"
+      "sha256": "855f43c7ccb6a392e5505d99d301345767985128a51e3d6a32aa0b59893a93bb"
     }
   ]
 }

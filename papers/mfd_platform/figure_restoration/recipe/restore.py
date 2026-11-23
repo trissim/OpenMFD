@@ -143,9 +143,9 @@ class Manuscript(RestoredDocument):
             number = int(number)
             caption = re.sub(r'^Figure \d+:', f'Fig. {number}.', caption).replace('**', '')
             if number == 2:
-                for old, new in (('Kerman et al. (2015)', '(PMID: 26015546)'),
-                                 ('Taylor et al. (2015)', '(PMID: 26000554)'),
-                                 ('Coquinco et al. (2014)', '(PMID: 24662423)')):
+                for old, new in (('inspired by Kerman et al. (2015)', 'inspired by a published myelination assay (PMID: 26015546)'),
+                                 ('inspired by Taylor et al. (2015)', 'inspired by a microfluidic gradient platform (PMID: 26000554)'),
+                                 ('inspired by Coquinco et al. (2014)', 'inspired by a model of synaptic competition (PMID: 24662423)')):
                     caption = caption.replace(old, new)
             if number == 4:
                 caption = caption.replace('(Protocol S1; mold fabrication in Protocol S2).',
@@ -175,6 +175,14 @@ class Manuscript(RestoredDocument):
             self.image_changes.append({'figure': number, 'asset': str(asset.relative_to(self.root)),
                                        'sha256': sha(asset), 'part': name, 'width': width, 'height': height})
         self.layout_figures()
+        # Word's auto-fit footer frame is 13.45pt wide (cx=170815), which LibreOffice wraps
+        # vertically for two-digit page numbers ("1\n5"). Widening to 36pt fixes both PDF and Word.
+        for name in list(self.entries):
+            if name.startswith('word/footer') and name.endswith('.xml'):
+                entry, data = self.entries[name]
+                if b'cx="170815"' in data:
+                    data = data.replace(b'cx="170815"', b'cx="457200"').replace(b'width:13.45pt', b'width:36pt')
+                    self.entries[name] = (entry, data)
 
     def layout_figures(self) -> None:
         """Keep each restored composite and complete legend on one reading page."""
