@@ -2,6 +2,7 @@
   "scope": "Prose-only redline. Tristan original figures are fixed in both views. Full earlier comparison preserved.",
   "original_text_unchanged_in_comparison_baseline": true,
   "references_preserved": true,
+  "non_picture_revisions_identical_to_full_comparison": true,
   "native_accept_all": "Final reading text and five final figures",
   "native_reject_all": "Original Alyson prose and the SAME five final figures; artwork is intentionally not redlined",
   "drawings": 5,
@@ -9,28 +10,26 @@
   "insertions": 59,
   "deletions": 84,
   "retained_inputs": {
-    "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/v14_tracked/MFD_V14_original.docx": "e7b757e2f11883a87656425e8302741626588430d36da79c8ee4f1489914790e",
-    "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/MFD_original_figures_revised.docx": "d39abaa6671b6afec9861154312cc18687a555fcfce44d8023b35f1dfe0794e7",
-    "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/MFD_original_figures_tracked.docx": "1a20de9b0da6e504e53da94f3a0444df5394b442eeb3dc36e439542a17e0e810",
-    "/home/ts/wt/mfd--81533fcd85c44f248fd19b12c53dec11--mfd/papers/mfd_platform/figure_restoration/MFD_original_figures_revised.pdf": "e525ff4bc01f8d80d3ede6fdf719a52a9ef9de486a5e7e21cededeeac1360cf4"
+    "/run/media/ts/nvme2/alyson-delivery-20261123/_work/OpenMFD/papers/mfd_platform/v14_tracked/MFD_V14_original.docx": "e7b757e2f11883a87656425e8302741626588430d36da79c8ee4f1489914790e",
+    "/run/media/ts/nvme2/alyson-delivery-20261123/_work/OpenMFD/papers/mfd_platform/figure_restoration/MFD_original_figures_revised.docx": "24fae97dd3861c27da6138cb82a7e0311d3e2deccc50635251b2f7165bbc38ee",
+    "/run/media/ts/nvme2/alyson-delivery-20261123/_work/OpenMFD/papers/mfd_platform/figure_restoration/MFD_original_figures_tracked.docx": "ce427689232ce164c8ff67195253dd7d75f2da4441df6839d82fde645dd71071",
+    "/run/media/ts/nvme2/alyson-delivery-20261123/_work/OpenMFD/papers/mfd_platform/figure_restoration/MFD_original_figures_revised.pdf": "acae3ee84ca222ad65bb80cf593b913f0c40bc93e55a15a57d79abb950fd35c8"
   },
   "files": [
     {
       "name": "MFD_for_Alyson_reading.docx",
-      "bytes": 11978755,
-      "sha256": "d39abaa6671b6afec9861154312cc18687a555fcfce44d8023b35f1dfe0794e7"
+      "bytes": 11978773,
+      "sha256": "24fae97dd3861c27da6138cb82a7e0311d3e2deccc50635251b2f7165bbc38ee"
     },
     {
       "name": "MFD_for_Alyson_reading.pdf",
-      "bytes": 12579929,
-      "sha256": "e525ff4bc01f8d80d3ede6fdf719a52a9ef9de486a5e7e21cededeeac1360cf4"
+      "bytes": 8297633,
+      "sha256": "acae3ee84ca222ad65bb80cf593b913f0c40bc93e55a15a57d79abb950fd35c8"
     },
     {
       "name": "MFD_for_Alyson_prose_redline.docx",
-      "bytes": 11776460,
-      "sha256": "2cba8be200829bae1e9af546db4168ffb6cc1041842412289a910551523bcb88"
+      "bytes": 11776459,
+      "sha256": "02375ce05dfcabfeaa285f516cca27de6d40d329aaa9a336b7c676b11437d96d"
     }
-  ],
-  "non_picture_revisions_identical_to_full_comparison": true,
-  "all_comment_texts_unchanged": 5
+  ]
 }

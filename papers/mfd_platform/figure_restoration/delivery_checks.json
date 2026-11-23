@@ -50,22 +50,23 @@
   ],
   "design_table_rows_in_S6": 12,
   "original_workbook_cells_and_styles_byte_identical": true,
+  "sheet1_provenance_note_updated_from_main_figure_3g": true,
   "fabrication_comparison_approaches": 11,
   "pdfs": [
     {
       "file": "MFD_original_figures_revised.pdf",
       "pages": 18,
-      "sha256": "e525ff4bc01f8d80d3ede6fdf719a52a9ef9de486a5e7e21cededeeac1360cf4"
+      "sha256": "acae3ee84ca222ad65bb80cf593b913f0c40bc93e55a15a57d79abb950fd35c8"
     },
     {
       "file": "Supplementary_Protocol_1_original_figures_revised.pdf",
       "pages": 6,
-      "sha256": "53c58fe24c6d9170bb802a01471cde68a7db5fb05a414cd3fae53b5c6731bab9"
+      "sha256": "887748a23a67fc40a77a3a1aabd9ff4f15edb750dd6b3f7fe20c7e547d1df33d"
     },
     {
       "file": "Supplementary_Protocol_2_original_figures_revised.pdf",
       "pages": 5,
-      "sha256": "68ae62f76e23b4c153e62c883fadb3c9de4fcc3e4dd02c4a850591b102893859"
+      "sha256": "855f43c7ccb6a392e5505d99d301345767985128a51e3d6a32aa0b59893a93bb"
     }
   ]
 }

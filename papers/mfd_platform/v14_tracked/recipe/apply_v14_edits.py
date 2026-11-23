@@ -54,12 +54,16 @@ class V14Document(ABC):
             raise ValueError(f'{self.source_name}: expected one paragraph for {anchor!r}, found {len(matches)}')
         return matches[0]
 
-    def replace(self, old: str, new: str, reason: str) -> None:
-        paragraph = self.paragraph(old)
+    def replace(self, old: str, new: str, reason: str, paragraph=None, occurrence=None) -> None:
+        # An explicit paragraph lets a caller replace just the changed words, so the
+        # surrounding runs (for example a bold run-in heading) keep their formatting.
+        paragraph = paragraph if paragraph is not None else self.paragraph(old)
         text = self.paragraph_text(paragraph)
-        if text.count(old) != 1:
+        if occurrence is None and text.count(old) != 1:
             raise ValueError(f'Nonunique edit text: {old!r}')
         start = text.index(old)
+        for _ in range(occurrence or 0):
+            start = text.index(old, start + 1)
         end = start + len(old)
         offset = 0
         inserted = False

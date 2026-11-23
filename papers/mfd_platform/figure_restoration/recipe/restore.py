@@ -33,7 +33,11 @@ class RestoredDocument(V14Document):
         text = self.paragraph_text(paragraph)
         if old not in text:
             raise ValueError((anchor, old))
-        self.replace(text, text.replace(old, new), 'Match restored figure/table content')
+        # Replace only the changed words: replacing the whole paragraph text would
+        # pour it all into the first run, turning a bold run-in heading into a bold paragraph.
+        # Last occurrence first, so earlier positions stay valid.
+        for index in reversed(range(text.count(old))):
+            self.replace(old, new, 'Match restored figure/table content', paragraph=paragraph, occurrence=index)
 
     def separate_images(self) -> None:
         """Use inline image paragraphs; floating anchors confuse native comparison."""
@@ -59,6 +63,13 @@ class RestoredDocument(V14Document):
     def paragraph_node(self, text: str):
         paragraph = self.document.createElementNS(W, 'w:p')
         run = self.document.createElementNS(W, 'w:r')
+        # Match the document's Times New Roman; the theme default would substitute another face.
+        properties = self.document.createElementNS(W, 'w:rPr')
+        fonts = self.document.createElementNS(W, 'w:rFonts')
+        for key in ('ascii', 'hAnsi', 'cs'):
+            fonts.setAttributeNS(W, 'w:' + key, 'Times New Roman')
+        properties.appendChild(fonts)
+        run.appendChild(properties)
         node = self.document.createElementNS(W, 'w:t')
         node.appendChild(self.document.createTextNode(text))
         run.appendChild(node)
@@ -132,9 +143,9 @@ class Manuscript(RestoredDocument):
             number = int(number)
             caption = re.sub(r'^Figure \d+:', f'Fig. {number}.', caption).replace('**', '')
             if number == 2:
-                for old, new in (('Kerman et al. (2015)', '(PMID: 26015546)'),
-                                 ('Taylor et al. (2015)', '(PMID: 26000554)'),
-                                 ('Coquinco et al. (2014)', '(PMID: 24662423)')):
+                for old, new in (('inspired by Kerman et al. (2015)', 'inspired by a published myelination assay (PMID: 26015546)'),
+                                 ('inspired by Taylor et al. (2015)', 'inspired by a microfluidic gradient platform (PMID: 26000554)'),
+                                 ('inspired by Coquinco et al. (2014)', 'inspired by a model of synaptic competition (PMID: 24662423)')):
                     caption = caption.replace(old, new)
             if number == 4:
                 caption = caption.replace('(Protocol S1; mold fabrication in Protocol S2).',
@@ -164,6 +175,14 @@ class Manuscript(RestoredDocument):
             self.image_changes.append({'figure': number, 'asset': str(asset.relative_to(self.root)),
                                        'sha256': sha(asset), 'part': name, 'width': width, 'height': height})
         self.layout_figures()
+        # Word's auto-fit footer frame is 13.45pt wide (cx=170815), which LibreOffice wraps
+        # vertically for two-digit page numbers ("1\n5"). Widening to 36pt fixes both PDF and Word.
+        for name in list(self.entries):
+            if name.startswith('word/footer') and name.endswith('.xml'):
+                entry, data = self.entries[name]
+                if b'cx="170815"' in data:
+                    data = data.replace(b'cx="170815"', b'cx="457200"').replace(b'width:13.45pt', b'width:36pt')
+                    self.entries[name] = (entry, data)
 
     def layout_figures(self) -> None:
         """Keep each restored composite and complete legend on one reading page."""
@@ -286,9 +305,8 @@ class MoldProtocol(RestoredDocument):
                 spacing.setAttributeNS(W, 'w:after', '40'); spacing.setAttributeNS(W, 'w:line', '240')
                 properties.appendChild(spacing); paragraph.insertBefore(properties, paragraph.firstChild)
                 run = paragraph.getElementsByTagNameNS(W, 'r')[0]
-                properties = self.document.createElementNS(W, 'w:rPr')
+                properties = run.getElementsByTagNameNS(W, 'rPr')[0]
                 size = self.document.createElementNS(W, 'w:sz'); size.setAttributeNS(W, 'w:val', '18'); properties.appendChild(size)
-                run.insertBefore(properties, run.firstChild)
                 cell.appendChild(paragraph); row.appendChild(cell)
             comparison.appendChild(row)
         body.insertBefore(comparison, end)
@@ -315,9 +333,10 @@ def workbook(original: Path, output: Path, rows: list[list[str]]) -> None:
         entries = {e.filename: (e, archive.read(e.filename)) for e in archive.infolist()}
     book = minidom.parseString(entries['xl/workbook.xml'][1])
     sheets = book.getElementsByTagNameNS(S, 'sheets')[0]
-    if any(n.getAttribute('name') == 'S6' for n in sheets.childNodes if n.nodeType == n.ELEMENT_NODE):
+    declared = [n for n in sheets.childNodes if n.nodeType == n.ELEMENT_NODE]
+    if any(n.getAttribute('name').startswith('S6') for n in declared):
         raise ValueError('Source workbook already has S6')
-    identifiers = [int(n.getAttribute('sheetId')) for n in sheets.childNodes if n.nodeType == n.ELEMENT_NODE]
+    identifiers = [int(n.getAttribute('sheetId')) for n in declared]
     identifier = max(identifiers) + 1
     rels = minidom.parseString(entries['xl/_rels/workbook.xml.rels'][1])
     rel = rels.createElementNS(rels.documentElement.namespaceURI, 'Relationship')
@@ -326,8 +345,11 @@ def workbook(original: Path, output: Path, rows: list[list[str]]) -> None:
     rel.setAttribute('Type', R + '/worksheet')
     rel.setAttribute('Target', f'worksheets/sheet{identifier}.xml')
     rels.documentElement.appendChild(rel)
-    sheet = book.createElementNS(S, 'sheet')
-    sheet.setAttribute('name', 'S6'); sheet.setAttribute('sheetId', str(identifier))
+    # minidom writes names as given: the new entry copies its siblings' prefix
+    # and relationship-namespace declaration, or the workbook is not XML at all.
+    sheet = book.createElementNS(S, declared[0].tagName)
+    sheet.setAttribute('xmlns:r', R)
+    sheet.setAttribute('name', 'S6 Design specifications'); sheet.setAttribute('sheetId', str(identifier))
     sheet.setAttributeNS(R, 'r:id', rid); sheets.appendChild(sheet)
     xml = minidom.parseString(f'<worksheet xmlns="{S}"><sheetData/></worksheet>')
     data = xml.getElementsByTagNameNS(S, 'sheetData')[0]
@@ -361,15 +383,26 @@ def workbook(original: Path, output: Path, rows: list[list[str]]) -> None:
     types.documentElement.appendChild(content)
     for name, document in [('xl/workbook.xml', book), ('xl/_rels/workbook.xml.rels', rels), ('[Content_Types].xml', types)]:
         entries[name] = (entries[name][0], document.toxml(encoding='utf-8'))
+        minidom.parseString(entries[name][1])
     name = f'xl/worksheets/sheet{identifier}.xml'
     entries[name] = (name, xml.toxml(encoding='utf-8'))
+    # The main figures no longer include a panel 3G; point the provenance note at what exists.
+    heights = entries['xl/worksheets/sheet1.xml']
+    stale = b'<x:v>Main Figure 3G</x:v>'
+    assert heights[1].count(stale) == 1
+    entries['xl/worksheets/sheet1.xml'] = (heights[0], heights[1].replace(
+        stale, b'<x:v>Supplementary data only; not plotted in a main figure</x:v>'))
     with ZipFile(output, 'w', compression=ZIP_DEFLATED) as archive:
         for entry, payload in entries.values():
             archive.writestr(entry, payload)
     with ZipFile(original) as old, ZipFile(output) as new:
         for name in old.namelist():
             if name.startswith(('xl/worksheets/', 'xl/sharedStrings', 'xl/styles')):
-                assert old.read(name) == new.read(name), name
+                expected = old.read(name)
+                if name == 'xl/worksheets/sheet1.xml':
+                    expected = expected.replace(b'<x:v>Main Figure 3G</x:v>',
+                                                b'<x:v>Supplementary data only; not plotted in a main figure</x:v>')
+                assert expected == new.read(name), name
 
 
 def main() -> None:
