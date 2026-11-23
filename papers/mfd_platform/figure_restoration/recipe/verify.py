@@ -80,7 +80,7 @@ def main():
             if token not in seen: seen.append(token)
     assert main_seen == ['1', '2', '3', '4', '5'], main_seen
     assert supplementary_seen == ['S1', 'S2', 'S3'], supplementary_seen
-    for invalid in ('Fig. 3G', 'Fig. 4A', 'Fig. 4B', 'Fig. 4C', 'Fig. 4D', 'Fig. 4E', 'Fig. 5D'):
+    for invalid in ('Fig. 2D', 'Fig. 2E', 'Fig. 2F', 'Fig. 3G', 'Fig. 4A', 'Fig. 4B', 'Fig. 4C', 'Fig. 4D', 'Fig. 4E', 'Fig. 5D'):
         assert invalid not in body, invalid
     report['figure_order'] = main_seen
     report['supplementary_figure_order'] = supplementary_seen

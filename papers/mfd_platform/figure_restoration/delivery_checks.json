@@ -2,8 +2,8 @@
   "documents": [
     {
       "file": "MFD_original_figures_tracked.docx",
-      "insertions": 351,
-      "deletions": 385,
+      "insertions": 370,
+      "deletions": 402,
       "comments": 0,
       "references_preserved": true,
       "recording_enabled": true,
@@ -43,7 +43,7 @@
   ],
   "original_main_image_hashes": [
     "4791cf190333d75c83ea04b758cf0bd2b179e62f5c864ba83c52ec70cd927296",
-    "14faa64f4a8aa2c42ba2c2edd0c48ac26d7acd38a7bdecb2d7cf7b815af3302b",
+    "0e2c481c9072e3f4c56200301bf173b1f0588c196d856369064d3b3c3d120f77",
     "4dfb2f5a0ec63a7f06ff89f780cdbdb5aa9d46adf49ad32b4f2a0412d95ade2c",
     "f855ec072dab4ebb4ea7eeb0f2b2ae25ecb256c66ed4e3a12a0224fc4e5a1a75",
     "9674e4ee7c31188165216be99b1e686921ac632e416dccfe22c4d13acde8b103"
@@ -56,17 +56,17 @@
     {
       "file": "MFD_original_figures_revised.pdf",
       "pages": 17,
-      "sha256": "d6e384be222004e6c59c53f1ef5ca8cf6d17ce8d1134f7da3db234f49c819136"
+      "sha256": "50dd8538311818486eac67169384361d662077f61e599e80da6b417ea2b73ff5"
     },
     {
       "file": "Supplementary_Protocol_1_original_figures_revised.pdf",
       "pages": 6,
-      "sha256": "173357d352aa6621215552dbe9db252d300103515bb3f2084f5aea1d067c03cb"
+      "sha256": "7f14e3ef397ccec3803c180da5908903c84383ea8393d633b6f2b91d01dd86cc"
     },
     {
       "file": "Supplementary_Protocol_2_original_figures_revised.pdf",
       "pages": 5,
-      "sha256": "84eb072547efdf508b6875b393e0a3aea60825073d4fd9b76bf3de77b4c0226a"
+      "sha256": "19b76f5a5d455c82f38bf4ac7c16c0574ecc324bce30320599d8aa078dbd3d72"
     }
   ]
 }

@@ -102,6 +102,12 @@ class Manuscript(RestoredDocument):
         self.change('For the demonstrated two-compartment neuronal device,',
                     'The corresponding insert models depict the two well-forming structures required for one device and their placement in the complete 96-insert array (Fig. 1D). OpenMFD also generated the matching plate-frame model (Fig. 1E). The assembled microfluidic plate shown in Fig. 1F',
                     'OpenMFD also generated the matching plate-frame model (Fig. 1D). The corresponding insert models depict the two well-forming structures required for one device and their placement in the complete 96-insert array (Fig. 1E,F). The assembled microfluidic plate shown in Fig. 1G')
+        self.change('We next examined whether the same design framework could generate matched files',
+                    'including single-unit and wafer-scale photomasks (Fig. 2A) and corresponding individual and arrayed resin-insert models (Fig. 2B). A second four-well configuration incorporated orthogonally arranged connections suitable for an axon-guidance design inspired by gradient-based assays (PMID: 26000554), again yielding matched photomasks (Fig. 2C) and insert models (Fig. 2D). Finally, a serial three-compartment configuration inspired by a microfluidic synaptic-competition model (PMID: 24662423) was generated with corresponding photomask (Fig. 2E) and insert outputs (Fig. 2F).',
+                    'illustrated by its single-unit and wafer-scale photomask layouts (Fig. 2A) alongside corresponding resin-insert models. A second four-well configuration incorporated orthogonally arranged connections suitable for an axon-guidance design inspired by gradient-based assays (PMID: 26000554), illustrated by its single-unit and wafer-scale photomask layouts (Fig. 2B) alongside matching insert models. Finally, a serial three-compartment configuration inspired by a microfluidic synaptic-competition model (PMID: 24662423) was generated with single-unit and wafer-scale photomask layouts (Fig. 2C) and matching insert outputs.')
+        self.change('Finally, OpenMFD generated coordinated mask and insert files',
+                    'serial three-compartment layouts (Fig. 2),',
+                    'serial three-compartment layouts (photomask layouts shown in Fig. 2),')
         self.change('The principal device comprised a 6 × 8 array',
                     'Design dimensions are provided in Table S1 within Supplementary Protocol 1',
                     'Design dimensions are provided in Supplementary Data File 1, sheet S6')
