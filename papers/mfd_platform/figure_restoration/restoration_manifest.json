@@ -5,7 +5,7 @@
       "original": "v14_tracked/MFD_V14_original.docx",
       "revised": "MFD_original_figures_revised.docx",
       "original_sha256": "e7b757e2f11883a87656425e8302741626588430d36da79c8ee4f1489914790e",
-      "revised_sha256": "24fae97dd3861c27da6138cb82a7e0311d3e2deccc50635251b2f7165bbc38ee",
+      "revised_sha256": "79d45b23f2dbc335e1d9030f4f525605709935dc73acc17cf52ef5e82e448311",
       "edits": [
         {
           "old": "The corresponding insert models depict the two well-forming structures required for one device and their placement in the complete 96-insert array (Fig. 1D). OpenMFD also generated the matching plate-frame model (Fig. 1E). The assembled microfluidic plate shown in Fig. 1F",
@@ -15,6 +15,21 @@
         {
           "old": "Design dimensions are provided in Table S1 within Supplementary Protocol 1",
           "new": "Design dimensions are provided in Supplementary Data File 1, sheet S6",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "(resin specifications: https://siraya.tech/products/sculpt-resin-high-temperature-resistant-resin; printing settings: Supplementary Data File 1, sheet S2)",
+          "new": "(printing settings: Supplementary Data File 1, sheet S2)",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "EPO-TEK 301-2 epoxy adhesive (manufacturer specifications: https://products.meridianadhesives.com/storage/downloads/uennuicaaxt1bodtipkbpydtg0u8qs33/301-2.pdf)",
+          "new": "EPO-TEK 301-2 epoxy adhesive (Epoxy Technology)",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "LOCTITE SI 5140 silicone adhesive (manufacturer specifications: https://datasheets.tdx.henkel.com/LOCTITE-SI-5140-en_GL.pdf)",
+          "new": "LOCTITE SI 5140 silicone adhesive (Henkel)",
           "reason": "Match restored figure/table content"
         },
         {
@@ -188,7 +203,7 @@
       "comparison_baseline": "MFD_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "MFD_original_figures_tracked.docx",
-      "tracked_sha256": "ce427689232ce164c8ff67195253dd7d75f2da4441df6839d82fde645dd71071",
+      "tracked_sha256": "136baebf01dae7dc4597eb8a0b98166128f892d818484893730d14a459ed2214",
       "native_endpoints_verified": true
     },
     {
@@ -227,7 +242,7 @@
       "comparison_baseline": "Supplementary_Protocol_1_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_1_original_figures_tracked.docx",
-      "tracked_sha256": "bea241e58e809e104f00986966df0f1b62f584d1f17e059a486ccc988c8a9dc9",
+      "tracked_sha256": "e6071a0fd988e450e6a4a42f6a95590a4436d2878138404352df223aa84b8dd2",
       "native_endpoints_verified": true
     },
     {
@@ -240,7 +255,7 @@
       "comparison_baseline": "Supplementary_Protocol_2_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_2_original_figures_tracked.docx",
-      "tracked_sha256": "3c2d5407bce9e7b62e0514a2bd6b477ee47cec5660b5316d2ecd767588ee6418",
+      "tracked_sha256": "a392f3cc52e6a33030e85ddad91a51beac554fc910e2263ca7653ec56cfa6e48",
       "native_endpoints_verified": true
     }
   ],

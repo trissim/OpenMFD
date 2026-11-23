@@ -14,6 +14,7 @@ from zipfile import ZipFile
 
 import pymupdf
 from paper_build.compare import document_text
+from papers.mfd_platform.figure_restoration.recipe.restore import REMOVED_VENDOR_URLS
 from papers.mfd_platform.v14_tracked.recipe.apply_v14_edits import references
 
 W = '{http://schemas.openxmlformats.org/wordprocessingml/2006/main}'
@@ -39,7 +40,8 @@ def main():
         tracked = out / record['tracked']
         assert record['native_endpoints_verified']
         assert hashlib.sha256(tracked.read_bytes()).hexdigest() == record['tracked_sha256']
-        assert references(original) == references(revised)
+        expected_refs = references(original) - (REMOVED_VENDOR_URLS if record['revised'].startswith('MFD_') else Counter())
+        assert expected_refs == references(revised)
         with ZipFile(tracked) as archive:
             assert archive.testzip() is None
             document = ET.fromstring(archive.read('word/document.xml'))

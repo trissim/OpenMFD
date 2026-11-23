@@ -13,7 +13,7 @@ from xml.etree import ElementTree as ET
 from zipfile import ZipFile
 
 from paper_build.compare import compare_documents, document_media, document_text
-from papers.mfd_platform.figure_restoration.recipe.restore import A, ComparisonBaseline, Manuscript, R, W, sha
+from papers.mfd_platform.figure_restoration.recipe.restore import A, ComparisonBaseline, Manuscript, R, REMOVED_VENDOR_URLS, W, sha
 from papers.mfd_platform.v14_tracked.recipe.apply_v14_edits import enable_recording, references
 
 
@@ -78,7 +78,8 @@ def main() -> None:
     document.apply()
     document.write(baseline)
     assert document_text(baseline) == document_text(original)
-    assert references(baseline) == references(original) == references(revised)
+    assert references(baseline) == references(original)
+    assert references(original) - REMOVED_VENDOR_URLS == references(revised)
     assert document_media(baseline) == document_media(revised)
     reading = output / 'MFD_for_Alyson_reading.docx'
     shutil.copyfile(revised, reading)

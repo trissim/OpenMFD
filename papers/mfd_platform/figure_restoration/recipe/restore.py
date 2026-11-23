@@ -2,6 +2,7 @@
 from __future__ import annotations
 
 import argparse
+from collections import Counter
 import csv
 import hashlib
 from io import BytesIO, StringIO
@@ -20,6 +21,12 @@ A = 'http://schemas.openxmlformats.org/drawingml/2006/main'
 WP = 'http://schemas.openxmlformats.org/drawingml/2006/wordprocessingDrawing'
 R = 'http://schemas.openxmlformats.org/officeDocument/2006/relationships'
 S = 'http://schemas.openxmlformats.org/spreadsheetml/2006/main'
+
+REMOVED_VENDOR_URLS = Counter({
+    'https://siraya.tech/products/sculpt-resin-high-temperature-resistant-resin;': 1,
+    'https://products.meridianadhesives.com/storage/downloads/uennuicaaxt1bodtipkbpydtg0u8qs33/301-2.pdf': 1,
+    'https://datasheets.tdx.henkel.com/LOCTITE-SI-5140-en_GL.pdf': 1,
+})
 
 
 def sha(path: Path) -> str:
@@ -98,6 +105,15 @@ class Manuscript(RestoredDocument):
         self.change('The principal device comprised a 6 × 8 array',
                     'Design dimensions are provided in Table S1 within Supplementary Protocol 1',
                     'Design dimensions are provided in Supplementary Data File 1, sheet S6')
+        self.change('Well-forming inserts were produced from Siraya Tech Sculpt Clear resin',
+                    '(resin specifications: https://siraya.tech/products/sculpt-resin-high-temperature-resistant-resin; printing settings: Supplementary Data File 1, sheet S2)',
+                    '(printing settings: Supplementary Data File 1, sheet S2)')
+        self.change('Well-forming inserts were produced from Siraya Tech Sculpt Clear resin',
+                    'EPO-TEK 301-2 epoxy adhesive (manufacturer specifications: https://products.meridianadhesives.com/storage/downloads/uennuicaaxt1bodtipkbpydtg0u8qs33/301-2.pdf)',
+                    'EPO-TEK 301-2 epoxy adhesive (Epoxy Technology)')
+        self.change('The arrays were plasma-bonded to 110 × 74 × 0.17 mm glass sheets',
+                    'LOCTITE SI 5140 silicone adhesive (manufacturer specifications: https://datasheets.tdx.henkel.com/LOCTITE-SI-5140-en_GL.pdf)',
+                    'LOCTITE SI 5140 silicone adhesive (Henkel)')
         self.change('Hybrid mold fabrication - Reusable hybrid molds',
                     'Complete photolithographic processing parameters are provided in Supplementary Protocol 1.',
                     'Process-development observations are shown in Supplementary Figs. S1–S2. Complete photolithographic processing parameters are provided in Supplementary Protocol 1.')
@@ -429,7 +445,8 @@ def main() -> None:
         note_path = output / (document.stem + '_comments.json')
         note_path.write_text(json.dumps(notes, indent=2) + '\n')
         original = previous / (previous_stem + '_original.docx')
-        assert references(original) == references(revised), document.source_name
+        expected_refs = references(original) - (REMOVED_VENDOR_URLS if kind is Manuscript else Counter())
+        assert expected_refs == references(revised), document.source_name
         row = {'original': str(original.relative_to(root)), 'revised': revised.name,
                'original_sha256': sha(original), 'revised_sha256': sha(revised),
                'edits': document.edits, 'images': document.image_changes}

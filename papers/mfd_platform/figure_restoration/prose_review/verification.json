@@ -7,29 +7,29 @@
   "native_reject_all": "Original Alyson prose and the SAME five final figures; artwork is intentionally not redlined",
   "drawings": 5,
   "image_revisions": 0,
-  "insertions": 59,
-  "deletions": 84,
+  "insertions": 62,
+  "deletions": 88,
   "retained_inputs": {
-    "/run/media/ts/nvme2/alyson-delivery-20261123/_work/OpenMFD/papers/mfd_platform/v14_tracked/MFD_V14_original.docx": "e7b757e2f11883a87656425e8302741626588430d36da79c8ee4f1489914790e",
-    "/run/media/ts/nvme2/alyson-delivery-20261123/_work/OpenMFD/papers/mfd_platform/figure_restoration/MFD_original_figures_revised.docx": "24fae97dd3861c27da6138cb82a7e0311d3e2deccc50635251b2f7165bbc38ee",
-    "/run/media/ts/nvme2/alyson-delivery-20261123/_work/OpenMFD/papers/mfd_platform/figure_restoration/MFD_original_figures_tracked.docx": "ce427689232ce164c8ff67195253dd7d75f2da4441df6839d82fde645dd71071",
-    "/run/media/ts/nvme2/alyson-delivery-20261123/_work/OpenMFD/papers/mfd_platform/figure_restoration/MFD_original_figures_revised.pdf": "acae3ee84ca222ad65bb80cf593b913f0c40bc93e55a15a57d79abb950fd35c8"
+    "/run/media/ts/nvme2/alyson-delivery-20261123/_work_refresh/OpenMFD/papers/mfd_platform/v14_tracked/MFD_V14_original.docx": "e7b757e2f11883a87656425e8302741626588430d36da79c8ee4f1489914790e",
+    "/run/media/ts/nvme2/alyson-delivery-20261123/_work_refresh/OpenMFD/papers/mfd_platform/figure_restoration/MFD_original_figures_revised.docx": "79d45b23f2dbc335e1d9030f4f525605709935dc73acc17cf52ef5e82e448311",
+    "/run/media/ts/nvme2/alyson-delivery-20261123/_work_refresh/OpenMFD/papers/mfd_platform/figure_restoration/MFD_original_figures_tracked.docx": "136baebf01dae7dc4597eb8a0b98166128f892d818484893730d14a459ed2214",
+    "/run/media/ts/nvme2/alyson-delivery-20261123/_work_refresh/OpenMFD/papers/mfd_platform/figure_restoration/MFD_original_figures_revised.pdf": "783a739058db40c34c826a462655df302d2f610a0d5ab635fbb02826067250ab"
   },
   "files": [
     {
       "name": "MFD_for_Alyson_reading.docx",
-      "bytes": 11978773,
-      "sha256": "24fae97dd3861c27da6138cb82a7e0311d3e2deccc50635251b2f7165bbc38ee"
+      "bytes": 11978614,
+      "sha256": "79d45b23f2dbc335e1d9030f4f525605709935dc73acc17cf52ef5e82e448311"
     },
     {
       "name": "MFD_for_Alyson_reading.pdf",
-      "bytes": 8297633,
-      "sha256": "acae3ee84ca222ad65bb80cf593b913f0c40bc93e55a15a57d79abb950fd35c8"
+      "bytes": 8297129,
+      "sha256": "783a739058db40c34c826a462655df302d2f610a0d5ab635fbb02826067250ab"
     },
     {
       "name": "MFD_for_Alyson_prose_redline.docx",
-      "bytes": 11776459,
-      "sha256": "02375ce05dfcabfeaa285f516cca27de6d40d329aaa9a336b7c676b11437d96d"
+      "bytes": 11776560,
+      "sha256": "b0c536130527a3202bfa7573b2796243bc76fb7fce1e4651fb7320ac43b46849"
     }
   ]
 }
