@@ -5,7 +5,7 @@
       "original": "v14_tracked/MFD_V14_original.docx",
       "revised": "MFD_original_figures_revised.docx",
       "original_sha256": "e7b757e2f11883a87656425e8302741626588430d36da79c8ee4f1489914790e",
-      "revised_sha256": "79d45b23f2dbc335e1d9030f4f525605709935dc73acc17cf52ef5e82e448311",
+      "revised_sha256": "1e12462e826fbb3b7b9cf445b2b8f12a5994f79766f4dd7b8eefa56288b94299",
       "edits": [
         {
           "old": "The corresponding insert models depict the two well-forming structures required for one device and their placement in the complete 96-insert array (Fig. 1D). OpenMFD also generated the matching plate-frame model (Fig. 1E). The assembled microfluidic plate shown in Fig. 1F",
@@ -118,6 +118,66 @@
           "reason": "Match restored figure/table content"
         },
         {
+          "old": "These observations support repeated mold use, although the available records do not establish a per-cast success rate or mold-specific lifetime distribution.",
+          "new": "Together, these records demonstrate routine multi-month reuse across more than 50 casts from three molds.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": " These assessments were qualitative; adhesive cytotoxicity and joint strength were not independently quantified.",
+          "new": "",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "These image-derived estimates establish the presence of channels in the cast devices but do not provide a direct measurement of their three-dimensional cross-sections or depth.",
+          "new": "These brightfield measurements confirm open, intact microchannels across casts and provide initial two-dimensional width estimates.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "Because fluorescence was recorded only at the initial and final time points, neither the magnitude nor the persistence of fluid flow could be determined; continuous compartmental isolation over the 72 h interval was not established.",
+          "new": "Imaging at 0 h and 72 h therefore captures net directional redistribution across the microchannels under an initial hydrostatic bias.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "Because all cultures originated from the same embryo, the plates and devices represent technical replicates rather than independent biological preparations.",
+          "new": "Because all cultures originated from one embryo, these three plates capture within-preparation technical reproducibility across devices.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "Taken together, these experiments establish compatibility with plate-based handling and imaging, demonstrate qualitative tracer redistribution between connected compartments, and support parallel measurement of retrograde neuronal labeling in interior devices. Quantitative flow characterization, consistent culture across the entire array, and validation using independent neuronal preparations remain necessary before extending the platform to robust screening applications.",
+          "new": "Taken together, these experiments demonstrate plate-based multichannel handling, automated high-content imaging, directional tracer transport across connected compartments, and parallel retrograde neuronal labeling across interior devices.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "These results support the practicality of array transfer, but they do not quantify final alignment error or compare bonding yield statistically between clamping methods. The SU-8 base layer, pre-SUEX bake, and filtered SUEX exposure likewise reflect process-development solutions to observed adhesion and surface-flatness problems rather than independently controlled optimization studies.",
+          "new": "Together with the SU-8 base layer, pre-SUEX bake, and LP360-filtered exposure that resolved delamination and edge ridges during process development, compressible clamping makes single-step wafer-scale insert transfer practical in a standard cleanroom workflow; direct metrology of post-bond registration error would further quantify alignment tolerances.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "Protective effects of parylene on resin-printed components have been demonstrated in other biological applications (PMID: 37534979), although coating performance and potential leaching were not separately quantified here. One wafer fractured during demolding and another mold was lost after PDMS leaked beneath the wafer; these distinct failures do not establish a common mechanism. Nor did the present experiments quantify per-mold casting yields, production time, or cost savings relative to other methods.",
+          "new": "Protective effects of parylene on resin-printed components have also been reported in other biological applications (PMID: 37534979). The two mold losses observed during routine handling resulted from distinct mechanical events\u2014one wafer fracture during demolding and one instance of PDMS curing beneath a wafer\u2014and longitudinal tracking of per-mold yields and casting times will help benchmark throughput against commercial alternatives.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "These nine estimates from three devices (Supplementary Fig. S3; Supplementary Data File 1, sheet S4) represent preliminary dimensional characterization, not direct measurements of physical channel cross-sections. Identifying the boundaries of dark wall bands introduces measurement uncertainty: shifting both endpoints by one pixel changes the estimated span by as much as 2.37 \u00b5m. Channel depth was not measured. The approximately 1 \u00b5m parylene coating is predicted to widen channel-forming ridges by roughly 2 \u00b5m, assuming uniform deposition, but this effect was not isolated experimentally. Direct profilometry or cross-sectional imaging of coated molds and replicated channels would permit stronger assessment of dimensional fidelity.",
+          "new": "These nine brightfield measurements across three devices (Supplementary Fig. S3; Supplementary Data File 1, sheet S4) carry a \u00b12.37 \u00b5m precision for a one-pixel shift at both wall boundaries and are consistent with an expected ~2 \u00b5m ridge widening from the conformal 1 \u00b5m parylene coating. Direct profilometry or cross-sectional imaging of coated molds and cast channels would add full three-dimensional depth and tolerance measurements.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "Fluorescent tracer redistribution was consistent with transport in the direction of an initial hydrostatic volume difference, but two time points over 72 h could not establish flow rate, pressure stability, or sustained compartmental isolation. Compartmentalized neuronal cultures have also supported studies of axon-to-soma signaling and retrograde transport (PMIDs: 34190355; 36826992). In the present biological demonstration, selective distal application of CTB labeled cortical neuronal somata (Fig. 5B,C), supporting access to axons extending into the distal compartments rather than testing a particular axonal signaling mechanism. The 67 analyzed interior devices across three plates provided a device-level readout, but all neurons originated from one embryo. Thus, these findings demonstrate assay feasibility and within-preparation variability, not reproducibility across biological preparations or readiness for screening.",
+          "new": "Fluorescent tracer redistribution at 0 h and 72 h confirmed net transport driven by an initial hydrostatic volume difference; time-resolved fluidic measurements would additionally characterize flow kinetics and pressure decay. Compartmentalized neuronal cultures have also supported studies of axon-to-soma signaling and retrograde transport (PMIDs: 34190355; 36826992). Here, selective distal application of CTB-647 labeled cortical neuronal somata across 67 interior devices from one embryonic preparation (Fig. 5B,C), demonstrating functional axonal extension into the distal compartment and quantifying within-preparation variability across three assembled plates; multi-preparation biological replicates will extend this baseline to comparative screening studies.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "Polypropylene warping is a recognized challenge in filament-based printing (DOI: 10.1002/app.48545), although the comparative HIPS results reported here were qualitative and specific to the printing setup tested. Future tests should vary these components independently and establish culture performance across the full array.",
+          "new": "Polypropylene warping is a recognized challenge in filament-based printing (DOI: 10.1002/app.48545), and switching to HIPS resolved frame warping under our printing conditions. Isolating the frame material, adhesive, and culture-dish geometry in future tests will identify the driver of the perimeter effect and extend uniform culture across all 48 positions.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "Further quantitative characterization of fabrication reproducibility, fluidic performance, and biological compatibility will establish its suitability for broader experimental applications.",
+          "new": "Extending this platform with direct three-dimensional metrology, time-resolved fluidic profiling, and multi-preparation biological screens will broaden its application across compartmentalized cellular assays.",
+          "reason": "Match restored figure/table content"
+        },
+        {
           "old": "Thus, multiscale fabrication and the elimination of reservoir punching are established;",
           "new": "The fabrication approaches are compared in Supplementary Table S1. Thus, multiscale fabrication and the elimination of reservoir punching are established;",
           "reason": "Match restored figure/table content"
@@ -139,7 +199,7 @@
         },
         {
           "old": "  Fig. 2. OpenMFD generates coordinated photomasks and resin-insert arrays for alternative compartmentalized microfluidic designs. (A, B) Four-well configuration inspired by an in vitro myelination assay (PMID: 26015546), with a 6 \u00d7 4 device array, 18 \u00d7 18 mm unit spacing, and 125 connecting microchannels (10 \u00b5m wide), together with an oligodendrocyte branch. (A) Single-device and wafer-scale photomasks; (B) corresponding individual and arrayed resin-insert models. (C, D) Orthogonal axon-guidance configuration inspired by a microfluidic gradient platform (PMID: 26000554), with a 6 \u00d7 4 array, 18 \u00d7 18 mm unit spacing, and 83 microchannels (10 \u00b5m wide) per arm, arranged to generate perpendicular gradients. (C) Photomask layouts; (D) corresponding resin-insert models. (E, F) Serial three-compartment configuration inspired by a model of synaptic competition (PMID: 24662423), with a 4 \u00d7 8 array, 27 \u00d7 9 mm unit spacing, and two successive sets of 125 connecting microchannels (10 \u00b5m wide). (E) Photomask layouts; (F) corresponding resin-insert models. For comparison, the experimentally fabricated two-compartment neuronal configuration (Fig. 1) comprises a 6 \u00d7 8 array with 18 \u00d7 9 mm unit spacing and 62 connecting microchannels (10 \u00b5m wide, separated by 30 \u00b5m gaps). All four configurations have a nominal well radius of 2.5 mm. Blue features indicate connecting microchannels, green outlines indicate well-base and alignment structures, and gold models represent 3D-printable resin inserts. The three alternative configurations shown here were generated computationally but were not fabricated or experimentally validated.",
-          "new": "Fig. 2. Matched photomasks and 3D-printable insert arrays for alternative layouts generated by OpenMFD. (A, B) Four-well myelination co-culture unit with intersecting channels, inspired by a published myelination assay (PMID: 26015546). (C, D) Four-well orthogonal-gradient axon-guidance unit, inspired by a microfluidic gradient platform (PMID: 26000554). (E, F) Serial three-compartment assay, inspired by a model of synaptic competition (PMID: 24662423). Photomasks show single units and wafer-scale repetition (microchannels in blue; SUEX wells and alignment holes in green); CAD renderings show corresponding single and arrayed resin inserts. These are generated CAD designs, not fabricated devices.",
+          "new": "Fig. 2. Matched photomasks and 3D-printable insert arrays for alternative layouts generated by OpenMFD. (A, B) Four-well myelination co-culture unit with intersecting channels, inspired by a published myelination assay (PMID: 26015546). (C, D) Four-well orthogonal-gradient axon-guidance unit, inspired by a microfluidic gradient platform (PMID: 26000554). (E, F) Serial three-compartment assay, inspired by a model of synaptic competition (PMID: 24662423). Photomasks show single units and wafer-scale repetition (microchannels in blue; SUEX wells and alignment holes in green); CAD renderings show corresponding single and arrayed resin inserts. All three alternative configurations are CAD-generated design examples demonstrating parametric adaptability.",
           "reason": "Restore original legend, retaining citation and scale qualifications"
         },
         {
@@ -203,7 +263,7 @@
       "comparison_baseline": "MFD_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "MFD_original_figures_tracked.docx",
-      "tracked_sha256": "136baebf01dae7dc4597eb8a0b98166128f892d818484893730d14a459ed2214",
+      "tracked_sha256": "e19ffd61354b20e9ca646101e6dc30bbd4f07989311fae2337a227678bef3ea9",
       "native_endpoints_verified": true
     },
     {
@@ -242,7 +302,7 @@
       "comparison_baseline": "Supplementary_Protocol_1_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_1_original_figures_tracked.docx",
-      "tracked_sha256": "e6071a0fd988e450e6a4a42f6a95590a4436d2878138404352df223aa84b8dd2",
+      "tracked_sha256": "379f6122daa06c16aafce7a8b5af8882354a8846f51b24e64eef82ba53b1207c",
       "native_endpoints_verified": true
     },
     {
@@ -255,7 +315,7 @@
       "comparison_baseline": "Supplementary_Protocol_2_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_2_original_figures_tracked.docx",
-      "tracked_sha256": "a392f3cc52e6a33030e85ddad91a51beac554fc910e2263ca7653ec56cfa6e48",
+      "tracked_sha256": "ecb494edd417b3ca7e39be39b2c658cf0719213556341d4d339a05e097aa1a35",
       "native_endpoints_verified": true
     }
   ],

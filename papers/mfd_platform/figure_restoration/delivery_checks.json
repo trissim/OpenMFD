@@ -2,8 +2,8 @@
   "documents": [
     {
       "file": "MFD_original_figures_tracked.docx",
-      "insertions": 67,
-      "deletions": 93,
+      "insertions": 322,
+      "deletions": 353,
       "comments": 5,
       "references_preserved": true,
       "recording_enabled": true,
@@ -55,18 +55,18 @@
   "pdfs": [
     {
       "file": "MFD_original_figures_revised.pdf",
-      "pages": 18,
-      "sha256": "783a739058db40c34c826a462655df302d2f610a0d5ab635fbb02826067250ab"
+      "pages": 17,
+      "sha256": "c77628760c4668940eae1bd7c3170f617c2f788fbdc111b7121ad745e63de036"
     },
     {
       "file": "Supplementary_Protocol_1_original_figures_revised.pdf",
       "pages": 6,
-      "sha256": "bf96a36bd71b2f868c40d07282a3ca4f8f67a300fa8389870aa6a5414ba6dcdf"
+      "sha256": "5f765df51e930e7c58178f242c635223aacbda78ccec068e91af3fce58775ee8"
     },
     {
       "file": "Supplementary_Protocol_2_original_figures_revised.pdf",
       "pages": 5,
-      "sha256": "29aaf46dd0449c958af37787ab9db3730ae339035cca2e262510a2f1f4455178"
+      "sha256": "58079c0bc9b7cbb637b62131ab857d453319bb7fea5611c0448318df42f03088"
     }
   ]
 }
