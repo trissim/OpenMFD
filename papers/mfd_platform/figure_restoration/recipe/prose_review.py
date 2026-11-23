@@ -96,8 +96,10 @@ def main() -> None:
         assert len(list(xml.iter(w + 'drawing'))) == len(manuscript['images']) == 5
         assert not any(list(node.iter(w + 'drawing')) for node in (*insertions, *deletions))
         assert insertions and deletions
-        comments = ET.fromstring(archive.read('word/comments.xml'))
-        assert len(comments) >= len(json.loads((source / (Manuscript.stem + '_comments.json')).read_text()))
+        expected_notes = json.loads((source / (Manuscript.stem + '_comments.json')).read_text())
+        if expected_notes:
+            comments = ET.fromstring(archive.read('word/comments.xml'))
+            assert len(comments) >= len(expected_notes)
     assert document_media(tracked) == document_media(reading)
     assert text_revisions(tracked) == text_revisions(full_comparison)
     for path, value in immutable.items():

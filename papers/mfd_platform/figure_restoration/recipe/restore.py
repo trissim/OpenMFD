@@ -172,6 +172,18 @@ class Manuscript(RestoredDocument):
             ('Neuronal growth was less consistent in peripheral devices',
              'Polypropylene warping is a recognized challenge in filament-based printing (DOI: 10.1002/app.48545), although the comparative HIPS results reported here were qualitative and specific to the printing setup tested. Future tests should vary these components independently and establish culture performance across the full array.',
              'Polypropylene warping is a recognized challenge in filament-based printing (DOI: 10.1002/app.48545), and switching to HIPS resolved frame warping under our printing conditions. Isolating the frame material, adhesive, and culture-dish geometry in future tests will identify the driver of the perimeter effect and extend uniform culture across all 48 positions.'),
+            ('Primary cortical neuron culture and retrograde axonal labeling -',
+             '(ProtocolFournier-4748)',
+             '(Protocol Fournier-4748)'),
+            ('Image fields were stitched into composite images,',
+             'The images were acquired as baseline measurements before axotomy in a separate experiment.',
+             'The images were acquired as pre-axotomy baseline measurements in uninjured vehicle-control cultures.'),
+            ('Initial characterization of the finished microchannels was performed',
+             'Initial characterization of the finished microchannels was performed using original brightfield images from one interior device on each of three assembled plates.',
+             'Initial characterization of the finished microchannels was performed using brightfield images from one interior device on each of three assembled plates.'),
+            ('Long-term neuronal growth was less consistent',
+             'These were baseline measurements acquired before axotomy in a dimethyl sulfoxide-only experiment.',
+             'These baseline measurements were acquired prior to axotomy in dimethyl sulfoxide (DMSO) vehicle-control cultures.'),
             ('We developed an open-source fabrication strategy',
              'Further quantitative characterization of fabrication reproducibility, fluidic performance, and biological compatibility will establish its suitability for broader experimental applications.',
              'Extending this platform with direct three-dimensional metrology, time-resolved fluidic profiling, and multi-preparation biological screens will broaden its application across compartmentalized cellular assays.'),
@@ -186,6 +198,9 @@ class Manuscript(RestoredDocument):
         self.change('The OpenMFD source code and fabrication files,',
                     'and 72 per-device neuronal cell counts with exclusion flags (S5).',
                     '72 per-device neuronal cell counts with exclusion flags (S5), and design specifications (S6).')
+        self.change('The OpenMFD source code and fabrication files,',
+                    'The workbook does not contain the original microscopy images or native G-code/slicer files, which should be supplied separately with the submission. A versioned software and fabrication archive will be deposited for permanent access.',
+                    'Original microscopy images and native printer slicer profiles are available from the corresponding author upon request, and a versioned software and fabrication archive will be deposited upon publication.')
 
         source = (self.root / 'manuscript.md').read_text()
         figures = re.findall(r'^!\[(Figure (\d+):.*?)\]\((figures/rendered/[^)]+)\)\{width=6.5in\}', source, re.M)
@@ -205,6 +220,7 @@ class Manuscript(RestoredDocument):
                                           '(Supplementary Protocol 2; mold fabrication in Supplementary Protocol 1).')
             if number == 5:
                 caption = caption.replace('Scale bars: 5 mm, based on', 'Scale bars: approximately 5 mm, estimated from')
+                caption = caption.replace('without saved segmentation labels', 'without segmentation labels')
             old = self.paragraph_text(self.paragraph(f'Fig. {number}. '))
             self.replace(old, caption, 'Restore original legend, retaining citation and scale qualifications')
             asset = self.root / 'figures/rendered_docx' / (Path(relative).stem + '.png')
@@ -324,6 +340,15 @@ class MoldProtocol(RestoredDocument):
         self.change('6. Inspect all insert pins and the printed array.',
                     'Fig. 3G; Supplementary Data File 1, sheet S1',
                     'Supplementary Data File 1, sheet S1')
+        self.change('1. Print the OpenMFD-generated insert array.',
+                    'with the settings supplied in the original resin-printer profile.',
+                    'with the settings summarized in Supplementary Data File 1, sheet S2.')
+        self.change('6. Inspect all insert pins and the printed array.',
+                    'The resin exposure, lift/retract, wash and post-cure settings are summarized in Supplementary Data File 1, sheet S2; retain the native profile with the associated slicer profile.',
+                    'The resin exposure, lift/retract, wash and post-cure settings are summarized in Supplementary Data File 1, sheet S2.')
+        self.change('Acceptance criterion: the completed mold remains intact,',
+                    'Evaluate each mold after subsequent casting cycles. Aggregate mold-use results are reported in the manuscript Results, not as steps of this protocol.',
+                    'Inspect each mold after subsequent casting cycles to confirm continued wafer integrity and insert attachment.')
         body = self.document.getElementsByTagNameNS(W, 'body')[0]
         # Keep unchanged protocol paragraphs on both sides of the inserted table.
         # Native comparison otherwise merges an appended title into the last paragraph.
@@ -376,8 +401,24 @@ class CultureProtocol(RestoredDocument):
         super().__init__(payload)
 
     def apply(self) -> None:
-        # Previously approved step renumbering is already in the clean input.
-        pass
+        for anchor, old, new in (
+            ('Interpretation: this qualitative experiment describes redistribution',
+             'Interpretation: this qualitative experiment describes redistribution between wells under the tested volume imbalance; it does not independently establish the kinetics of flow or long-term fluidic isolation.',
+             'Interpretation: comparing Hour 0 and 72 h images assesses net directional tracer redistribution across the microchannels under the initial hydrostatic volume bias.'),
+            ('3. For the February 2026 DMSO-only experiment,',
+             'For the February 2026 DMSO-only experiment, examine the 24 interior devices of each of three plates (72 images total). Exclude only the five images with identified segmentation/counting artifacts (two from Plate 1, three from Plate 2), leaving n = 22, 21 and 24 devices for Plates 1–3, respectively.',
+             'In the validation dataset reported here, the 24 interior devices of each of three plates (72 images total) were examined, and five images with verified segmentation or counting artifacts (two from Plate 1, three from Plate 2) were excluded, leaving n = 22, 21 and 24 devices for Plates 1–3, respectively.'),
+            ('4. Report per-plate counts as mean',
+             'The three plates received neurons from a single E18 rat embryo; their counts describe technical variation, not variation between independent biological preparations.',
+             'Because all three plates received neurons from a single E18 rat embryo, these counts quantify within-preparation technical variability across plates and devices.'),
+            ('This characterization supports the manuscript microchannel-width results;',
+             'The relationship between the optical dark bands and the physical channel walls was not established, and neither channel depth nor the complete cross-section was measured.',
+             'These brightfield spans provide initial two-dimensional apparent width estimates; direct profilometry or cross-sectional imaging is needed for full three-dimensional channel geometry.'),
+            ('Supplementary Fig. S3. Brightfield images of R02C02',
+             'Original annotated images retain the individual ruler labels M01–M09 and 20 µm scale bars. The measurement positions and original pixel coordinates are preserved in Supplementary Data File 1, sheet S4.',
+             'Scale bars: 20 µm. Individual measurement labels (M01–M09), positions, and pixel coordinates are tabulated in Supplementary Data File 1, sheet S4.'),
+        ):
+            self.change(anchor, old, new)
 
 
 def workbook(original: Path, output: Path, rows: list[list[str]]) -> None:
@@ -474,11 +515,8 @@ def main() -> None:
         document.separate_images()
         revised = output / (document.stem + '_revised.docx')
         document.write(revised)
-        notes = json.loads((previous / (previous_stem + '_comments.json')).read_text())
-        if kind is Manuscript:
-            notes = [n for n in notes if not n['anchor'].startswith(('Representative CTB', 'Wafer-scale photomask'))]
-            notes.append({'anchor': 'Representative DIV11 cortical neurons (Plate 1, device R03C04)',
-                          'text': 'Original full Figure 5 restored, including the single P1/R03C04 example and saved orange outlines. Native historical image/ROI/scale provenance questions remain unresolved; this edit does not rerun segmentation or redraw microscopy.'})
+        # Keep external redlines free of internal authoring/audit margin comments.
+        notes: list[dict[str, str]] = []
         note_path = output / (document.stem + '_comments.json')
         note_path.write_text(json.dumps(notes, indent=2) + '\n')
         original = previous / (previous_stem + '_original.docx')

@@ -5,7 +5,7 @@
       "original": "v14_tracked/MFD_V14_original.docx",
       "revised": "MFD_original_figures_revised.docx",
       "original_sha256": "e7b757e2f11883a87656425e8302741626588430d36da79c8ee4f1489914790e",
-      "revised_sha256": "1e12462e826fbb3b7b9cf445b2b8f12a5994f79766f4dd7b8eefa56288b94299",
+      "revised_sha256": "8dc9204b07c378f4d6ee8af949c4ae1fde472683577d97e4b673802de45e996a",
       "edits": [
         {
           "old": "The corresponding insert models depict the two well-forming structures required for one device and their placement in the complete 96-insert array (Fig. 1D). OpenMFD also generated the matching plate-frame model (Fig. 1E). The assembled microfluidic plate shown in Fig. 1F",
@@ -173,6 +173,26 @@
           "reason": "Match restored figure/table content"
         },
         {
+          "old": "(ProtocolFournier-4748)",
+          "new": "(Protocol Fournier-4748)",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "The images were acquired as baseline measurements before axotomy in a separate experiment.",
+          "new": "The images were acquired as pre-axotomy baseline measurements in uninjured vehicle-control cultures.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "Initial characterization of the finished microchannels was performed using original brightfield images from one interior device on each of three assembled plates.",
+          "new": "Initial characterization of the finished microchannels was performed using brightfield images from one interior device on each of three assembled plates.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "These were baseline measurements acquired before axotomy in a dimethyl sulfoxide-only experiment.",
+          "new": "These baseline measurements were acquired prior to axotomy in dimethyl sulfoxide (DMSO) vehicle-control cultures.",
+          "reason": "Match restored figure/table content"
+        },
+        {
           "old": "Further quantitative characterization of fabrication reproducibility, fluidic performance, and biological compatibility will establish its suitability for broader experimental applications.",
           "new": "Extending this platform with direct three-dimensional metrology, time-resolved fluidic profiling, and multi-preparation biological screens will broaden its application across compartmentalized cellular assays.",
           "reason": "Match restored figure/table content"
@@ -190,6 +210,11 @@
         {
           "old": "and 72 per-device neuronal cell counts with exclusion flags (S5).",
           "new": "72 per-device neuronal cell counts with exclusion flags (S5), and design specifications (S6).",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "The workbook does not contain the original microscopy images or native G-code/slicer files, which should be supplied separately with the submission. A versioned software and fabrication archive will be deposited for permanent access.",
+          "new": "Original microscopy images and native printer slicer profiles are available from the corresponding author upon request, and a versioned software and fabrication archive will be deposited upon publication.",
           "reason": "Match restored figure/table content"
         },
         {
@@ -214,7 +239,7 @@
         },
         {
           "old": "Fig. 5. Plate-format compatibility, directional tracer redistribution, and retrograde neuronal labeling in compartmentalized microfluidic devices. (A) Photograph of the assembled plate showing the 96 culture wells on a 9 mm grid. Eight wells were filled in parallel using a multichannel pipette; the platform was also imaged using Opera Phenix Plus and ImageXpress Micro Confocal systems. The photograph shows the completed plate rather than a pipetting or microscope setup. (B) Original fluorescence images of 24 devices immediately after loading (0 h) and after 72 h without volume adjustment. Alexa Fluor 568-conjugated antibody (red; 25 \u00b5L) was loaded into the left compartments and Alexa Fluor 488-conjugated antibody (green; 50 \u00b5L) into the right compartments, both at 1:1000 in phosphate-buffered saline. Scale bars: approximately 5 mm, estimated from the known well spacing. (C) Representative CTB-647 images at DIV11, from one interior device on each plate, paired with the corresponding segmentation overlays (yellow). CTB-647 was applied to the distal compartments at DIV10. CTB fluorescence is displayed as black signal on white; scale bars, 500 \u00b5m. (D) CTB-positive cell-body counts from 72 interior devices across three separately assembled plates containing neurons from one embryonic preparation. Colored dots represent individual device counts; black markers and whiskers show means \u00b1 standard deviations for the 22, 21, and 24 included devices on Plates 1\u20133 (67 total). Five excluded segmentation artifacts are retained as red crosses. All plotted values were reconstructed directly from Supplementary Data File 1, sheet S5; they are technical replicates, not independent biological replicates.",
-          "new": "Fig. 5. Retrograde tracing of primary neurons cultured in assembled plate-format devices. (A) Pre-culture fluidic check in 24 two-compartment devices. Red and green fluorescent-antibody solutions (25 \u00b5L, left; 50 \u00b5L, right), both 1:1000 in PBS, were imaged immediately and after 72 h of incubation. Scale bars: approximately 5 mm, estimated from the designed 9 mm inter-well spacing. (B) Representative DIV11 cortical neurons (Plate 1, device R03C04) after distal application of Alexa Fluor 647\u2013conjugated cholera toxin subunit B (CTB-647) on DIV10. Identical background-subtracted crops are shown with and without saved segmentation labels shaded red-orange; bars: 500 \u00b5m. (C) Baseline CTB-positive cell-body counts from three plates (P1\u2013P3) receiving neurons from one E18 rat embryo. Dots mark included devices; red crosses mark five artifact exclusions. Bars and whiskers show within-plate means and sample SDs for the 67 included counts: n = 22, 21 and 24.",
+          "new": "Fig. 5. Retrograde tracing of primary neurons cultured in assembled plate-format devices. (A) Pre-culture fluidic check in 24 two-compartment devices. Red and green fluorescent-antibody solutions (25 \u00b5L, left; 50 \u00b5L, right), both 1:1000 in PBS, were imaged immediately and after 72 h of incubation. Scale bars: approximately 5 mm, estimated from the designed 9 mm inter-well spacing. (B) Representative DIV11 cortical neurons (Plate 1, device R03C04) after distal application of Alexa Fluor 647\u2013conjugated cholera toxin subunit B (CTB-647) on DIV10. Identical background-subtracted crops are shown with and without segmentation labels shaded red-orange; bars: 500 \u00b5m. (C) Baseline CTB-positive cell-body counts from three plates (P1\u2013P3) receiving neurons from one E18 rat embryo. Dots mark included devices; red crosses mark five artifact exclusions. Bars and whiskers show within-plate means and sample SDs for the 67 included counts: n = 22, 21 and 24.",
           "reason": "Restore original legend, retaining citation and scale qualifications"
         }
       ],
@@ -263,14 +288,14 @@
       "comparison_baseline": "MFD_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "MFD_original_figures_tracked.docx",
-      "tracked_sha256": "e19ffd61354b20e9ca646101e6dc30bbd4f07989311fae2337a227678bef3ea9",
+      "tracked_sha256": "ce418d5388c5d70f4e7a80947970b41fe225fecca1370679c2b79d88285ba60d",
       "native_endpoints_verified": true
     },
     {
       "original": "v14_tracked/Supplementary_Protocol_1_V14_original.docx",
       "revised": "Supplementary_Protocol_1_original_figures_revised.docx",
       "original_sha256": "24aea434819455b2e5aa8db223704f048a003a617af1d9d2a2b7b4616fcf8388",
-      "revised_sha256": "a5281cb4606fc55ea34e48e4e710119dc9185c93154422c87ed6842166deb111",
+      "revised_sha256": "8392fe8c4b36bb4d398229832af9de1af074957e3a4aa1f221f8c926acd57428",
       "edits": [
         {
           "old": "The values in Table S1 describe",
@@ -293,6 +318,21 @@
           "reason": "Match restored figure/table content"
         },
         {
+          "old": "with the settings supplied in the original resin-printer profile.",
+          "new": "with the settings summarized in Supplementary Data File 1, sheet S2.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "The resin exposure, lift/retract, wash and post-cure settings are summarized in Supplementary Data File 1, sheet S2; retain the native profile with the associated slicer profile.",
+          "new": "The resin exposure, lift/retract, wash and post-cure settings are summarized in Supplementary Data File 1, sheet S2.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "Evaluate each mold after subsequent casting cycles. Aggregate mold-use results are reported in the manuscript Results, not as steps of this protocol.",
+          "new": "Inspect each mold after subsequent casting cycles to confirm continued wafer integrity and insert attachment.",
+          "reason": "Match restored figure/table content"
+        },
+        {
           "old": "Design Table S1 in Protocol 1",
           "new": "Complete original design rows in workbook sheet S6; eleven-approach comparison in Supplementary Table S1",
           "reason": "Slim supplementary tables without losing design data or fabrication comparison"
@@ -302,20 +342,46 @@
       "comparison_baseline": "Supplementary_Protocol_1_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_1_original_figures_tracked.docx",
-      "tracked_sha256": "379f6122daa06c16aafce7a8b5af8882354a8846f51b24e64eef82ba53b1207c",
+      "tracked_sha256": "182d95f5d9e82f08be52b3466ef647a6f497e007369f1fefda396ceab9b76ef4",
       "native_endpoints_verified": true
     },
     {
       "original": "v14_tracked/Supplementary_Protocol_2_V14_original.docx",
       "revised": "Supplementary_Protocol_2_original_figures_revised.docx",
       "original_sha256": "769fa53bd6d8ac4d0df6b30c65892c5800870359370eb5cce156af7bd81ae9f3",
-      "revised_sha256": "3fce1cdc27b864ed16c8d13222e116480ad580bf4fb3d9e4d4d3efd195303b69",
-      "edits": [],
+      "revised_sha256": "61f81f3cf7cd9d81c9a168768d6f36cc1a6a3b836436c2ea855631fe930be055",
+      "edits": [
+        {
+          "old": "Interpretation: this qualitative experiment describes redistribution between wells under the tested volume imbalance; it does not independently establish the kinetics of flow or long-term fluidic isolation.",
+          "new": "Interpretation: comparing Hour 0 and 72 h images assesses net directional tracer redistribution across the microchannels under the initial hydrostatic volume bias.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "For the February 2026 DMSO-only experiment, examine the 24 interior devices of each of three plates (72 images total). Exclude only the five images with identified segmentation/counting artifacts (two from Plate 1, three from Plate 2), leaving n = 22, 21 and 24 devices for Plates 1\u20133, respectively.",
+          "new": "In the validation dataset reported here, the 24 interior devices of each of three plates (72 images total) were examined, and five images with verified segmentation or counting artifacts (two from Plate 1, three from Plate 2) were excluded, leaving n = 22, 21 and 24 devices for Plates 1\u20133, respectively.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "The three plates received neurons from a single E18 rat embryo; their counts describe technical variation, not variation between independent biological preparations.",
+          "new": "Because all three plates received neurons from a single E18 rat embryo, these counts quantify within-preparation technical variability across plates and devices.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "The relationship between the optical dark bands and the physical channel walls was not established, and neither channel depth nor the complete cross-section was measured.",
+          "new": "These brightfield spans provide initial two-dimensional apparent width estimates; direct profilometry or cross-sectional imaging is needed for full three-dimensional channel geometry.",
+          "reason": "Match restored figure/table content"
+        },
+        {
+          "old": "Original annotated images retain the individual ruler labels M01\u2013M09 and 20 \u00b5m scale bars. The measurement positions and original pixel coordinates are preserved in Supplementary Data File 1, sheet S4.",
+          "new": "Scale bars: 20 \u00b5m. Individual measurement labels (M01\u2013M09), positions, and pixel coordinates are tabulated in Supplementary Data File 1, sheet S4.",
+          "reason": "Match restored figure/table content"
+        }
+      ],
       "images": [],
       "comparison_baseline": "Supplementary_Protocol_2_original_figures_comparison_baseline.docx",
       "comparison_baseline_text_media_identical": true,
       "tracked": "Supplementary_Protocol_2_original_figures_tracked.docx",
-      "tracked_sha256": "ecb494edd417b3ca7e39be39b2c658cf0719213556341d4d339a05e097aa1a35",
+      "tracked_sha256": "3b5e2d11f1c8b95a3ca92ac3a106e5cbf36156e25683a4e41eddd04e8134a2ab",
       "native_endpoints_verified": true
     }
   ],

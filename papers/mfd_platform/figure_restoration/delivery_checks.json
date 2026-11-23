@@ -2,17 +2,17 @@
   "documents": [
     {
       "file": "MFD_original_figures_tracked.docx",
-      "insertions": 322,
-      "deletions": 353,
-      "comments": 5,
+      "insertions": 351,
+      "deletions": 385,
+      "comments": 0,
       "references_preserved": true,
       "recording_enabled": true,
       "native_accept_reject_text_media": true
     },
     {
       "file": "Supplementary_Protocol_1_original_figures_tracked.docx",
-      "insertions": 123,
-      "deletions": 75,
+      "insertions": 137,
+      "deletions": 91,
       "comments": 0,
       "references_preserved": true,
       "recording_enabled": true,
@@ -20,9 +20,9 @@
     },
     {
       "file": "Supplementary_Protocol_2_original_figures_tracked.docx",
-      "insertions": 6,
-      "deletions": 6,
-      "comments": 1,
+      "insertions": 62,
+      "deletions": 61,
+      "comments": 0,
       "references_preserved": true,
       "recording_enabled": true,
       "native_accept_reject_text_media": true
@@ -56,17 +56,17 @@
     {
       "file": "MFD_original_figures_revised.pdf",
       "pages": 17,
-      "sha256": "c77628760c4668940eae1bd7c3170f617c2f788fbdc111b7121ad745e63de036"
+      "sha256": "d6e384be222004e6c59c53f1ef5ca8cf6d17ce8d1134f7da3db234f49c819136"
     },
     {
       "file": "Supplementary_Protocol_1_original_figures_revised.pdf",
       "pages": 6,
-      "sha256": "5f765df51e930e7c58178f242c635223aacbda78ccec068e91af3fce58775ee8"
+      "sha256": "173357d352aa6621215552dbe9db252d300103515bb3f2084f5aea1d067c03cb"
     },
     {
       "file": "Supplementary_Protocol_2_original_figures_revised.pdf",
       "pages": 5,
-      "sha256": "58079c0bc9b7cbb637b62131ab857d453319bb7fea5611c0448318df42f03088"
+      "sha256": "84eb072547efdf508b6875b393e0a3aea60825073d4fd9b76bf3de77b4c0226a"
     }
   ]
 }
